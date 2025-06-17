@@ -1,0 +1,22 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Optional
+from datetime import date
+
+from ..._models import BaseModel
+
+__all__ = ["DocumentUpdateResponse"]
+
+
+class DocumentUpdateResponse(BaseModel):
+    external_id: str
+
+    success: bool
+
+    doc_date: Optional[date] = None
+
+    message: Optional[str] = None
+
+    shared: Optional[bool] = None
+
+    title: Optional[str] = None
