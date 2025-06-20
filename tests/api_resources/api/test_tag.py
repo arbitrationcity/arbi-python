@@ -12,9 +12,9 @@ from tests.utils import assert_matches_type
 from arbi.types.api import (
     TagApplyResponse,
     TagCreateResponse,
+    TagDeleteResponse,
+    TagRemoveResponse,
     TagUpdateResponse,
-    TagDeleteDeleteResponse,
-    TagDeleteRemoveResponse,
     TagRetrieveDocsResponse,
 )
 
@@ -125,6 +125,48 @@ class TestTag:
 
     @pytest.mark.skip()
     @parametrize
+    def test_method_delete(self, client: Arbi) -> None:
+        tag = client.api.tag.delete(
+            "tag",
+        )
+        assert_matches_type(TagDeleteResponse, tag, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_delete(self, client: Arbi) -> None:
+        response = client.api.tag.with_raw_response.delete(
+            "tag",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        tag = response.parse()
+        assert_matches_type(TagDeleteResponse, tag, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_delete(self, client: Arbi) -> None:
+        with client.api.tag.with_streaming_response.delete(
+            "tag",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            tag = response.parse()
+            assert_matches_type(TagDeleteResponse, tag, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_path_params_delete(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `tag_ext_id` but received ''"):
+            client.api.tag.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
     def test_method_apply(self, client: Arbi) -> None:
         tag = client.api.tag.apply(
             tag_ext_id="tag",
@@ -171,59 +213,17 @@ class TestTag:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_delete_delete(self, client: Arbi) -> None:
-        tag = client.api.tag.delete_delete(
-            "tag",
-        )
-        assert_matches_type(TagDeleteDeleteResponse, tag, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_delete_delete(self, client: Arbi) -> None:
-        response = client.api.tag.with_raw_response.delete_delete(
-            "tag",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        tag = response.parse()
-        assert_matches_type(TagDeleteDeleteResponse, tag, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_delete_delete(self, client: Arbi) -> None:
-        with client.api.tag.with_streaming_response.delete_delete(
-            "tag",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            tag = response.parse()
-            assert_matches_type(TagDeleteDeleteResponse, tag, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_path_params_delete_delete(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `tag_ext_id` but received ''"):
-            client.api.tag.with_raw_response.delete_delete(
-                "",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_delete_remove(self, client: Arbi) -> None:
-        tag = client.api.tag.delete_remove(
+    def test_method_remove(self, client: Arbi) -> None:
+        tag = client.api.tag.remove(
             tag_ext_id="tag",
             doc_ids=["string"],
         )
-        assert_matches_type(TagDeleteRemoveResponse, tag, path=["response"])
+        assert_matches_type(TagRemoveResponse, tag, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_delete_remove(self, client: Arbi) -> None:
-        response = client.api.tag.with_raw_response.delete_remove(
+    def test_raw_response_remove(self, client: Arbi) -> None:
+        response = client.api.tag.with_raw_response.remove(
             tag_ext_id="tag",
             doc_ids=["string"],
         )
@@ -231,12 +231,12 @@ class TestTag:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         tag = response.parse()
-        assert_matches_type(TagDeleteRemoveResponse, tag, path=["response"])
+        assert_matches_type(TagRemoveResponse, tag, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_delete_remove(self, client: Arbi) -> None:
-        with client.api.tag.with_streaming_response.delete_remove(
+    def test_streaming_response_remove(self, client: Arbi) -> None:
+        with client.api.tag.with_streaming_response.remove(
             tag_ext_id="tag",
             doc_ids=["string"],
         ) as response:
@@ -244,15 +244,15 @@ class TestTag:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             tag = response.parse()
-            assert_matches_type(TagDeleteRemoveResponse, tag, path=["response"])
+            assert_matches_type(TagRemoveResponse, tag, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    def test_path_params_delete_remove(self, client: Arbi) -> None:
+    def test_path_params_remove(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `tag_ext_id` but received ''"):
-            client.api.tag.with_raw_response.delete_remove(
+            client.api.tag.with_raw_response.remove(
                 tag_ext_id="",
                 doc_ids=["string"],
             )
@@ -404,6 +404,48 @@ class TestAsyncTag:
 
     @pytest.mark.skip()
     @parametrize
+    async def test_method_delete(self, async_client: AsyncArbi) -> None:
+        tag = await async_client.api.tag.delete(
+            "tag",
+        )
+        assert_matches_type(TagDeleteResponse, tag, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.tag.with_raw_response.delete(
+            "tag",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        tag = await response.parse()
+        assert_matches_type(TagDeleteResponse, tag, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.tag.with_streaming_response.delete(
+            "tag",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            tag = await response.parse()
+            assert_matches_type(TagDeleteResponse, tag, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `tag_ext_id` but received ''"):
+            await async_client.api.tag.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
     async def test_method_apply(self, async_client: AsyncArbi) -> None:
         tag = await async_client.api.tag.apply(
             tag_ext_id="tag",
@@ -450,59 +492,17 @@ class TestAsyncTag:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_delete_delete(self, async_client: AsyncArbi) -> None:
-        tag = await async_client.api.tag.delete_delete(
-            "tag",
-        )
-        assert_matches_type(TagDeleteDeleteResponse, tag, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_delete_delete(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.tag.with_raw_response.delete_delete(
-            "tag",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        tag = await response.parse()
-        assert_matches_type(TagDeleteDeleteResponse, tag, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_delete_delete(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.tag.with_streaming_response.delete_delete(
-            "tag",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            tag = await response.parse()
-            assert_matches_type(TagDeleteDeleteResponse, tag, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_path_params_delete_delete(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `tag_ext_id` but received ''"):
-            await async_client.api.tag.with_raw_response.delete_delete(
-                "",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_delete_remove(self, async_client: AsyncArbi) -> None:
-        tag = await async_client.api.tag.delete_remove(
+    async def test_method_remove(self, async_client: AsyncArbi) -> None:
+        tag = await async_client.api.tag.remove(
             tag_ext_id="tag",
             doc_ids=["string"],
         )
-        assert_matches_type(TagDeleteRemoveResponse, tag, path=["response"])
+        assert_matches_type(TagRemoveResponse, tag, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_delete_remove(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.tag.with_raw_response.delete_remove(
+    async def test_raw_response_remove(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.tag.with_raw_response.remove(
             tag_ext_id="tag",
             doc_ids=["string"],
         )
@@ -510,12 +510,12 @@ class TestAsyncTag:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         tag = await response.parse()
-        assert_matches_type(TagDeleteRemoveResponse, tag, path=["response"])
+        assert_matches_type(TagRemoveResponse, tag, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_delete_remove(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.tag.with_streaming_response.delete_remove(
+    async def test_streaming_response_remove(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.tag.with_streaming_response.remove(
             tag_ext_id="tag",
             doc_ids=["string"],
         ) as response:
@@ -523,15 +523,15 @@ class TestAsyncTag:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             tag = await response.parse()
-            assert_matches_type(TagDeleteRemoveResponse, tag, path=["response"])
+            assert_matches_type(TagRemoveResponse, tag, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize
-    async def test_path_params_delete_remove(self, async_client: AsyncArbi) -> None:
+    async def test_path_params_remove(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `tag_ext_id` but received ''"):
-            await async_client.api.tag.with_raw_response.delete_remove(
+            await async_client.api.tag.with_raw_response.remove(
                 tag_ext_id="",
                 doc_ids=["string"],
             )

@@ -12,6 +12,7 @@ from .tag_apply_params import TagApplyParams as TagApplyParams
 from .all_configs_param import AllConfigsParam as AllConfigsParam
 from .sso_invite_params import SSOInviteParams as SSOInviteParams
 from .tag_create_params import TagCreateParams as TagCreateParams
+from .tag_remove_params import TagRemoveParams as TagRemoveParams
 from .tag_update_params import TagUpdateParams as TagUpdateParams
 from .user_login_params import UserLoginParams as UserLoginParams
 from .sso_login_response import SSOLoginResponse as SSOLoginResponse
@@ -19,6 +20,8 @@ from .tag_apply_response import TagApplyResponse as TagApplyResponse
 from .workspace_response import WorkspaceResponse as WorkspaceResponse
 from .sso_invite_response import SSOInviteResponse as SSOInviteResponse
 from .tag_create_response import TagCreateResponse as TagCreateResponse
+from .tag_delete_response import TagDeleteResponse as TagDeleteResponse
+from .tag_remove_response import TagRemoveResponse as TagRemoveResponse
 from .tag_update_response import TagUpdateResponse as TagUpdateResponse
 from .user_logout_response import UserLogoutResponse as UserLogoutResponse
 from .user_register_params import UserRegisterParams as UserRegisterParams
@@ -29,12 +32,9 @@ from .workspace_share_params import WorkspaceShareParams as WorkspaceShareParams
 from .workspace_update_params import WorkspaceUpdateParams as WorkspaceUpdateParams
 from .document_delete_response import DocumentDeleteResponse as DocumentDeleteResponse
 from .document_update_response import DocumentUpdateResponse as DocumentUpdateResponse
-from .tag_delete_remove_params import TagDeleteRemoveParams as TagDeleteRemoveParams
 from .workspace_share_response import WorkspaceShareResponse as WorkspaceShareResponse
 from .assistant_retrieve_params import AssistantRetrieveParams as AssistantRetrieveParams
 from .workspace_delete_response import WorkspaceDeleteResponse as WorkspaceDeleteResponse
-from .tag_delete_delete_response import TagDeleteDeleteResponse as TagDeleteDeleteResponse
-from .tag_delete_remove_response import TagDeleteRemoveResponse as TagDeleteRemoveResponse
 from .tag_retrieve_docs_response import TagRetrieveDocsResponse as TagRetrieveDocsResponse
 from .config_update_update_params import ConfigUpdateUpdateParams as ConfigUpdateUpdateParams
 from .conversation_share_response import ConversationShareResponse as ConversationShareResponse
