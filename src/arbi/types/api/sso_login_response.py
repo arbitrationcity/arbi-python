@@ -8,7 +8,7 @@ __all__ = ["SSOLoginResponse"]
 
 
 class SSOLoginResponse(BaseModel):
-    message: str
+    detail: str
 
     user_ext_id: str
 

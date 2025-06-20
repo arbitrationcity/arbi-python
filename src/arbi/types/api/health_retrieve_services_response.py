@@ -12,7 +12,7 @@ class Service(BaseModel):
 
     status: str
 
-    details: Optional[str] = None
+    detail: Optional[str] = None
 
     service_info: Optional[Dict[str, object]] = None
 

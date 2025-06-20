@@ -6,4 +6,4 @@ __all__ = ["TagDeleteDeleteResponse"]
 
 
 class TagDeleteDeleteResponse(BaseModel):
-    message: str
+    detail: str

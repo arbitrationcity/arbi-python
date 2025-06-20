@@ -6,6 +6,6 @@ __all__ = ["TagCreateResponse"]
 
 
 class TagCreateResponse(BaseModel):
-    message: str
+    detail: str
 
     tag_id: str

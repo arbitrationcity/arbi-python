@@ -6,4 +6,4 @@ __all__ = ["ConfigUpdateUpdateResponse"]
 
 
 class ConfigUpdateUpdateResponse(BaseModel):
-    message: str
+    detail: str

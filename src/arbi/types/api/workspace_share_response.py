@@ -12,7 +12,7 @@ class Notifications(BaseModel):
 
 
 class WorkspaceShareResponse(BaseModel):
-    message: str
+    detail: str
 
     notifications: Notifications
 

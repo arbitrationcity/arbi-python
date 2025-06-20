@@ -6,4 +6,4 @@ __all__ = ["UserLogoutResponse"]
 
 
 class UserLogoutResponse(BaseModel):
-    message: str
+    detail: str

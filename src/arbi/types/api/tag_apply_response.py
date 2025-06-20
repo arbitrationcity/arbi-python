@@ -8,6 +8,6 @@ __all__ = ["TagApplyResponse"]
 
 
 class TagApplyResponse(BaseModel):
-    doc_tag_ids: List[str]
+    detail: str
 
-    message: str
+    doc_tag_ids: List[str]
