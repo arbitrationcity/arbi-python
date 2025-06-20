@@ -4,10 +4,10 @@ from typing import List
 
 from ..._models import BaseModel
 
-__all__ = ["TagDeleteRemoveResponse"]
+__all__ = ["TagRemoveResponse"]
 
 
-class TagDeleteRemoveResponse(BaseModel):
+class TagRemoveResponse(BaseModel):
     detail: str
 
     removed_doc_tag_ids: List[str]
