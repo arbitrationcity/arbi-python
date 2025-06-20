@@ -8,6 +8,6 @@ __all__ = ["TagDeleteRemoveResponse"]
 
 
 class TagDeleteRemoveResponse(BaseModel):
-    message: str
+    detail: str
 
     removed_doc_tag_ids: List[str]

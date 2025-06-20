@@ -6,6 +6,6 @@ __all__ = ["SSOInviteResponse"]
 
 
 class SSOInviteResponse(BaseModel):
-    message: str
+    detail: str
 
     user_ext_id: str

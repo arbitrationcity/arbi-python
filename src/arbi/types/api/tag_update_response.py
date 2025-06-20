@@ -8,7 +8,7 @@ __all__ = ["TagUpdateResponse"]
 
 
 class TagUpdateResponse(BaseModel):
-    message: str
+    detail: str
 
     tag_id: str
 

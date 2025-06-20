@@ -6,4 +6,4 @@ __all__ = ["WorkspaceDeleteResponse"]
 
 
 class WorkspaceDeleteResponse(BaseModel):
-    message: str
+    detail: str

@@ -6,6 +6,6 @@ __all__ = ["SSORotatePasscodeResponse"]
 
 
 class SSORotatePasscodeResponse(BaseModel):
-    message: str
+    detail: str
 
     new_passcode: str

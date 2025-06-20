@@ -12,7 +12,7 @@ class Model(BaseModel):
 
     status: str
 
-    details: Optional[str] = None
+    detail: Optional[str] = None
 
 
 class HealthRetrieveRemoteModelsResponse(BaseModel):
