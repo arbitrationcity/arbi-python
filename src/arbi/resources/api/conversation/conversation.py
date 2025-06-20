@@ -24,6 +24,7 @@ from ...._response import (
 from ...._base_client import make_request_options
 from ....types.api.conversation_share_response import ConversationShareResponse
 from ....types.api.conversation_delete_response import ConversationDeleteResponse
+from ....types.api.conversation_delete_message_response import ConversationDeleteMessageResponse
 from ....types.api.conversation_retrieve_threads_response import ConversationRetrieveThreadsResponse
 
 __all__ = ["ConversationResource", "AsyncConversationResource"]
@@ -55,7 +56,7 @@ class ConversationResource(SyncAPIResource):
 
     def delete(
         self,
-        message_ext_id: str,
+        conversation_ext_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -64,6 +65,44 @@ class ConversationResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ConversationDeleteResponse:
+        """Delete a conversation.
+
+        RLS ensures the user can only delete conversations they
+        have access to. Deleting a conversation will also delete all associated messages
+        due to cascade delete.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not conversation_ext_id:
+            raise ValueError(
+                f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
+            )
+        return self._delete(
+            f"/api/conversation/{conversation_ext_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConversationDeleteResponse,
+        )
+
+    def delete_message(
+        self,
+        message_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConversationDeleteMessageResponse:
         """
         Delete a message along with all descendants.
 
@@ -83,7 +122,7 @@ class ConversationResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConversationDeleteResponse,
+            cast_to=ConversationDeleteMessageResponse,
         )
 
     def retrieve_threads(
@@ -186,7 +225,7 @@ class AsyncConversationResource(AsyncAPIResource):
 
     async def delete(
         self,
-        message_ext_id: str,
+        conversation_ext_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -195,6 +234,44 @@ class AsyncConversationResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ConversationDeleteResponse:
+        """Delete a conversation.
+
+        RLS ensures the user can only delete conversations they
+        have access to. Deleting a conversation will also delete all associated messages
+        due to cascade delete.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not conversation_ext_id:
+            raise ValueError(
+                f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
+            )
+        return await self._delete(
+            f"/api/conversation/{conversation_ext_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConversationDeleteResponse,
+        )
+
+    async def delete_message(
+        self,
+        message_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConversationDeleteMessageResponse:
         """
         Delete a message along with all descendants.
 
@@ -214,7 +291,7 @@ class AsyncConversationResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConversationDeleteResponse,
+            cast_to=ConversationDeleteMessageResponse,
         )
 
     async def retrieve_threads(
@@ -298,6 +375,9 @@ class ConversationResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             conversation.delete,
         )
+        self.delete_message = to_raw_response_wrapper(
+            conversation.delete_message,
+        )
         self.retrieve_threads = to_raw_response_wrapper(
             conversation.retrieve_threads,
         )
@@ -316,6 +396,9 @@ class AsyncConversationResourceWithRawResponse:
 
         self.delete = async_to_raw_response_wrapper(
             conversation.delete,
+        )
+        self.delete_message = async_to_raw_response_wrapper(
+            conversation.delete_message,
         )
         self.retrieve_threads = async_to_raw_response_wrapper(
             conversation.retrieve_threads,
@@ -336,6 +419,9 @@ class ConversationResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             conversation.delete,
         )
+        self.delete_message = to_streamed_response_wrapper(
+            conversation.delete_message,
+        )
         self.retrieve_threads = to_streamed_response_wrapper(
             conversation.retrieve_threads,
         )
@@ -354,6 +440,9 @@ class AsyncConversationResourceWithStreamingResponse:
 
         self.delete = async_to_streamed_response_wrapper(
             conversation.delete,
+        )
+        self.delete_message = async_to_streamed_response_wrapper(
+            conversation.delete_message,
         )
         self.retrieve_threads = async_to_streamed_response_wrapper(
             conversation.retrieve_threads,

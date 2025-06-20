@@ -9,7 +9,12 @@ import pytest
 
 from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
-from arbi.types.api import ConversationShareResponse, ConversationDeleteResponse, ConversationRetrieveThreadsResponse
+from arbi.types.api import (
+    ConversationShareResponse,
+    ConversationDeleteResponse,
+    ConversationDeleteMessageResponse,
+    ConversationRetrieveThreadsResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -21,7 +26,7 @@ class TestConversation:
     @parametrize
     def test_method_delete(self, client: Arbi) -> None:
         conversation = client.api.conversation.delete(
-            "msg",
+            "con",
         )
         assert_matches_type(ConversationDeleteResponse, conversation, path=["response"])
 
@@ -29,7 +34,7 @@ class TestConversation:
     @parametrize
     def test_raw_response_delete(self, client: Arbi) -> None:
         response = client.api.conversation.with_raw_response.delete(
-            "msg",
+            "con",
         )
 
         assert response.is_closed is True
@@ -41,7 +46,7 @@ class TestConversation:
     @parametrize
     def test_streaming_response_delete(self, client: Arbi) -> None:
         with client.api.conversation.with_streaming_response.delete(
-            "msg",
+            "con",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -54,8 +59,50 @@ class TestConversation:
     @pytest.mark.skip()
     @parametrize
     def test_path_params_delete(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             client.api.conversation.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_delete_message(self, client: Arbi) -> None:
+        conversation = client.api.conversation.delete_message(
+            "msg",
+        )
+        assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_delete_message(self, client: Arbi) -> None:
+        response = client.api.conversation.with_raw_response.delete_message(
+            "msg",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = response.parse()
+        assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_delete_message(self, client: Arbi) -> None:
+        with client.api.conversation.with_streaming_response.delete_message(
+            "msg",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = response.parse()
+            assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_path_params_delete_message(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
+            client.api.conversation.with_raw_response.delete_message(
                 "",
             )
 
@@ -151,7 +198,7 @@ class TestAsyncConversation:
     @parametrize
     async def test_method_delete(self, async_client: AsyncArbi) -> None:
         conversation = await async_client.api.conversation.delete(
-            "msg",
+            "con",
         )
         assert_matches_type(ConversationDeleteResponse, conversation, path=["response"])
 
@@ -159,7 +206,7 @@ class TestAsyncConversation:
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.with_raw_response.delete(
-            "msg",
+            "con",
         )
 
         assert response.is_closed is True
@@ -171,7 +218,7 @@ class TestAsyncConversation:
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.with_streaming_response.delete(
-            "msg",
+            "con",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -184,8 +231,50 @@ class TestAsyncConversation:
     @pytest.mark.skip()
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             await async_client.api.conversation.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_delete_message(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.delete_message(
+            "msg",
+        )
+        assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_delete_message(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.conversation.with_raw_response.delete_message(
+            "msg",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = await response.parse()
+        assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_delete_message(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.conversation.with_streaming_response.delete_message(
+            "msg",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = await response.parse()
+            assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_path_params_delete_message(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
+            await async_client.api.conversation.with_raw_response.delete_message(
                 "",
             )
 
