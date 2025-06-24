@@ -47,6 +47,25 @@ class ConfigsResource(SyncAPIResource):
 
     def retrieve(
         self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AllConfigs:
+        """Return the current configurations for the user"""
+        return self._get(
+            "/api/configs/",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AllConfigs,
+        )
+
+    def load(
+        self,
         version: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -72,25 +91,6 @@ class ConfigsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
         return self._get(
             f"/api/configs/load/{version}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
-        )
-
-    def retrieve(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """Return the current configurations for the user"""
-        return self._get(
-            "/api/configs/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -199,6 +199,25 @@ class AsyncConfigsResource(AsyncAPIResource):
 
     async def retrieve(
         self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AllConfigs:
+        """Return the current configurations for the user"""
+        return await self._get(
+            "/api/configs/",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AllConfigs,
+        )
+
+    async def load(
+        self,
         version: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -224,25 +243,6 @@ class AsyncConfigsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
         return await self._get(
             f"/api/configs/load/{version}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
-        )
-
-    async def retrieve(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """Return the current configurations for the user"""
-        return await self._get(
-            "/api/configs/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -336,8 +336,8 @@ class ConfigsResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve = to_raw_response_wrapper(
-            configs.retrieve,
+        self.load = to_raw_response_wrapper(
+            configs.load,
         )
         self.retrieve_schema = to_raw_response_wrapper(
             configs.retrieve_schema,
@@ -357,8 +357,8 @@ class AsyncConfigsResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            configs.retrieve,
+        self.load = async_to_raw_response_wrapper(
+            configs.load,
         )
         self.retrieve_schema = async_to_raw_response_wrapper(
             configs.retrieve_schema,
@@ -378,8 +378,8 @@ class ConfigsResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            configs.retrieve,
+        self.load = to_streamed_response_wrapper(
+            configs.load,
         )
         self.retrieve_schema = to_streamed_response_wrapper(
             configs.retrieve_schema,
@@ -399,8 +399,8 @@ class AsyncConfigsResourceWithStreamingResponse:
         self.retrieve = async_to_streamed_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            configs.retrieve,
+        self.load = async_to_streamed_response_wrapper(
+            configs.load,
         )
         self.retrieve_schema = async_to_streamed_response_wrapper(
             configs.retrieve_schema,

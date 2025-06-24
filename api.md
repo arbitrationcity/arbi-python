@@ -199,8 +199,8 @@ from arbi.types.api import (
 
 Methods:
 
-- <code title="get /api/configs/load/{version}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve</a>(version) -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
 - <code title="get /api/configs/">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve</a>() -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
+- <code title="get /api/configs/load/{version}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">load</a>(version) -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
 - <code title="get /api/configs/schema">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_schema</a>() -> <a href="./src/arbi/types/api/config_retrieve_schema_response.py">ConfigRetrieveSchemaResponse</a></code>
 - <code title="get /api/configs/versions">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_versions</a>() -> <a href="./src/arbi/types/api/config_retrieve_versions_response.py">ConfigRetrieveVersionsResponse</a></code>
 - <code title="put /api/configs/update">client.api.configs.<a href="./src/arbi/resources/api/configs.py">update_update</a>(\*\*<a href="src/arbi/types/api/config_update_update_params.py">params</a>) -> <a href="./src/arbi/types/api/config_update_update_response.py">ConfigUpdateUpdateResponse</a></code>
