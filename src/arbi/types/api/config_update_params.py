@@ -6,10 +6,10 @@ from typing_extensions import Required, TypedDict
 
 from .all_configs_param import AllConfigsParam
 
-__all__ = ["ConfigUpdateUpdateParams"]
+__all__ = ["ConfigUpdateParams"]
 
 
-class ConfigUpdateUpdateParams(TypedDict, total=False):
+class ConfigUpdateParams(TypedDict, total=False):
     configs: Required[AllConfigsParam]
 
     filename_suffix: str
