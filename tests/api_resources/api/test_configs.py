@@ -25,48 +25,6 @@ class TestConfigs:
     @pytest.mark.skip()
     @parametrize
     def test_method_retrieve(self, client: Arbi) -> None:
-        config = client.api.configs.retrieve(
-            "version",
-        )
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_retrieve(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.retrieve(
-            "version",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_retrieve(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.retrieve(
-            "version",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_path_params_retrieve(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `version` but received ''"):
-            client.api.configs.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_retrieve(self, client: Arbi) -> None:
         config = client.api.configs.retrieve()
         assert_matches_type(AllConfigs, config, path=["response"])
 
@@ -91,6 +49,48 @@ class TestConfigs:
             assert_matches_type(AllConfigs, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_load(self, client: Arbi) -> None:
+        config = client.api.configs.load(
+            "version",
+        )
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_load(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.load(
+            "version",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        config = response.parse()
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_load(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.load(
+            "version",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            config = response.parse()
+            assert_matches_type(AllConfigs, config, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_path_params_load(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `version` but received ''"):
+            client.api.configs.with_raw_response.load(
+                "",
+            )
 
     @pytest.mark.skip()
     @parametrize
@@ -243,48 +243,6 @@ class TestAsyncConfigs:
     @pytest.mark.skip()
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.retrieve(
-            "version",
-        )
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.retrieve(
-            "version",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = await response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.retrieve(
-            "version",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = await response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `version` but received ''"):
-            await async_client.api.configs.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.retrieve()
         assert_matches_type(AllConfigs, config, path=["response"])
 
@@ -309,6 +267,48 @@ class TestAsyncConfigs:
             assert_matches_type(AllConfigs, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_load(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.load(
+            "version",
+        )
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_load(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.load(
+            "version",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        config = await response.parse()
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_load(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.load(
+            "version",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            config = await response.parse()
+            assert_matches_type(AllConfigs, config, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_path_params_load(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `version` but received ''"):
+            await async_client.api.configs.with_raw_response.load(
+                "",
+            )
 
     @pytest.mark.skip()
     @parametrize
