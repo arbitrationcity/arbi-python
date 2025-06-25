@@ -124,6 +124,29 @@ class UserResource(SyncAPIResource):
             cast_to=UserLogoutResponse,
         )
 
+    def me(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserResponse:
+        """Retrieve current authenticated user information.
+
+        This endpoint is useful for
+        validating tokens and checking authentication status.
+        """
+        return self._get(
+            "/api/user/me",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserResponse,
+        )
+
     def refresh_token(
         self,
         *,
@@ -184,29 +207,6 @@ class UserResource(SyncAPIResource):
                 },
                 user_register_params.UserRegisterParams,
             ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserResponse,
-        )
-
-    def retrieve_current(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
-        """Retrieve current authenticated user information.
-
-        This endpoint is useful for
-        validating tokens and checking authentication status.
-        """
-        return self._get(
-            "/api/user/me",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -314,6 +314,29 @@ class AsyncUserResource(AsyncAPIResource):
             cast_to=UserLogoutResponse,
         )
 
+    async def me(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserResponse:
+        """Retrieve current authenticated user information.
+
+        This endpoint is useful for
+        validating tokens and checking authentication status.
+        """
+        return await self._get(
+            "/api/user/me",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserResponse,
+        )
+
     async def refresh_token(
         self,
         *,
@@ -380,29 +403,6 @@ class AsyncUserResource(AsyncAPIResource):
             cast_to=UserResponse,
         )
 
-    async def retrieve_current(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
-        """Retrieve current authenticated user information.
-
-        This endpoint is useful for
-        validating tokens and checking authentication status.
-        """
-        return await self._get(
-            "/api/user/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserResponse,
-        )
-
 
 class UserResourceWithRawResponse:
     def __init__(self, user: UserResource) -> None:
@@ -417,14 +417,14 @@ class UserResourceWithRawResponse:
         self.logout = to_raw_response_wrapper(
             user.logout,
         )
+        self.me = to_raw_response_wrapper(
+            user.me,
+        )
         self.refresh_token = to_raw_response_wrapper(
             user.refresh_token,
         )
         self.register = to_raw_response_wrapper(
             user.register,
-        )
-        self.retrieve_current = to_raw_response_wrapper(
-            user.retrieve_current,
         )
 
 
@@ -441,14 +441,14 @@ class AsyncUserResourceWithRawResponse:
         self.logout = async_to_raw_response_wrapper(
             user.logout,
         )
+        self.me = async_to_raw_response_wrapper(
+            user.me,
+        )
         self.refresh_token = async_to_raw_response_wrapper(
             user.refresh_token,
         )
         self.register = async_to_raw_response_wrapper(
             user.register,
-        )
-        self.retrieve_current = async_to_raw_response_wrapper(
-            user.retrieve_current,
         )
 
 
@@ -465,14 +465,14 @@ class UserResourceWithStreamingResponse:
         self.logout = to_streamed_response_wrapper(
             user.logout,
         )
+        self.me = to_streamed_response_wrapper(
+            user.me,
+        )
         self.refresh_token = to_streamed_response_wrapper(
             user.refresh_token,
         )
         self.register = to_streamed_response_wrapper(
             user.register,
-        )
-        self.retrieve_current = to_streamed_response_wrapper(
-            user.retrieve_current,
         )
 
 
@@ -489,12 +489,12 @@ class AsyncUserResourceWithStreamingResponse:
         self.logout = async_to_streamed_response_wrapper(
             user.logout,
         )
+        self.me = async_to_streamed_response_wrapper(
+            user.me,
+        )
         self.refresh_token = async_to_streamed_response_wrapper(
             user.refresh_token,
         )
         self.register = async_to_streamed_response_wrapper(
             user.register,
-        )
-        self.retrieve_current = async_to_streamed_response_wrapper(
-            user.retrieve_current,
         )

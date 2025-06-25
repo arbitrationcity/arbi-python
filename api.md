@@ -17,9 +17,9 @@ Methods:
 - <code title="get /api/user/workspaces">client.api.user.<a href="./src/arbi/resources/api/user.py">list_workspaces</a>() -> <a href="./src/arbi/types/api/user_list_workspaces_response.py">UserListWorkspacesResponse</a></code>
 - <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/logout">client.api.user.<a href="./src/arbi/resources/api/user.py">logout</a>() -> <a href="./src/arbi/types/api/user_logout_response.py">UserLogoutResponse</a></code>
+- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user.py">me</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
 - <code title="post /api/user/token_refresh">client.api.user.<a href="./src/arbi/resources/api/user.py">refresh_token</a>() -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
-- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user.py">retrieve_current</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
 
 ## SSO
 
