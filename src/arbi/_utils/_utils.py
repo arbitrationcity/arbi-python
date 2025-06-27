@@ -77,8 +77,8 @@ def _extract_items(
         if is_list(obj):
             files: list[tuple[str, FileTypes]] = []
             for entry in obj:
-                assert_is_file_content(entry, key=flattened_key + "[]" if flattened_key else "")
-                files.append((flattened_key + "[]", cast(FileTypes, entry)))
+                assert_is_file_content(entry, key=flattened_key if flattened_key else "")
+                files.append((flattened_key, cast(FileTypes, entry)))
             return files
 
         assert_is_file_content(obj, key=flattened_key)
