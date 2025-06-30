@@ -9,11 +9,18 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api import Token, UserResponse, UserListWorkspacesResponse, UserLogoutResponse
+from arbi.types.api import (
+    Token,
+    UserResponse,
+    UserGetSettingsResponse,
+    UserListWorkspacesResponse,
+    UserLogoutResponse,
+)
 ```
 
 Methods:
 
+- <code title="get /api/user/settings">client.api.user.<a href="./src/arbi/resources/api/user.py">get_settings</a>() -> <a href="./src/arbi/types/api/user_get_settings_response.py">UserGetSettingsResponse</a></code>
 - <code title="get /api/user/workspaces">client.api.user.<a href="./src/arbi/resources/api/user.py">list_workspaces</a>() -> <a href="./src/arbi/types/api/user_list_workspaces_response.py">UserListWorkspacesResponse</a></code>
 - <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/logout">client.api.user.<a href="./src/arbi/resources/api/user.py">logout</a>() -> <a href="./src/arbi/types/api/user_logout_response.py">UserLogoutResponse</a></code>
