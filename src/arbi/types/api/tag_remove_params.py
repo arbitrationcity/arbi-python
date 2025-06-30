@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Required, TypedDict
 
-__all__ = ["TagDeleteRemoveParams"]
+__all__ = ["TagRemoveParams"]
 
 
-class TagDeleteRemoveParams(TypedDict, total=False):
+class TagRemoveParams(TypedDict, total=False):
     doc_ids: Required[List[str]]
