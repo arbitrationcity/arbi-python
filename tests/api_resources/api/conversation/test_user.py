@@ -25,7 +25,7 @@ class TestUser:
     def test_method_create(self, client: Arbi) -> None:
         user = client.api.conversation.user.create(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
         assert_matches_type(UserCreateResponse, user, path=["response"])
 
@@ -34,7 +34,7 @@ class TestUser:
     def test_raw_response_create(self, client: Arbi) -> None:
         response = client.api.conversation.user.with_raw_response.create(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -47,7 +47,7 @@ class TestUser:
     def test_streaming_response_create(self, client: Arbi) -> None:
         with client.api.conversation.user.with_streaming_response.create(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -63,7 +63,7 @@ class TestUser:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             client.api.conversation.user.with_raw_response.create(
                 conversation_ext_id="",
-                user_ext_id="user_ext_id",
+                user_ext_id="usr-bFXA5r3A",
             )
 
     @pytest.mark.skip()
@@ -71,7 +71,7 @@ class TestUser:
     def test_method_delete_all(self, client: Arbi) -> None:
         user = client.api.conversation.user.delete_all(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
         assert_matches_type(UserDeleteAllResponse, user, path=["response"])
 
@@ -80,7 +80,7 @@ class TestUser:
     def test_raw_response_delete_all(self, client: Arbi) -> None:
         response = client.api.conversation.user.with_raw_response.delete_all(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -93,7 +93,7 @@ class TestUser:
     def test_streaming_response_delete_all(self, client: Arbi) -> None:
         with client.api.conversation.user.with_streaming_response.delete_all(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -109,7 +109,7 @@ class TestUser:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             client.api.conversation.user.with_raw_response.delete_all(
                 conversation_ext_id="",
-                user_ext_id="user_ext_id",
+                user_ext_id="usr-bFXA5r3A",
             )
 
 
@@ -123,7 +123,7 @@ class TestAsyncUser:
     async def test_method_create(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.conversation.user.create(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
         assert_matches_type(UserCreateResponse, user, path=["response"])
 
@@ -132,7 +132,7 @@ class TestAsyncUser:
     async def test_raw_response_create(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.user.with_raw_response.create(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -145,7 +145,7 @@ class TestAsyncUser:
     async def test_streaming_response_create(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.user.with_streaming_response.create(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -161,7 +161,7 @@ class TestAsyncUser:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             await async_client.api.conversation.user.with_raw_response.create(
                 conversation_ext_id="",
-                user_ext_id="user_ext_id",
+                user_ext_id="usr-bFXA5r3A",
             )
 
     @pytest.mark.skip()
@@ -169,7 +169,7 @@ class TestAsyncUser:
     async def test_method_delete_all(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.conversation.user.delete_all(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
         assert_matches_type(UserDeleteAllResponse, user, path=["response"])
 
@@ -178,7 +178,7 @@ class TestAsyncUser:
     async def test_raw_response_delete_all(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.user.with_raw_response.delete_all(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -191,7 +191,7 @@ class TestAsyncUser:
     async def test_streaming_response_delete_all(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.user.with_streaming_response.delete_all(
             conversation_ext_id="con",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -207,5 +207,5 @@ class TestAsyncUser:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             await async_client.api.conversation.user.with_raw_response.delete_all(
                 conversation_ext_id="",
-                user_ext_id="user_ext_id",
+                user_ext_id="usr-bFXA5r3A",
             )

@@ -47,6 +47,9 @@ class Embedder(BaseModel):
 
 
 class ModelCitation(BaseModel):
+    api_model_name: Optional[str] = FieldInfo(alias="MODEL_NAME", default=None)
+    """Name of the model to be used."""
+
     sim_threashold: Optional[float] = FieldInfo(alias="SIM_THREASHOLD", default=None)
     """How similar does the statement needs to be to be considered as citation."""
 
