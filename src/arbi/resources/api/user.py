@@ -21,6 +21,7 @@ from ..._base_client import make_request_options
 from ...types.api.token import Token
 from ...types.api.user_response import UserResponse
 from ...types.api.user_logout_response import UserLogoutResponse
+from ...types.api.user_get_settings_response import UserGetSettingsResponse
 from ...types.api.user_list_workspaces_response import UserListWorkspacesResponse
 
 __all__ = ["UserResource", "AsyncUserResource"]
@@ -45,6 +46,25 @@ class UserResource(SyncAPIResource):
         For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return UserResourceWithStreamingResponse(self)
+
+    def get_settings(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserGetSettingsResponse:
+        """Get current user's settings."""
+        return self._get(
+            "/api/user/settings",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserGetSettingsResponse,
+        )
 
     def list_workspaces(
         self,
@@ -271,6 +291,25 @@ class AsyncUserResource(AsyncAPIResource):
         """
         return AsyncUserResourceWithStreamingResponse(self)
 
+    async def get_settings(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserGetSettingsResponse:
+        """Get current user's settings."""
+        return await self._get(
+            "/api/user/settings",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserGetSettingsResponse,
+        )
+
     async def list_workspaces(
         self,
         *,
@@ -480,6 +519,9 @@ class UserResourceWithRawResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
+        self.get_settings = to_raw_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -507,6 +549,9 @@ class AsyncUserResourceWithRawResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
+        self.get_settings = async_to_raw_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = async_to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -534,6 +579,9 @@ class UserResourceWithStreamingResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
+        self.get_settings = to_streamed_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = to_streamed_response_wrapper(
             user.list_workspaces,
         )
@@ -561,6 +609,9 @@ class AsyncUserResourceWithStreamingResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
+        self.get_settings = async_to_streamed_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = async_to_streamed_response_wrapper(
             user.list_workspaces,
         )
