@@ -14,11 +14,11 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.api import AllConfigs, config_update_update_params
+from ...types.api import AllConfigs, config_update_params
 from ..._base_client import make_request_options
 from ...types.api.all_configs import AllConfigs
 from ...types.api.all_configs_param import AllConfigsParam
-from ...types.api.config_update_update_response import ConfigUpdateUpdateResponse
+from ...types.api.config_update_response import ConfigUpdateResponse
 from ...types.api.config_retrieve_schema_response import ConfigRetrieveSchemaResponse
 from ...types.api.config_retrieve_versions_response import ConfigRetrieveVersionsResponse
 
@@ -78,6 +78,47 @@ class ConfigsResource(SyncAPIResource):
             cast_to=AllConfigs,
         )
 
+    def update(
+        self,
+        *,
+        configs: AllConfigsParam,
+        filename_suffix: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConfigUpdateResponse:
+        """Update user-specific configuration settings.
+
+        Saves new configurations to a TOML
+        file if different from existing ones.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._put(
+            "/api/configs/update",
+            body=maybe_transform(
+                {
+                    "configs": configs,
+                    "filename_suffix": filename_suffix,
+                },
+                config_update_params.ConfigUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConfigUpdateResponse,
+        )
+
     def retrieve(
         self,
         *,
@@ -135,47 +176,6 @@ class ConfigsResource(SyncAPIResource):
             cast_to=ConfigRetrieveVersionsResponse,
         )
 
-    def update_update(
-        self,
-        *,
-        configs: AllConfigsParam,
-        filename_suffix: str | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigUpdateUpdateResponse:
-        """Update user-specific configuration settings.
-
-        Saves new configurations to a TOML
-        file if different from existing ones.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._put(
-            "/api/configs/update",
-            body=maybe_transform(
-                {
-                    "configs": configs,
-                    "filename_suffix": filename_suffix,
-                },
-                config_update_update_params.ConfigUpdateUpdateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConfigUpdateUpdateResponse,
-        )
-
 
 class AsyncConfigsResource(AsyncAPIResource):
     @cached_property
@@ -228,6 +228,47 @@ class AsyncConfigsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=AllConfigs,
+        )
+
+    async def update(
+        self,
+        *,
+        configs: AllConfigsParam,
+        filename_suffix: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConfigUpdateResponse:
+        """Update user-specific configuration settings.
+
+        Saves new configurations to a TOML
+        file if different from existing ones.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._put(
+            "/api/configs/update",
+            body=await async_maybe_transform(
+                {
+                    "configs": configs,
+                    "filename_suffix": filename_suffix,
+                },
+                config_update_params.ConfigUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConfigUpdateResponse,
         )
 
     async def retrieve(
@@ -287,47 +328,6 @@ class AsyncConfigsResource(AsyncAPIResource):
             cast_to=ConfigRetrieveVersionsResponse,
         )
 
-    async def update_update(
-        self,
-        *,
-        configs: AllConfigsParam,
-        filename_suffix: str | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigUpdateUpdateResponse:
-        """Update user-specific configuration settings.
-
-        Saves new configurations to a TOML
-        file if different from existing ones.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._put(
-            "/api/configs/update",
-            body=await async_maybe_transform(
-                {
-                    "configs": configs,
-                    "filename_suffix": filename_suffix,
-                },
-                config_update_update_params.ConfigUpdateUpdateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConfigUpdateUpdateResponse,
-        )
-
 
 class ConfigsResourceWithRawResponse:
     def __init__(self, configs: ConfigsResource) -> None:
@@ -335,6 +335,9 @@ class ConfigsResourceWithRawResponse:
 
         self.retrieve = to_raw_response_wrapper(
             configs.retrieve,
+        )
+        self.update = to_raw_response_wrapper(
+            configs.update,
         )
         self.retrieve = to_raw_response_wrapper(
             configs.retrieve,
@@ -345,9 +348,6 @@ class ConfigsResourceWithRawResponse:
         self.retrieve_versions = to_raw_response_wrapper(
             configs.retrieve_versions,
         )
-        self.update_update = to_raw_response_wrapper(
-            configs.update_update,
-        )
 
 
 class AsyncConfigsResourceWithRawResponse:
@@ -356,6 +356,9 @@ class AsyncConfigsResourceWithRawResponse:
 
         self.retrieve = async_to_raw_response_wrapper(
             configs.retrieve,
+        )
+        self.update = async_to_raw_response_wrapper(
+            configs.update,
         )
         self.retrieve = async_to_raw_response_wrapper(
             configs.retrieve,
@@ -366,9 +369,6 @@ class AsyncConfigsResourceWithRawResponse:
         self.retrieve_versions = async_to_raw_response_wrapper(
             configs.retrieve_versions,
         )
-        self.update_update = async_to_raw_response_wrapper(
-            configs.update_update,
-        )
 
 
 class ConfigsResourceWithStreamingResponse:
@@ -377,6 +377,9 @@ class ConfigsResourceWithStreamingResponse:
 
         self.retrieve = to_streamed_response_wrapper(
             configs.retrieve,
+        )
+        self.update = to_streamed_response_wrapper(
+            configs.update,
         )
         self.retrieve = to_streamed_response_wrapper(
             configs.retrieve,
@@ -387,9 +390,6 @@ class ConfigsResourceWithStreamingResponse:
         self.retrieve_versions = to_streamed_response_wrapper(
             configs.retrieve_versions,
         )
-        self.update_update = to_streamed_response_wrapper(
-            configs.update_update,
-        )
 
 
 class AsyncConfigsResourceWithStreamingResponse:
@@ -399,6 +399,9 @@ class AsyncConfigsResourceWithStreamingResponse:
         self.retrieve = async_to_streamed_response_wrapper(
             configs.retrieve,
         )
+        self.update = async_to_streamed_response_wrapper(
+            configs.update,
+        )
         self.retrieve = async_to_streamed_response_wrapper(
             configs.retrieve,
         )
@@ -407,7 +410,4 @@ class AsyncConfigsResourceWithStreamingResponse:
         )
         self.retrieve_versions = async_to_streamed_response_wrapper(
             configs.retrieve_versions,
-        )
-        self.update_update = async_to_streamed_response_wrapper(
-            configs.update_update,
         )

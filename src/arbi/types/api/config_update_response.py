@@ -2,8 +2,8 @@
 
 from ..._models import BaseModel
 
-__all__ = ["TagDeleteDeleteResponse"]
+__all__ = ["ConfigUpdateResponse"]
 
 
-class TagDeleteDeleteResponse(BaseModel):
+class ConfigUpdateResponse(BaseModel):
     detail: str
