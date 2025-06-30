@@ -20,6 +20,7 @@ Methods:
 - <code title="post /api/user/token_refresh">client.api.user.<a href="./src/arbi/resources/api/user.py">refresh_token</a>() -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
 - <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user.py">retrieve_current</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
+- <code title="patch /api/user/settings">client.api.user.<a href="./src/arbi/resources/api/user.py">update_settings</a>(\*\*<a href="src/arbi/types/api/user_update_settings_params.py">params</a>) -> None</code>
 
 ## SSO
 
