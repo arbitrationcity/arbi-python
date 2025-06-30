@@ -214,6 +214,42 @@ class TestUser:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_update_settings(self, client: Arbi) -> None:
+        user = client.api.user.update_settings()
+        assert user is None
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_update_settings_with_all_params(self, client: Arbi) -> None:
+        user = client.api.user.update_settings(
+            pinned_workspaces=["wrk-bFXA5r3A"],
+        )
+        assert user is None
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_update_settings(self, client: Arbi) -> None:
+        response = client.api.user.with_raw_response.update_settings()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        user = response.parse()
+        assert user is None
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_update_settings(self, client: Arbi) -> None:
+        with client.api.user.with_streaming_response.update_settings() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            user = response.parse()
+            assert user is None
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncUser:
     parametrize = pytest.mark.parametrize(
@@ -409,5 +445,41 @@ class TestAsyncUser:
 
             user = await response.parse()
             assert_matches_type(UserResponse, user, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_update_settings(self, async_client: AsyncArbi) -> None:
+        user = await async_client.api.user.update_settings()
+        assert user is None
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_update_settings_with_all_params(self, async_client: AsyncArbi) -> None:
+        user = await async_client.api.user.update_settings(
+            pinned_workspaces=["wrk-bFXA5r3A"],
+        )
+        assert user is None
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_update_settings(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.user.with_raw_response.update_settings()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        user = await response.parse()
+        assert user is None
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_update_settings(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.user.with_streaming_response.update_settings() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            user = await response.parse()
+            assert user is None
 
         assert cast(Any, response.is_closed) is True
