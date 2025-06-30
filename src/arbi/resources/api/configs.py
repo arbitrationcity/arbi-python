@@ -45,39 +45,6 @@ class ConfigsResource(SyncAPIResource):
         """
         return ConfigsResourceWithStreamingResponse(self)
 
-    def retrieve(
-        self,
-        version: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """
-        Loads configurations from a specific .toml file version
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not version:
-            raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
-        return self._get(
-            f"/api/configs/load/{version}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
-        )
-
     def update(
         self,
         *,
@@ -117,6 +84,39 @@ class ConfigsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConfigUpdateResponse,
+        )
+
+    def load(
+        self,
+        version: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AllConfigs:
+        """
+        Loads configurations from a specific .toml file version
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not version:
+            raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
+        return self._get(
+            f"/api/configs/load/{version}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AllConfigs,
         )
 
     def retrieve(
@@ -197,39 +197,6 @@ class AsyncConfigsResource(AsyncAPIResource):
         """
         return AsyncConfigsResourceWithStreamingResponse(self)
 
-    async def retrieve(
-        self,
-        version: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """
-        Loads configurations from a specific .toml file version
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not version:
-            raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
-        return await self._get(
-            f"/api/configs/load/{version}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
-        )
-
     async def update(
         self,
         *,
@@ -269,6 +236,39 @@ class AsyncConfigsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConfigUpdateResponse,
+        )
+
+    async def load(
+        self,
+        version: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AllConfigs:
+        """
+        Loads configurations from a specific .toml file version
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not version:
+            raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
+        return await self._get(
+            f"/api/configs/load/{version}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AllConfigs,
         )
 
     async def retrieve(
@@ -333,11 +333,11 @@ class ConfigsResourceWithRawResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = to_raw_response_wrapper(
-            configs.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             configs.update,
+        )
+        self.load = to_raw_response_wrapper(
+            configs.load,
         )
         self.retrieve = to_raw_response_wrapper(
             configs.retrieve,
@@ -354,11 +354,11 @@ class AsyncConfigsResourceWithRawResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = async_to_raw_response_wrapper(
-            configs.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             configs.update,
+        )
+        self.load = async_to_raw_response_wrapper(
+            configs.load,
         )
         self.retrieve = async_to_raw_response_wrapper(
             configs.retrieve,
@@ -375,11 +375,11 @@ class ConfigsResourceWithStreamingResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = to_streamed_response_wrapper(
-            configs.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             configs.update,
+        )
+        self.load = to_streamed_response_wrapper(
+            configs.load,
         )
         self.retrieve = to_streamed_response_wrapper(
             configs.retrieve,
@@ -396,11 +396,11 @@ class AsyncConfigsResourceWithStreamingResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            configs.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             configs.update,
+        )
+        self.load = async_to_streamed_response_wrapper(
+            configs.load,
         )
         self.retrieve = async_to_streamed_response_wrapper(
             configs.retrieve,
