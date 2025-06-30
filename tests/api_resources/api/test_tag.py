@@ -29,7 +29,7 @@ class TestTag:
     def test_method_create(self, client: Arbi) -> None:
         tag = client.api.tag.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
         )
         assert_matches_type(TagCreateResponse, tag, path=["response"])
 
@@ -38,7 +38,7 @@ class TestTag:
     def test_method_create_with_all_params(self, client: Arbi) -> None:
         tag = client.api.tag.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
             shared=True,
         )
         assert_matches_type(TagCreateResponse, tag, path=["response"])
@@ -48,7 +48,7 @@ class TestTag:
     def test_raw_response_create(self, client: Arbi) -> None:
         response = client.api.tag.with_raw_response.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -61,7 +61,7 @@ class TestTag:
     def test_streaming_response_create(self, client: Arbi) -> None:
         with client.api.tag.with_streaming_response.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -310,7 +310,7 @@ class TestAsyncTag:
     async def test_method_create(self, async_client: AsyncArbi) -> None:
         tag = await async_client.api.tag.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
         )
         assert_matches_type(TagCreateResponse, tag, path=["response"])
 
@@ -319,7 +319,7 @@ class TestAsyncTag:
     async def test_method_create_with_all_params(self, async_client: AsyncArbi) -> None:
         tag = await async_client.api.tag.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
             shared=True,
         )
         assert_matches_type(TagCreateResponse, tag, path=["response"])
@@ -329,7 +329,7 @@ class TestAsyncTag:
     async def test_raw_response_create(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.tag.with_raw_response.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -342,7 +342,7 @@ class TestAsyncTag:
     async def test_streaming_response_create(self, async_client: AsyncArbi) -> None:
         async with async_client.api.tag.with_streaming_response.create(
             name="name",
-            workspace_ext_id="workspace_ext_id",
+            workspace_ext_id="wrk-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

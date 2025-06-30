@@ -174,7 +174,10 @@ class TestConfigs:
                     "api_type": "local",
                     "model_name": "MODEL_NAME",
                 },
-                "model_citation": {"sim_threashold": 0},
+                "model_citation": {
+                    "model_name": "MODEL_NAME",
+                    "sim_threashold": 0,
+                },
                 "parser": {},
                 "query_llm": {
                     "api_type": "local",
@@ -392,7 +395,10 @@ class TestAsyncConfigs:
                     "api_type": "local",
                     "model_name": "MODEL_NAME",
                 },
-                "model_citation": {"sim_threashold": 0},
+                "model_citation": {
+                    "model_name": "MODEL_NAME",
+                    "sim_threashold": 0,
+                },
                 "parser": {},
                 "query_llm": {
                     "api_type": "local",
