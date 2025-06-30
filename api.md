@@ -17,9 +17,9 @@ Methods:
 - <code title="get /api/user/workspaces">client.api.user.<a href="./src/arbi/resources/api/user.py">list_workspaces</a>() -> <a href="./src/arbi/types/api/user_list_workspaces_response.py">UserListWorkspacesResponse</a></code>
 - <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/logout">client.api.user.<a href="./src/arbi/resources/api/user.py">logout</a>() -> <a href="./src/arbi/types/api/user_logout_response.py">UserLogoutResponse</a></code>
-- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user.py">me</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
 - <code title="post /api/user/token_refresh">client.api.user.<a href="./src/arbi/resources/api/user.py">refresh_token</a>() -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
+- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user.py">retrieve_current</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
 
 ## SSO
 
@@ -101,7 +101,6 @@ Types:
 ```python
 from arbi.types.api import (
     ConversationDeleteResponse,
-    ConversationDeleteMessageResponse,
     ConversationRetrieveThreadsResponse,
     ConversationShareResponse,
 )
@@ -109,8 +108,7 @@ from arbi.types.api import (
 
 Methods:
 
-- <code title="delete /api/conversation/{conversation_ext_id}">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">delete</a>(conversation_ext_id) -> <a href="./src/arbi/types/api/conversation_delete_response.py">ConversationDeleteResponse</a></code>
-- <code title="delete /api/conversation/message/{message_ext_id}">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">delete_message</a>(message_ext_id) -> <a href="./src/arbi/types/api/conversation_delete_message_response.py">ConversationDeleteMessageResponse</a></code>
+- <code title="delete /api/conversation/message/{message_ext_id}">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">delete</a>(message_ext_id) -> <a href="./src/arbi/types/api/conversation_delete_response.py">ConversationDeleteResponse</a></code>
 - <code title="get /api/conversation/{conversation_ext_id}/threads">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">retrieve_threads</a>(conversation_ext_id) -> <a href="./src/arbi/types/api/conversation_retrieve_threads_response.py">ConversationRetrieveThreadsResponse</a></code>
 - <code title="post /api/conversation/{conversation_ext_id}/share">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">share</a>(conversation_ext_id) -> <a href="./src/arbi/types/api/conversation_share_response.py">ConversationShareResponse</a></code>
 
@@ -168,9 +166,9 @@ from arbi.types.api import (
     TagOperationRequest,
     TagCreateResponse,
     TagUpdateResponse,
-    TagDeleteResponse,
     TagApplyResponse,
-    TagRemoveResponse,
+    TagDeleteDeleteResponse,
+    TagDeleteRemoveResponse,
     TagRetrieveDocsResponse,
 )
 ```
@@ -179,9 +177,9 @@ Methods:
 
 - <code title="post /api/tag/create">client.api.tag.<a href="./src/arbi/resources/api/tag.py">create</a>(\*\*<a href="src/arbi/types/api/tag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_create_response.py">TagCreateResponse</a></code>
 - <code title="patch /api/tag/{tag_ext_id}">client.api.tag.<a href="./src/arbi/resources/api/tag.py">update</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_update_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_update_response.py">TagUpdateResponse</a></code>
-- <code title="delete /api/tag/{tag_ext_id}/delete">client.api.tag.<a href="./src/arbi/resources/api/tag.py">delete</a>(tag_ext_id) -> <a href="./src/arbi/types/api/tag_delete_response.py">TagDeleteResponse</a></code>
 - <code title="post /api/tag/{tag_ext_id}/apply">client.api.tag.<a href="./src/arbi/resources/api/tag.py">apply</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_apply_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_apply_response.py">TagApplyResponse</a></code>
-- <code title="delete /api/tag/{tag_ext_id}/remove">client.api.tag.<a href="./src/arbi/resources/api/tag.py">remove</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_remove_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_remove_response.py">TagRemoveResponse</a></code>
+- <code title="delete /api/tag/{tag_ext_id}/delete">client.api.tag.<a href="./src/arbi/resources/api/tag.py">delete_delete</a>(tag_ext_id) -> <a href="./src/arbi/types/api/tag_delete_delete_response.py">TagDeleteDeleteResponse</a></code>
+- <code title="delete /api/tag/{tag_ext_id}/remove">client.api.tag.<a href="./src/arbi/resources/api/tag.py">delete_remove</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_delete_remove_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_delete_remove_response.py">TagDeleteRemoveResponse</a></code>
 - <code title="get /api/tag/{tag_ext_id}/docs">client.api.tag.<a href="./src/arbi/resources/api/tag.py">retrieve_docs</a>(tag_ext_id) -> <a href="./src/arbi/types/api/tag_retrieve_docs_response.py">TagRetrieveDocsResponse</a></code>
 
 ## Configs
@@ -191,16 +189,16 @@ Types:
 ```python
 from arbi.types.api import (
     AllConfigs,
-    ConfigUpdateResponse,
     ConfigRetrieveSchemaResponse,
     ConfigRetrieveVersionsResponse,
+    ConfigUpdateUpdateResponse,
 )
 ```
 
 Methods:
 
+- <code title="get /api/configs/load/{version}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve</a>(version) -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
 - <code title="get /api/configs/">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve</a>() -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
-- <code title="put /api/configs/update">client.api.configs.<a href="./src/arbi/resources/api/configs.py">update</a>(\*\*<a href="src/arbi/types/api/config_update_params.py">params</a>) -> <a href="./src/arbi/types/api/config_update_response.py">ConfigUpdateResponse</a></code>
-- <code title="get /api/configs/load/{version}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">load</a>(version) -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
 - <code title="get /api/configs/schema">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_schema</a>() -> <a href="./src/arbi/types/api/config_retrieve_schema_response.py">ConfigRetrieveSchemaResponse</a></code>
 - <code title="get /api/configs/versions">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_versions</a>() -> <a href="./src/arbi/types/api/config_retrieve_versions_response.py">ConfigRetrieveVersionsResponse</a></code>
+- <code title="put /api/configs/update">client.api.configs.<a href="./src/arbi/resources/api/configs.py">update_update</a>(\*\*<a href="src/arbi/types/api/config_update_update_params.py">params</a>) -> <a href="./src/arbi/types/api/config_update_update_response.py">ConfigUpdateUpdateResponse</a></code>
