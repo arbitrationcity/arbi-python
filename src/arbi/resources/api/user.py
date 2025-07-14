@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing import List, Optional
+
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -14,11 +16,12 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.api import user_login_params, user_register_params
+from ...types.api import user_login_params, user_register_params, user_update_settings_params
 from ..._base_client import make_request_options
 from ...types.api.token import Token
 from ...types.api.user_response import UserResponse
 from ...types.api.user_logout_response import UserLogoutResponse
+from ...types.api.user_get_settings_response import UserGetSettingsResponse
 from ...types.api.user_list_workspaces_response import UserListWorkspacesResponse
 
 __all__ = ["UserResource", "AsyncUserResource"]
@@ -31,7 +34,7 @@ class UserResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
         """
         return UserResourceWithRawResponse(self)
 
@@ -40,9 +43,28 @@ class UserResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
         return UserResourceWithStreamingResponse(self)
+
+    def get_settings(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserGetSettingsResponse:
+        """Get current user's settings."""
+        return self._get(
+            "/api/user/settings",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserGetSettingsResponse,
+        )
 
     def list_workspaces(
         self,
@@ -124,29 +146,6 @@ class UserResource(SyncAPIResource):
             cast_to=UserLogoutResponse,
         )
 
-    def me(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
-        """Retrieve current authenticated user information.
-
-        This endpoint is useful for
-        validating tokens and checking authentication status.
-        """
-        return self._get(
-            "/api/user/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserResponse,
-        )
-
     def refresh_token(
         self,
         *,
@@ -213,6 +212,64 @@ class UserResource(SyncAPIResource):
             cast_to=UserResponse,
         )
 
+    def retrieve_current(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserResponse:
+        """Retrieve current authenticated user information.
+
+        This endpoint is useful for
+        validating tokens and checking authentication status.
+        """
+        return self._get(
+            "/api/user/me",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserResponse,
+        )
+
+    def update_settings(
+        self,
+        *,
+        pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> None:
+        """
+        Update user's settings (merge with existing).
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._patch(
+            "/api/user/settings",
+            body=maybe_transform(
+                {"pinned_workspaces": pinned_workspaces}, user_update_settings_params.UserUpdateSettingsParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
 
 class AsyncUserResource(AsyncAPIResource):
     @cached_property
@@ -221,7 +278,7 @@ class AsyncUserResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
         """
         return AsyncUserResourceWithRawResponse(self)
 
@@ -230,9 +287,28 @@ class AsyncUserResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
         return AsyncUserResourceWithStreamingResponse(self)
+
+    async def get_settings(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserGetSettingsResponse:
+        """Get current user's settings."""
+        return await self._get(
+            "/api/user/settings",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserGetSettingsResponse,
+        )
 
     async def list_workspaces(
         self,
@@ -314,29 +390,6 @@ class AsyncUserResource(AsyncAPIResource):
             cast_to=UserLogoutResponse,
         )
 
-    async def me(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
-        """Retrieve current authenticated user information.
-
-        This endpoint is useful for
-        validating tokens and checking authentication status.
-        """
-        return await self._get(
-            "/api/user/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserResponse,
-        )
-
     async def refresh_token(
         self,
         *,
@@ -403,11 +456,72 @@ class AsyncUserResource(AsyncAPIResource):
             cast_to=UserResponse,
         )
 
+    async def retrieve_current(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> UserResponse:
+        """Retrieve current authenticated user information.
+
+        This endpoint is useful for
+        validating tokens and checking authentication status.
+        """
+        return await self._get(
+            "/api/user/me",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserResponse,
+        )
+
+    async def update_settings(
+        self,
+        *,
+        pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> None:
+        """
+        Update user's settings (merge with existing).
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._patch(
+            "/api/user/settings",
+            body=await async_maybe_transform(
+                {"pinned_workspaces": pinned_workspaces}, user_update_settings_params.UserUpdateSettingsParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
 
 class UserResourceWithRawResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
+        self.get_settings = to_raw_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -417,14 +531,17 @@ class UserResourceWithRawResponse:
         self.logout = to_raw_response_wrapper(
             user.logout,
         )
-        self.me = to_raw_response_wrapper(
-            user.me,
-        )
         self.refresh_token = to_raw_response_wrapper(
             user.refresh_token,
         )
         self.register = to_raw_response_wrapper(
             user.register,
+        )
+        self.retrieve_current = to_raw_response_wrapper(
+            user.retrieve_current,
+        )
+        self.update_settings = to_raw_response_wrapper(
+            user.update_settings,
         )
 
 
@@ -432,6 +549,9 @@ class AsyncUserResourceWithRawResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
+        self.get_settings = async_to_raw_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = async_to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -441,14 +561,17 @@ class AsyncUserResourceWithRawResponse:
         self.logout = async_to_raw_response_wrapper(
             user.logout,
         )
-        self.me = async_to_raw_response_wrapper(
-            user.me,
-        )
         self.refresh_token = async_to_raw_response_wrapper(
             user.refresh_token,
         )
         self.register = async_to_raw_response_wrapper(
             user.register,
+        )
+        self.retrieve_current = async_to_raw_response_wrapper(
+            user.retrieve_current,
+        )
+        self.update_settings = async_to_raw_response_wrapper(
+            user.update_settings,
         )
 
 
@@ -456,6 +579,9 @@ class UserResourceWithStreamingResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
+        self.get_settings = to_streamed_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = to_streamed_response_wrapper(
             user.list_workspaces,
         )
@@ -465,14 +591,17 @@ class UserResourceWithStreamingResponse:
         self.logout = to_streamed_response_wrapper(
             user.logout,
         )
-        self.me = to_streamed_response_wrapper(
-            user.me,
-        )
         self.refresh_token = to_streamed_response_wrapper(
             user.refresh_token,
         )
         self.register = to_streamed_response_wrapper(
             user.register,
+        )
+        self.retrieve_current = to_streamed_response_wrapper(
+            user.retrieve_current,
+        )
+        self.update_settings = to_streamed_response_wrapper(
+            user.update_settings,
         )
 
 
@@ -480,6 +609,9 @@ class AsyncUserResourceWithStreamingResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
+        self.get_settings = async_to_streamed_response_wrapper(
+            user.get_settings,
+        )
         self.list_workspaces = async_to_streamed_response_wrapper(
             user.list_workspaces,
         )
@@ -489,12 +621,15 @@ class AsyncUserResourceWithStreamingResponse:
         self.logout = async_to_streamed_response_wrapper(
             user.logout,
         )
-        self.me = async_to_streamed_response_wrapper(
-            user.me,
-        )
         self.refresh_token = async_to_streamed_response_wrapper(
             user.refresh_token,
         )
         self.register = async_to_streamed_response_wrapper(
             user.register,
+        )
+        self.retrieve_current = async_to_streamed_response_wrapper(
+            user.retrieve_current,
+        )
+        self.update_settings = async_to_streamed_response_wrapper(
+            user.update_settings,
         )

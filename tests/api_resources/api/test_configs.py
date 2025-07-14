@@ -24,34 +24,6 @@ class TestConfigs:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_retrieve(self, client: Arbi) -> None:
-        config = client.api.configs.retrieve()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_retrieve(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.retrieve()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_retrieve(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.retrieve() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
     def test_method_update(self, client: Arbi) -> None:
         config = client.api.configs.update(
             configs={},
@@ -76,7 +48,10 @@ class TestConfigs:
                     "api_type": "local",
                     "model_name": "MODEL_NAME",
                 },
-                "model_citation": {"sim_threashold": 0},
+                "model_citation": {
+                    "model_name": "MODEL_NAME",
+                    "sim_threashold": 0,
+                },
                 "parser": {},
                 "query_llm": {
                     "api_type": "local",
@@ -180,6 +155,34 @@ class TestConfigs:
 
     @pytest.mark.skip()
     @parametrize
+    def test_method_retrieve(self, client: Arbi) -> None:
+        config = client.api.configs.retrieve()
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_retrieve(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.retrieve()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        config = response.parse()
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_retrieve(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.retrieve() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            config = response.parse()
+            assert_matches_type(AllConfigs, config, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
     def test_method_retrieve_schema(self, client: Arbi) -> None:
         config = client.api.configs.retrieve_schema()
         assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
@@ -242,34 +245,6 @@ class TestAsyncConfigs:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.retrieve()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.retrieve()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = await response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.retrieve() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = await response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
     async def test_method_update(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.update(
             configs={},
@@ -294,7 +269,10 @@ class TestAsyncConfigs:
                     "api_type": "local",
                     "model_name": "MODEL_NAME",
                 },
-                "model_citation": {"sim_threashold": 0},
+                "model_citation": {
+                    "model_name": "MODEL_NAME",
+                    "sim_threashold": 0,
+                },
                 "parser": {},
                 "query_llm": {
                     "api_type": "local",
@@ -395,6 +373,34 @@ class TestAsyncConfigs:
             await async_client.api.configs.with_raw_response.load(
                 "",
             )
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.retrieve()
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.retrieve()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        config = await response.parse()
+        assert_matches_type(AllConfigs, config, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.retrieve() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            config = await response.parse()
+            assert_matches_type(AllConfigs, config, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip()
     @parametrize

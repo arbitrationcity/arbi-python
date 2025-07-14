@@ -32,7 +32,7 @@ class ConfigsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
         """
         return ConfigsResourceWithRawResponse(self)
 
@@ -41,28 +41,9 @@ class ConfigsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
         return ConfigsResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """Return the current configurations for the user"""
-        return self._get(
-            "/api/configs/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
-        )
 
     def update(
         self,
@@ -138,6 +119,25 @@ class ConfigsResource(SyncAPIResource):
             cast_to=AllConfigs,
         )
 
+    def retrieve(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AllConfigs:
+        """Return the current configurations for the user"""
+        return self._get(
+            "/api/configs/",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AllConfigs,
+        )
+
     def retrieve_schema(
         self,
         *,
@@ -184,7 +184,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
         """
         return AsyncConfigsResourceWithRawResponse(self)
 
@@ -193,28 +193,9 @@ class AsyncConfigsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
         return AsyncConfigsResourceWithStreamingResponse(self)
-
-    async def retrieve(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """Return the current configurations for the user"""
-        return await self._get(
-            "/api/configs/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
-        )
 
     async def update(
         self,
@@ -290,6 +271,25 @@ class AsyncConfigsResource(AsyncAPIResource):
             cast_to=AllConfigs,
         )
 
+    async def retrieve(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AllConfigs:
+        """Return the current configurations for the user"""
+        return await self._get(
+            "/api/configs/",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AllConfigs,
+        )
+
     async def retrieve_schema(
         self,
         *,
@@ -333,14 +333,14 @@ class ConfigsResourceWithRawResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = to_raw_response_wrapper(
-            configs.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             configs.update,
         )
         self.load = to_raw_response_wrapper(
             configs.load,
+        )
+        self.retrieve = to_raw_response_wrapper(
+            configs.retrieve,
         )
         self.retrieve_schema = to_raw_response_wrapper(
             configs.retrieve_schema,
@@ -354,14 +354,14 @@ class AsyncConfigsResourceWithRawResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = async_to_raw_response_wrapper(
-            configs.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             configs.update,
         )
         self.load = async_to_raw_response_wrapper(
             configs.load,
+        )
+        self.retrieve = async_to_raw_response_wrapper(
+            configs.retrieve,
         )
         self.retrieve_schema = async_to_raw_response_wrapper(
             configs.retrieve_schema,
@@ -375,14 +375,14 @@ class ConfigsResourceWithStreamingResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = to_streamed_response_wrapper(
-            configs.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             configs.update,
         )
         self.load = to_streamed_response_wrapper(
             configs.load,
+        )
+        self.retrieve = to_streamed_response_wrapper(
+            configs.retrieve,
         )
         self.retrieve_schema = to_streamed_response_wrapper(
             configs.retrieve_schema,
@@ -396,14 +396,14 @@ class AsyncConfigsResourceWithStreamingResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            configs.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             configs.update,
         )
         self.load = async_to_streamed_response_wrapper(
             configs.load,
+        )
+        self.retrieve = async_to_streamed_response_wrapper(
+            configs.retrieve,
         )
         self.retrieve_schema = async_to_streamed_response_wrapper(
             configs.retrieve_schema,

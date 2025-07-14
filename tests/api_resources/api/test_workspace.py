@@ -380,7 +380,7 @@ class TestWorkspace:
     def test_method_remove_user(self, client: Arbi) -> None:
         workspace = client.api.workspace.remove_user(
             workspace_ext_id="wrk",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
         assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
 
@@ -389,7 +389,7 @@ class TestWorkspace:
     def test_raw_response_remove_user(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.remove_user(
             workspace_ext_id="wrk",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -402,7 +402,7 @@ class TestWorkspace:
     def test_streaming_response_remove_user(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.remove_user(
             workspace_ext_id="wrk",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -418,7 +418,7 @@ class TestWorkspace:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
             client.api.workspace.with_raw_response.remove_user(
                 workspace_ext_id="",
-                user_ext_id="user_ext_id",
+                user_ext_id="usr-bFXA5r3A",
             )
 
     @pytest.mark.skip()
@@ -867,7 +867,7 @@ class TestAsyncWorkspace:
     async def test_method_remove_user(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.remove_user(
             workspace_ext_id="wrk",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
         assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
 
@@ -876,7 +876,7 @@ class TestAsyncWorkspace:
     async def test_raw_response_remove_user(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.remove_user(
             workspace_ext_id="wrk",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         )
 
         assert response.is_closed is True
@@ -889,7 +889,7 @@ class TestAsyncWorkspace:
     async def test_streaming_response_remove_user(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.remove_user(
             workspace_ext_id="wrk",
-            user_ext_id="user_ext_id",
+            user_ext_id="usr-bFXA5r3A",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -905,7 +905,7 @@ class TestAsyncWorkspace:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
             await async_client.api.workspace.with_raw_response.remove_user(
                 workspace_ext_id="",
-                user_ext_id="user_ext_id",
+                user_ext_id="usr-bFXA5r3A",
             )
 
     @pytest.mark.skip()
