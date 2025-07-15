@@ -80,7 +80,6 @@ pip install 'arbi[aiohttp] @ git+ssh://git@github.com/arbitrationcity/arbi-pytho
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
-import os
 import asyncio
 from arbi import DefaultAioHttpClient
 from arbi import AsyncArbi
@@ -88,7 +87,7 @@ from arbi import AsyncArbi
 
 async def main() -> None:
     async with AsyncArbi(
-        bearer_token=os.environ.get("ARBI_BEARER_TOKEN"),  # This is the default and can be omitted
+        bearer_token="My Bearer Token",
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.api.index()
