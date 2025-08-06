@@ -83,7 +83,6 @@ Types:
 ```python
 from arbi.types.api import (
     DocResponse,
-    DocTagMetadata,
     DocumentUpdateResponse,
     DocumentDeleteResponse,
     DocumentRetrieveParsedStageResponse,
@@ -137,16 +136,9 @@ Methods:
 
 ## Assistant
 
-Types:
-
-```python
-from arbi.types.api import MessageBase, AssistantCreateCitationsResponse
-```
-
 Methods:
 
 - <code title="post /api/assistant/retrieve">client.api.assistant.<a href="./src/arbi/resources/api/assistant.py">retrieve</a>(\*\*<a href="src/arbi/types/api/assistant_retrieve_params.py">params</a>) -> object</code>
-- <code title="post /api/assistant/create_citations">client.api.assistant.<a href="./src/arbi/resources/api/assistant.py">create_citations</a>(\*\*<a href="src/arbi/types/api/assistant_create_citations_params.py">params</a>) -> <a href="./src/arbi/types/api/assistant_create_citations_response.py">AssistantCreateCitationsResponse</a></code>
 - <code title="post /api/assistant/query">client.api.assistant.<a href="./src/arbi/resources/api/assistant.py">query</a>(\*\*<a href="src/arbi/types/api/assistant_query_params.py">params</a>) -> object</code>
 
 ## Health
@@ -197,18 +189,10 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api import (
-    AllConfigs,
-    ConfigUpdateResponse,
-    ConfigRetrieveSchemaResponse,
-    ConfigRetrieveVersionsResponse,
-)
+from arbi.types.api import AllConfigs, ConfigRetrieveSchemaResponse, ConfigRetrieveVersionsResponse
 ```
 
 Methods:
 
-- <code title="put /api/configs/update">client.api.configs.<a href="./src/arbi/resources/api/configs.py">update</a>(\*\*<a href="src/arbi/types/api/config_update_params.py">params</a>) -> <a href="./src/arbi/types/api/config_update_response.py">ConfigUpdateResponse</a></code>
-- <code title="get /api/configs/load/{version}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">load</a>(version) -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
-- <code title="get /api/configs/">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve</a>() -> <a href="./src/arbi/types/api/all_configs.py">AllConfigs</a></code>
 - <code title="get /api/configs/schema">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_schema</a>() -> <a href="./src/arbi/types/api/config_retrieve_schema_response.py">ConfigRetrieveSchemaResponse</a></code>
 - <code title="get /api/configs/versions">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_versions</a>() -> <a href="./src/arbi/types/api/config_retrieve_versions_response.py">ConfigRetrieveVersionsResponse</a></code>

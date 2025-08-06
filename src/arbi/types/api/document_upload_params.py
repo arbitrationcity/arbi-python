@@ -14,7 +14,7 @@ class DocumentUploadParams(TypedDict, total=False):
     workspace_ext_id: Required[str]
 
     files: Required[List[FileTypes]]
-    """Multiple files as UploadFile"""
+    """Multiple files to upload"""
 
     shared: bool
     """Whether the document should be shared with workspace members"""

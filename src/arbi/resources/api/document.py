@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import List, Union, Mapping, Optional, cast
 from datetime import date
+from typing_extensions import Literal
 
 import httpx
 
@@ -201,7 +202,7 @@ class DocumentResource(SyncAPIResource):
 
     def retrieve_parsed_stage(
         self,
-        stage: str,
+        stage: Literal["marker", "subchunk", "final"],
         *,
         document_ext_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -249,7 +250,7 @@ class DocumentResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> DocumentRetrieveTagsResponse:
         """
-        Get all tags applied to a specific document along with metadata from DocTags.
+        Get all tags applied to a specific document along with doctag metadata.
 
         Args:
           extra_headers: Send extra headers
@@ -331,7 +332,7 @@ class DocumentResource(SyncAPIResource):
         for processing, parsed, and indexed for vector search.
 
         Args:
-          files: Multiple files as UploadFile
+          files: Multiple files to upload
 
           shared: Whether the document should be shared with workspace members
 
@@ -543,7 +544,7 @@ class AsyncDocumentResource(AsyncAPIResource):
 
     async def retrieve_parsed_stage(
         self,
-        stage: str,
+        stage: Literal["marker", "subchunk", "final"],
         *,
         document_ext_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -591,7 +592,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> DocumentRetrieveTagsResponse:
         """
-        Get all tags applied to a specific document along with metadata from DocTags.
+        Get all tags applied to a specific document along with doctag metadata.
 
         Args:
           extra_headers: Send extra headers
@@ -675,7 +676,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         for processing, parsed, and indexed for vector search.
 
         Args:
-          files: Multiple files as UploadFile
+          files: Multiple files to upload
 
           shared: Whether the document should be shared with workspace members
 

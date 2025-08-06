@@ -114,10 +114,9 @@ from arbi import Arbi
 
 client = Arbi()
 
-config = client.api.configs.update(
-    configs={},
+client.api.user.update_settings(
+    active_config={},
 )
-print(config.configs)
 ```
 
 ## Handling errors

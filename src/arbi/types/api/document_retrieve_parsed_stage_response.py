@@ -38,6 +38,8 @@ class ChunkMetadata(BaseModel):
 
     score: Optional[float] = None
 
+    tokens: Optional[int] = None
+
 
 class Chunk(BaseModel):
     content: str

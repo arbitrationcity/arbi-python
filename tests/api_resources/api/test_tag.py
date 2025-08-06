@@ -39,6 +39,7 @@ class TestTag:
         tag = client.api.tag.create(
             name="name",
             workspace_ext_id="wrk-bFXA5r3A",
+            parent_ext_id="tag-bFXA5r3A",
             shared=True,
         )
         assert_matches_type(TagCreateResponse, tag, path=["response"])
@@ -320,6 +321,7 @@ class TestAsyncTag:
         tag = await async_client.api.tag.create(
             name="name",
             workspace_ext_id="wrk-bFXA5r3A",
+            parent_ext_id="tag-bFXA5r3A",
             shared=True,
         )
         assert_matches_type(TagCreateResponse, tag, path=["response"])

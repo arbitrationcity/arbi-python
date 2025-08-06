@@ -2,10 +2,20 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
-from typing_extensions import Required, TypedDict
+from typing import Dict, List, Union, Iterable, Optional
+from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-__all__ = ["AssistantQueryParams", "Tools"]
+__all__ = [
+    "AssistantQueryParams",
+    "Tools",
+    "ToolsModelCitationTool",
+    "ToolsRetrievalChunkToolInput",
+    "ToolsRetrievalChunkToolInputToolResponse",
+    "ToolsRetrievalChunkToolInputToolResponseMetadata",
+    "ToolsRetrievalFullContextToolInput",
+    "ToolsRetrievalFullContextToolInputToolResponse",
+    "ToolsRetrievalFullContextToolInputToolResponseMetadata",
+]
 
 
 class AssistantQueryParams(TypedDict, total=False):
@@ -13,20 +23,97 @@ class AssistantQueryParams(TypedDict, total=False):
 
     workspace_ext_id: Required[str]
 
-    model: Optional[str]
-
     parent_message_ext_id: Optional[str]
-
-    system_message: Optional[str]
 
     tools: Dict[str, Tools]
 
 
-class Tools(TypedDict, total=False):
-    description: Required[str]
+class ToolsModelCitationTool(TypedDict, total=False):
+    description: str
 
-    name: Required[str]
+    name: Literal["model_citation"]
 
-    tool_args: Required[Dict[str, object]]
+    tool_responses: Dict[str, List[str]]
 
-    tool_responses: Dict[str, object]
+
+class ToolsRetrievalChunkToolInputToolResponseMetadata(TypedDict, total=False):
+    chunk_doc_idx: Required[int]
+
+    chunk_ext_id: Required[str]
+
+    chunk_pg_idx: Required[int]
+
+    created_at: Required[str]
+
+    page_number: Required[int]
+
+    chunk_id: Optional[str]
+
+    doc_ext_id: Optional[str]
+
+    doc_title: Optional[str]
+
+    rerank_score: Optional[float]
+
+    score: Optional[float]
+
+    tokens: Optional[int]
+
+
+class ToolsRetrievalChunkToolInputToolResponse(TypedDict, total=False):
+    content: Required[str]
+
+    metadata: Required[ToolsRetrievalChunkToolInputToolResponseMetadata]
+
+
+class ToolsRetrievalChunkToolInput(TypedDict, total=False):
+    description: str
+
+    name: Literal["retrieval_chunk"]
+
+    tool_args: Dict[str, List[str]]
+
+    tool_responses: Dict[str, Iterable[ToolsRetrievalChunkToolInputToolResponse]]
+
+
+class ToolsRetrievalFullContextToolInputToolResponseMetadata(TypedDict, total=False):
+    chunk_doc_idx: Required[int]
+
+    chunk_ext_id: Required[str]
+
+    chunk_pg_idx: Required[int]
+
+    created_at: Required[str]
+
+    page_number: Required[int]
+
+    chunk_id: Optional[str]
+
+    doc_ext_id: Optional[str]
+
+    doc_title: Optional[str]
+
+    rerank_score: Optional[float]
+
+    score: Optional[float]
+
+    tokens: Optional[int]
+
+
+class ToolsRetrievalFullContextToolInputToolResponse(TypedDict, total=False):
+    content: Required[str]
+
+    metadata: Required[ToolsRetrievalFullContextToolInputToolResponseMetadata]
+
+
+class ToolsRetrievalFullContextToolInput(TypedDict, total=False):
+    description: str
+
+    name: Literal["retrieval_full_context"]
+
+    tool_args: Dict[str, List[str]]
+
+    tool_responses: Dict[str, Iterable[ToolsRetrievalFullContextToolInputToolResponse]]
+
+
+Tools: TypeAlias = Union[ToolsModelCitationTool, ToolsRetrievalChunkToolInput, ToolsRetrievalFullContextToolInput]
