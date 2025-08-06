@@ -253,6 +253,53 @@ class TestUser:
     @parametrize
     def test_method_update_settings_with_all_params(self, client: Arbi) -> None:
         user = client.api.user.update_settings(
+            active_config={
+                "chunker": {},
+                "document_date_extractor_llm": {
+                    "api_type": "local",
+                    "max_char_size_to_answer": 0,
+                    "max_tokens": 0,
+                    "model_name": "MODEL_NAME",
+                    "system_instruction": "SYSTEM_INSTRUCTION",
+                    "temperature": 0,
+                },
+                "embedder": {
+                    "api_type": "local",
+                    "model_name": "MODEL_NAME",
+                },
+                "model_citation": {
+                    "model_name": "MODEL_NAME",
+                    "sim_threashold": 0,
+                },
+                "parser": {},
+                "query_llm": {
+                    "api_type": "local",
+                    "max_char_size_to_answer": 0,
+                    "max_tokens": 0,
+                    "model_name": "MODEL_NAME",
+                    "system_instruction": "SYSTEM_INSTRUCTION",
+                    "temperature": 0,
+                },
+                "reranker": {
+                    "api_type": "local",
+                    "max_numb_of_chunks": 1,
+                    "model_name": "MODEL_NAME",
+                },
+                "retriever": {
+                    "group_size": 1000,
+                    "max_distinct_documents": 100,
+                    "max_total_chunks_to_retrieve": 100,
+                    "min_retrieval_sim_score": 0,
+                },
+                "title_llm": {
+                    "api_type": "local",
+                    "max_char_size_to_answer": 0,
+                    "max_tokens": 0,
+                    "model_name": "MODEL_NAME",
+                    "system_instruction": "SYSTEM_INSTRUCTION",
+                    "temperature": 0,
+                },
+            },
             pinned_workspaces=["wrk-bFXA5r3A"],
         )
         assert user is None
@@ -515,6 +562,53 @@ class TestAsyncUser:
     @parametrize
     async def test_method_update_settings_with_all_params(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.update_settings(
+            active_config={
+                "chunker": {},
+                "document_date_extractor_llm": {
+                    "api_type": "local",
+                    "max_char_size_to_answer": 0,
+                    "max_tokens": 0,
+                    "model_name": "MODEL_NAME",
+                    "system_instruction": "SYSTEM_INSTRUCTION",
+                    "temperature": 0,
+                },
+                "embedder": {
+                    "api_type": "local",
+                    "model_name": "MODEL_NAME",
+                },
+                "model_citation": {
+                    "model_name": "MODEL_NAME",
+                    "sim_threashold": 0,
+                },
+                "parser": {},
+                "query_llm": {
+                    "api_type": "local",
+                    "max_char_size_to_answer": 0,
+                    "max_tokens": 0,
+                    "model_name": "MODEL_NAME",
+                    "system_instruction": "SYSTEM_INSTRUCTION",
+                    "temperature": 0,
+                },
+                "reranker": {
+                    "api_type": "local",
+                    "max_numb_of_chunks": 1,
+                    "model_name": "MODEL_NAME",
+                },
+                "retriever": {
+                    "group_size": 1000,
+                    "max_distinct_documents": 100,
+                    "max_total_chunks_to_retrieve": 100,
+                    "min_retrieval_sim_score": 0,
+                },
+                "title_llm": {
+                    "api_type": "local",
+                    "max_char_size_to_answer": 0,
+                    "max_tokens": 0,
+                    "model_name": "MODEL_NAME",
+                    "system_instruction": "SYSTEM_INSTRUCTION",
+                    "temperature": 0,
+                },
+            },
             pinned_workspaces=["wrk-bFXA5r3A"],
         )
         assert user is None

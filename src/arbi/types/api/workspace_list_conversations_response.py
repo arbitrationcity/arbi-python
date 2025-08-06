@@ -10,6 +10,8 @@ __all__ = ["WorkspaceListConversationsResponse", "WorkspaceListConversationsResp
 
 
 class WorkspaceListConversationsResponseItem(BaseModel):
+    created_at: datetime
+
     external_id: str
 
     is_creator: bool

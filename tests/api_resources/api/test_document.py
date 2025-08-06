@@ -207,7 +207,7 @@ class TestDocument:
     @parametrize
     def test_method_retrieve_parsed_stage(self, client: Arbi) -> None:
         document = client.api.document.retrieve_parsed_stage(
-            stage='S?oC"final',
+            stage="marker",
             document_ext_id="doc",
         )
         assert_matches_type(DocumentRetrieveParsedStageResponse, document, path=["response"])
@@ -216,7 +216,7 @@ class TestDocument:
     @parametrize
     def test_raw_response_retrieve_parsed_stage(self, client: Arbi) -> None:
         response = client.api.document.with_raw_response.retrieve_parsed_stage(
-            stage='S?oC"final',
+            stage="marker",
             document_ext_id="doc",
         )
 
@@ -229,7 +229,7 @@ class TestDocument:
     @parametrize
     def test_streaming_response_retrieve_parsed_stage(self, client: Arbi) -> None:
         with client.api.document.with_streaming_response.retrieve_parsed_stage(
-            stage='S?oC"final',
+            stage="marker",
             document_ext_id="doc",
         ) as response:
             assert not response.is_closed
@@ -245,14 +245,8 @@ class TestDocument:
     def test_path_params_retrieve_parsed_stage(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
             client.api.document.with_raw_response.retrieve_parsed_stage(
-                stage='S?oC"final',
+                stage="marker",
                 document_ext_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `stage` but received ''"):
-            client.api.document.with_raw_response.retrieve_parsed_stage(
-                stage="",
-                document_ext_id="doc",
             )
 
     @pytest.mark.skip()
@@ -584,7 +578,7 @@ class TestAsyncDocument:
     @parametrize
     async def test_method_retrieve_parsed_stage(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.retrieve_parsed_stage(
-            stage='S?oC"final',
+            stage="marker",
             document_ext_id="doc",
         )
         assert_matches_type(DocumentRetrieveParsedStageResponse, document, path=["response"])
@@ -593,7 +587,7 @@ class TestAsyncDocument:
     @parametrize
     async def test_raw_response_retrieve_parsed_stage(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.document.with_raw_response.retrieve_parsed_stage(
-            stage='S?oC"final',
+            stage="marker",
             document_ext_id="doc",
         )
 
@@ -606,7 +600,7 @@ class TestAsyncDocument:
     @parametrize
     async def test_streaming_response_retrieve_parsed_stage(self, async_client: AsyncArbi) -> None:
         async with async_client.api.document.with_streaming_response.retrieve_parsed_stage(
-            stage='S?oC"final',
+            stage="marker",
             document_ext_id="doc",
         ) as response:
             assert not response.is_closed
@@ -622,14 +616,8 @@ class TestAsyncDocument:
     async def test_path_params_retrieve_parsed_stage(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
             await async_client.api.document.with_raw_response.retrieve_parsed_stage(
-                stage='S?oC"final',
+                stage="marker",
                 document_ext_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `stage` but received ''"):
-            await async_client.api.document.with_raw_response.retrieve_parsed_stage(
-                stage="",
-                document_ext_id="doc",
             )
 
     @pytest.mark.skip()

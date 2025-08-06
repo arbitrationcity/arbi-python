@@ -1,24 +1,30 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import List, Optional
+from datetime import datetime
+from typing_extensions import TypeAlias
 
 from ..._models import BaseModel
-from .doc_tag_metadata import DocTagMetadata
 
-__all__ = ["DocumentRetrieveTagsResponse", "Tag", "TagTag"]
-
-
-class TagTag(BaseModel):
-    external_id: str
-
-    name: str
+__all__ = ["DocumentRetrieveTagsResponse", "DocumentRetrieveTagsResponseItem"]
 
 
-class Tag(BaseModel):
-    doc_tag_metadata: DocTagMetadata
+class DocumentRetrieveTagsResponseItem(BaseModel):
+    created_at: datetime
 
-    tag: TagTag
+    created_by_ext_id: str
+
+    doc_ext_id: str
+
+    doctag_ext_id: str
+
+    tag_ext_id: str
+
+    updated_at: datetime
+
+    note: Optional[str] = None
+
+    page_ref: Optional[int] = None
 
 
-class DocumentRetrieveTagsResponse(BaseModel):
-    tags: List[Tag]
+DocumentRetrieveTagsResponse: TypeAlias = List[DocumentRetrieveTagsResponseItem]

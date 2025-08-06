@@ -238,6 +238,7 @@ class UserResource(SyncAPIResource):
     def update_settings(
         self,
         *,
+        active_config: Optional[user_update_settings_params.ActiveConfig] | NotGiven = NOT_GIVEN,
         pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -250,6 +251,9 @@ class UserResource(SyncAPIResource):
         Update user's settings (merge with existing).
 
         Args:
+          active_config: Partial configuration for user active config - all fields optional for
+              overrides.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -262,7 +266,11 @@ class UserResource(SyncAPIResource):
         return self._patch(
             "/api/user/settings",
             body=maybe_transform(
-                {"pinned_workspaces": pinned_workspaces}, user_update_settings_params.UserUpdateSettingsParams
+                {
+                    "active_config": active_config,
+                    "pinned_workspaces": pinned_workspaces,
+                },
+                user_update_settings_params.UserUpdateSettingsParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -482,6 +490,7 @@ class AsyncUserResource(AsyncAPIResource):
     async def update_settings(
         self,
         *,
+        active_config: Optional[user_update_settings_params.ActiveConfig] | NotGiven = NOT_GIVEN,
         pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -494,6 +503,9 @@ class AsyncUserResource(AsyncAPIResource):
         Update user's settings (merge with existing).
 
         Args:
+          active_config: Partial configuration for user active config - all fields optional for
+              overrides.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -506,7 +518,11 @@ class AsyncUserResource(AsyncAPIResource):
         return await self._patch(
             "/api/user/settings",
             body=await async_maybe_transform(
-                {"pinned_workspaces": pinned_workspaces}, user_update_settings_params.UserUpdateSettingsParams
+                {
+                    "active_config": active_config,
+                    "pinned_workspaces": pinned_workspaces,
+                },
+                user_update_settings_params.UserUpdateSettingsParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout

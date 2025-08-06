@@ -53,6 +53,7 @@ class TagResource(SyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
+        parent_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -82,6 +83,7 @@ class TagResource(SyncAPIResource):
                 {
                     "name": name,
                     "workspace_ext_id": workspace_ext_id,
+                    "parent_ext_id": parent_ext_id,
                     "shared": shared,
                 },
                 tag_create_params.TagCreateParams,
@@ -249,7 +251,7 @@ class TagResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> TagRetrieveDocsResponse:
         """
-        Get all documents that have a given tag along with metadata from DocTags.
+        Get all doctags for a given tag.
 
         Args:
           extra_headers: Send extra headers
@@ -296,6 +298,7 @@ class AsyncTagResource(AsyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
+        parent_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -325,6 +328,7 @@ class AsyncTagResource(AsyncAPIResource):
                 {
                     "name": name,
                     "workspace_ext_id": workspace_ext_id,
+                    "parent_ext_id": parent_ext_id,
                     "shared": shared,
                 },
                 tag_create_params.TagCreateParams,
@@ -492,7 +496,7 @@ class AsyncTagResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> TagRetrieveDocsResponse:
         """
-        Get all documents that have a given tag along with metadata from DocTags.
+        Get all doctags for a given tag.
 
         Args:
           extra_headers: Send extra headers

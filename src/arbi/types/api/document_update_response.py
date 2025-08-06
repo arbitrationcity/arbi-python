@@ -13,10 +13,10 @@ class DocumentUpdateResponse(BaseModel):
 
     success: bool
 
+    title: str
+
     detail: Optional[str] = None
 
     doc_date: Optional[date] = None
 
     shared: Optional[bool] = None
-
-    title: Optional[str] = None

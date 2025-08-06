@@ -2,13 +2,14 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import TypeAlias
 
 from ..._models import BaseModel
 
-__all__ = ["WorkspaceListDoctagsResponse", "Doctag"]
+__all__ = ["WorkspaceListDoctagsResponse", "WorkspaceListDoctagsResponseItem"]
 
 
-class Doctag(BaseModel):
+class WorkspaceListDoctagsResponseItem(BaseModel):
     created_at: datetime
 
     created_by_ext_id: str
@@ -19,10 +20,11 @@ class Doctag(BaseModel):
 
     tag_ext_id: str
 
+    updated_at: datetime
+
     note: Optional[str] = None
 
     page_ref: Optional[int] = None
 
 
-class WorkspaceListDoctagsResponse(BaseModel):
-    doctags: List[Doctag]
+WorkspaceListDoctagsResponse: TypeAlias = List[WorkspaceListDoctagsResponseItem]

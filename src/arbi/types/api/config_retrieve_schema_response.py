@@ -12,6 +12,8 @@ __all__ = ["ConfigRetrieveSchemaResponse"]
 class ConfigRetrieveSchemaResponse(BaseModel):
     chunker: Dict[str, object] = FieldInfo(alias="Chunker")
 
+    document_date_extractor_llm: Dict[str, object] = FieldInfo(alias="DocumentDateExtractorLLM")
+
     embedder: Dict[str, object] = FieldInfo(alias="Embedder")
 
     api_model_citation: Dict[str, object] = FieldInfo(alias="ModelCitation")
