@@ -8,28 +8,40 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
-from ..._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ...._compat import cached_property
+from .annotation import (
+    AnnotationResource,
+    AsyncAnnotationResource,
+    AnnotationResourceWithRawResponse,
+    AsyncAnnotationResourceWithRawResponse,
+    AnnotationResourceWithStreamingResponse,
+    AsyncAnnotationResourceWithStreamingResponse,
+)
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.api import document_update_params, document_upload_params, document_retrieve_view_params
-from ..._base_client import make_request_options
-from ...types.api.doc_response import DocResponse
-from ...types.api.document_delete_response import DocumentDeleteResponse
-from ...types.api.document_update_response import DocumentUpdateResponse
-from ...types.api.document_retrieve_tags_response import DocumentRetrieveTagsResponse
-from ...types.api.document_retrieve_parsed_stage_response import DocumentRetrieveParsedStageResponse
+from ....types.api import document_update_params, document_upload_params, document_retrieve_view_params
+from ...._base_client import make_request_options
+from ....types.api.doc_response import DocResponse
+from ....types.api.document_delete_response import DocumentDeleteResponse
+from ....types.api.document_update_response import DocumentUpdateResponse
+from ....types.api.document_retrieve_tags_response import DocumentRetrieveTagsResponse
+from ....types.api.document_retrieve_parsed_stage_response import DocumentRetrieveParsedStageResponse
 
 __all__ = ["DocumentResource", "AsyncDocumentResource"]
 
 
 class DocumentResource(SyncAPIResource):
+    @cached_property
+    def annotation(self) -> AnnotationResource:
+        return AnnotationResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> DocumentResourceWithRawResponse:
         """
@@ -372,6 +384,10 @@ class DocumentResource(SyncAPIResource):
 
 
 class AsyncDocumentResource(AsyncAPIResource):
+    @cached_property
+    def annotation(self) -> AsyncAnnotationResource:
+        return AsyncAnnotationResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncDocumentResourceWithRawResponse:
         """
@@ -744,6 +760,10 @@ class DocumentResourceWithRawResponse:
             document.upload,
         )
 
+    @cached_property
+    def annotation(self) -> AnnotationResourceWithRawResponse:
+        return AnnotationResourceWithRawResponse(self._document.annotation)
+
 
 class AsyncDocumentResourceWithRawResponse:
     def __init__(self, document: AsyncDocumentResource) -> None:
@@ -773,6 +793,10 @@ class AsyncDocumentResourceWithRawResponse:
         self.upload = async_to_raw_response_wrapper(
             document.upload,
         )
+
+    @cached_property
+    def annotation(self) -> AsyncAnnotationResourceWithRawResponse:
+        return AsyncAnnotationResourceWithRawResponse(self._document.annotation)
 
 
 class DocumentResourceWithStreamingResponse:
@@ -804,6 +828,10 @@ class DocumentResourceWithStreamingResponse:
             document.upload,
         )
 
+    @cached_property
+    def annotation(self) -> AnnotationResourceWithStreamingResponse:
+        return AnnotationResourceWithStreamingResponse(self._document.annotation)
+
 
 class AsyncDocumentResourceWithStreamingResponse:
     def __init__(self, document: AsyncDocumentResource) -> None:
@@ -833,3 +861,7 @@ class AsyncDocumentResourceWithStreamingResponse:
         self.upload = async_to_streamed_response_wrapper(
             document.upload,
         )
+
+    @cached_property
+    def annotation(self) -> AsyncAnnotationResourceWithStreamingResponse:
+        return AsyncAnnotationResourceWithStreamingResponse(self._document.annotation)

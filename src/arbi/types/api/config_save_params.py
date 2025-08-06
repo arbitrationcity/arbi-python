@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Annotated, TypedDict
 
 from ..._utils import PropertyInfo
@@ -14,20 +14,10 @@ from ..title_llm_config_param import TitleLlmConfigParam
 from ..model_citation_config_param import ModelCitationConfigParam
 from ..document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
-__all__ = ["UserUpdateSettingsParams", "ActiveConfig"]
+__all__ = ["ConfigSaveParams"]
 
 
-class UserUpdateSettingsParams(TypedDict, total=False):
-    active_config: Optional[ActiveConfig]
-    """
-    Partial configuration for user active config - all fields optional for
-    overrides.
-    """
-
-    pinned_workspaces: Optional[List[str]]
-
-
-class ActiveConfig(TypedDict, total=False):
+class ConfigSaveParams(TypedDict, total=False):
     chunker: Annotated[Optional[object], PropertyInfo(alias="Chunker")]
 
     document_date_extractor_llm: Annotated[
@@ -35,6 +25,8 @@ class ActiveConfig(TypedDict, total=False):
     ]
 
     embedder: Annotated[Optional[EmbedderConfigParam], PropertyInfo(alias="Embedder")]
+
+    filename_suffix: str
 
     model_citation: Annotated[Optional[ModelCitationConfigParam], PropertyInfo(alias="ModelCitation")]
 

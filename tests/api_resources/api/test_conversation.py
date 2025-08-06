@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from arbi.types.api import (
     ConversationShareResponse,
     ConversationDeleteResponse,
+    ConversationUpdateTitleResponse,
     ConversationDeleteMessageResponse,
     ConversationRetrieveThreadsResponse,
 )
@@ -190,6 +191,52 @@ class TestConversation:
                 "",
             )
 
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_update_title(self, client: Arbi) -> None:
+        conversation = client.api.conversation.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_raw_response_update_title(self, client: Arbi) -> None:
+        response = client.api.conversation.with_raw_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = response.parse()
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_streaming_response_update_title(self, client: Arbi) -> None:
+        with client.api.conversation.with_streaming_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = response.parse()
+            assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_path_params_update_title(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
+            client.api.conversation.with_raw_response.update_title(
+                conversation_ext_id="",
+                title="x",
+            )
+
 
 class TestAsyncConversation:
     parametrize = pytest.mark.parametrize(
@@ -362,4 +409,50 @@ class TestAsyncConversation:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             await async_client.api.conversation.with_raw_response.share(
                 "",
+            )
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_update_title(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_raw_response_update_title(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.conversation.with_raw_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = await response.parse()
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_streaming_response_update_title(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.conversation.with_streaming_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = await response.parse()
+            assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_path_params_update_title(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
+            await async_client.api.conversation.with_raw_response.update_title(
+                conversation_ext_id="",
+                title="x",
             )
