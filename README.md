@@ -16,8 +16,8 @@ The full API of this library can be found in [api.md](api.md).
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/arbitrationcity/arbi-python.git
+# install from this staging repo
+pip install git+ssh://git@github.com/stainless-sdks/arbi-python.git
 ```
 
 > [!NOTE]
@@ -32,16 +32,16 @@ import os
 from arbi import Arbi
 
 client = Arbi(
-    bearer_token=os.environ.get("ARBI_BEARER_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("ARBI_API_KEY"),  # This is the default and can be omitted
 )
 
 response = client.api.index()
 ```
 
-While you can provide a `bearer_token` keyword argument,
+While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `ARBI_BEARER_TOKEN="My Bearer Token"` to your `.env` file
-so that your Bearer Token is not stored in source control.
+to add `ARBI_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
 
 ## Async usage
 
@@ -53,7 +53,7 @@ import asyncio
 from arbi import AsyncArbi
 
 client = AsyncArbi(
-    bearer_token=os.environ.get("ARBI_BEARER_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("ARBI_API_KEY"),  # This is the default and can be omitted
 )
 
 
@@ -73,8 +73,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'arbi[aiohttp] @ git+ssh://git@github.com/arbitrationcity/arbi-python.git'
+# install from this staging repo
+pip install 'arbi[aiohttp] @ git+ssh://git@github.com/stainless-sdks/arbi-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -87,7 +87,7 @@ from arbi import AsyncArbi
 
 async def main() -> None:
     async with AsyncArbi(
-        bearer_token="My Bearer Token",
+        api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.api.index()
@@ -114,7 +114,7 @@ from arbi import Arbi
 
 client = Arbi()
 
-client.api.user.update_settings(
+client.api.user.settings.update(
     active_config={},
 )
 ```
@@ -249,9 +249,9 @@ api = response.parse()  # get the object that `api.index()` would have returned
 print(api)
 ```
 
-These methods return an [`APIResponse`](https://github.com/arbitrationcity/arbi-python/tree/main/src/arbi/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/arbi-python/tree/main/src/arbi/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/arbitrationcity/arbi-python/tree/main/src/arbi/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/arbi-python/tree/main/src/arbi/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -355,7 +355,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/arbitrationcity/arbi-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/arbi-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 

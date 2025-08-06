@@ -18,9 +18,8 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.api.document import annotation_create_params, annotation_update_params
-from ....types.api.document.annotation_create_response import AnnotationCreateResponse
+from ....types.api.document.doc_tag_response import DocTagResponse
 from ....types.api.document.annotation_delete_response import AnnotationDeleteResponse
-from ....types.api.document.annotation_update_response import AnnotationUpdateResponse
 
 __all__ = ["AnnotationResource", "AsyncAnnotationResource"]
 
@@ -32,7 +31,7 @@ class AnnotationResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
         """
         return AnnotationResourceWithRawResponse(self)
 
@@ -41,7 +40,7 @@ class AnnotationResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return AnnotationResourceWithStreamingResponse(self)
 
@@ -58,7 +57,7 @@ class AnnotationResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AnnotationCreateResponse:
+    ) -> DocTagResponse:
         """
         Create an annotation for a document.
 
@@ -90,7 +89,7 @@ class AnnotationResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AnnotationCreateResponse,
+            cast_to=DocTagResponse,
         )
 
     def update(
@@ -106,7 +105,7 @@ class AnnotationResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AnnotationUpdateResponse:
+    ) -> DocTagResponse:
         """
         Update an annotation (doctag) for a document.
 
@@ -135,7 +134,7 @@ class AnnotationResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AnnotationUpdateResponse,
+            cast_to=DocTagResponse,
         )
 
     def delete(
@@ -182,7 +181,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAnnotationResourceWithRawResponse(self)
 
@@ -191,7 +190,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return AsyncAnnotationResourceWithStreamingResponse(self)
 
@@ -208,7 +207,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AnnotationCreateResponse:
+    ) -> DocTagResponse:
         """
         Create an annotation for a document.
 
@@ -240,7 +239,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AnnotationCreateResponse,
+            cast_to=DocTagResponse,
         )
 
     async def update(
@@ -256,7 +255,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AnnotationUpdateResponse:
+    ) -> DocTagResponse:
         """
         Update an annotation (doctag) for a document.
 
@@ -285,7 +284,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AnnotationUpdateResponse,
+            cast_to=DocTagResponse,
         )
 
     async def delete(

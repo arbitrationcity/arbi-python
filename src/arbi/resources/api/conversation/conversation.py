@@ -27,7 +27,6 @@ from ...._base_client import make_request_options
 from ....types.api.conversation_share_response import ConversationShareResponse
 from ....types.api.conversation_delete_response import ConversationDeleteResponse
 from ....types.api.conversation_update_title_response import ConversationUpdateTitleResponse
-from ....types.api.conversation_delete_message_response import ConversationDeleteMessageResponse
 from ....types.api.conversation_retrieve_threads_response import ConversationRetrieveThreadsResponse
 
 __all__ = ["ConversationResource", "AsyncConversationResource"]
@@ -44,7 +43,7 @@ class ConversationResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
         """
         return ConversationResourceWithRawResponse(self)
 
@@ -53,7 +52,7 @@ class ConversationResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return ConversationResourceWithStreamingResponse(self)
 
@@ -93,39 +92,6 @@ class ConversationResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConversationDeleteResponse,
-        )
-
-    def delete_message(
-        self,
-        message_ext_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConversationDeleteMessageResponse:
-        """
-        Delete a message along with all descendants.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not message_ext_id:
-            raise ValueError(f"Expected a non-empty value for `message_ext_id` but received {message_ext_id!r}")
-        return self._delete(
-            f"/api/conversation/message/{message_ext_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConversationDeleteMessageResponse,
         )
 
     def retrieve_threads(
@@ -254,7 +220,7 @@ class AsyncConversationResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
         """
         return AsyncConversationResourceWithRawResponse(self)
 
@@ -263,7 +229,7 @@ class AsyncConversationResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return AsyncConversationResourceWithStreamingResponse(self)
 
@@ -303,39 +269,6 @@ class AsyncConversationResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConversationDeleteResponse,
-        )
-
-    async def delete_message(
-        self,
-        message_ext_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConversationDeleteMessageResponse:
-        """
-        Delete a message along with all descendants.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not message_ext_id:
-            raise ValueError(f"Expected a non-empty value for `message_ext_id` but received {message_ext_id!r}")
-        return await self._delete(
-            f"/api/conversation/message/{message_ext_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConversationDeleteMessageResponse,
         )
 
     async def retrieve_threads(
@@ -462,9 +395,6 @@ class ConversationResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             conversation.delete,
         )
-        self.delete_message = to_raw_response_wrapper(
-            conversation.delete_message,
-        )
         self.retrieve_threads = to_raw_response_wrapper(
             conversation.retrieve_threads,
         )
@@ -486,9 +416,6 @@ class AsyncConversationResourceWithRawResponse:
 
         self.delete = async_to_raw_response_wrapper(
             conversation.delete,
-        )
-        self.delete_message = async_to_raw_response_wrapper(
-            conversation.delete_message,
         )
         self.retrieve_threads = async_to_raw_response_wrapper(
             conversation.retrieve_threads,
@@ -512,9 +439,6 @@ class ConversationResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             conversation.delete,
         )
-        self.delete_message = to_streamed_response_wrapper(
-            conversation.delete_message,
-        )
         self.retrieve_threads = to_streamed_response_wrapper(
             conversation.retrieve_threads,
         )
@@ -536,9 +460,6 @@ class AsyncConversationResourceWithStreamingResponse:
 
         self.delete = async_to_streamed_response_wrapper(
             conversation.delete,
-        )
-        self.delete_message = async_to_streamed_response_wrapper(
-            conversation.delete_message,
         )
         self.retrieve_threads = async_to_streamed_response_wrapper(
             conversation.retrieve_threads,

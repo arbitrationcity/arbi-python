@@ -1,30 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from datetime import datetime
+from typing import List
 from typing_extensions import TypeAlias
 
-from ..._models import BaseModel
+from .document.doc_tag_response import DocTagResponse
 
-__all__ = ["WorkspaceListDoctagsResponse", "WorkspaceListDoctagsResponseItem"]
+__all__ = ["WorkspaceListDoctagsResponse"]
 
-
-class WorkspaceListDoctagsResponseItem(BaseModel):
-    created_at: datetime
-
-    created_by_ext_id: str
-
-    doc_ext_id: str
-
-    doctag_ext_id: str
-
-    tag_ext_id: str
-
-    updated_at: datetime
-
-    note: Optional[str] = None
-
-    page_ref: Optional[int] = None
-
-
-WorkspaceListDoctagsResponse: TypeAlias = List[WorkspaceListDoctagsResponseItem]
+WorkspaceListDoctagsResponse: TypeAlias = List[DocTagResponse]
