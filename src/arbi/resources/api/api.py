@@ -46,14 +46,6 @@ from .configs import (
     AsyncConfigsResourceWithStreamingResponse,
 )
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .document import (
-    DocumentResource,
-    AsyncDocumentResource,
-    DocumentResourceWithRawResponse,
-    AsyncDocumentResourceWithRawResponse,
-    DocumentResourceWithStreamingResponse,
-    AsyncDocumentResourceWithStreamingResponse,
-)
 from ..._compat import cached_property
 from .assistant import (
     AssistantResource,
@@ -78,6 +70,14 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
+from .document.document import (
+    DocumentResource,
+    AsyncDocumentResource,
+    DocumentResourceWithRawResponse,
+    AsyncDocumentResourceWithRawResponse,
+    DocumentResourceWithStreamingResponse,
+    AsyncDocumentResourceWithStreamingResponse,
+)
 from .conversation.conversation import (
     ConversationResource,
     AsyncConversationResource,
