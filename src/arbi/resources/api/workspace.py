@@ -23,7 +23,7 @@ from ...types.api import (
     workspace_create_protected_params,
 )
 from ..._base_client import make_request_options
-from ...types.api.workspace_response import WorkspaceResponse
+from ...types.api.workspace import Workspace
 from ...types.api.workspace_share_response import WorkspaceShareResponse
 from ...types.api.workspace_delete_response import WorkspaceDeleteResponse
 from ...types.api.workspace_list_tags_response import WorkspaceListTagsResponse
@@ -69,7 +69,7 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceResponse:
+    ) -> Workspace:
         """Update workspace metadata such as name or description.
 
         Changes are persisted to
@@ -98,7 +98,7 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceResponse,
+            cast_to=Workspace,
         )
 
     def delete(
@@ -149,7 +149,7 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceResponse:
+    ) -> Workspace:
         """Create a new workspace with encryption and access controls.
 
         Sets up vector
@@ -176,7 +176,7 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceResponse,
+            cast_to=Workspace,
         )
 
     def list_conversations(
@@ -501,7 +501,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceResponse:
+    ) -> Workspace:
         """Update workspace metadata such as name or description.
 
         Changes are persisted to
@@ -530,7 +530,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceResponse,
+            cast_to=Workspace,
         )
 
     async def delete(
@@ -581,7 +581,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceResponse:
+    ) -> Workspace:
         """Create a new workspace with encryption and access controls.
 
         Sets up vector
@@ -608,7 +608,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceResponse,
+            cast_to=Workspace,
         )
 
     async def list_conversations(

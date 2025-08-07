@@ -5,10 +5,10 @@ from datetime import date, datetime
 
 from ..._models import BaseModel
 
-__all__ = ["DocResponse"]
+__all__ = ["Doc"]
 
 
-class DocResponse(BaseModel):
+class Doc(BaseModel):
     created_at: datetime
 
     external_id: str

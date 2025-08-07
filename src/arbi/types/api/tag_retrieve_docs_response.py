@@ -3,8 +3,8 @@
 from typing import List
 from typing_extensions import TypeAlias
 
-from .document.doc_tag_response import DocTagResponse
+from .document.doc_tag import DocTag
 
 __all__ = ["TagRetrieveDocsResponse"]
 
-TagRetrieveDocsResponse: TypeAlias = List[DocTagResponse]
+TagRetrieveDocsResponse: TypeAlias = List[DocTag]

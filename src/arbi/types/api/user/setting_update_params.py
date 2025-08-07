@@ -5,13 +5,13 @@ from __future__ import annotations
 from typing import List, Optional
 from typing_extensions import TypedDict
 
-from .user_active_config_param import UserActiveConfigParam
+from .active_config_param import ActiveConfigParam
 
 __all__ = ["SettingUpdateParams"]
 
 
 class SettingUpdateParams(TypedDict, total=False):
-    active_config: Optional[UserActiveConfigParam]
+    active_config: Optional[ActiveConfigParam]
     """
     Partial configuration for user active config - all fields optional for
     overrides.

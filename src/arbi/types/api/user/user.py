@@ -2,12 +2,12 @@
 
 from typing import Optional
 
-from ..._models import BaseModel
+from ...._models import BaseModel
 
-__all__ = ["UserResponse"]
+__all__ = ["User"]
 
 
-class UserResponse(BaseModel):
+class User(BaseModel):
     email: Optional[str] = None
 
     external_id: Optional[str] = None

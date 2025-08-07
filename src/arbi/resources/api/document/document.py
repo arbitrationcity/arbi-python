@@ -28,7 +28,7 @@ from ...._response import (
 )
 from ....types.api import document_update_params, document_upload_params, document_retrieve_view_params
 from ...._base_client import make_request_options
-from ....types.api.doc_response import DocResponse
+from ....types.api.doc import Doc
 from ....types.api.document_delete_response import DocumentDeleteResponse
 from ....types.api.document_update_response import DocumentUpdateResponse
 from ....types.api.document_retrieve_tags_response import DocumentRetrieveTagsResponse
@@ -71,7 +71,7 @@ class DocumentResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocResponse:
+    ) -> Doc:
         """Retrieve document metadata by its external ID.
 
         Returns decrypted document
@@ -93,7 +93,7 @@ class DocumentResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocResponse,
+            cast_to=Doc,
         )
 
     def update(
@@ -417,7 +417,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocResponse:
+    ) -> Doc:
         """Retrieve document metadata by its external ID.
 
         Returns decrypted document
@@ -439,7 +439,7 @@ class AsyncDocumentResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocResponse,
+            cast_to=Doc,
         )
 
     async def update(

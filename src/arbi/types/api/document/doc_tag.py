@@ -3,22 +3,24 @@
 from typing import Optional
 from datetime import datetime
 
-from ..._models import BaseModel
+from ...._models import BaseModel
 
-__all__ = ["WorkspaceResponse"]
+__all__ = ["DocTag"]
 
 
-class WorkspaceResponse(BaseModel):
+class DocTag(BaseModel):
     created_at: datetime
 
     created_by_ext_id: str
 
-    description: Optional[str] = None
+    doc_ext_id: str
 
-    external_id: str
+    doctag_ext_id: str
 
-    name: str
+    tag_ext_id: str
 
     updated_at: datetime
 
-    updated_by_ext_id: Optional[str] = None
+    note: Optional[str] = None
+
+    page_ref: Optional[int] = None

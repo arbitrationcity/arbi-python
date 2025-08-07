@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from .doc import Doc as Doc
+from .user import User as User
 from .token import Token as Token
-from .doc_response import DocResponse as DocResponse
-from .user_response import UserResponse as UserResponse
+from .workspace import Workspace as Workspace
 from .embedder_config import EmbedderConfig as EmbedderConfig
 from .reranker_config import RerankerConfig as RerankerConfig
 from .query_llm_config import QueryLlmConfig as QueryLlmConfig
@@ -18,7 +19,6 @@ from .tag_update_params import TagUpdateParams as TagUpdateParams
 from .user_login_params import UserLoginParams as UserLoginParams
 from .sso_login_response import SSOLoginResponse as SSOLoginResponse
 from .tag_apply_response import TagApplyResponse as TagApplyResponse
-from .workspace_response import WorkspaceResponse as WorkspaceResponse
 from .parser_config_param import ParserConfigParam as ParserConfigParam
 from .sso_invite_response import SSOInviteResponse as SSOInviteResponse
 from .tag_create_response import TagCreateResponse as TagCreateResponse

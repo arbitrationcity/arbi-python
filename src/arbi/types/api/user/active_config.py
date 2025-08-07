@@ -13,10 +13,10 @@ from ..title_llm_config import TitleLlmConfig
 from ..model_citation_config import ModelCitationConfig
 from ..document_date_extractor_llm_config import DocumentDateExtractorLlmConfig
 
-__all__ = ["UserActiveConfig"]
+__all__ = ["ActiveConfig"]
 
 
-class UserActiveConfig(BaseModel):
+class ActiveConfig(BaseModel):
     chunker: Optional[object] = FieldInfo(alias="Chunker", default=None)
 
     document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfig] = FieldInfo(
