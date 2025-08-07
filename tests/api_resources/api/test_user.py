@@ -11,10 +11,10 @@ from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
     Token,
-    UserResponse,
     UserLogoutResponse,
     UserListWorkspacesResponse,
 )
+from arbi.types.api.user import User
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -152,7 +152,7 @@ class TestUser:
             name="name",
             password="password",
         )
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -167,7 +167,7 @@ class TestUser:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -182,7 +182,7 @@ class TestUser:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert_matches_type(UserResponse, user, path=["response"])
+            assert_matches_type(User, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -190,7 +190,7 @@ class TestUser:
     @parametrize
     def test_method_retrieve_current(self, client: Arbi) -> None:
         user = client.api.user.retrieve_current()
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -200,7 +200,7 @@ class TestUser:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -210,7 +210,7 @@ class TestUser:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
-            assert_matches_type(UserResponse, user, path=["response"])
+            assert_matches_type(User, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -350,7 +350,7 @@ class TestAsyncUser:
             name="name",
             password="password",
         )
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -365,7 +365,7 @@ class TestAsyncUser:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -380,7 +380,7 @@ class TestAsyncUser:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert_matches_type(UserResponse, user, path=["response"])
+            assert_matches_type(User, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -388,7 +388,7 @@ class TestAsyncUser:
     @parametrize
     async def test_method_retrieve_current(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.retrieve_current()
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -398,7 +398,7 @@ class TestAsyncUser:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
-        assert_matches_type(UserResponse, user, path=["response"])
+        assert_matches_type(User, user, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -408,6 +408,6 @@ class TestAsyncUser:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
-            assert_matches_type(UserResponse, user, path=["response"])
+            assert_matches_type(User, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True

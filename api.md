@@ -1,5 +1,11 @@
 # API
 
+Types:
+
+```python
+from arbi.types import Chunk, ChunkMetadata
+```
+
 Methods:
 
 - <code title="get /api">client.api.<a href="./src/arbi/resources/api/api.py">index</a>() -> object</code>
@@ -9,7 +15,7 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api import Token, UserResponse, UserListWorkspacesResponse, UserLogoutResponse
+from arbi.types.api import Token, User, UserListWorkspacesResponse, UserLogoutResponse
 ```
 
 Methods:
@@ -18,15 +24,15 @@ Methods:
 - <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/logout">client.api.user.<a href="./src/arbi/resources/api/user/user.py">logout</a>() -> <a href="./src/arbi/types/api/user_logout_response.py">UserLogoutResponse</a></code>
 - <code title="post /api/user/token_refresh">client.api.user.<a href="./src/arbi/resources/api/user/user.py">refresh_token</a>() -> <a href="./src/arbi/types/api/token.py">Token</a></code>
-- <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
-- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user/user.py">retrieve_current</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
+- <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user/user.py">User</a></code>
+- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user/user.py">retrieve_current</a>() -> <a href="./src/arbi/types/api/user/user.py">User</a></code>
 
 ### Settings
 
 Types:
 
 ```python
-from arbi.types.api.user import UserActiveConfig, SettingRetrieveResponse
+from arbi.types.api.user import ActiveConfig, SettingRetrieveResponse
 ```
 
 Methods:
@@ -54,7 +60,7 @@ Types:
 
 ```python
 from arbi.types.api import (
-    WorkspaceResponse,
+    Workspace,
     WorkspaceDeleteResponse,
     WorkspaceListConversationsResponse,
     WorkspaceListDoctagsResponse,
@@ -69,9 +75,9 @@ from arbi.types.api import (
 
 Methods:
 
-- <code title="patch /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">update</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_update_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
+- <code title="patch /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">update</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_update_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace.py">Workspace</a></code>
 - <code title="delete /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">delete</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_delete_response.py">WorkspaceDeleteResponse</a></code>
-- <code title="post /api/workspace/create_protected">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">create_protected</a>(\*\*<a href="src/arbi/types/api/workspace_create_protected_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
+- <code title="post /api/workspace/create_protected">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">create_protected</a>(\*\*<a href="src/arbi/types/api/workspace_create_protected_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace.py">Workspace</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/conversations">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">list_conversations</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_list_conversations_response.py">WorkspaceListConversationsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/doctags">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">list_doctags</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_list_doctags_response.py">WorkspaceListDoctagsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/documents">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">list_documents</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_list_documents_response.py">WorkspaceListDocumentsResponse</a></code>
@@ -87,7 +93,7 @@ Types:
 
 ```python
 from arbi.types.api import (
-    DocResponse,
+    Doc,
     DocumentUpdateResponse,
     DocumentDeleteResponse,
     DocumentRetrieveParsedStageResponse,
@@ -97,7 +103,7 @@ from arbi.types.api import (
 
 Methods:
 
-- <code title="get /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">retrieve</a>(document_ext_id) -> <a href="./src/arbi/types/api/doc_response.py">DocResponse</a></code>
+- <code title="get /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">retrieve</a>(document_ext_id) -> <a href="./src/arbi/types/api/doc.py">Doc</a></code>
 - <code title="patch /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">update</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document_update_response.py">DocumentUpdateResponse</a></code>
 - <code title="delete /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">delete</a>(document_ext_id) -> <a href="./src/arbi/types/api/document_delete_response.py">DocumentDeleteResponse</a></code>
 - <code title="get /api/document/{document_ext_id}/download">client.api.document.<a href="./src/arbi/resources/api/document/document.py">retrieve_download</a>(document_ext_id) -> object</code>
@@ -111,13 +117,13 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api.document import DocTagResponse, AnnotationDeleteResponse
+from arbi.types.api.document import DocTag, AnnotationDeleteResponse
 ```
 
 Methods:
 
-- <code title="post /api/document/{doc_ext_id}/annotation">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">create</a>(doc_ext_id, \*\*<a href="src/arbi/types/api/document/annotation_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
-- <code title="patch /api/document/{doc_ext_id}/annotation/{doctag_ext_id}">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">update</a>(doctag_ext_id, \*, doc_ext_id, \*\*<a href="src/arbi/types/api/document/annotation_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
+- <code title="post /api/document/{doc_ext_id}/annotation">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">create</a>(doc_ext_id, \*\*<a href="src/arbi/types/api/document/annotation_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag.py">DocTag</a></code>
+- <code title="patch /api/document/{doc_ext_id}/annotation/{doctag_ext_id}">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">update</a>(doctag_ext_id, \*, doc_ext_id, \*\*<a href="src/arbi/types/api/document/annotation_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag.py">DocTag</a></code>
 - <code title="delete /api/document/{doc_ext_id}/annotation/{doctag_ext_id}">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">delete</a>(doctag_ext_id, \*, doc_ext_id) -> <a href="./src/arbi/types/api/document/annotation_delete_response.py">AnnotationDeleteResponse</a></code>
 
 ## Conversation

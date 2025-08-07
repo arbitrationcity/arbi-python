@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from .user_active_config import UserActiveConfig as UserActiveConfig
+from .user import User as User
+from .active_config import ActiveConfig as ActiveConfig
+from .active_config_param import ActiveConfigParam as ActiveConfigParam
 from .setting_update_params import SettingUpdateParams as SettingUpdateParams
-from .user_active_config_param import UserActiveConfigParam as UserActiveConfigParam
 from .setting_retrieve_response import SettingRetrieveResponse as SettingRetrieveResponse

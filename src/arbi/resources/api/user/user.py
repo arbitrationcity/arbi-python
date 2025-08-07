@@ -25,7 +25,7 @@ from ...._response import (
 from ....types.api import user_login_params, user_register_params
 from ...._base_client import make_request_options
 from ....types.api.token import Token
-from ....types.api.user_response import UserResponse
+from ....types.api.user.user import User
 from ....types.api.user_logout_response import UserLogoutResponse
 from ....types.api.user_list_workspaces_response import UserListWorkspacesResponse
 
@@ -172,7 +172,7 @@ class UserResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
+    ) -> User:
         """
         Register a new user.
 
@@ -199,7 +199,7 @@ class UserResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserResponse,
+            cast_to=User,
         )
 
     def retrieve_current(
@@ -211,7 +211,7 @@ class UserResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
+    ) -> User:
         """Retrieve current authenticated user information.
 
         This endpoint is useful for
@@ -222,7 +222,7 @@ class UserResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserResponse,
+            cast_to=User,
         )
 
 
@@ -366,7 +366,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
+    ) -> User:
         """
         Register a new user.
 
@@ -393,7 +393,7 @@ class AsyncUserResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserResponse,
+            cast_to=User,
         )
 
     async def retrieve_current(
@@ -405,7 +405,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserResponse:
+    ) -> User:
         """Retrieve current authenticated user information.
 
         This endpoint is useful for
@@ -416,7 +416,7 @@ class AsyncUserResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserResponse,
+            cast_to=User,
         )
 
 

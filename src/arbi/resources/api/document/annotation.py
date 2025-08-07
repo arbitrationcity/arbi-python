@@ -18,7 +18,7 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.api.document import annotation_create_params, annotation_update_params
-from ....types.api.document.doc_tag_response import DocTagResponse
+from ....types.api.document.doc_tag import DocTag
 from ....types.api.document.annotation_delete_response import AnnotationDeleteResponse
 
 __all__ = ["AnnotationResource", "AsyncAnnotationResource"]
@@ -57,7 +57,7 @@ class AnnotationResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocTagResponse:
+    ) -> DocTag:
         """
         Create an annotation for a document.
 
@@ -89,7 +89,7 @@ class AnnotationResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocTagResponse,
+            cast_to=DocTag,
         )
 
     def update(
@@ -105,7 +105,7 @@ class AnnotationResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocTagResponse:
+    ) -> DocTag:
         """
         Update an annotation (doctag) for a document.
 
@@ -134,7 +134,7 @@ class AnnotationResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocTagResponse,
+            cast_to=DocTag,
         )
 
     def delete(
@@ -207,7 +207,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocTagResponse:
+    ) -> DocTag:
         """
         Create an annotation for a document.
 
@@ -239,7 +239,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocTagResponse,
+            cast_to=DocTag,
         )
 
     async def update(
@@ -255,7 +255,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocTagResponse:
+    ) -> DocTag:
         """
         Update an annotation (doctag) for a document.
 
@@ -284,7 +284,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocTagResponse,
+            cast_to=DocTag,
         )
 
     async def delete(

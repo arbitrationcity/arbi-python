@@ -18,7 +18,7 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.api.user import setting_update_params
-from ....types.api.user.user_active_config_param import UserActiveConfigParam
+from ....types.api.user.active_config_param import ActiveConfigParam
 from ....types.api.user.setting_retrieve_response import SettingRetrieveResponse
 
 __all__ = ["SettingsResource", "AsyncSettingsResource"]
@@ -66,7 +66,7 @@ class SettingsResource(SyncAPIResource):
     def update(
         self,
         *,
-        active_config: Optional[UserActiveConfigParam] | NotGiven = NOT_GIVEN,
+        active_config: Optional[ActiveConfigParam] | NotGiven = NOT_GIVEN,
         pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -149,7 +149,7 @@ class AsyncSettingsResource(AsyncAPIResource):
     async def update(
         self,
         *,
-        active_config: Optional[UserActiveConfigParam] | NotGiven = NOT_GIVEN,
+        active_config: Optional[ActiveConfigParam] | NotGiven = NOT_GIVEN,
         pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

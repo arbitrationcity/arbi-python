@@ -5,13 +5,13 @@ from typing import TYPE_CHECKING, Dict, List, Optional
 from pydantic import Field as FieldInfo
 
 from ...._models import BaseModel
-from .user_active_config import UserActiveConfig
+from .active_config import ActiveConfig
 
 __all__ = ["SettingRetrieveResponse"]
 
 
 class SettingRetrieveResponse(BaseModel):
-    active_config: Optional[UserActiveConfig] = None
+    active_config: Optional[ActiveConfig] = None
     """
     Partial configuration for user active config - all fields optional for
     overrides.

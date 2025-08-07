@@ -11,7 +11,7 @@ from arbi import Arbi, AsyncArbi
 from arbi._utils import parse_date
 from tests.utils import assert_matches_type
 from arbi.types.api import (
-    DocResponse,
+    Doc,
     DocumentDeleteResponse,
     DocumentUpdateResponse,
     DocumentRetrieveTagsResponse,
@@ -30,7 +30,7 @@ class TestDocument:
         document = client.api.document.retrieve(
             "doc",
         )
-        assert_matches_type(DocResponse, document, path=["response"])
+        assert_matches_type(Doc, document, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -42,7 +42,7 @@ class TestDocument:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document = response.parse()
-        assert_matches_type(DocResponse, document, path=["response"])
+        assert_matches_type(Doc, document, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -54,7 +54,7 @@ class TestDocument:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document = response.parse()
-            assert_matches_type(DocResponse, document, path=["response"])
+            assert_matches_type(Doc, document, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -401,7 +401,7 @@ class TestAsyncDocument:
         document = await async_client.api.document.retrieve(
             "doc",
         )
-        assert_matches_type(DocResponse, document, path=["response"])
+        assert_matches_type(Doc, document, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -413,7 +413,7 @@ class TestAsyncDocument:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document = await response.parse()
-        assert_matches_type(DocResponse, document, path=["response"])
+        assert_matches_type(Doc, document, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -425,7 +425,7 @@ class TestAsyncDocument:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document = await response.parse()
-            assert_matches_type(DocResponse, document, path=["response"])
+            assert_matches_type(Doc, document, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

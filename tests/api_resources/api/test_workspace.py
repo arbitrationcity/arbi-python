@@ -10,7 +10,7 @@ import pytest
 from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
-    WorkspaceResponse,
+    Workspace,
     WorkspaceShareResponse,
     WorkspaceDeleteResponse,
     WorkspaceListTagsResponse,
@@ -34,7 +34,7 @@ class TestWorkspace:
         workspace = client.api.workspace.update(
             workspace_ext_id="wrk",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -44,7 +44,7 @@ class TestWorkspace:
             description="description",
             name="name",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -56,7 +56,7 @@ class TestWorkspace:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = response.parse()
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -68,7 +68,7 @@ class TestWorkspace:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = response.parse()
-            assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+            assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -128,7 +128,7 @@ class TestWorkspace:
         workspace = client.api.workspace.create_protected(
             name="name",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -137,7 +137,7 @@ class TestWorkspace:
             name="name",
             description="description",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -149,7 +149,7 @@ class TestWorkspace:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = response.parse()
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -161,7 +161,7 @@ class TestWorkspace:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = response.parse()
-            assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+            assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -521,7 +521,7 @@ class TestAsyncWorkspace:
         workspace = await async_client.api.workspace.update(
             workspace_ext_id="wrk",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -531,7 +531,7 @@ class TestAsyncWorkspace:
             description="description",
             name="name",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -543,7 +543,7 @@ class TestAsyncWorkspace:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = await response.parse()
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -555,7 +555,7 @@ class TestAsyncWorkspace:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = await response.parse()
-            assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+            assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -615,7 +615,7 @@ class TestAsyncWorkspace:
         workspace = await async_client.api.workspace.create_protected(
             name="name",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -624,7 +624,7 @@ class TestAsyncWorkspace:
             name="name",
             description="description",
         )
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -636,7 +636,7 @@ class TestAsyncWorkspace:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = await response.parse()
-        assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+        assert_matches_type(Workspace, workspace, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -648,7 +648,7 @@ class TestAsyncWorkspace:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = await response.parse()
-            assert_matches_type(WorkspaceResponse, workspace, path=["response"])
+            assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
