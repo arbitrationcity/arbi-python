@@ -23,7 +23,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestConfigs:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Arbi) -> None:
         config = client.api.configs.retrieve(
@@ -31,7 +31,7 @@ class TestConfigs:
         )
         assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Arbi) -> None:
         response = client.api.configs.with_raw_response.retrieve(
@@ -43,7 +43,7 @@ class TestConfigs:
         config = response.parse()
         assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Arbi) -> None:
         with client.api.configs.with_streaming_response.retrieve(
@@ -57,7 +57,7 @@ class TestConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_path` but received ''"):
@@ -65,13 +65,13 @@ class TestConfigs:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Arbi) -> None:
         config = client.api.configs.update()
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Arbi) -> None:
         config = client.api.configs.update(
@@ -124,7 +124,7 @@ class TestConfigs:
         )
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Arbi) -> None:
         response = client.api.configs.with_raw_response.update()
@@ -134,7 +134,7 @@ class TestConfigs:
         config = response.parse()
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Arbi) -> None:
         with client.api.configs.with_streaming_response.update() as response:
@@ -146,7 +146,7 @@ class TestConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Arbi) -> None:
         config = client.api.configs.delete(
@@ -154,7 +154,7 @@ class TestConfigs:
         )
         assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Arbi) -> None:
         response = client.api.configs.with_raw_response.delete(
@@ -166,7 +166,7 @@ class TestConfigs:
         config = response.parse()
         assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Arbi) -> None:
         with client.api.configs.with_streaming_response.delete(
@@ -180,7 +180,7 @@ class TestConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `filename` but received ''"):
@@ -188,13 +188,13 @@ class TestConfigs:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_schema(self, client: Arbi) -> None:
         config = client.api.configs.retrieve_schema()
         assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve_schema(self, client: Arbi) -> None:
         response = client.api.configs.with_raw_response.retrieve_schema()
@@ -204,7 +204,7 @@ class TestConfigs:
         config = response.parse()
         assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_schema(self, client: Arbi) -> None:
         with client.api.configs.with_streaming_response.retrieve_schema() as response:
@@ -216,13 +216,13 @@ class TestConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_versions(self, client: Arbi) -> None:
         config = client.api.configs.retrieve_versions()
         assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve_versions(self, client: Arbi) -> None:
         response = client.api.configs.with_raw_response.retrieve_versions()
@@ -232,7 +232,7 @@ class TestConfigs:
         config = response.parse()
         assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_versions(self, client: Arbi) -> None:
         with client.api.configs.with_streaming_response.retrieve_versions() as response:
@@ -250,7 +250,7 @@ class TestAsyncConfigs:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.retrieve(
@@ -258,7 +258,7 @@ class TestAsyncConfigs:
         )
         assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.configs.with_raw_response.retrieve(
@@ -270,7 +270,7 @@ class TestAsyncConfigs:
         config = await response.parse()
         assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
         async with async_client.api.configs.with_streaming_response.retrieve(
@@ -284,7 +284,7 @@ class TestAsyncConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_path` but received ''"):
@@ -292,13 +292,13 @@ class TestAsyncConfigs:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.update()
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.update(
@@ -351,7 +351,7 @@ class TestAsyncConfigs:
         )
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.configs.with_raw_response.update()
@@ -361,7 +361,7 @@ class TestAsyncConfigs:
         config = await response.parse()
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncArbi) -> None:
         async with async_client.api.configs.with_streaming_response.update() as response:
@@ -373,7 +373,7 @@ class TestAsyncConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.delete(
@@ -381,7 +381,7 @@ class TestAsyncConfigs:
         )
         assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.configs.with_raw_response.delete(
@@ -393,7 +393,7 @@ class TestAsyncConfigs:
         config = await response.parse()
         assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
         async with async_client.api.configs.with_streaming_response.delete(
@@ -407,7 +407,7 @@ class TestAsyncConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `filename` but received ''"):
@@ -415,13 +415,13 @@ class TestAsyncConfigs:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_schema(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.retrieve_schema()
         assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_schema(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.configs.with_raw_response.retrieve_schema()
@@ -431,7 +431,7 @@ class TestAsyncConfigs:
         config = await response.parse()
         assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_schema(self, async_client: AsyncArbi) -> None:
         async with async_client.api.configs.with_streaming_response.retrieve_schema() as response:
@@ -443,13 +443,13 @@ class TestAsyncConfigs:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_versions(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.retrieve_versions()
         assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_versions(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.configs.with_raw_response.retrieve_versions()
@@ -459,7 +459,7 @@ class TestAsyncConfigs:
         config = await response.parse()
         assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_versions(self, async_client: AsyncArbi) -> None:
         async with async_client.api.configs.with_streaming_response.retrieve_versions() as response:

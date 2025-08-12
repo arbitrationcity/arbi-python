@@ -16,7 +16,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestAssistant:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Arbi) -> None:
         assistant = client.api.assistant.retrieve(
@@ -25,7 +25,7 @@ class TestAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_with_all_params(self, client: Arbi) -> None:
         assistant = client.api.assistant.retrieve(
@@ -42,7 +42,7 @@ class TestAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Arbi) -> None:
         response = client.api.assistant.with_raw_response.retrieve(
@@ -55,7 +55,7 @@ class TestAssistant:
         assistant = response.parse()
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Arbi) -> None:
         with client.api.assistant.with_streaming_response.retrieve(
@@ -70,7 +70,7 @@ class TestAssistant:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_query(self, client: Arbi) -> None:
         assistant = client.api.assistant.query(
@@ -79,7 +79,7 @@ class TestAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_query_with_all_params(self, client: Arbi) -> None:
         assistant = client.api.assistant.query(
@@ -96,7 +96,7 @@ class TestAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_query(self, client: Arbi) -> None:
         response = client.api.assistant.with_raw_response.query(
@@ -109,7 +109,7 @@ class TestAssistant:
         assistant = response.parse()
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_query(self, client: Arbi) -> None:
         with client.api.assistant.with_streaming_response.query(
@@ -130,7 +130,7 @@ class TestAsyncAssistant:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
         assistant = await async_client.api.assistant.retrieve(
@@ -139,7 +139,7 @@ class TestAsyncAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_with_all_params(self, async_client: AsyncArbi) -> None:
         assistant = await async_client.api.assistant.retrieve(
@@ -156,7 +156,7 @@ class TestAsyncAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.assistant.with_raw_response.retrieve(
@@ -169,7 +169,7 @@ class TestAsyncAssistant:
         assistant = await response.parse()
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
         async with async_client.api.assistant.with_streaming_response.retrieve(
@@ -184,7 +184,7 @@ class TestAsyncAssistant:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_query(self, async_client: AsyncArbi) -> None:
         assistant = await async_client.api.assistant.query(
@@ -193,7 +193,7 @@ class TestAsyncAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_query_with_all_params(self, async_client: AsyncArbi) -> None:
         assistant = await async_client.api.assistant.query(
@@ -210,7 +210,7 @@ class TestAsyncAssistant:
         )
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_query(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.assistant.with_raw_response.query(
@@ -223,7 +223,7 @@ class TestAsyncAssistant:
         assistant = await response.parse()
         assert_matches_type(object, assistant, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_query(self, async_client: AsyncArbi) -> None:
         async with async_client.api.assistant.with_streaming_response.query(
