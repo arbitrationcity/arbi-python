@@ -28,7 +28,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestWorkspace:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update(self, client: Arbi) -> None:
         workspace = client.api.workspace.update(
@@ -36,7 +36,7 @@ class TestWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Arbi) -> None:
         workspace = client.api.workspace.update(
@@ -46,7 +46,7 @@ class TestWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.update(
@@ -58,7 +58,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.update(
@@ -72,7 +72,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -80,7 +80,7 @@ class TestWorkspace:
                 workspace_ext_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Arbi) -> None:
         workspace = client.api.workspace.delete(
@@ -88,7 +88,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceDeleteResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.delete(
@@ -100,7 +100,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceDeleteResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.delete(
@@ -114,7 +114,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -122,7 +122,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_protected(self, client: Arbi) -> None:
         workspace = client.api.workspace.create_protected(
@@ -130,7 +130,7 @@ class TestWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_protected_with_all_params(self, client: Arbi) -> None:
         workspace = client.api.workspace.create_protected(
@@ -139,7 +139,7 @@ class TestWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create_protected(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.create_protected(
@@ -151,7 +151,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create_protected(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.create_protected(
@@ -165,7 +165,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_conversations(self, client: Arbi) -> None:
         workspace = client.api.workspace.list_conversations(
@@ -173,7 +173,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceListConversationsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list_conversations(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.list_conversations(
@@ -185,7 +185,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceListConversationsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list_conversations(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.list_conversations(
@@ -199,7 +199,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_list_conversations(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -207,7 +207,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_doctags(self, client: Arbi) -> None:
         workspace = client.api.workspace.list_doctags(
@@ -215,7 +215,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceListDoctagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list_doctags(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.list_doctags(
@@ -227,7 +227,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceListDoctagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list_doctags(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.list_doctags(
@@ -241,7 +241,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_list_doctags(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -249,7 +249,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_documents(self, client: Arbi) -> None:
         workspace = client.api.workspace.list_documents(
@@ -257,7 +257,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceListDocumentsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list_documents(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.list_documents(
@@ -269,7 +269,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceListDocumentsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list_documents(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.list_documents(
@@ -283,7 +283,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_list_documents(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -291,7 +291,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_tags(self, client: Arbi) -> None:
         workspace = client.api.workspace.list_tags(
@@ -299,7 +299,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceListTagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list_tags(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.list_tags(
@@ -311,7 +311,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceListTagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list_tags(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.list_tags(
@@ -325,7 +325,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_list_tags(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -333,7 +333,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_users(self, client: Arbi) -> None:
         workspace = client.api.workspace.list_users(
@@ -341,7 +341,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceListUsersResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list_users(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.list_users(
@@ -353,7 +353,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceListUsersResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list_users(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.list_users(
@@ -367,7 +367,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_list_users(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -375,7 +375,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_remove_user(self, client: Arbi) -> None:
         workspace = client.api.workspace.remove_user(
@@ -384,7 +384,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_remove_user(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.remove_user(
@@ -397,7 +397,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_remove_user(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.remove_user(
@@ -412,7 +412,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_remove_user(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -421,7 +421,7 @@ class TestWorkspace:
                 user_ext_id="usr-bFXA5r3A",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_stats(self, client: Arbi) -> None:
         workspace = client.api.workspace.retrieve_stats(
@@ -429,7 +429,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceRetrieveStatsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve_stats(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.retrieve_stats(
@@ -441,7 +441,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceRetrieveStatsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_stats(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.retrieve_stats(
@@ -455,7 +455,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve_stats(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -463,7 +463,7 @@ class TestWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_share(self, client: Arbi) -> None:
         workspace = client.api.workspace.share(
@@ -472,7 +472,7 @@ class TestWorkspace:
         )
         assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_share(self, client: Arbi) -> None:
         response = client.api.workspace.with_raw_response.share(
@@ -485,7 +485,7 @@ class TestWorkspace:
         workspace = response.parse()
         assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_share(self, client: Arbi) -> None:
         with client.api.workspace.with_streaming_response.share(
@@ -500,7 +500,7 @@ class TestWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_share(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -515,7 +515,7 @@ class TestAsyncWorkspace:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.update(
@@ -523,7 +523,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.update(
@@ -533,7 +533,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.update(
@@ -545,7 +545,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.update(
@@ -559,7 +559,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -567,7 +567,7 @@ class TestAsyncWorkspace:
                 workspace_ext_id="",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.delete(
@@ -575,7 +575,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceDeleteResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.delete(
@@ -587,7 +587,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceDeleteResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.delete(
@@ -601,7 +601,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -609,7 +609,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_protected(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.create_protected(
@@ -617,7 +617,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_protected_with_all_params(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.create_protected(
@@ -626,7 +626,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create_protected(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.create_protected(
@@ -638,7 +638,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(Workspace, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create_protected(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.create_protected(
@@ -652,7 +652,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_conversations(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.list_conversations(
@@ -660,7 +660,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceListConversationsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list_conversations(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.list_conversations(
@@ -672,7 +672,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceListConversationsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list_conversations(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.list_conversations(
@@ -686,7 +686,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_list_conversations(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -694,7 +694,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_doctags(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.list_doctags(
@@ -702,7 +702,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceListDoctagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list_doctags(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.list_doctags(
@@ -714,7 +714,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceListDoctagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list_doctags(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.list_doctags(
@@ -728,7 +728,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_list_doctags(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -736,7 +736,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_documents(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.list_documents(
@@ -744,7 +744,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceListDocumentsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list_documents(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.list_documents(
@@ -756,7 +756,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceListDocumentsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list_documents(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.list_documents(
@@ -770,7 +770,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_list_documents(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -778,7 +778,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_tags(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.list_tags(
@@ -786,7 +786,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceListTagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list_tags(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.list_tags(
@@ -798,7 +798,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceListTagsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list_tags(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.list_tags(
@@ -812,7 +812,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_list_tags(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -820,7 +820,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_users(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.list_users(
@@ -828,7 +828,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceListUsersResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list_users(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.list_users(
@@ -840,7 +840,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceListUsersResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list_users(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.list_users(
@@ -854,7 +854,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_list_users(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -862,7 +862,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_remove_user(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.remove_user(
@@ -871,7 +871,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_remove_user(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.remove_user(
@@ -884,7 +884,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_remove_user(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.remove_user(
@@ -899,7 +899,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_remove_user(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -908,7 +908,7 @@ class TestAsyncWorkspace:
                 user_ext_id="usr-bFXA5r3A",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_stats(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.retrieve_stats(
@@ -916,7 +916,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceRetrieveStatsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_stats(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.retrieve_stats(
@@ -928,7 +928,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceRetrieveStatsResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_stats(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.retrieve_stats(
@@ -942,7 +942,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve_stats(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
@@ -950,7 +950,7 @@ class TestAsyncWorkspace:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_share(self, async_client: AsyncArbi) -> None:
         workspace = await async_client.api.workspace.share(
@@ -959,7 +959,7 @@ class TestAsyncWorkspace:
         )
         assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_share(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.workspace.with_raw_response.share(
@@ -972,7 +972,7 @@ class TestAsyncWorkspace:
         workspace = await response.parse()
         assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_share(self, async_client: AsyncArbi) -> None:
         async with async_client.api.workspace.with_streaming_response.share(
@@ -987,7 +987,7 @@ class TestAsyncWorkspace:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_share(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
