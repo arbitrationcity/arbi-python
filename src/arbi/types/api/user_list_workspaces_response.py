@@ -3,8 +3,8 @@
 from typing import List
 from typing_extensions import TypeAlias
 
-from .workspace import Workspace
+from .workspace_response import WorkspaceResponse
 
 __all__ = ["UserListWorkspacesResponse"]
 
-UserListWorkspacesResponse: TypeAlias = List[Workspace]
+UserListWorkspacesResponse: TypeAlias = List[WorkspaceResponse]

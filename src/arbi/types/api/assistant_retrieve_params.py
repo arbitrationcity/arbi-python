@@ -5,14 +5,16 @@ from __future__ import annotations
 from typing import Dict, List, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
-from ..chunk_param import ChunkParam
-
 __all__ = [
     "AssistantRetrieveParams",
     "Tools",
     "ToolsModelCitationTool",
     "ToolsRetrievalChunkToolInput",
+    "ToolsRetrievalChunkToolInputToolResponse",
+    "ToolsRetrievalChunkToolInputToolResponseMetadata",
     "ToolsRetrievalFullContextToolInput",
+    "ToolsRetrievalFullContextToolInputToolResponse",
+    "ToolsRetrievalFullContextToolInputToolResponseMetadata",
 ]
 
 
@@ -36,6 +38,36 @@ class ToolsModelCitationTool(TypedDict, total=False):
     tool_responses: Dict[str, List[str]]
 
 
+class ToolsRetrievalChunkToolInputToolResponseMetadata(TypedDict, total=False):
+    chunk_doc_idx: Required[int]
+
+    chunk_ext_id: Required[str]
+
+    chunk_pg_idx: Required[int]
+
+    created_at: Required[str]
+
+    page_number: Required[int]
+
+    chunk_id: Optional[str]
+
+    doc_ext_id: Optional[str]
+
+    doc_title: Optional[str]
+
+    rerank_score: Optional[float]
+
+    score: Optional[float]
+
+    tokens: Optional[int]
+
+
+class ToolsRetrievalChunkToolInputToolResponse(TypedDict, total=False):
+    content: Required[str]
+
+    metadata: Required[ToolsRetrievalChunkToolInputToolResponseMetadata]
+
+
 class ToolsRetrievalChunkToolInput(TypedDict, total=False):
     description: str
 
@@ -43,7 +75,37 @@ class ToolsRetrievalChunkToolInput(TypedDict, total=False):
 
     tool_args: Dict[str, List[str]]
 
-    tool_responses: Dict[str, Iterable[ChunkParam]]
+    tool_responses: Dict[str, Iterable[ToolsRetrievalChunkToolInputToolResponse]]
+
+
+class ToolsRetrievalFullContextToolInputToolResponseMetadata(TypedDict, total=False):
+    chunk_doc_idx: Required[int]
+
+    chunk_ext_id: Required[str]
+
+    chunk_pg_idx: Required[int]
+
+    created_at: Required[str]
+
+    page_number: Required[int]
+
+    chunk_id: Optional[str]
+
+    doc_ext_id: Optional[str]
+
+    doc_title: Optional[str]
+
+    rerank_score: Optional[float]
+
+    score: Optional[float]
+
+    tokens: Optional[int]
+
+
+class ToolsRetrievalFullContextToolInputToolResponse(TypedDict, total=False):
+    content: Required[str]
+
+    metadata: Required[ToolsRetrievalFullContextToolInputToolResponseMetadata]
 
 
 class ToolsRetrievalFullContextToolInput(TypedDict, total=False):
@@ -53,7 +115,7 @@ class ToolsRetrievalFullContextToolInput(TypedDict, total=False):
 
     tool_args: Dict[str, List[str]]
 
-    tool_responses: Dict[str, Iterable[ChunkParam]]
+    tool_responses: Dict[str, Iterable[ToolsRetrievalFullContextToolInputToolResponse]]
 
 
 Tools: TypeAlias = Union[ToolsModelCitationTool, ToolsRetrievalChunkToolInput, ToolsRetrievalFullContextToolInput]

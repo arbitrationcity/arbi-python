@@ -114,7 +114,7 @@ from arbi import Arbi
 
 client = Arbi()
 
-config = client.api.configs.update(
+config = client.api.configs.create(
     document_date_extractor_llm={},
 )
 print(config.document_date_extractor_llm)
