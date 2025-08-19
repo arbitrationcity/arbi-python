@@ -2,6 +2,5 @@
 
 from __future__ import annotations
 
-from .user import User as User
 from .setting_update_params import SettingUpdateParams as SettingUpdateParams
 from .setting_retrieve_response import SettingRetrieveResponse as SettingRetrieveResponse

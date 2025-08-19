@@ -25,7 +25,7 @@ from ...._response import (
 from ....types.api import user_login_params, user_register_params
 from ...._base_client import make_request_options
 from ....types.api.token import Token
-from ....types.api.user.user import User
+from ....types.api.user_response import UserResponse
 from ....types.api.user_logout_response import UserLogoutResponse
 from ....types.api.user_list_workspaces_response import UserListWorkspacesResponse
 
@@ -172,7 +172,7 @@ class UserResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> UserResponse:
         """
         Register a new user.
 
@@ -199,10 +199,10 @@ class UserResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=UserResponse,
         )
 
-    def retrieve_current(
+    def retrieve_me(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -211,7 +211,7 @@ class UserResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> UserResponse:
         """Retrieve current authenticated user information.
 
         This endpoint is useful for
@@ -222,7 +222,7 @@ class UserResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=UserResponse,
         )
 
 
@@ -366,7 +366,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> UserResponse:
         """
         Register a new user.
 
@@ -393,10 +393,10 @@ class AsyncUserResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=UserResponse,
         )
 
-    async def retrieve_current(
+    async def retrieve_me(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -405,7 +405,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> User:
+    ) -> UserResponse:
         """Retrieve current authenticated user information.
 
         This endpoint is useful for
@@ -416,7 +416,7 @@ class AsyncUserResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=User,
+            cast_to=UserResponse,
         )
 
 
@@ -439,8 +439,8 @@ class UserResourceWithRawResponse:
         self.register = to_raw_response_wrapper(
             user.register,
         )
-        self.retrieve_current = to_raw_response_wrapper(
-            user.retrieve_current,
+        self.retrieve_me = to_raw_response_wrapper(
+            user.retrieve_me,
         )
 
     @cached_property
@@ -467,8 +467,8 @@ class AsyncUserResourceWithRawResponse:
         self.register = async_to_raw_response_wrapper(
             user.register,
         )
-        self.retrieve_current = async_to_raw_response_wrapper(
-            user.retrieve_current,
+        self.retrieve_me = async_to_raw_response_wrapper(
+            user.retrieve_me,
         )
 
     @cached_property
@@ -495,8 +495,8 @@ class UserResourceWithStreamingResponse:
         self.register = to_streamed_response_wrapper(
             user.register,
         )
-        self.retrieve_current = to_streamed_response_wrapper(
-            user.retrieve_current,
+        self.retrieve_me = to_streamed_response_wrapper(
+            user.retrieve_me,
         )
 
     @cached_property
@@ -523,8 +523,8 @@ class AsyncUserResourceWithStreamingResponse:
         self.register = async_to_streamed_response_wrapper(
             user.register,
         )
-        self.retrieve_current = async_to_streamed_response_wrapper(
-            user.retrieve_current,
+        self.retrieve_me = async_to_streamed_response_wrapper(
+            user.retrieve_me,
         )
 
     @cached_property

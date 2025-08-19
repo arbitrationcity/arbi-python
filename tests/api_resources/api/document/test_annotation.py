@@ -9,7 +9,10 @@ import pytest
 
 from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
-from arbi.types.api.document import DocTag, AnnotationDeleteResponse
+from arbi.types.api.document import (
+    DocTagResponse,
+    AnnotationDeleteResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,7 +26,7 @@ class TestAnnotation:
         annotation = client.api.document.annotation.create(
             doc_ext_id="doc",
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -34,7 +37,7 @@ class TestAnnotation:
             page_ref=0,
             tag_name="tag_name",
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -46,7 +49,7 @@ class TestAnnotation:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         annotation = response.parse()
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -58,7 +61,7 @@ class TestAnnotation:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             annotation = response.parse()
-            assert_matches_type(DocTag, annotation, path=["response"])
+            assert_matches_type(DocTagResponse, annotation, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -77,7 +80,7 @@ class TestAnnotation:
             doctag_ext_id="dtj",
             doc_ext_id="doc",
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -88,7 +91,7 @@ class TestAnnotation:
             note="note",
             page_ref=0,
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -101,7 +104,7 @@ class TestAnnotation:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         annotation = response.parse()
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -114,7 +117,7 @@ class TestAnnotation:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             annotation = response.parse()
-            assert_matches_type(DocTag, annotation, path=["response"])
+            assert_matches_type(DocTagResponse, annotation, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -197,7 +200,7 @@ class TestAsyncAnnotation:
         annotation = await async_client.api.document.annotation.create(
             doc_ext_id="doc",
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -208,7 +211,7 @@ class TestAsyncAnnotation:
             page_ref=0,
             tag_name="tag_name",
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -220,7 +223,7 @@ class TestAsyncAnnotation:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         annotation = await response.parse()
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -232,7 +235,7 @@ class TestAsyncAnnotation:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             annotation = await response.parse()
-            assert_matches_type(DocTag, annotation, path=["response"])
+            assert_matches_type(DocTagResponse, annotation, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -251,7 +254,7 @@ class TestAsyncAnnotation:
             doctag_ext_id="dtj",
             doc_ext_id="doc",
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -262,7 +265,7 @@ class TestAsyncAnnotation:
             note="note",
             page_ref=0,
         )
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -275,7 +278,7 @@ class TestAsyncAnnotation:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         annotation = await response.parse()
-        assert_matches_type(DocTag, annotation, path=["response"])
+        assert_matches_type(DocTagResponse, annotation, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -288,7 +291,7 @@ class TestAsyncAnnotation:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             annotation = await response.parse()
-            assert_matches_type(DocTag, annotation, path=["response"])
+            assert_matches_type(DocTagResponse, annotation, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

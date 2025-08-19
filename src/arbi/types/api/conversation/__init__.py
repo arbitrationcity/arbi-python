@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .user_create_params import UserCreateParams as UserCreateParams
-from .user_create_response import UserCreateResponse as UserCreateResponse
-from .user_delete_all_params import UserDeleteAllParams as UserDeleteAllParams
-from .user_delete_all_response import UserDeleteAllResponse as UserDeleteAllResponse
+from .user_add_params import UserAddParams as UserAddParams
+from .user_add_response import UserAddResponse as UserAddResponse
+from .user_remove_params import UserRemoveParams as UserRemoveParams
+from .user_remove_response import UserRemoveResponse as UserRemoveResponse

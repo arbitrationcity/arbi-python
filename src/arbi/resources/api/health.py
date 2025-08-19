@@ -14,10 +14,10 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.api.health_retrieve_app_response import HealthRetrieveAppResponse
-from ...types.api.health_retrieve_models_response import HealthRetrieveModelsResponse
-from ...types.api.health_retrieve_services_response import HealthRetrieveServicesResponse
-from ...types.api.health_retrieve_remote_models_response import HealthRetrieveRemoteModelsResponse
+from ...types.api.health_check_app_response import HealthCheckAppResponse
+from ...types.api.health_get_models_response import HealthGetModelsResponse
+from ...types.api.health_check_models_response import HealthCheckModelsResponse
+from ...types.api.health_check_services_response import HealthCheckServicesResponse
 
 __all__ = ["HealthResource", "AsyncHealthResource"]
 
@@ -42,7 +42,7 @@ class HealthResource(SyncAPIResource):
         """
         return HealthResourceWithStreamingResponse(self)
 
-    def retrieve_app(
+    def check_app(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -51,17 +51,17 @@ class HealthResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveAppResponse:
+    ) -> HealthCheckAppResponse:
         """Lightweight health check endpoint for the arbi-app itself."""
         return self._get(
             "/api/health/app",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=HealthRetrieveAppResponse,
+            cast_to=HealthCheckAppResponse,
         )
 
-    def retrieve_models(
+    def check_models(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -70,26 +70,7 @@ class HealthResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveModelsResponse:
-        """Returns available models with model_name and api_type fields"""
-        return self._get(
-            "/api/health/models",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=HealthRetrieveModelsResponse,
-        )
-
-    def retrieve_remote_models(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveRemoteModelsResponse:
+    ) -> HealthCheckModelsResponse:
         """
         Endpoint to check the health of various models hosted on the LiteLLM platform.
         This endpoint fetches a list of available models and checks if each one is
@@ -100,10 +81,10 @@ class HealthResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=HealthRetrieveRemoteModelsResponse,
+            cast_to=HealthCheckModelsResponse,
         )
 
-    def retrieve_services(
+    def check_services(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -112,7 +93,7 @@ class HealthResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveServicesResponse:
+    ) -> HealthCheckServicesResponse:
         """
         Health check endpoint that verifies the status of the application and external
         services. Always returns a structured object with the health status of all
@@ -123,7 +104,26 @@ class HealthResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=HealthRetrieveServicesResponse,
+            cast_to=HealthCheckServicesResponse,
+        )
+
+    def get_models(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> HealthGetModelsResponse:
+        """Returns available models with model_name and api_type fields"""
+        return self._get(
+            "/api/health/models",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=HealthGetModelsResponse,
         )
 
 
@@ -147,7 +147,7 @@ class AsyncHealthResource(AsyncAPIResource):
         """
         return AsyncHealthResourceWithStreamingResponse(self)
 
-    async def retrieve_app(
+    async def check_app(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -156,17 +156,17 @@ class AsyncHealthResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveAppResponse:
+    ) -> HealthCheckAppResponse:
         """Lightweight health check endpoint for the arbi-app itself."""
         return await self._get(
             "/api/health/app",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=HealthRetrieveAppResponse,
+            cast_to=HealthCheckAppResponse,
         )
 
-    async def retrieve_models(
+    async def check_models(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -175,26 +175,7 @@ class AsyncHealthResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveModelsResponse:
-        """Returns available models with model_name and api_type fields"""
-        return await self._get(
-            "/api/health/models",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=HealthRetrieveModelsResponse,
-        )
-
-    async def retrieve_remote_models(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveRemoteModelsResponse:
+    ) -> HealthCheckModelsResponse:
         """
         Endpoint to check the health of various models hosted on the LiteLLM platform.
         This endpoint fetches a list of available models and checks if each one is
@@ -205,10 +186,10 @@ class AsyncHealthResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=HealthRetrieveRemoteModelsResponse,
+            cast_to=HealthCheckModelsResponse,
         )
 
-    async def retrieve_services(
+    async def check_services(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -217,7 +198,7 @@ class AsyncHealthResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> HealthRetrieveServicesResponse:
+    ) -> HealthCheckServicesResponse:
         """
         Health check endpoint that verifies the status of the application and external
         services. Always returns a structured object with the health status of all
@@ -228,7 +209,26 @@ class AsyncHealthResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=HealthRetrieveServicesResponse,
+            cast_to=HealthCheckServicesResponse,
+        )
+
+    async def get_models(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> HealthGetModelsResponse:
+        """Returns available models with model_name and api_type fields"""
+        return await self._get(
+            "/api/health/models",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=HealthGetModelsResponse,
         )
 
 
@@ -236,17 +236,17 @@ class HealthResourceWithRawResponse:
     def __init__(self, health: HealthResource) -> None:
         self._health = health
 
-        self.retrieve_app = to_raw_response_wrapper(
-            health.retrieve_app,
+        self.check_app = to_raw_response_wrapper(
+            health.check_app,
         )
-        self.retrieve_models = to_raw_response_wrapper(
-            health.retrieve_models,
+        self.check_models = to_raw_response_wrapper(
+            health.check_models,
         )
-        self.retrieve_remote_models = to_raw_response_wrapper(
-            health.retrieve_remote_models,
+        self.check_services = to_raw_response_wrapper(
+            health.check_services,
         )
-        self.retrieve_services = to_raw_response_wrapper(
-            health.retrieve_services,
+        self.get_models = to_raw_response_wrapper(
+            health.get_models,
         )
 
 
@@ -254,17 +254,17 @@ class AsyncHealthResourceWithRawResponse:
     def __init__(self, health: AsyncHealthResource) -> None:
         self._health = health
 
-        self.retrieve_app = async_to_raw_response_wrapper(
-            health.retrieve_app,
+        self.check_app = async_to_raw_response_wrapper(
+            health.check_app,
         )
-        self.retrieve_models = async_to_raw_response_wrapper(
-            health.retrieve_models,
+        self.check_models = async_to_raw_response_wrapper(
+            health.check_models,
         )
-        self.retrieve_remote_models = async_to_raw_response_wrapper(
-            health.retrieve_remote_models,
+        self.check_services = async_to_raw_response_wrapper(
+            health.check_services,
         )
-        self.retrieve_services = async_to_raw_response_wrapper(
-            health.retrieve_services,
+        self.get_models = async_to_raw_response_wrapper(
+            health.get_models,
         )
 
 
@@ -272,17 +272,17 @@ class HealthResourceWithStreamingResponse:
     def __init__(self, health: HealthResource) -> None:
         self._health = health
 
-        self.retrieve_app = to_streamed_response_wrapper(
-            health.retrieve_app,
+        self.check_app = to_streamed_response_wrapper(
+            health.check_app,
         )
-        self.retrieve_models = to_streamed_response_wrapper(
-            health.retrieve_models,
+        self.check_models = to_streamed_response_wrapper(
+            health.check_models,
         )
-        self.retrieve_remote_models = to_streamed_response_wrapper(
-            health.retrieve_remote_models,
+        self.check_services = to_streamed_response_wrapper(
+            health.check_services,
         )
-        self.retrieve_services = to_streamed_response_wrapper(
-            health.retrieve_services,
+        self.get_models = to_streamed_response_wrapper(
+            health.get_models,
         )
 
 
@@ -290,15 +290,15 @@ class AsyncHealthResourceWithStreamingResponse:
     def __init__(self, health: AsyncHealthResource) -> None:
         self._health = health
 
-        self.retrieve_app = async_to_streamed_response_wrapper(
-            health.retrieve_app,
+        self.check_app = async_to_streamed_response_wrapper(
+            health.check_app,
         )
-        self.retrieve_models = async_to_streamed_response_wrapper(
-            health.retrieve_models,
+        self.check_models = async_to_streamed_response_wrapper(
+            health.check_models,
         )
-        self.retrieve_remote_models = async_to_streamed_response_wrapper(
-            health.retrieve_remote_models,
+        self.check_services = async_to_streamed_response_wrapper(
+            health.check_services,
         )
-        self.retrieve_services = async_to_streamed_response_wrapper(
-            health.retrieve_services,
+        self.get_models = async_to_streamed_response_wrapper(
+            health.get_models,
         )

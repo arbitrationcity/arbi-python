@@ -4,7 +4,6 @@ from typing import Dict, List, Union, Optional
 from datetime import datetime
 from typing_extensions import Literal, Annotated, TypeAlias
 
-from ..chunk import Chunk
 from ..._utils import PropertyInfo
 from ..._models import BaseModel
 
@@ -15,7 +14,11 @@ __all__ = [
     "ThreadHistoryTools",
     "ThreadHistoryToolsModelCitationTool",
     "ThreadHistoryToolsRetrievalChunkToolOutput",
+    "ThreadHistoryToolsRetrievalChunkToolOutputToolResponse",
+    "ThreadHistoryToolsRetrievalChunkToolOutputToolResponseMetadata",
     "ThreadHistoryToolsRetrievalFullContextToolOutput",
+    "ThreadHistoryToolsRetrievalFullContextToolOutputToolResponse",
+    "ThreadHistoryToolsRetrievalFullContextToolOutputToolResponseMetadata",
 ]
 
 
@@ -27,6 +30,36 @@ class ThreadHistoryToolsModelCitationTool(BaseModel):
     tool_responses: Optional[Dict[str, List[str]]] = None
 
 
+class ThreadHistoryToolsRetrievalChunkToolOutputToolResponseMetadata(BaseModel):
+    chunk_doc_idx: int
+
+    chunk_ext_id: str
+
+    chunk_pg_idx: int
+
+    created_at: str
+
+    page_number: int
+
+    chunk_id: Optional[str] = None
+
+    doc_ext_id: Optional[str] = None
+
+    doc_title: Optional[str] = None
+
+    rerank_score: Optional[float] = None
+
+    score: Optional[float] = None
+
+    tokens: Optional[int] = None
+
+
+class ThreadHistoryToolsRetrievalChunkToolOutputToolResponse(BaseModel):
+    content: str
+
+    metadata: ThreadHistoryToolsRetrievalChunkToolOutputToolResponseMetadata
+
+
 class ThreadHistoryToolsRetrievalChunkToolOutput(BaseModel):
     description: Optional[str] = None
 
@@ -34,7 +67,37 @@ class ThreadHistoryToolsRetrievalChunkToolOutput(BaseModel):
 
     tool_args: Optional[Dict[str, List[str]]] = None
 
-    tool_responses: Optional[Dict[str, List[Chunk]]] = None
+    tool_responses: Optional[Dict[str, List[ThreadHistoryToolsRetrievalChunkToolOutputToolResponse]]] = None
+
+
+class ThreadHistoryToolsRetrievalFullContextToolOutputToolResponseMetadata(BaseModel):
+    chunk_doc_idx: int
+
+    chunk_ext_id: str
+
+    chunk_pg_idx: int
+
+    created_at: str
+
+    page_number: int
+
+    chunk_id: Optional[str] = None
+
+    doc_ext_id: Optional[str] = None
+
+    doc_title: Optional[str] = None
+
+    rerank_score: Optional[float] = None
+
+    score: Optional[float] = None
+
+    tokens: Optional[int] = None
+
+
+class ThreadHistoryToolsRetrievalFullContextToolOutputToolResponse(BaseModel):
+    content: str
+
+    metadata: ThreadHistoryToolsRetrievalFullContextToolOutputToolResponseMetadata
 
 
 class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
@@ -44,7 +107,7 @@ class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
 
     tool_args: Optional[Dict[str, List[str]]] = None
 
-    tool_responses: Optional[Dict[str, List[Chunk]]] = None
+    tool_responses: Optional[Dict[str, List[ThreadHistoryToolsRetrievalFullContextToolOutputToolResponse]]] = None
 
 
 ThreadHistoryTools: TypeAlias = Annotated[

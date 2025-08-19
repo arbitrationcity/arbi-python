@@ -26,13 +26,13 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.api import document_update_params, document_upload_params, document_retrieve_view_params
+from ....types.api import document_view_params, document_update_params, document_upload_params
 from ...._base_client import make_request_options
-from ....types.api.doc import Doc
+from ....types.api.doc_response import DocResponse
 from ....types.api.document_delete_response import DocumentDeleteResponse
 from ....types.api.document_update_response import DocumentUpdateResponse
-from ....types.api.document_retrieve_tags_response import DocumentRetrieveTagsResponse
-from ....types.api.document_retrieve_parsed_stage_response import DocumentRetrieveParsedStageResponse
+from ....types.api.document_get_tags_response import DocumentGetTagsResponse
+from ....types.api.document_get_parsed_response import DocumentGetParsedResponse
 
 __all__ = ["DocumentResource", "AsyncDocumentResource"]
 
@@ -60,41 +60,6 @@ class DocumentResource(SyncAPIResource):
         For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return DocumentResourceWithStreamingResponse(self)
-
-    def retrieve(
-        self,
-        document_ext_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Doc:
-        """Retrieve document metadata by its external ID.
-
-        Returns decrypted document
-        information with proper access controls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        return self._get(
-            f"/api/document/{document_ext_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Doc,
-        )
 
     def update(
         self,
@@ -177,7 +142,7 @@ class DocumentResource(SyncAPIResource):
             cast_to=DocumentDeleteResponse,
         )
 
-    def retrieve_download(
+    def download(
         self,
         document_ext_id: str,
         *,
@@ -212,7 +177,42 @@ class DocumentResource(SyncAPIResource):
             cast_to=object,
         )
 
-    def retrieve_parsed_stage(
+    def get(
+        self,
+        document_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocResponse:
+        """Retrieve document metadata by its external ID.
+
+        Returns decrypted document
+        information with proper access controls.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        return self._get(
+            f"/api/document/{document_ext_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocResponse,
+        )
+
+    def get_parsed(
         self,
         stage: Literal["marker", "subchunk", "final"],
         *,
@@ -223,7 +223,7 @@ class DocumentResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentRetrieveParsedStageResponse:
+    ) -> DocumentGetParsedResponse:
         """Retrieve the full parsed document to be handled by the frontend.
 
         Only requires
@@ -247,10 +247,10 @@ class DocumentResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentRetrieveParsedStageResponse,
+            cast_to=DocumentGetParsedResponse,
         )
 
-    def retrieve_tags(
+    def get_tags(
         self,
         doc_ext_id: str,
         *,
@@ -260,7 +260,7 @@ class DocumentResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentRetrieveTagsResponse:
+    ) -> DocumentGetTagsResponse:
         """
         Get all tags applied to a specific document along with doctag metadata.
 
@@ -280,49 +280,7 @@ class DocumentResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentRetrieveTagsResponse,
-        )
-
-    def retrieve_view(
-        self,
-        document_ext_id: str,
-        *,
-        page: Optional[int] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """View a document inline in the browser.
-
-        Retrieves and decrypts the document for
-        inline viewing with optional page specification.
-
-        Args:
-          page: Optional page to open on load
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        return self._get(
-            f"/api/document/{document_ext_id}/view",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"page": page}, document_retrieve_view_params.DocumentRetrieveViewParams),
-            ),
-            cast_to=object,
+            cast_to=DocumentGetTagsResponse,
         )
 
     def upload(
@@ -386,6 +344,48 @@ class DocumentResource(SyncAPIResource):
             cast_to=object,
         )
 
+    def view(
+        self,
+        document_ext_id: str,
+        *,
+        page: Optional[int] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> object:
+        """View a document inline in the browser.
+
+        Retrieves and decrypts the document for
+        inline viewing with optional page specification.
+
+        Args:
+          page: Optional page to open on load
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        return self._get(
+            f"/api/document/{document_ext_id}/view",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"page": page}, document_view_params.DocumentViewParams),
+            ),
+            cast_to=object,
+        )
+
 
 class AsyncDocumentResource(AsyncAPIResource):
     @cached_property
@@ -410,41 +410,6 @@ class AsyncDocumentResource(AsyncAPIResource):
         For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return AsyncDocumentResourceWithStreamingResponse(self)
-
-    async def retrieve(
-        self,
-        document_ext_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Doc:
-        """Retrieve document metadata by its external ID.
-
-        Returns decrypted document
-        information with proper access controls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        return await self._get(
-            f"/api/document/{document_ext_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Doc,
-        )
 
     async def update(
         self,
@@ -527,7 +492,7 @@ class AsyncDocumentResource(AsyncAPIResource):
             cast_to=DocumentDeleteResponse,
         )
 
-    async def retrieve_download(
+    async def download(
         self,
         document_ext_id: str,
         *,
@@ -562,7 +527,42 @@ class AsyncDocumentResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    async def retrieve_parsed_stage(
+    async def get(
+        self,
+        document_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> DocResponse:
+        """Retrieve document metadata by its external ID.
+
+        Returns decrypted document
+        information with proper access controls.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        return await self._get(
+            f"/api/document/{document_ext_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocResponse,
+        )
+
+    async def get_parsed(
         self,
         stage: Literal["marker", "subchunk", "final"],
         *,
@@ -573,7 +573,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentRetrieveParsedStageResponse:
+    ) -> DocumentGetParsedResponse:
         """Retrieve the full parsed document to be handled by the frontend.
 
         Only requires
@@ -597,10 +597,10 @@ class AsyncDocumentResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentRetrieveParsedStageResponse,
+            cast_to=DocumentGetParsedResponse,
         )
 
-    async def retrieve_tags(
+    async def get_tags(
         self,
         doc_ext_id: str,
         *,
@@ -610,7 +610,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DocumentRetrieveTagsResponse:
+    ) -> DocumentGetTagsResponse:
         """
         Get all tags applied to a specific document along with doctag metadata.
 
@@ -630,51 +630,7 @@ class AsyncDocumentResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentRetrieveTagsResponse,
-        )
-
-    async def retrieve_view(
-        self,
-        document_ext_id: str,
-        *,
-        page: Optional[int] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
-        """View a document inline in the browser.
-
-        Retrieves and decrypts the document for
-        inline viewing with optional page specification.
-
-        Args:
-          page: Optional page to open on load
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        return await self._get(
-            f"/api/document/{document_ext_id}/view",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"page": page}, document_retrieve_view_params.DocumentRetrieveViewParams
-                ),
-            ),
-            cast_to=object,
+            cast_to=DocumentGetTagsResponse,
         )
 
     async def upload(
@@ -738,34 +694,76 @@ class AsyncDocumentResource(AsyncAPIResource):
             cast_to=object,
         )
 
+    async def view(
+        self,
+        document_ext_id: str,
+        *,
+        page: Optional[int] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> object:
+        """View a document inline in the browser.
+
+        Retrieves and decrypts the document for
+        inline viewing with optional page specification.
+
+        Args:
+          page: Optional page to open on load
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        return await self._get(
+            f"/api/document/{document_ext_id}/view",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"page": page}, document_view_params.DocumentViewParams),
+            ),
+            cast_to=object,
+        )
+
 
 class DocumentResourceWithRawResponse:
     def __init__(self, document: DocumentResource) -> None:
         self._document = document
 
-        self.retrieve = to_raw_response_wrapper(
-            document.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             document.update,
         )
         self.delete = to_raw_response_wrapper(
             document.delete,
         )
-        self.retrieve_download = to_raw_response_wrapper(
-            document.retrieve_download,
+        self.download = to_raw_response_wrapper(
+            document.download,
         )
-        self.retrieve_parsed_stage = to_raw_response_wrapper(
-            document.retrieve_parsed_stage,
+        self.get = to_raw_response_wrapper(
+            document.get,
         )
-        self.retrieve_tags = to_raw_response_wrapper(
-            document.retrieve_tags,
+        self.get_parsed = to_raw_response_wrapper(
+            document.get_parsed,
         )
-        self.retrieve_view = to_raw_response_wrapper(
-            document.retrieve_view,
+        self.get_tags = to_raw_response_wrapper(
+            document.get_tags,
         )
         self.upload = to_raw_response_wrapper(
             document.upload,
+        )
+        self.view = to_raw_response_wrapper(
+            document.view,
         )
 
     @cached_property
@@ -777,29 +775,29 @@ class AsyncDocumentResourceWithRawResponse:
     def __init__(self, document: AsyncDocumentResource) -> None:
         self._document = document
 
-        self.retrieve = async_to_raw_response_wrapper(
-            document.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             document.update,
         )
         self.delete = async_to_raw_response_wrapper(
             document.delete,
         )
-        self.retrieve_download = async_to_raw_response_wrapper(
-            document.retrieve_download,
+        self.download = async_to_raw_response_wrapper(
+            document.download,
         )
-        self.retrieve_parsed_stage = async_to_raw_response_wrapper(
-            document.retrieve_parsed_stage,
+        self.get = async_to_raw_response_wrapper(
+            document.get,
         )
-        self.retrieve_tags = async_to_raw_response_wrapper(
-            document.retrieve_tags,
+        self.get_parsed = async_to_raw_response_wrapper(
+            document.get_parsed,
         )
-        self.retrieve_view = async_to_raw_response_wrapper(
-            document.retrieve_view,
+        self.get_tags = async_to_raw_response_wrapper(
+            document.get_tags,
         )
         self.upload = async_to_raw_response_wrapper(
             document.upload,
+        )
+        self.view = async_to_raw_response_wrapper(
+            document.view,
         )
 
     @cached_property
@@ -811,29 +809,29 @@ class DocumentResourceWithStreamingResponse:
     def __init__(self, document: DocumentResource) -> None:
         self._document = document
 
-        self.retrieve = to_streamed_response_wrapper(
-            document.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             document.update,
         )
         self.delete = to_streamed_response_wrapper(
             document.delete,
         )
-        self.retrieve_download = to_streamed_response_wrapper(
-            document.retrieve_download,
+        self.download = to_streamed_response_wrapper(
+            document.download,
         )
-        self.retrieve_parsed_stage = to_streamed_response_wrapper(
-            document.retrieve_parsed_stage,
+        self.get = to_streamed_response_wrapper(
+            document.get,
         )
-        self.retrieve_tags = to_streamed_response_wrapper(
-            document.retrieve_tags,
+        self.get_parsed = to_streamed_response_wrapper(
+            document.get_parsed,
         )
-        self.retrieve_view = to_streamed_response_wrapper(
-            document.retrieve_view,
+        self.get_tags = to_streamed_response_wrapper(
+            document.get_tags,
         )
         self.upload = to_streamed_response_wrapper(
             document.upload,
+        )
+        self.view = to_streamed_response_wrapper(
+            document.view,
         )
 
     @cached_property
@@ -845,29 +843,29 @@ class AsyncDocumentResourceWithStreamingResponse:
     def __init__(self, document: AsyncDocumentResource) -> None:
         self._document = document
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            document.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             document.update,
         )
         self.delete = async_to_streamed_response_wrapper(
             document.delete,
         )
-        self.retrieve_download = async_to_streamed_response_wrapper(
-            document.retrieve_download,
+        self.download = async_to_streamed_response_wrapper(
+            document.download,
         )
-        self.retrieve_parsed_stage = async_to_streamed_response_wrapper(
-            document.retrieve_parsed_stage,
+        self.get = async_to_streamed_response_wrapper(
+            document.get,
         )
-        self.retrieve_tags = async_to_streamed_response_wrapper(
-            document.retrieve_tags,
+        self.get_parsed = async_to_streamed_response_wrapper(
+            document.get_parsed,
         )
-        self.retrieve_view = async_to_streamed_response_wrapper(
-            document.retrieve_view,
+        self.get_tags = async_to_streamed_response_wrapper(
+            document.get_tags,
         )
         self.upload = async_to_streamed_response_wrapper(
             document.upload,
+        )
+        self.view = async_to_streamed_response_wrapper(
+            document.view,
         )
 
     @cached_property
