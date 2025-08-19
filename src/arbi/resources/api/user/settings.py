@@ -18,7 +18,6 @@ from ...._response import (
 )
 from ...._base_client import make_request_options
 from ....types.api.user import setting_update_params
-from ....types.api.user.active_config_param import ActiveConfigParam
 from ....types.api.user.setting_retrieve_response import SettingRetrieveResponse
 
 __all__ = ["SettingsResource", "AsyncSettingsResource"]
@@ -66,8 +65,13 @@ class SettingsResource(SyncAPIResource):
     def update(
         self,
         *,
-        active_config: Optional[ActiveConfigParam] | NotGiven = NOT_GIVEN,
         pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        show_document_navigator: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_help_page: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_invite_tab: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_security_settings: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_smart_search: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_thread_visualization: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -79,9 +83,6 @@ class SettingsResource(SyncAPIResource):
         Update user's settings (merge with existing).
 
         Args:
-          active_config: Partial configuration for user active config - all fields optional for
-              overrides.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -95,8 +96,13 @@ class SettingsResource(SyncAPIResource):
             "/api/user/settings",
             body=maybe_transform(
                 {
-                    "active_config": active_config,
                     "pinned_workspaces": pinned_workspaces,
+                    "show_document_navigator": show_document_navigator,
+                    "show_help_page": show_help_page,
+                    "show_invite_tab": show_invite_tab,
+                    "show_security_settings": show_security_settings,
+                    "show_smart_search": show_smart_search,
+                    "show_thread_visualization": show_thread_visualization,
                 },
                 setting_update_params.SettingUpdateParams,
             ),
@@ -149,8 +155,13 @@ class AsyncSettingsResource(AsyncAPIResource):
     async def update(
         self,
         *,
-        active_config: Optional[ActiveConfigParam] | NotGiven = NOT_GIVEN,
         pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        show_document_navigator: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_help_page: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_invite_tab: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_security_settings: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_smart_search: Optional[bool] | NotGiven = NOT_GIVEN,
+        show_thread_visualization: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -162,9 +173,6 @@ class AsyncSettingsResource(AsyncAPIResource):
         Update user's settings (merge with existing).
 
         Args:
-          active_config: Partial configuration for user active config - all fields optional for
-              overrides.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -178,8 +186,13 @@ class AsyncSettingsResource(AsyncAPIResource):
             "/api/user/settings",
             body=await async_maybe_transform(
                 {
-                    "active_config": active_config,
                     "pinned_workspaces": pinned_workspaces,
+                    "show_document_navigator": show_document_navigator,
+                    "show_help_page": show_help_page,
+                    "show_invite_tab": show_invite_tab,
+                    "show_security_settings": show_security_settings,
+                    "show_smart_search": show_smart_search,
+                    "show_thread_visualization": show_thread_visualization,
                 },
                 setting_update_params.SettingUpdateParams,
             ),

@@ -21,6 +21,8 @@ class AssistantQueryParams(TypedDict, total=False):
 
     workspace_ext_id: Required[str]
 
+    config_ext_id: Optional[str]
+
     parent_message_ext_id: Optional[str]
 
     tools: Dict[str, Tools]

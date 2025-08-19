@@ -32,7 +32,7 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api.user import ActiveConfig, SettingRetrieveResponse
+from arbi.types.api.user import SettingRetrieveResponse
 ```
 
 Methods:
@@ -234,18 +234,13 @@ from arbi.types.api import (
     RerankerConfig,
     RetrieverConfig,
     TitleLlmConfig,
-    ConfigRetrieveResponse,
     ConfigUpdateResponse,
-    ConfigDeleteResponse,
-    ConfigRetrieveSchemaResponse,
     ConfigRetrieveVersionsResponse,
 )
 ```
 
 Methods:
 
-- <code title="get /api/configs/{config_path}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve</a>(config_path) -> <a href="./src/arbi/types/api/config_retrieve_response.py">ConfigRetrieveResponse</a></code>
 - <code title="post /api/configs/">client.api.configs.<a href="./src/arbi/resources/api/configs.py">update</a>(\*\*<a href="src/arbi/types/api/config_update_params.py">params</a>) -> <a href="./src/arbi/types/api/config_update_response.py">ConfigUpdateResponse</a></code>
-- <code title="delete /api/configs/{filename}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">delete</a>(filename) -> <a href="./src/arbi/types/api/config_delete_response.py">ConfigDeleteResponse</a></code>
-- <code title="get /api/configs/schema">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_schema</a>() -> <a href="./src/arbi/types/api/config_retrieve_schema_response.py">ConfigRetrieveSchemaResponse</a></code>
+- <code title="get /api/configs/schema">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_schema</a>() -> object</code>
 - <code title="get /api/configs/versions">client.api.configs.<a href="./src/arbi/resources/api/configs.py">retrieve_versions</a>() -> <a href="./src/arbi/types/api/config_retrieve_versions_response.py">ConfigRetrieveVersionsResponse</a></code>

@@ -10,7 +10,13 @@ __all__ = ["ModelCitationConfigParam"]
 
 
 class ModelCitationConfigParam(TypedDict, total=False):
-    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
+    max_numb_citations: Annotated[int, PropertyInfo(alias="MAX_NUMB_CITATIONS")]
+    """Maximum number of citations to return per statement."""
+
+    min_char_size_to_answer: Annotated[int, PropertyInfo(alias="MIN_CHAR_SIZE_TO_ANSWER")]
+    """Minimum character length to be considered as a statement for citation."""
+
+    sim_model_name: Annotated[str, PropertyInfo(alias="SIM_MODEL_NAME")]
     """Name of the model to be used."""
 
     sim_threashold: Annotated[float, PropertyInfo(alias="SIM_THREASHOLD")]

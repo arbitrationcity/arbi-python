@@ -219,7 +219,7 @@ class ConversationResource(SyncAPIResource):
         they have access to.
 
         Args:
-          title: New conversation title (1-20 characters)
+          title: New conversation title (1-60 characters)
 
           extra_headers: Send extra headers
 
@@ -429,7 +429,7 @@ class AsyncConversationResource(AsyncAPIResource):
         they have access to.
 
         Args:
-          title: New conversation title (1-20 characters)
+          title: New conversation title (1-60 characters)
 
           extra_headers: Send extra headers
 

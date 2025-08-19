@@ -11,7 +11,7 @@ __all__ = ["TitleLlmConfigParam"]
 
 class TitleLlmConfigParam(TypedDict, total=False):
     api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
-    """API type for the model."""
+    """The inference type (local or remote)."""
 
     max_char_size_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_SIZE_TO_ANSWER")]
     """Maximum character size to answer."""

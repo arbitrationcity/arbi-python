@@ -28,9 +28,9 @@ class ConfigUpdateParams(TypedDict, total=False):
 
     embedder: Annotated[Optional[EmbedderConfigParam], PropertyInfo(alias="Embedder")]
 
-    filename_suffix: str
-
     model_citation: Annotated[Optional[ModelCitationConfigParam], PropertyInfo(alias="ModelCitation")]
+
+    parent_message_ext_id: Optional[str]
 
     parser: Annotated[Optional[ParserConfigParam], PropertyInfo(alias="Parser")]
 
@@ -39,5 +39,7 @@ class ConfigUpdateParams(TypedDict, total=False):
     reranker: Annotated[Optional[RerankerConfigParam], PropertyInfo(alias="Reranker")]
 
     retriever: Annotated[Optional[RetrieverConfigParam], PropertyInfo(alias="Retriever")]
+
+    title: str
 
     title_llm: Annotated[Optional[TitleLlmConfigParam], PropertyInfo(alias="TitleLLM")]

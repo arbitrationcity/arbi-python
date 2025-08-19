@@ -47,6 +47,7 @@ class AssistantResource(SyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
+        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         tools: Dict[str, assistant_retrieve_params.Tools] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -76,6 +77,7 @@ class AssistantResource(SyncAPIResource):
                 {
                     "content": content,
                     "workspace_ext_id": workspace_ext_id,
+                    "config_ext_id": config_ext_id,
                     "parent_message_ext_id": parent_message_ext_id,
                     "tools": tools,
                 },
@@ -92,6 +94,7 @@ class AssistantResource(SyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
+        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         tools: Dict[str, assistant_query_params.Tools] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -121,6 +124,7 @@ class AssistantResource(SyncAPIResource):
                 {
                     "content": content,
                     "workspace_ext_id": workspace_ext_id,
+                    "config_ext_id": config_ext_id,
                     "parent_message_ext_id": parent_message_ext_id,
                     "tools": tools,
                 },
@@ -158,6 +162,7 @@ class AsyncAssistantResource(AsyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
+        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         tools: Dict[str, assistant_retrieve_params.Tools] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -187,6 +192,7 @@ class AsyncAssistantResource(AsyncAPIResource):
                 {
                     "content": content,
                     "workspace_ext_id": workspace_ext_id,
+                    "config_ext_id": config_ext_id,
                     "parent_message_ext_id": parent_message_ext_id,
                     "tools": tools,
                 },
@@ -203,6 +209,7 @@ class AsyncAssistantResource(AsyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
+        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         tools: Dict[str, assistant_query_params.Tools] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -232,6 +239,7 @@ class AsyncAssistantResource(AsyncAPIResource):
                 {
                     "content": content,
                     "workspace_ext_id": workspace_ext_id,
+                    "config_ext_id": config_ext_id,
                     "parent_message_ext_id": parent_message_ext_id,
                     "tools": tools,
                 },
