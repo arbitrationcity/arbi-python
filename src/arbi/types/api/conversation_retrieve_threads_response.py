@@ -70,7 +70,7 @@ class ThreadHistory(BaseModel):
 
     role: Literal["user", "assistant", "system"]
 
-    configurations_name: Optional[str] = None
+    config_ext_id: Optional[str] = None
 
     parent_message_ext_id: Optional[str] = None
 

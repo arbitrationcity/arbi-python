@@ -114,9 +114,10 @@ from arbi import Arbi
 
 client = Arbi()
 
-client.api.user.settings.update(
-    active_config={},
+config = client.api.configs.update(
+    document_date_extractor_llm={},
 )
+print(config.document_date_extractor_llm)
 ```
 
 ## Handling errors

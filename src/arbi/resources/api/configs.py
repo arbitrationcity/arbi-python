@@ -24,14 +24,11 @@ from ...types.api.parser_config_param import ParserConfigParam
 from ...types.api.chunker_config_param import ChunkerConfigParam
 from ...types.api.embedder_config_param import EmbedderConfigParam
 from ...types.api.reranker_config_param import RerankerConfigParam
-from ...types.api.config_delete_response import ConfigDeleteResponse
 from ...types.api.config_update_response import ConfigUpdateResponse
 from ...types.api.query_llm_config_param import QueryLlmConfigParam
 from ...types.api.retriever_config_param import RetrieverConfigParam
 from ...types.api.title_llm_config_param import TitleLlmConfigParam
-from ...types.api.config_retrieve_response import ConfigRetrieveResponse
 from ...types.api.model_citation_config_param import ModelCitationConfigParam
-from ...types.api.config_retrieve_schema_response import ConfigRetrieveSchemaResponse
 from ...types.api.config_retrieve_versions_response import ConfigRetrieveVersionsResponse
 from ...types.api.document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
@@ -58,54 +55,19 @@ class ConfigsResource(SyncAPIResource):
         """
         return ConfigsResourceWithStreamingResponse(self)
 
-    def retrieve(
-        self,
-        config_path: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveResponse:
-        """
-        Read configurations from a configuration path (supports user, conversation
-        configs, and system defaults)
-
-        Args:
-          config_path: Config path: 'defaults', 'filename', or 'con-{id}/filename'
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not config_path:
-            raise ValueError(f"Expected a non-empty value for `config_path` but received {config_path!r}")
-        return self._get(
-            f"/api/configs/{config_path}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConfigRetrieveResponse,
-        )
-
     def update(
         self,
         *,
         chunker: Optional[ChunkerConfigParam] | NotGiven = NOT_GIVEN,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | NotGiven = NOT_GIVEN,
         embedder: Optional[EmbedderConfigParam] | NotGiven = NOT_GIVEN,
-        filename_suffix: str | NotGiven = NOT_GIVEN,
         model_citation: Optional[ModelCitationConfigParam] | NotGiven = NOT_GIVEN,
+        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         parser: Optional[ParserConfigParam] | NotGiven = NOT_GIVEN,
         query_llm: Optional[QueryLlmConfigParam] | NotGiven = NOT_GIVEN,
         reranker: Optional[RerankerConfigParam] | NotGiven = NOT_GIVEN,
         retriever: Optional[RetrieverConfigParam] | NotGiven = NOT_GIVEN,
+        title: str | NotGiven = NOT_GIVEN,
         title_llm: Optional[TitleLlmConfigParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -115,7 +77,7 @@ class ConfigsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ConfigUpdateResponse:
         """
-        Save a new configuration with only the changed parameters.
+        Save a new configuration.
 
         Args:
           extra_headers: Send extra headers
@@ -133,12 +95,13 @@ class ConfigsResource(SyncAPIResource):
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "embedder": embedder,
-                    "filename_suffix": filename_suffix,
                     "model_citation": model_citation,
+                    "parent_message_ext_id": parent_message_ext_id,
                     "parser": parser,
                     "query_llm": query_llm,
                     "reranker": reranker,
                     "retriever": retriever,
+                    "title": title,
                     "title_llm": title_llm,
                 },
                 config_update_params.ConfigUpdateParams,
@@ -147,39 +110,6 @@ class ConfigsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConfigUpdateResponse,
-        )
-
-    def delete(
-        self,
-        filename: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigDeleteResponse:
-        """
-        Delete a specific configuration file from user's directory
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not filename:
-            raise ValueError(f"Expected a non-empty value for `filename` but received {filename!r}")
-        return self._delete(
-            f"/api/configs/{filename}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConfigDeleteResponse,
         )
 
     def retrieve_schema(
@@ -191,14 +121,14 @@ class ConfigsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveSchemaResponse:
+    ) -> object:
         """Return the JSON schema for all config models"""
         return self._get(
             "/api/configs/schema",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigRetrieveSchemaResponse,
+            cast_to=object,
         )
 
     def retrieve_versions(
@@ -241,54 +171,19 @@ class AsyncConfigsResource(AsyncAPIResource):
         """
         return AsyncConfigsResourceWithStreamingResponse(self)
 
-    async def retrieve(
-        self,
-        config_path: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveResponse:
-        """
-        Read configurations from a configuration path (supports user, conversation
-        configs, and system defaults)
-
-        Args:
-          config_path: Config path: 'defaults', 'filename', or 'con-{id}/filename'
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not config_path:
-            raise ValueError(f"Expected a non-empty value for `config_path` but received {config_path!r}")
-        return await self._get(
-            f"/api/configs/{config_path}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConfigRetrieveResponse,
-        )
-
     async def update(
         self,
         *,
         chunker: Optional[ChunkerConfigParam] | NotGiven = NOT_GIVEN,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | NotGiven = NOT_GIVEN,
         embedder: Optional[EmbedderConfigParam] | NotGiven = NOT_GIVEN,
-        filename_suffix: str | NotGiven = NOT_GIVEN,
         model_citation: Optional[ModelCitationConfigParam] | NotGiven = NOT_GIVEN,
+        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         parser: Optional[ParserConfigParam] | NotGiven = NOT_GIVEN,
         query_llm: Optional[QueryLlmConfigParam] | NotGiven = NOT_GIVEN,
         reranker: Optional[RerankerConfigParam] | NotGiven = NOT_GIVEN,
         retriever: Optional[RetrieverConfigParam] | NotGiven = NOT_GIVEN,
+        title: str | NotGiven = NOT_GIVEN,
         title_llm: Optional[TitleLlmConfigParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -298,7 +193,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ConfigUpdateResponse:
         """
-        Save a new configuration with only the changed parameters.
+        Save a new configuration.
 
         Args:
           extra_headers: Send extra headers
@@ -316,12 +211,13 @@ class AsyncConfigsResource(AsyncAPIResource):
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "embedder": embedder,
-                    "filename_suffix": filename_suffix,
                     "model_citation": model_citation,
+                    "parent_message_ext_id": parent_message_ext_id,
                     "parser": parser,
                     "query_llm": query_llm,
                     "reranker": reranker,
                     "retriever": retriever,
+                    "title": title,
                     "title_llm": title_llm,
                 },
                 config_update_params.ConfigUpdateParams,
@@ -330,39 +226,6 @@ class AsyncConfigsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConfigUpdateResponse,
-        )
-
-    async def delete(
-        self,
-        filename: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigDeleteResponse:
-        """
-        Delete a specific configuration file from user's directory
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not filename:
-            raise ValueError(f"Expected a non-empty value for `filename` but received {filename!r}")
-        return await self._delete(
-            f"/api/configs/{filename}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=ConfigDeleteResponse,
         )
 
     async def retrieve_schema(
@@ -374,14 +237,14 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveSchemaResponse:
+    ) -> object:
         """Return the JSON schema for all config models"""
         return await self._get(
             "/api/configs/schema",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigRetrieveSchemaResponse,
+            cast_to=object,
         )
 
     async def retrieve_versions(
@@ -408,14 +271,8 @@ class ConfigsResourceWithRawResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = to_raw_response_wrapper(
-            configs.retrieve,
-        )
         self.update = to_raw_response_wrapper(
             configs.update,
-        )
-        self.delete = to_raw_response_wrapper(
-            configs.delete,
         )
         self.retrieve_schema = to_raw_response_wrapper(
             configs.retrieve_schema,
@@ -429,14 +286,8 @@ class AsyncConfigsResourceWithRawResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = async_to_raw_response_wrapper(
-            configs.retrieve,
-        )
         self.update = async_to_raw_response_wrapper(
             configs.update,
-        )
-        self.delete = async_to_raw_response_wrapper(
-            configs.delete,
         )
         self.retrieve_schema = async_to_raw_response_wrapper(
             configs.retrieve_schema,
@@ -450,14 +301,8 @@ class ConfigsResourceWithStreamingResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = to_streamed_response_wrapper(
-            configs.retrieve,
-        )
         self.update = to_streamed_response_wrapper(
             configs.update,
-        )
-        self.delete = to_streamed_response_wrapper(
-            configs.delete,
         )
         self.retrieve_schema = to_streamed_response_wrapper(
             configs.retrieve_schema,
@@ -471,14 +316,8 @@ class AsyncConfigsResourceWithStreamingResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            configs.retrieve,
-        )
         self.update = async_to_streamed_response_wrapper(
             configs.update,
-        )
-        self.delete = async_to_streamed_response_wrapper(
-            configs.delete,
         )
         self.retrieve_schema = async_to_streamed_response_wrapper(
             configs.retrieve_schema,

@@ -8,6 +8,8 @@ __all__ = ["ConfigUpdateResponse"]
 
 
 class ConfigUpdateResponse(BaseModel):
-    version: str
+    created_at: str
 
-    detail: Optional[str] = None
+    external_id: str
+
+    title: Optional[str] = None

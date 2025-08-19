@@ -10,10 +10,7 @@ import pytest
 from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
-    ConfigDeleteResponse,
     ConfigUpdateResponse,
-    ConfigRetrieveResponse,
-    ConfigRetrieveSchemaResponse,
     ConfigRetrieveVersionsResponse,
 )
 
@@ -22,48 +19,6 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestConfigs:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve(self, client: Arbi) -> None:
-        config = client.api.configs.retrieve(
-            "config_path",
-        )
-        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.retrieve(
-            "config_path",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = response.parse()
-        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.retrieve(
-            "config_path",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = response.parse()
-            assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_path` but received ''"):
-            client.api.configs.with_raw_response.retrieve(
-                "",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -88,11 +43,13 @@ class TestConfigs:
                 "api_type": "local",
                 "model_name": "MODEL_NAME",
             },
-            filename_suffix="filename_suffix",
             model_citation={
-                "model_name": "MODEL_NAME",
+                "max_numb_citations": 0,
+                "min_char_size_to_answer": 0,
+                "sim_model_name": "SIM_MODEL_NAME",
                 "sim_threashold": 0,
             },
+            parent_message_ext_id="parent_message_ext_id",
             parser={},
             query_llm={
                 "api_type": "local",
@@ -113,6 +70,7 @@ class TestConfigs:
                 "max_total_chunks_to_retrieve": 100,
                 "min_retrieval_sim_score": 0,
             },
+            title="title",
             title_llm={
                 "api_type": "local",
                 "max_char_size_to_answer": 0,
@@ -148,51 +106,9 @@ class TestConfigs:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_delete(self, client: Arbi) -> None:
-        config = client.api.configs.delete(
-            "filename",
-        )
-        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_delete(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.delete(
-            "filename",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = response.parse()
-        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_delete(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.delete(
-            "filename",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = response.parse()
-            assert_matches_type(ConfigDeleteResponse, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_delete(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `filename` but received ''"):
-            client.api.configs.with_raw_response.delete(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_retrieve_schema(self, client: Arbi) -> None:
         config = client.api.configs.retrieve_schema()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+        assert_matches_type(object, config, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -202,7 +118,7 @@ class TestConfigs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = response.parse()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+        assert_matches_type(object, config, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -212,7 +128,7 @@ class TestConfigs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = response.parse()
-            assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+            assert_matches_type(object, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -252,48 +168,6 @@ class TestAsyncConfigs:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.retrieve(
-            "config_path",
-        )
-        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.retrieve(
-            "config_path",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = await response.parse()
-        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.retrieve(
-            "config_path",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = await response.parse()
-            assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_path` but received ''"):
-            await async_client.api.configs.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_update(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.update()
         assert_matches_type(ConfigUpdateResponse, config, path=["response"])
@@ -315,11 +189,13 @@ class TestAsyncConfigs:
                 "api_type": "local",
                 "model_name": "MODEL_NAME",
             },
-            filename_suffix="filename_suffix",
             model_citation={
-                "model_name": "MODEL_NAME",
+                "max_numb_citations": 0,
+                "min_char_size_to_answer": 0,
+                "sim_model_name": "SIM_MODEL_NAME",
                 "sim_threashold": 0,
             },
+            parent_message_ext_id="parent_message_ext_id",
             parser={},
             query_llm={
                 "api_type": "local",
@@ -340,6 +216,7 @@ class TestAsyncConfigs:
                 "max_total_chunks_to_retrieve": 100,
                 "min_retrieval_sim_score": 0,
             },
+            title="title",
             title_llm={
                 "api_type": "local",
                 "max_char_size_to_answer": 0,
@@ -375,51 +252,9 @@ class TestAsyncConfigs:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_delete(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.delete(
-            "filename",
-        )
-        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.delete(
-            "filename",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = await response.parse()
-        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.delete(
-            "filename",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = await response.parse()
-            assert_matches_type(ConfigDeleteResponse, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `filename` but received ''"):
-            await async_client.api.configs.with_raw_response.delete(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_retrieve_schema(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.retrieve_schema()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+        assert_matches_type(object, config, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -429,7 +264,7 @@ class TestAsyncConfigs:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = await response.parse()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+        assert_matches_type(object, config, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -439,7 +274,7 @@ class TestAsyncConfigs:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = await response.parse()
-            assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+            assert_matches_type(object, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

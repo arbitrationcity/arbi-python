@@ -19,6 +19,8 @@ class Doc(BaseModel):
 
     workspace_ext_id: str
 
+    config_ext_id: Optional[str] = None
+
     created_by_ext_id: Optional[str] = None
 
     doc_date: Optional[date] = None

@@ -330,6 +330,7 @@ class DocumentResource(SyncAPIResource):
         *,
         workspace_ext_id: str,
         files: List[FileTypes],
+        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -345,6 +346,8 @@ class DocumentResource(SyncAPIResource):
 
         Args:
           files: Multiple files to upload
+
+          config_ext_id: Configuration to use for processing
 
           shared: Whether the document should be shared with workspace members
 
@@ -374,6 +377,7 @@ class DocumentResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "workspace_ext_id": workspace_ext_id,
+                        "config_ext_id": config_ext_id,
                         "shared": shared,
                     },
                     document_upload_params.DocumentUploadParams,
@@ -678,6 +682,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         *,
         workspace_ext_id: str,
         files: List[FileTypes],
+        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -693,6 +698,8 @@ class AsyncDocumentResource(AsyncAPIResource):
 
         Args:
           files: Multiple files to upload
+
+          config_ext_id: Configuration to use for processing
 
           shared: Whether the document should be shared with workspace members
 
@@ -722,6 +729,7 @@ class AsyncDocumentResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "workspace_ext_id": workspace_ext_id,
+                        "config_ext_id": config_ext_id,
                         "shared": shared,
                     },
                     document_upload_params.DocumentUploadParams,

@@ -357,6 +357,7 @@ class TestDocument:
         document = client.api.document.upload(
             workspace_ext_id="wrk",
             files=[b"raw file contents"],
+            config_ext_id="config_ext_id",
             shared=True,
         )
         assert_matches_type(object, document, path=["response"])
@@ -728,6 +729,7 @@ class TestAsyncDocument:
         document = await async_client.api.document.upload(
             workspace_ext_id="wrk",
             files=[b"raw file contents"],
+            config_ext_id="config_ext_id",
             shared=True,
         )
         assert_matches_type(object, document, path=["response"])

@@ -9,4 +9,4 @@ __all__ = ["ConversationUpdateTitleParams"]
 
 class ConversationUpdateTitleParams(TypedDict, total=False):
     title: Required[str]
-    """New conversation title (1-20 characters)"""
+    """New conversation title (1-60 characters)"""

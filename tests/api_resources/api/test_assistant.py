@@ -31,6 +31,7 @@ class TestAssistant:
         assistant = client.api.assistant.retrieve(
             content="content",
             workspace_ext_id="wrk-bFXA5r3A",
+            config_ext_id="config_ext_id",
             parent_message_ext_id="parent_message_ext_id",
             tools={
                 "foo": {
@@ -85,6 +86,7 @@ class TestAssistant:
         assistant = client.api.assistant.query(
             content="content",
             workspace_ext_id="wrk-bFXA5r3A",
+            config_ext_id="config_ext_id",
             parent_message_ext_id="parent_message_ext_id",
             tools={
                 "foo": {
@@ -145,6 +147,7 @@ class TestAsyncAssistant:
         assistant = await async_client.api.assistant.retrieve(
             content="content",
             workspace_ext_id="wrk-bFXA5r3A",
+            config_ext_id="config_ext_id",
             parent_message_ext_id="parent_message_ext_id",
             tools={
                 "foo": {
@@ -199,6 +202,7 @@ class TestAsyncAssistant:
         assistant = await async_client.api.assistant.query(
             content="content",
             workspace_ext_id="wrk-bFXA5r3A",
+            config_ext_id="config_ext_id",
             parent_message_ext_id="parent_message_ext_id",
             tools={
                 "foo": {
