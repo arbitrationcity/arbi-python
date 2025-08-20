@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-08-20)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/arbitrationcity/arbi-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** manual updates ([cf4ce4f](https://github.com/arbitrationcity/arbi-python/commit/cf4ce4fc8a9ac37366d87a3fc216d98491a97a80))
+* **api:** manual updates ([88379e2](https://github.com/arbitrationcity/arbi-python/commit/88379e2df1d787be045b522dd71c8fc72062c5bf))
+* **api:** manual updates ([9fdc003](https://github.com/arbitrationcity/arbi-python/commit/9fdc003db20c59b3d42b3518beb6abb87efba4e3))
+* **api:** manual updates ([45cdc9a](https://github.com/arbitrationcity/arbi-python/commit/45cdc9a0d716af2bbbcffd742044fb7871191131))
+* **api:** manual updates ([fdcd3b8](https://github.com/arbitrationcity/arbi-python/commit/fdcd3b8a24e3e853e5c1992b7ea9882d53be29c3))
+* **api:** manual updates - test ([ceb0a29](https://github.com/arbitrationcity/arbi-python/commit/ceb0a29da5fbffc47c3adfafd52d2fb718661e05))
+* **api:** manual updates -test 2 ([718dc68](https://github.com/arbitrationcity/arbi-python/commit/718dc68b20b2cd964117b5de9676747628444181))
+* clean up environment call outs ([88cdd65](https://github.com/arbitrationcity/arbi-python/commit/88cdd6551e968fc66a5f0702799973cc2e133058))
+* **client:** support file upload requests ([0e302b2](https://github.com/arbitrationcity/arbi-python/commit/0e302b2c990d2a5a29e9cad98f75017e190a244b))
+
+
+### Bug Fixes
+
+* **parsing:** ignore empty metadata ([5c8f7a1](https://github.com/arbitrationcity/arbi-python/commit/5c8f7a1448a88497243dde391e745124d9708dac))
+* **parsing:** parse extra field types ([13d7e6b](https://github.com/arbitrationcity/arbi-python/commit/13d7e6b0ccd9ab20db2f505dfb3a3a3d5a2bd950))
+
+
+### Chores
+
+* **internal:** codegen related update ([32175d3](https://github.com/arbitrationcity/arbi-python/commit/32175d3433c0f30de68c728793888ce2ea50c805))
+* **internal:** fix ruff target version ([b14949a](https://github.com/arbitrationcity/arbi-python/commit/b14949ac8dc813d4256a7768a0e0f7b2c6edad5f))
+* **internal:** update comment in script ([c5ad447](https://github.com/arbitrationcity/arbi-python/commit/c5ad447a54950674fb5bfdea7dc7a23960086311))
+* **project:** add settings file for vscode ([dc9cfc0](https://github.com/arbitrationcity/arbi-python/commit/dc9cfc0a3a1d9af1050569d86b7cedf5466492bc))
+* update @stainless-api/prism-cli to v5.15.0 ([481255c](https://github.com/arbitrationcity/arbi-python/commit/481255c1dd4bd151ddbab289e079e82f7468ab30))
+* update SDK settings ([c1365e9](https://github.com/arbitrationcity/arbi-python/commit/c1365e9d75cb0454096dedd3d954e04715e579ac))
+* update SDK settings ([b7631d1](https://github.com/arbitrationcity/arbi-python/commit/b7631d192230f69c6925ab4a1f658da3054da887))
+
 ## 0.1.0-alpha.1 (2025-07-14)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/arbitrationcity/arbi-python/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
