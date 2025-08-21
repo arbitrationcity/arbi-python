@@ -21,14 +21,6 @@ from .tag import (
     TagResourceWithStreamingResponse,
     AsyncTagResourceWithStreamingResponse,
 )
-from .test import (
-    TestResource,
-    AsyncTestResource,
-    TestResourceWithRawResponse,
-    AsyncTestResourceWithRawResponse,
-    TestResourceWithStreamingResponse,
-    AsyncTestResourceWithStreamingResponse,
-)
 from .health import (
     HealthResource,
     AsyncHealthResource,
@@ -136,16 +128,12 @@ class APIResource(_resource.SyncAPIResource):
         return ConfigsResource(self._client)
 
     @cached_property
-    def test(self) -> TestResource:
-        return TestResource(self._client)
-
-    @cached_property
     def with_raw_response(self) -> APIResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
         """
         return APIResourceWithRawResponse(self)
 
@@ -154,7 +142,7 @@ class APIResource(_resource.SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return APIResourceWithStreamingResponse(self)
 
@@ -216,16 +204,12 @@ class AsyncAPIResource(_resource.AsyncAPIResource):
         return AsyncConfigsResource(self._client)
 
     @cached_property
-    def test(self) -> AsyncTestResource:
-        return AsyncTestResource(self._client)
-
-    @cached_property
     def with_raw_response(self) -> AsyncAPIResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#accessing-raw-response-data-eg-headers
         """
         return AsyncAPIResourceWithRawResponse(self)
 
@@ -234,7 +218,7 @@ class AsyncAPIResource(_resource.AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/arbi-python#with_streaming_response
         """
         return AsyncAPIResourceWithStreamingResponse(self)
 
@@ -302,10 +286,6 @@ class APIResourceWithRawResponse:
     def configs(self) -> ConfigsResourceWithRawResponse:
         return ConfigsResourceWithRawResponse(self._api.configs)
 
-    @cached_property
-    def test(self) -> TestResourceWithRawResponse:
-        return TestResourceWithRawResponse(self._api.test)
-
 
 class AsyncAPIResourceWithRawResponse:
     def __init__(self, api: AsyncAPIResource) -> None:
@@ -350,10 +330,6 @@ class AsyncAPIResourceWithRawResponse:
     @cached_property
     def configs(self) -> AsyncConfigsResourceWithRawResponse:
         return AsyncConfigsResourceWithRawResponse(self._api.configs)
-
-    @cached_property
-    def test(self) -> AsyncTestResourceWithRawResponse:
-        return AsyncTestResourceWithRawResponse(self._api.test)
 
 
 class APIResourceWithStreamingResponse:
@@ -400,10 +376,6 @@ class APIResourceWithStreamingResponse:
     def configs(self) -> ConfigsResourceWithStreamingResponse:
         return ConfigsResourceWithStreamingResponse(self._api.configs)
 
-    @cached_property
-    def test(self) -> TestResourceWithStreamingResponse:
-        return TestResourceWithStreamingResponse(self._api.test)
-
 
 class AsyncAPIResourceWithStreamingResponse:
     def __init__(self, api: AsyncAPIResource) -> None:
@@ -448,7 +420,3 @@ class AsyncAPIResourceWithStreamingResponse:
     @cached_property
     def configs(self) -> AsyncConfigsResourceWithStreamingResponse:
         return AsyncConfigsResourceWithStreamingResponse(self._api.configs)
-
-    @cached_property
-    def test(self) -> AsyncTestResourceWithStreamingResponse:
-        return AsyncTestResourceWithStreamingResponse(self._api.test)

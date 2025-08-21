@@ -24,14 +24,6 @@ from .tag import (
     TagResourceWithStreamingResponse,
     AsyncTagResourceWithStreamingResponse,
 )
-from .test import (
-    TestResource,
-    AsyncTestResource,
-    TestResourceWithRawResponse,
-    AsyncTestResourceWithRawResponse,
-    TestResourceWithStreamingResponse,
-    AsyncTestResourceWithStreamingResponse,
-)
 from .user import (
     UserResource,
     AsyncUserResource,
@@ -144,12 +136,6 @@ __all__ = [
     "AsyncConfigsResourceWithRawResponse",
     "ConfigsResourceWithStreamingResponse",
     "AsyncConfigsResourceWithStreamingResponse",
-    "TestResource",
-    "AsyncTestResource",
-    "TestResourceWithRawResponse",
-    "AsyncTestResourceWithRawResponse",
-    "TestResourceWithStreamingResponse",
-    "AsyncTestResourceWithStreamingResponse",
     "APIResource",
     "AsyncAPIResource",
     "APIResourceWithRawResponse",
