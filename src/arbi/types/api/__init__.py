@@ -7,7 +7,6 @@ from .doc_response import DocResponse as DocResponse
 from .user_response import UserResponse as UserResponse
 from .embedder_config import EmbedderConfig as EmbedderConfig
 from .reranker_config import RerankerConfig as RerankerConfig
-from .simple_response import SimpleResponse as SimpleResponse
 from .query_llm_config import QueryLlmConfig as QueryLlmConfig
 from .retriever_config import RetrieverConfig as RetrieverConfig
 from .sso_login_params import SSOLoginParams as SSOLoginParams
