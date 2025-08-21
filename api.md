@@ -1,5 +1,11 @@
 # API
 
+Types:
+
+```python
+from arbi.types import Chunk, ChunkMetadata
+```
+
 Methods:
 
 - <code title="get /api">client.api.<a href="./src/arbi/resources/api/api.py">index</a>() -> object</code>
