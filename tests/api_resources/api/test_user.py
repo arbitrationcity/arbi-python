@@ -13,7 +13,6 @@ from arbi.types.api import (
     Token,
     UserResponse,
     UserLogoutResponse,
-    UserGetSettingsResponse,
     UserListWorkspacesResponse,
 )
 
@@ -23,41 +22,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestUser:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_get_settings(self, client: Arbi) -> None:
-        user = client.api.user.get_settings()
-        assert_matches_type(UserGetSettingsResponse, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_get_settings(self, client: Arbi) -> None:
-        response = client.api.user.with_raw_response.get_settings()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(UserGetSettingsResponse, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_get_settings(self, client: Arbi) -> None:
-        with client.api.user.with_streaming_response.get_settings() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = response.parse()
-            assert_matches_type(UserGetSettingsResponse, user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_workspaces(self, client: Arbi) -> None:
         user = client.api.user.list_workspaces()
         assert_matches_type(UserListWorkspacesResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list_workspaces(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.list_workspaces()
@@ -67,7 +38,7 @@ class TestUser:
         user = response.parse()
         assert_matches_type(UserListWorkspacesResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list_workspaces(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.list_workspaces() as response:
@@ -79,7 +50,7 @@ class TestUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_login(self, client: Arbi) -> None:
         user = client.api.user.login(
@@ -88,7 +59,7 @@ class TestUser:
         )
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_login(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.login(
@@ -101,7 +72,7 @@ class TestUser:
         user = response.parse()
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_login(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.login(
@@ -116,13 +87,13 @@ class TestUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_logout(self, client: Arbi) -> None:
         user = client.api.user.logout()
         assert_matches_type(UserLogoutResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_logout(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.logout()
@@ -132,7 +103,7 @@ class TestUser:
         user = response.parse()
         assert_matches_type(UserLogoutResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_logout(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.logout() as response:
@@ -144,13 +115,13 @@ class TestUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_refresh_token(self, client: Arbi) -> None:
         user = client.api.user.refresh_token()
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_refresh_token(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.refresh_token()
@@ -160,7 +131,7 @@ class TestUser:
         user = response.parse()
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_refresh_token(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.refresh_token() as response:
@@ -172,7 +143,7 @@ class TestUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_register(self, client: Arbi) -> None:
         user = client.api.user.register(
@@ -183,7 +154,7 @@ class TestUser:
         )
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_register(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.register(
@@ -198,7 +169,7 @@ class TestUser:
         user = response.parse()
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_register(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.register(
@@ -215,67 +186,31 @@ class TestUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_current(self, client: Arbi) -> None:
-        user = client.api.user.retrieve_current()
+    def test_method_retrieve_me(self, client: Arbi) -> None:
+        user = client.api.user.retrieve_me()
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_current(self, client: Arbi) -> None:
-        response = client.api.user.with_raw_response.retrieve_current()
+    def test_raw_response_retrieve_me(self, client: Arbi) -> None:
+        response = client.api.user.with_raw_response.retrieve_me()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = response.parse()
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_current(self, client: Arbi) -> None:
-        with client.api.user.with_streaming_response.retrieve_current() as response:
+    def test_streaming_response_retrieve_me(self, client: Arbi) -> None:
+        with client.api.user.with_streaming_response.retrieve_me() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = response.parse()
             assert_matches_type(UserResponse, user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_update_settings(self, client: Arbi) -> None:
-        user = client.api.user.update_settings()
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_update_settings_with_all_params(self, client: Arbi) -> None:
-        user = client.api.user.update_settings(
-            pinned_workspaces=["wrk-bFXA5r3A"],
-        )
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_update_settings(self, client: Arbi) -> None:
-        response = client.api.user.with_raw_response.update_settings()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_update_settings(self, client: Arbi) -> None:
-        with client.api.user.with_streaming_response.update_settings() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = response.parse()
-            assert user is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -285,41 +220,13 @@ class TestAsyncUser:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_get_settings(self, async_client: AsyncArbi) -> None:
-        user = await async_client.api.user.get_settings()
-        assert_matches_type(UserGetSettingsResponse, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_get_settings(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.user.with_raw_response.get_settings()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(UserGetSettingsResponse, user, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_get_settings(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.user.with_streaming_response.get_settings() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = await response.parse()
-            assert_matches_type(UserGetSettingsResponse, user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_workspaces(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.list_workspaces()
         assert_matches_type(UserListWorkspacesResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list_workspaces(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.list_workspaces()
@@ -329,7 +236,7 @@ class TestAsyncUser:
         user = await response.parse()
         assert_matches_type(UserListWorkspacesResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list_workspaces(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.list_workspaces() as response:
@@ -341,7 +248,7 @@ class TestAsyncUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_login(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.login(
@@ -350,7 +257,7 @@ class TestAsyncUser:
         )
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_login(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.login(
@@ -363,7 +270,7 @@ class TestAsyncUser:
         user = await response.parse()
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_login(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.login(
@@ -378,13 +285,13 @@ class TestAsyncUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_logout(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.logout()
         assert_matches_type(UserLogoutResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_logout(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.logout()
@@ -394,7 +301,7 @@ class TestAsyncUser:
         user = await response.parse()
         assert_matches_type(UserLogoutResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_logout(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.logout() as response:
@@ -406,13 +313,13 @@ class TestAsyncUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_refresh_token(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.refresh_token()
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_refresh_token(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.refresh_token()
@@ -422,7 +329,7 @@ class TestAsyncUser:
         user = await response.parse()
         assert_matches_type(Token, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_refresh_token(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.refresh_token() as response:
@@ -434,7 +341,7 @@ class TestAsyncUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_register(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.register(
@@ -445,7 +352,7 @@ class TestAsyncUser:
         )
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_register(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.register(
@@ -460,7 +367,7 @@ class TestAsyncUser:
         user = await response.parse()
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_register(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.register(
@@ -477,66 +384,30 @@ class TestAsyncUser:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_current(self, async_client: AsyncArbi) -> None:
-        user = await async_client.api.user.retrieve_current()
+    async def test_method_retrieve_me(self, async_client: AsyncArbi) -> None:
+        user = await async_client.api.user.retrieve_me()
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_current(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.user.with_raw_response.retrieve_current()
+    async def test_raw_response_retrieve_me(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.user.with_raw_response.retrieve_me()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         user = await response.parse()
         assert_matches_type(UserResponse, user, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_current(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.user.with_streaming_response.retrieve_current() as response:
+    async def test_streaming_response_retrieve_me(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.user.with_streaming_response.retrieve_me() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             user = await response.parse()
             assert_matches_type(UserResponse, user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_update_settings(self, async_client: AsyncArbi) -> None:
-        user = await async_client.api.user.update_settings()
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_update_settings_with_all_params(self, async_client: AsyncArbi) -> None:
-        user = await async_client.api.user.update_settings(
-            pinned_workspaces=["wrk-bFXA5r3A"],
-        )
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_update_settings(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.user.with_raw_response.update_settings()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert user is None
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_update_settings(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.user.with_streaming_response.update_settings() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = await response.parse()
-            assert user is None
 
         assert cast(Any, response.is_closed) is True

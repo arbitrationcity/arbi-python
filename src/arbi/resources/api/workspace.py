@@ -26,13 +26,13 @@ from ..._base_client import make_request_options
 from ...types.api.workspace_response import WorkspaceResponse
 from ...types.api.workspace_share_response import WorkspaceShareResponse
 from ...types.api.workspace_delete_response import WorkspaceDeleteResponse
-from ...types.api.workspace_list_tags_response import WorkspaceListTagsResponse
-from ...types.api.workspace_list_users_response import WorkspaceListUsersResponse
+from ...types.api.workspace_get_tags_response import WorkspaceGetTagsResponse
+from ...types.api.workspace_get_stats_response import WorkspaceGetStatsResponse
+from ...types.api.workspace_get_users_response import WorkspaceGetUsersResponse
+from ...types.api.workspace_get_doctags_response import WorkspaceGetDoctagsResponse
 from ...types.api.workspace_remove_user_response import WorkspaceRemoveUserResponse
-from ...types.api.workspace_list_doctags_response import WorkspaceListDoctagsResponse
-from ...types.api.workspace_list_documents_response import WorkspaceListDocumentsResponse
-from ...types.api.workspace_retrieve_stats_response import WorkspaceRetrieveStatsResponse
-from ...types.api.workspace_list_conversations_response import WorkspaceListConversationsResponse
+from ...types.api.workspace_get_documents_response import WorkspaceGetDocumentsResponse
+from ...types.api.workspace_get_conversations_response import WorkspaceGetConversationsResponse
 
 __all__ = ["WorkspaceResource", "AsyncWorkspaceResource"]
 
@@ -179,7 +179,7 @@ class WorkspaceResource(SyncAPIResource):
             cast_to=WorkspaceResponse,
         )
 
-    def list_conversations(
+    def get_conversations(
         self,
         workspace_ext_id: str,
         *,
@@ -189,7 +189,7 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListConversationsResponse:
+    ) -> WorkspaceGetConversationsResponse:
         """
         Retrieve conversations for a workspace where the current user is:
 
@@ -220,10 +220,10 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListConversationsResponse,
+            cast_to=WorkspaceGetConversationsResponse,
         )
 
-    def list_doctags(
+    def get_doctags(
         self,
         workspace_ext_id: str,
         *,
@@ -233,7 +233,7 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListDoctagsResponse:
+    ) -> WorkspaceGetDoctagsResponse:
         """Get all doctags (document-tag associations) in a given workspace.
 
         RLS is used to
@@ -255,10 +255,10 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListDoctagsResponse,
+            cast_to=WorkspaceGetDoctagsResponse,
         )
 
-    def list_documents(
+    def get_documents(
         self,
         workspace_ext_id: str,
         *,
@@ -268,7 +268,7 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListDocumentsResponse:
+    ) -> WorkspaceGetDocumentsResponse:
         """Retrieve all documents in a workspace with proper access controls.
 
         Decrypts
@@ -290,10 +290,10 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListDocumentsResponse,
+            cast_to=WorkspaceGetDocumentsResponse,
         )
 
-    def list_tags(
+    def get_stats(
         self,
         workspace_ext_id: str,
         *,
@@ -303,7 +303,40 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListTagsResponse:
+    ) -> WorkspaceGetStatsResponse:
+        """
+        Retrieves conversation and document counts for a specific workspace.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_ext_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        return self._get(
+            f"/api/workspace/{workspace_ext_id}/stats",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WorkspaceGetStatsResponse,
+        )
+
+    def get_tags(
+        self,
+        workspace_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> WorkspaceGetTagsResponse:
         """
         Get all tags in a given workspace created by the current user.
 
@@ -323,10 +356,10 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListTagsResponse,
+            cast_to=WorkspaceGetTagsResponse,
         )
 
-    def list_users(
+    def get_users(
         self,
         workspace_ext_id: str,
         *,
@@ -336,7 +369,7 @@ class WorkspaceResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListUsersResponse:
+    ) -> WorkspaceGetUsersResponse:
         """Retrieve users with access to a specific workspace.
 
         Leverages RLS to enforce
@@ -358,7 +391,7 @@ class WorkspaceResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListUsersResponse,
+            cast_to=WorkspaceGetUsersResponse,
         )
 
     def remove_user(
@@ -396,39 +429,6 @@ class WorkspaceResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WorkspaceRemoveUserResponse,
-        )
-
-    def retrieve_stats(
-        self,
-        workspace_ext_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceRetrieveStatsResponse:
-        """
-        Retrieves conversation and document counts for a specific workspace.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_ext_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
-        return self._get(
-            f"/api/workspace/{workspace_ext_id}/stats",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=WorkspaceRetrieveStatsResponse,
         )
 
     def share(
@@ -611,7 +611,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             cast_to=WorkspaceResponse,
         )
 
-    async def list_conversations(
+    async def get_conversations(
         self,
         workspace_ext_id: str,
         *,
@@ -621,7 +621,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListConversationsResponse:
+    ) -> WorkspaceGetConversationsResponse:
         """
         Retrieve conversations for a workspace where the current user is:
 
@@ -652,10 +652,10 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListConversationsResponse,
+            cast_to=WorkspaceGetConversationsResponse,
         )
 
-    async def list_doctags(
+    async def get_doctags(
         self,
         workspace_ext_id: str,
         *,
@@ -665,7 +665,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListDoctagsResponse:
+    ) -> WorkspaceGetDoctagsResponse:
         """Get all doctags (document-tag associations) in a given workspace.
 
         RLS is used to
@@ -687,10 +687,10 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListDoctagsResponse,
+            cast_to=WorkspaceGetDoctagsResponse,
         )
 
-    async def list_documents(
+    async def get_documents(
         self,
         workspace_ext_id: str,
         *,
@@ -700,7 +700,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListDocumentsResponse:
+    ) -> WorkspaceGetDocumentsResponse:
         """Retrieve all documents in a workspace with proper access controls.
 
         Decrypts
@@ -722,10 +722,10 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListDocumentsResponse,
+            cast_to=WorkspaceGetDocumentsResponse,
         )
 
-    async def list_tags(
+    async def get_stats(
         self,
         workspace_ext_id: str,
         *,
@@ -735,7 +735,40 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListTagsResponse:
+    ) -> WorkspaceGetStatsResponse:
+        """
+        Retrieves conversation and document counts for a specific workspace.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_ext_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        return await self._get(
+            f"/api/workspace/{workspace_ext_id}/stats",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WorkspaceGetStatsResponse,
+        )
+
+    async def get_tags(
+        self,
+        workspace_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> WorkspaceGetTagsResponse:
         """
         Get all tags in a given workspace created by the current user.
 
@@ -755,10 +788,10 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListTagsResponse,
+            cast_to=WorkspaceGetTagsResponse,
         )
 
-    async def list_users(
+    async def get_users(
         self,
         workspace_ext_id: str,
         *,
@@ -768,7 +801,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceListUsersResponse:
+    ) -> WorkspaceGetUsersResponse:
         """Retrieve users with access to a specific workspace.
 
         Leverages RLS to enforce
@@ -790,7 +823,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceListUsersResponse,
+            cast_to=WorkspaceGetUsersResponse,
         )
 
     async def remove_user(
@@ -830,39 +863,6 @@ class AsyncWorkspaceResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WorkspaceRemoveUserResponse,
-        )
-
-    async def retrieve_stats(
-        self,
-        workspace_ext_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> WorkspaceRetrieveStatsResponse:
-        """
-        Retrieves conversation and document counts for a specific workspace.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_ext_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
-        return await self._get(
-            f"/api/workspace/{workspace_ext_id}/stats",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=WorkspaceRetrieveStatsResponse,
         )
 
     async def share(
@@ -918,26 +918,26 @@ class WorkspaceResourceWithRawResponse:
         self.create_protected = to_raw_response_wrapper(
             workspace.create_protected,
         )
-        self.list_conversations = to_raw_response_wrapper(
-            workspace.list_conversations,
+        self.get_conversations = to_raw_response_wrapper(
+            workspace.get_conversations,
         )
-        self.list_doctags = to_raw_response_wrapper(
-            workspace.list_doctags,
+        self.get_doctags = to_raw_response_wrapper(
+            workspace.get_doctags,
         )
-        self.list_documents = to_raw_response_wrapper(
-            workspace.list_documents,
+        self.get_documents = to_raw_response_wrapper(
+            workspace.get_documents,
         )
-        self.list_tags = to_raw_response_wrapper(
-            workspace.list_tags,
+        self.get_stats = to_raw_response_wrapper(
+            workspace.get_stats,
         )
-        self.list_users = to_raw_response_wrapper(
-            workspace.list_users,
+        self.get_tags = to_raw_response_wrapper(
+            workspace.get_tags,
+        )
+        self.get_users = to_raw_response_wrapper(
+            workspace.get_users,
         )
         self.remove_user = to_raw_response_wrapper(
             workspace.remove_user,
-        )
-        self.retrieve_stats = to_raw_response_wrapper(
-            workspace.retrieve_stats,
         )
         self.share = to_raw_response_wrapper(
             workspace.share,
@@ -957,26 +957,26 @@ class AsyncWorkspaceResourceWithRawResponse:
         self.create_protected = async_to_raw_response_wrapper(
             workspace.create_protected,
         )
-        self.list_conversations = async_to_raw_response_wrapper(
-            workspace.list_conversations,
+        self.get_conversations = async_to_raw_response_wrapper(
+            workspace.get_conversations,
         )
-        self.list_doctags = async_to_raw_response_wrapper(
-            workspace.list_doctags,
+        self.get_doctags = async_to_raw_response_wrapper(
+            workspace.get_doctags,
         )
-        self.list_documents = async_to_raw_response_wrapper(
-            workspace.list_documents,
+        self.get_documents = async_to_raw_response_wrapper(
+            workspace.get_documents,
         )
-        self.list_tags = async_to_raw_response_wrapper(
-            workspace.list_tags,
+        self.get_stats = async_to_raw_response_wrapper(
+            workspace.get_stats,
         )
-        self.list_users = async_to_raw_response_wrapper(
-            workspace.list_users,
+        self.get_tags = async_to_raw_response_wrapper(
+            workspace.get_tags,
+        )
+        self.get_users = async_to_raw_response_wrapper(
+            workspace.get_users,
         )
         self.remove_user = async_to_raw_response_wrapper(
             workspace.remove_user,
-        )
-        self.retrieve_stats = async_to_raw_response_wrapper(
-            workspace.retrieve_stats,
         )
         self.share = async_to_raw_response_wrapper(
             workspace.share,
@@ -996,26 +996,26 @@ class WorkspaceResourceWithStreamingResponse:
         self.create_protected = to_streamed_response_wrapper(
             workspace.create_protected,
         )
-        self.list_conversations = to_streamed_response_wrapper(
-            workspace.list_conversations,
+        self.get_conversations = to_streamed_response_wrapper(
+            workspace.get_conversations,
         )
-        self.list_doctags = to_streamed_response_wrapper(
-            workspace.list_doctags,
+        self.get_doctags = to_streamed_response_wrapper(
+            workspace.get_doctags,
         )
-        self.list_documents = to_streamed_response_wrapper(
-            workspace.list_documents,
+        self.get_documents = to_streamed_response_wrapper(
+            workspace.get_documents,
         )
-        self.list_tags = to_streamed_response_wrapper(
-            workspace.list_tags,
+        self.get_stats = to_streamed_response_wrapper(
+            workspace.get_stats,
         )
-        self.list_users = to_streamed_response_wrapper(
-            workspace.list_users,
+        self.get_tags = to_streamed_response_wrapper(
+            workspace.get_tags,
+        )
+        self.get_users = to_streamed_response_wrapper(
+            workspace.get_users,
         )
         self.remove_user = to_streamed_response_wrapper(
             workspace.remove_user,
-        )
-        self.retrieve_stats = to_streamed_response_wrapper(
-            workspace.retrieve_stats,
         )
         self.share = to_streamed_response_wrapper(
             workspace.share,
@@ -1035,26 +1035,26 @@ class AsyncWorkspaceResourceWithStreamingResponse:
         self.create_protected = async_to_streamed_response_wrapper(
             workspace.create_protected,
         )
-        self.list_conversations = async_to_streamed_response_wrapper(
-            workspace.list_conversations,
+        self.get_conversations = async_to_streamed_response_wrapper(
+            workspace.get_conversations,
         )
-        self.list_doctags = async_to_streamed_response_wrapper(
-            workspace.list_doctags,
+        self.get_doctags = async_to_streamed_response_wrapper(
+            workspace.get_doctags,
         )
-        self.list_documents = async_to_streamed_response_wrapper(
-            workspace.list_documents,
+        self.get_documents = async_to_streamed_response_wrapper(
+            workspace.get_documents,
         )
-        self.list_tags = async_to_streamed_response_wrapper(
-            workspace.list_tags,
+        self.get_stats = async_to_streamed_response_wrapper(
+            workspace.get_stats,
         )
-        self.list_users = async_to_streamed_response_wrapper(
-            workspace.list_users,
+        self.get_tags = async_to_streamed_response_wrapper(
+            workspace.get_tags,
+        )
+        self.get_users = async_to_streamed_response_wrapper(
+            workspace.get_users,
         )
         self.remove_user = async_to_streamed_response_wrapper(
             workspace.remove_user,
-        )
-        self.retrieve_stats = async_to_streamed_response_wrapper(
-            workspace.retrieve_stats,
         )
         self.share = async_to_streamed_response_wrapper(
             workspace.share,

@@ -16,12 +16,9 @@ The full API of this library can be found in [api.md](api.md).
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/arbitrationcity/arbi-python.git
+# install from PyPI
+pip install arbi
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install --pre arbi`
 
 ## Usage
 
@@ -32,16 +29,16 @@ import os
 from arbi import Arbi
 
 client = Arbi(
-    bearer_token=os.environ.get("ARBI_BEARER_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("ARBI_API_KEY"),  # This is the default and can be omitted
 )
 
 response = client.api.index()
 ```
 
-While you can provide a `bearer_token` keyword argument,
+While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `ARBI_BEARER_TOKEN="My Bearer Token"` to your `.env` file
-so that your Bearer Token is not stored in source control.
+to add `ARBI_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
 
 ## Async usage
 
@@ -53,7 +50,7 @@ import asyncio
 from arbi import AsyncArbi
 
 client = AsyncArbi(
-    bearer_token=os.environ.get("ARBI_BEARER_TOKEN"),  # This is the default and can be omitted
+    api_key=os.environ.get("ARBI_API_KEY"),  # This is the default and can be omitted
 )
 
 
@@ -73,14 +70,13 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'arbi[aiohttp] @ git+ssh://git@github.com/arbitrationcity/arbi-python.git'
+# install from PyPI
+pip install arbi[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
-import os
 import asyncio
 from arbi import DefaultAioHttpClient
 from arbi import AsyncArbi
@@ -88,7 +84,7 @@ from arbi import AsyncArbi
 
 async def main() -> None:
     async with AsyncArbi(
-        bearer_token=os.environ.get("ARBI_BEARER_TOKEN"),  # This is the default and can be omitted
+        api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.api.index()
@@ -115,10 +111,10 @@ from arbi import Arbi
 
 client = Arbi()
 
-config = client.api.configs.update(
-    configs={},
+config = client.api.configs.create(
+    document_date_extractor_llm={},
 )
-print(config.configs)
+print(config.document_date_extractor_llm)
 ```
 
 ## Handling errors

@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from arbi.types.api import (
     ConversationShareResponse,
     ConversationDeleteResponse,
+    ConversationUpdateTitleResponse,
     ConversationDeleteMessageResponse,
     ConversationRetrieveThreadsResponse,
 )
@@ -22,7 +23,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestConversation:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Arbi) -> None:
         conversation = client.api.conversation.delete(
@@ -30,7 +31,7 @@ class TestConversation:
         )
         assert_matches_type(ConversationDeleteResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Arbi) -> None:
         response = client.api.conversation.with_raw_response.delete(
@@ -42,7 +43,7 @@ class TestConversation:
         conversation = response.parse()
         assert_matches_type(ConversationDeleteResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Arbi) -> None:
         with client.api.conversation.with_streaming_response.delete(
@@ -56,7 +57,7 @@ class TestConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
@@ -64,7 +65,7 @@ class TestConversation:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete_message(self, client: Arbi) -> None:
         conversation = client.api.conversation.delete_message(
@@ -72,7 +73,7 @@ class TestConversation:
         )
         assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete_message(self, client: Arbi) -> None:
         response = client.api.conversation.with_raw_response.delete_message(
@@ -84,7 +85,7 @@ class TestConversation:
         conversation = response.parse()
         assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete_message(self, client: Arbi) -> None:
         with client.api.conversation.with_streaming_response.delete_message(
@@ -98,7 +99,7 @@ class TestConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete_message(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
@@ -106,7 +107,7 @@ class TestConversation:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve_threads(self, client: Arbi) -> None:
         conversation = client.api.conversation.retrieve_threads(
@@ -114,7 +115,7 @@ class TestConversation:
         )
         assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve_threads(self, client: Arbi) -> None:
         response = client.api.conversation.with_raw_response.retrieve_threads(
@@ -126,7 +127,7 @@ class TestConversation:
         conversation = response.parse()
         assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_threads(self, client: Arbi) -> None:
         with client.api.conversation.with_streaming_response.retrieve_threads(
@@ -140,7 +141,7 @@ class TestConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve_threads(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
@@ -148,7 +149,7 @@ class TestConversation:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_share(self, client: Arbi) -> None:
         conversation = client.api.conversation.share(
@@ -156,7 +157,7 @@ class TestConversation:
         )
         assert_matches_type(ConversationShareResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_share(self, client: Arbi) -> None:
         response = client.api.conversation.with_raw_response.share(
@@ -168,7 +169,7 @@ class TestConversation:
         conversation = response.parse()
         assert_matches_type(ConversationShareResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_share(self, client: Arbi) -> None:
         with client.api.conversation.with_streaming_response.share(
@@ -182,12 +183,58 @@ class TestConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_share(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             client.api.conversation.with_raw_response.share(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_update_title(self, client: Arbi) -> None:
+        conversation = client.api.conversation.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_update_title(self, client: Arbi) -> None:
+        response = client.api.conversation.with_raw_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = response.parse()
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_update_title(self, client: Arbi) -> None:
+        with client.api.conversation.with_streaming_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = response.parse()
+            assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_update_title(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
+            client.api.conversation.with_raw_response.update_title(
+                conversation_ext_id="",
+                title="x",
             )
 
 
@@ -196,7 +243,7 @@ class TestAsyncConversation:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncArbi) -> None:
         conversation = await async_client.api.conversation.delete(
@@ -204,7 +251,7 @@ class TestAsyncConversation:
         )
         assert_matches_type(ConversationDeleteResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.with_raw_response.delete(
@@ -216,7 +263,7 @@ class TestAsyncConversation:
         conversation = await response.parse()
         assert_matches_type(ConversationDeleteResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.with_streaming_response.delete(
@@ -230,7 +277,7 @@ class TestAsyncConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
@@ -238,7 +285,7 @@ class TestAsyncConversation:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete_message(self, async_client: AsyncArbi) -> None:
         conversation = await async_client.api.conversation.delete_message(
@@ -246,7 +293,7 @@ class TestAsyncConversation:
         )
         assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete_message(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.with_raw_response.delete_message(
@@ -258,7 +305,7 @@ class TestAsyncConversation:
         conversation = await response.parse()
         assert_matches_type(ConversationDeleteMessageResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete_message(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.with_streaming_response.delete_message(
@@ -272,7 +319,7 @@ class TestAsyncConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete_message(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
@@ -280,7 +327,7 @@ class TestAsyncConversation:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve_threads(self, async_client: AsyncArbi) -> None:
         conversation = await async_client.api.conversation.retrieve_threads(
@@ -288,7 +335,7 @@ class TestAsyncConversation:
         )
         assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_threads(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.with_raw_response.retrieve_threads(
@@ -300,7 +347,7 @@ class TestAsyncConversation:
         conversation = await response.parse()
         assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_threads(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.with_streaming_response.retrieve_threads(
@@ -314,7 +361,7 @@ class TestAsyncConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve_threads(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
@@ -322,7 +369,7 @@ class TestAsyncConversation:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_share(self, async_client: AsyncArbi) -> None:
         conversation = await async_client.api.conversation.share(
@@ -330,7 +377,7 @@ class TestAsyncConversation:
         )
         assert_matches_type(ConversationShareResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_share(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.with_raw_response.share(
@@ -342,7 +389,7 @@ class TestAsyncConversation:
         conversation = await response.parse()
         assert_matches_type(ConversationShareResponse, conversation, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_share(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.with_streaming_response.share(
@@ -356,10 +403,56 @@ class TestAsyncConversation:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_share(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             await async_client.api.conversation.with_raw_response.share(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_update_title(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_update_title(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.conversation.with_raw_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = await response.parse()
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_update_title(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.conversation.with_streaming_response.update_title(
+            conversation_ext_id="con",
+            title="x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = await response.parse()
+            assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_update_title(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
+            await async_client.api.conversation.with_raw_response.update_title(
+                conversation_ext_id="",
+                title="x",
             )

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any, Optional, cast
+
 import httpx
 
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
@@ -14,13 +16,23 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.api import AllConfigs, config_update_params
+from ...types.api import (
+    config_create_params,
+)
 from ..._base_client import make_request_options
-from ...types.api.all_configs import AllConfigs
-from ...types.api.all_configs_param import AllConfigsParam
-from ...types.api.config_update_response import ConfigUpdateResponse
-from ...types.api.config_retrieve_schema_response import ConfigRetrieveSchemaResponse
-from ...types.api.config_retrieve_versions_response import ConfigRetrieveVersionsResponse
+from ...types.api.parser_config_param import ParserConfigParam
+from ...types.api.chunker_config_param import ChunkerConfigParam
+from ...types.api.embedder_config_param import EmbedderConfigParam
+from ...types.api.reranker_config_param import RerankerConfigParam
+from ...types.api.config_create_response import ConfigCreateResponse
+from ...types.api.config_delete_response import ConfigDeleteResponse
+from ...types.api.query_llm_config_param import QueryLlmConfigParam
+from ...types.api.retriever_config_param import RetrieverConfigParam
+from ...types.api.title_llm_config_param import TitleLlmConfigParam
+from ...types.api.config_retrieve_response import ConfigRetrieveResponse
+from ...types.api.model_citation_config_param import ModelCitationConfigParam
+from ...types.api.config_get_versions_response import ConfigGetVersionsResponse
+from ...types.api.document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
 __all__ = ["ConfigsResource", "AsyncConfigsResource"]
 
@@ -45,22 +57,29 @@ class ConfigsResource(SyncAPIResource):
         """
         return ConfigsResourceWithStreamingResponse(self)
 
-    def update(
+    def create(
         self,
         *,
-        configs: AllConfigsParam,
-        filename_suffix: str | NotGiven = NOT_GIVEN,
+        chunker: Optional[ChunkerConfigParam] | NotGiven = NOT_GIVEN,
+        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | NotGiven = NOT_GIVEN,
+        embedder: Optional[EmbedderConfigParam] | NotGiven = NOT_GIVEN,
+        model_citation: Optional[ModelCitationConfigParam] | NotGiven = NOT_GIVEN,
+        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
+        parser: Optional[ParserConfigParam] | NotGiven = NOT_GIVEN,
+        query_llm: Optional[QueryLlmConfigParam] | NotGiven = NOT_GIVEN,
+        reranker: Optional[RerankerConfigParam] | NotGiven = NOT_GIVEN,
+        retriever: Optional[RetrieverConfigParam] | NotGiven = NOT_GIVEN,
+        title: str | NotGiven = NOT_GIVEN,
+        title_llm: Optional[TitleLlmConfigParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigUpdateResponse:
-        """Update user-specific configuration settings.
-
-        Saves new configurations to a TOML
-        file if different from existing ones.
+    ) -> ConfigCreateResponse:
+        """
+        Save a new configuration.
 
         Args:
           extra_headers: Send extra headers
@@ -71,56 +90,33 @@ class ConfigsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._put(
-            "/api/configs/update",
+        return self._post(
+            "/api/configs/",
             body=maybe_transform(
                 {
-                    "configs": configs,
-                    "filename_suffix": filename_suffix,
+                    "chunker": chunker,
+                    "document_date_extractor_llm": document_date_extractor_llm,
+                    "embedder": embedder,
+                    "model_citation": model_citation,
+                    "parent_message_ext_id": parent_message_ext_id,
+                    "parser": parser,
+                    "query_llm": query_llm,
+                    "reranker": reranker,
+                    "retriever": retriever,
+                    "title": title,
+                    "title_llm": title_llm,
                 },
-                config_update_params.ConfigUpdateParams,
+                config_create_params.ConfigCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigUpdateResponse,
-        )
-
-    def load(
-        self,
-        version: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """
-        Loads configurations from a specific .toml file version
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not version:
-            raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
-        return self._get(
-            f"/api/configs/load/{version}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
+            cast_to=ConfigCreateResponse,
         )
 
     def retrieve(
         self,
+        config_ext_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -128,17 +124,70 @@ class ConfigsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """Return the current configurations for the user"""
-        return self._get(
-            "/api/configs/",
+    ) -> ConfigRetrieveResponse:
+        """
+        Read configurations from database to be displayed in the UI
+
+        Args:
+          config_ext_id: Config name: 'cfg-XXXXXXXX' or 'default' for system default
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not config_ext_id:
+            raise ValueError(f"Expected a non-empty value for `config_ext_id` but received {config_ext_id!r}")
+        return cast(
+            ConfigRetrieveResponse,
+            self._get(
+                f"/api/configs/{config_ext_id}",
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, ConfigRetrieveResponse
+                ),  # Union types cannot be passed in as arguments in the type system
+            ),
+        )
+
+    def delete(
+        self,
+        config_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConfigDeleteResponse:
+        """
+        Delete a specific configuration from database
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not config_ext_id:
+            raise ValueError(f"Expected a non-empty value for `config_ext_id` but received {config_ext_id!r}")
+        return self._delete(
+            f"/api/configs/{config_ext_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AllConfigs,
+            cast_to=ConfigDeleteResponse,
         )
 
-    def retrieve_schema(
+    def get_schema(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -147,17 +196,17 @@ class ConfigsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveSchemaResponse:
+    ) -> object:
         """Return the JSON schema for all config models"""
         return self._get(
             "/api/configs/schema",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigRetrieveSchemaResponse,
+            cast_to=object,
         )
 
-    def retrieve_versions(
+    def get_versions(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -166,14 +215,14 @@ class ConfigsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveVersionsResponse:
-        """Returns a list of available configuration versions (.toml files)"""
+    ) -> ConfigGetVersionsResponse:
+        """Returns a list of available configuration versions for the current user"""
         return self._get(
             "/api/configs/versions",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigRetrieveVersionsResponse,
+            cast_to=ConfigGetVersionsResponse,
         )
 
 
@@ -197,22 +246,29 @@ class AsyncConfigsResource(AsyncAPIResource):
         """
         return AsyncConfigsResourceWithStreamingResponse(self)
 
-    async def update(
+    async def create(
         self,
         *,
-        configs: AllConfigsParam,
-        filename_suffix: str | NotGiven = NOT_GIVEN,
+        chunker: Optional[ChunkerConfigParam] | NotGiven = NOT_GIVEN,
+        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | NotGiven = NOT_GIVEN,
+        embedder: Optional[EmbedderConfigParam] | NotGiven = NOT_GIVEN,
+        model_citation: Optional[ModelCitationConfigParam] | NotGiven = NOT_GIVEN,
+        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
+        parser: Optional[ParserConfigParam] | NotGiven = NOT_GIVEN,
+        query_llm: Optional[QueryLlmConfigParam] | NotGiven = NOT_GIVEN,
+        reranker: Optional[RerankerConfigParam] | NotGiven = NOT_GIVEN,
+        retriever: Optional[RetrieverConfigParam] | NotGiven = NOT_GIVEN,
+        title: str | NotGiven = NOT_GIVEN,
+        title_llm: Optional[TitleLlmConfigParam] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigUpdateResponse:
-        """Update user-specific configuration settings.
-
-        Saves new configurations to a TOML
-        file if different from existing ones.
+    ) -> ConfigCreateResponse:
+        """
+        Save a new configuration.
 
         Args:
           extra_headers: Send extra headers
@@ -223,56 +279,33 @@ class AsyncConfigsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._put(
-            "/api/configs/update",
+        return await self._post(
+            "/api/configs/",
             body=await async_maybe_transform(
                 {
-                    "configs": configs,
-                    "filename_suffix": filename_suffix,
+                    "chunker": chunker,
+                    "document_date_extractor_llm": document_date_extractor_llm,
+                    "embedder": embedder,
+                    "model_citation": model_citation,
+                    "parent_message_ext_id": parent_message_ext_id,
+                    "parser": parser,
+                    "query_llm": query_llm,
+                    "reranker": reranker,
+                    "retriever": retriever,
+                    "title": title,
+                    "title_llm": title_llm,
                 },
-                config_update_params.ConfigUpdateParams,
+                config_create_params.ConfigCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigUpdateResponse,
-        )
-
-    async def load(
-        self,
-        version: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """
-        Loads configurations from a specific .toml file version
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not version:
-            raise ValueError(f"Expected a non-empty value for `version` but received {version!r}")
-        return await self._get(
-            f"/api/configs/load/{version}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AllConfigs,
+            cast_to=ConfigCreateResponse,
         )
 
     async def retrieve(
         self,
+        config_ext_id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -280,17 +313,70 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AllConfigs:
-        """Return the current configurations for the user"""
-        return await self._get(
-            "/api/configs/",
+    ) -> ConfigRetrieveResponse:
+        """
+        Read configurations from database to be displayed in the UI
+
+        Args:
+          config_ext_id: Config name: 'cfg-XXXXXXXX' or 'default' for system default
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not config_ext_id:
+            raise ValueError(f"Expected a non-empty value for `config_ext_id` but received {config_ext_id!r}")
+        return cast(
+            ConfigRetrieveResponse,
+            await self._get(
+                f"/api/configs/{config_ext_id}",
+                options=make_request_options(
+                    extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                ),
+                cast_to=cast(
+                    Any, ConfigRetrieveResponse
+                ),  # Union types cannot be passed in as arguments in the type system
+            ),
+        )
+
+    async def delete(
+        self,
+        config_ext_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConfigDeleteResponse:
+        """
+        Delete a specific configuration from database
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not config_ext_id:
+            raise ValueError(f"Expected a non-empty value for `config_ext_id` but received {config_ext_id!r}")
+        return await self._delete(
+            f"/api/configs/{config_ext_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AllConfigs,
+            cast_to=ConfigDeleteResponse,
         )
 
-    async def retrieve_schema(
+    async def get_schema(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -299,17 +385,17 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveSchemaResponse:
+    ) -> object:
         """Return the JSON schema for all config models"""
         return await self._get(
             "/api/configs/schema",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigRetrieveSchemaResponse,
+            cast_to=object,
         )
 
-    async def retrieve_versions(
+    async def get_versions(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -318,14 +404,14 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ConfigRetrieveVersionsResponse:
-        """Returns a list of available configuration versions (.toml files)"""
+    ) -> ConfigGetVersionsResponse:
+        """Returns a list of available configuration versions for the current user"""
         return await self._get(
             "/api/configs/versions",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ConfigRetrieveVersionsResponse,
+            cast_to=ConfigGetVersionsResponse,
         )
 
 
@@ -333,20 +419,20 @@ class ConfigsResourceWithRawResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.update = to_raw_response_wrapper(
-            configs.update,
-        )
-        self.load = to_raw_response_wrapper(
-            configs.load,
+        self.create = to_raw_response_wrapper(
+            configs.create,
         )
         self.retrieve = to_raw_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve_schema = to_raw_response_wrapper(
-            configs.retrieve_schema,
+        self.delete = to_raw_response_wrapper(
+            configs.delete,
         )
-        self.retrieve_versions = to_raw_response_wrapper(
-            configs.retrieve_versions,
+        self.get_schema = to_raw_response_wrapper(
+            configs.get_schema,
+        )
+        self.get_versions = to_raw_response_wrapper(
+            configs.get_versions,
         )
 
 
@@ -354,20 +440,20 @@ class AsyncConfigsResourceWithRawResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.update = async_to_raw_response_wrapper(
-            configs.update,
-        )
-        self.load = async_to_raw_response_wrapper(
-            configs.load,
+        self.create = async_to_raw_response_wrapper(
+            configs.create,
         )
         self.retrieve = async_to_raw_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve_schema = async_to_raw_response_wrapper(
-            configs.retrieve_schema,
+        self.delete = async_to_raw_response_wrapper(
+            configs.delete,
         )
-        self.retrieve_versions = async_to_raw_response_wrapper(
-            configs.retrieve_versions,
+        self.get_schema = async_to_raw_response_wrapper(
+            configs.get_schema,
+        )
+        self.get_versions = async_to_raw_response_wrapper(
+            configs.get_versions,
         )
 
 
@@ -375,20 +461,20 @@ class ConfigsResourceWithStreamingResponse:
     def __init__(self, configs: ConfigsResource) -> None:
         self._configs = configs
 
-        self.update = to_streamed_response_wrapper(
-            configs.update,
-        )
-        self.load = to_streamed_response_wrapper(
-            configs.load,
+        self.create = to_streamed_response_wrapper(
+            configs.create,
         )
         self.retrieve = to_streamed_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve_schema = to_streamed_response_wrapper(
-            configs.retrieve_schema,
+        self.delete = to_streamed_response_wrapper(
+            configs.delete,
         )
-        self.retrieve_versions = to_streamed_response_wrapper(
-            configs.retrieve_versions,
+        self.get_schema = to_streamed_response_wrapper(
+            configs.get_schema,
+        )
+        self.get_versions = to_streamed_response_wrapper(
+            configs.get_versions,
         )
 
 
@@ -396,18 +482,18 @@ class AsyncConfigsResourceWithStreamingResponse:
     def __init__(self, configs: AsyncConfigsResource) -> None:
         self._configs = configs
 
-        self.update = async_to_streamed_response_wrapper(
-            configs.update,
-        )
-        self.load = async_to_streamed_response_wrapper(
-            configs.load,
+        self.create = async_to_streamed_response_wrapper(
+            configs.create,
         )
         self.retrieve = async_to_streamed_response_wrapper(
             configs.retrieve,
         )
-        self.retrieve_schema = async_to_streamed_response_wrapper(
-            configs.retrieve_schema,
+        self.delete = async_to_streamed_response_wrapper(
+            configs.delete,
         )
-        self.retrieve_versions = async_to_streamed_response_wrapper(
-            configs.retrieve_versions,
+        self.get_schema = async_to_streamed_response_wrapper(
+            configs.get_schema,
+        )
+        self.get_versions = async_to_streamed_response_wrapper(
+            configs.get_versions,
         )

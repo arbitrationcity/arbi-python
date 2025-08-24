@@ -15,9 +15,9 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.api.conversation import user_create_params, user_delete_all_params
-from ....types.api.conversation.user_create_response import UserCreateResponse
-from ....types.api.conversation.user_delete_all_response import UserDeleteAllResponse
+from ....types.api.conversation import user_add_params, user_remove_params
+from ....types.api.conversation.user_add_response import UserAddResponse
+from ....types.api.conversation.user_remove_response import UserRemoveResponse
 
 __all__ = ["UserResource", "AsyncUserResource"]
 
@@ -42,7 +42,7 @@ class UserResource(SyncAPIResource):
         """
         return UserResourceWithStreamingResponse(self)
 
-    def create(
+    def add(
         self,
         conversation_ext_id: str,
         *,
@@ -53,7 +53,7 @@ class UserResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserCreateResponse:
+    ) -> UserAddResponse:
         """
         Add a user to a conversation.
 
@@ -75,14 +75,14 @@ class UserResource(SyncAPIResource):
             )
         return self._post(
             f"/api/conversation/{conversation_ext_id}/user",
-            body=maybe_transform({"user_ext_id": user_ext_id}, user_create_params.UserCreateParams),
+            body=maybe_transform({"user_ext_id": user_ext_id}, user_add_params.UserAddParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserCreateResponse,
+            cast_to=UserAddResponse,
         )
 
-    def delete_all(
+    def remove(
         self,
         conversation_ext_id: str,
         *,
@@ -93,7 +93,7 @@ class UserResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserDeleteAllResponse:
+    ) -> UserRemoveResponse:
         """
         Remove a user from a conversation.
 
@@ -114,11 +114,11 @@ class UserResource(SyncAPIResource):
             )
         return self._delete(
             f"/api/conversation/{conversation_ext_id}/user",
-            body=maybe_transform({"user_ext_id": user_ext_id}, user_delete_all_params.UserDeleteAllParams),
+            body=maybe_transform({"user_ext_id": user_ext_id}, user_remove_params.UserRemoveParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserDeleteAllResponse,
+            cast_to=UserRemoveResponse,
         )
 
 
@@ -142,7 +142,7 @@ class AsyncUserResource(AsyncAPIResource):
         """
         return AsyncUserResourceWithStreamingResponse(self)
 
-    async def create(
+    async def add(
         self,
         conversation_ext_id: str,
         *,
@@ -153,7 +153,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserCreateResponse:
+    ) -> UserAddResponse:
         """
         Add a user to a conversation.
 
@@ -175,14 +175,14 @@ class AsyncUserResource(AsyncAPIResource):
             )
         return await self._post(
             f"/api/conversation/{conversation_ext_id}/user",
-            body=await async_maybe_transform({"user_ext_id": user_ext_id}, user_create_params.UserCreateParams),
+            body=await async_maybe_transform({"user_ext_id": user_ext_id}, user_add_params.UserAddParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserCreateResponse,
+            cast_to=UserAddResponse,
         )
 
-    async def delete_all(
+    async def remove(
         self,
         conversation_ext_id: str,
         *,
@@ -193,7 +193,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> UserDeleteAllResponse:
+    ) -> UserRemoveResponse:
         """
         Remove a user from a conversation.
 
@@ -214,11 +214,11 @@ class AsyncUserResource(AsyncAPIResource):
             )
         return await self._delete(
             f"/api/conversation/{conversation_ext_id}/user",
-            body=await async_maybe_transform({"user_ext_id": user_ext_id}, user_delete_all_params.UserDeleteAllParams),
+            body=await async_maybe_transform({"user_ext_id": user_ext_id}, user_remove_params.UserRemoveParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserDeleteAllResponse,
+            cast_to=UserRemoveResponse,
         )
 
 
@@ -226,11 +226,11 @@ class UserResourceWithRawResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
-        self.create = to_raw_response_wrapper(
-            user.create,
+        self.add = to_raw_response_wrapper(
+            user.add,
         )
-        self.delete_all = to_raw_response_wrapper(
-            user.delete_all,
+        self.remove = to_raw_response_wrapper(
+            user.remove,
         )
 
 
@@ -238,11 +238,11 @@ class AsyncUserResourceWithRawResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
-        self.create = async_to_raw_response_wrapper(
-            user.create,
+        self.add = async_to_raw_response_wrapper(
+            user.add,
         )
-        self.delete_all = async_to_raw_response_wrapper(
-            user.delete_all,
+        self.remove = async_to_raw_response_wrapper(
+            user.remove,
         )
 
 
@@ -250,11 +250,11 @@ class UserResourceWithStreamingResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
-        self.create = to_streamed_response_wrapper(
-            user.create,
+        self.add = to_streamed_response_wrapper(
+            user.add,
         )
-        self.delete_all = to_streamed_response_wrapper(
-            user.delete_all,
+        self.remove = to_streamed_response_wrapper(
+            user.remove,
         )
 
 
@@ -262,9 +262,9 @@ class AsyncUserResourceWithStreamingResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
-        self.create = async_to_streamed_response_wrapper(
-            user.create,
+        self.add = async_to_streamed_response_wrapper(
+            user.add,
         )
-        self.delete_all = async_to_streamed_response_wrapper(
-            user.delete_all,
+        self.remove = async_to_streamed_response_wrapper(
+            user.remove,
         )

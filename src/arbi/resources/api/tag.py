@@ -16,14 +16,14 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...types.api import tag_apply_params, tag_create_params, tag_remove_params, tag_update_params
+from ...types.api import tag_create_params, tag_update_params, tag_apply_to_docs_params, tag_remove_from_docs_params
 from ..._base_client import make_request_options
-from ...types.api.tag_apply_response import TagApplyResponse
 from ...types.api.tag_create_response import TagCreateResponse
 from ...types.api.tag_delete_response import TagDeleteResponse
-from ...types.api.tag_remove_response import TagRemoveResponse
 from ...types.api.tag_update_response import TagUpdateResponse
-from ...types.api.tag_retrieve_docs_response import TagRetrieveDocsResponse
+from ...types.api.tag_get_docs_response import TagGetDocsResponse
+from ...types.api.tag_apply_to_docs_response import TagApplyToDocsResponse
+from ...types.api.tag_remove_from_docs_response import TagRemoveFromDocsResponse
 
 __all__ = ["TagResource", "AsyncTagResource"]
 
@@ -53,6 +53,7 @@ class TagResource(SyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
+        parent_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -82,6 +83,7 @@ class TagResource(SyncAPIResource):
                 {
                     "name": name,
                     "workspace_ext_id": workspace_ext_id,
+                    "parent_ext_id": parent_ext_id,
                     "shared": shared,
                 },
                 tag_create_params.TagCreateParams,
@@ -167,7 +169,7 @@ class TagResource(SyncAPIResource):
             cast_to=TagDeleteResponse,
         )
 
-    def apply(
+    def apply_to_docs(
         self,
         tag_ext_id: str,
         *,
@@ -178,7 +180,7 @@ class TagResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> TagApplyResponse:
+    ) -> TagApplyToDocsResponse:
         """
         Apply a tag to a list of documents.
 
@@ -195,49 +197,14 @@ class TagResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
         return self._post(
             f"/api/tag/{tag_ext_id}/apply",
-            body=maybe_transform({"doc_ids": doc_ids}, tag_apply_params.TagApplyParams),
+            body=maybe_transform({"doc_ids": doc_ids}, tag_apply_to_docs_params.TagApplyToDocsParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TagApplyResponse,
+            cast_to=TagApplyToDocsResponse,
         )
 
-    def remove(
-        self,
-        tag_ext_id: str,
-        *,
-        doc_ids: List[str],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> TagRemoveResponse:
-        """
-        Remove a tag from a list of documents.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not tag_ext_id:
-            raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
-        return self._delete(
-            f"/api/tag/{tag_ext_id}/remove",
-            body=maybe_transform({"doc_ids": doc_ids}, tag_remove_params.TagRemoveParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=TagRemoveResponse,
-        )
-
-    def retrieve_docs(
+    def get_docs(
         self,
         tag_ext_id: str,
         *,
@@ -247,9 +214,9 @@ class TagResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> TagRetrieveDocsResponse:
+    ) -> TagGetDocsResponse:
         """
-        Get all documents that have a given tag along with metadata from DocTags.
+        Get all doctags for a given tag.
 
         Args:
           extra_headers: Send extra headers
@@ -267,7 +234,42 @@ class TagResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TagRetrieveDocsResponse,
+            cast_to=TagGetDocsResponse,
+        )
+
+    def remove_from_docs(
+        self,
+        tag_ext_id: str,
+        *,
+        doc_ids: List[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> TagRemoveFromDocsResponse:
+        """
+        Remove a tag from a list of documents.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not tag_ext_id:
+            raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
+        return self._delete(
+            f"/api/tag/{tag_ext_id}/remove",
+            body=maybe_transform({"doc_ids": doc_ids}, tag_remove_from_docs_params.TagRemoveFromDocsParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=TagRemoveFromDocsResponse,
         )
 
 
@@ -296,6 +298,7 @@ class AsyncTagResource(AsyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
+        parent_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -325,6 +328,7 @@ class AsyncTagResource(AsyncAPIResource):
                 {
                     "name": name,
                     "workspace_ext_id": workspace_ext_id,
+                    "parent_ext_id": parent_ext_id,
                     "shared": shared,
                 },
                 tag_create_params.TagCreateParams,
@@ -410,7 +414,7 @@ class AsyncTagResource(AsyncAPIResource):
             cast_to=TagDeleteResponse,
         )
 
-    async def apply(
+    async def apply_to_docs(
         self,
         tag_ext_id: str,
         *,
@@ -421,7 +425,7 @@ class AsyncTagResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> TagApplyResponse:
+    ) -> TagApplyToDocsResponse:
         """
         Apply a tag to a list of documents.
 
@@ -438,49 +442,14 @@ class AsyncTagResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
         return await self._post(
             f"/api/tag/{tag_ext_id}/apply",
-            body=await async_maybe_transform({"doc_ids": doc_ids}, tag_apply_params.TagApplyParams),
+            body=await async_maybe_transform({"doc_ids": doc_ids}, tag_apply_to_docs_params.TagApplyToDocsParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TagApplyResponse,
+            cast_to=TagApplyToDocsResponse,
         )
 
-    async def remove(
-        self,
-        tag_ext_id: str,
-        *,
-        doc_ids: List[str],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> TagRemoveResponse:
-        """
-        Remove a tag from a list of documents.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not tag_ext_id:
-            raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
-        return await self._delete(
-            f"/api/tag/{tag_ext_id}/remove",
-            body=await async_maybe_transform({"doc_ids": doc_ids}, tag_remove_params.TagRemoveParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=TagRemoveResponse,
-        )
-
-    async def retrieve_docs(
+    async def get_docs(
         self,
         tag_ext_id: str,
         *,
@@ -490,9 +459,9 @@ class AsyncTagResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> TagRetrieveDocsResponse:
+    ) -> TagGetDocsResponse:
         """
-        Get all documents that have a given tag along with metadata from DocTags.
+        Get all doctags for a given tag.
 
         Args:
           extra_headers: Send extra headers
@@ -510,7 +479,42 @@ class AsyncTagResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=TagRetrieveDocsResponse,
+            cast_to=TagGetDocsResponse,
+        )
+
+    async def remove_from_docs(
+        self,
+        tag_ext_id: str,
+        *,
+        doc_ids: List[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> TagRemoveFromDocsResponse:
+        """
+        Remove a tag from a list of documents.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not tag_ext_id:
+            raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
+        return await self._delete(
+            f"/api/tag/{tag_ext_id}/remove",
+            body=await async_maybe_transform({"doc_ids": doc_ids}, tag_remove_from_docs_params.TagRemoveFromDocsParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=TagRemoveFromDocsResponse,
         )
 
 
@@ -527,14 +531,14 @@ class TagResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             tag.delete,
         )
-        self.apply = to_raw_response_wrapper(
-            tag.apply,
+        self.apply_to_docs = to_raw_response_wrapper(
+            tag.apply_to_docs,
         )
-        self.remove = to_raw_response_wrapper(
-            tag.remove,
+        self.get_docs = to_raw_response_wrapper(
+            tag.get_docs,
         )
-        self.retrieve_docs = to_raw_response_wrapper(
-            tag.retrieve_docs,
+        self.remove_from_docs = to_raw_response_wrapper(
+            tag.remove_from_docs,
         )
 
 
@@ -551,14 +555,14 @@ class AsyncTagResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             tag.delete,
         )
-        self.apply = async_to_raw_response_wrapper(
-            tag.apply,
+        self.apply_to_docs = async_to_raw_response_wrapper(
+            tag.apply_to_docs,
         )
-        self.remove = async_to_raw_response_wrapper(
-            tag.remove,
+        self.get_docs = async_to_raw_response_wrapper(
+            tag.get_docs,
         )
-        self.retrieve_docs = async_to_raw_response_wrapper(
-            tag.retrieve_docs,
+        self.remove_from_docs = async_to_raw_response_wrapper(
+            tag.remove_from_docs,
         )
 
 
@@ -575,14 +579,14 @@ class TagResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             tag.delete,
         )
-        self.apply = to_streamed_response_wrapper(
-            tag.apply,
+        self.apply_to_docs = to_streamed_response_wrapper(
+            tag.apply_to_docs,
         )
-        self.remove = to_streamed_response_wrapper(
-            tag.remove,
+        self.get_docs = to_streamed_response_wrapper(
+            tag.get_docs,
         )
-        self.retrieve_docs = to_streamed_response_wrapper(
-            tag.retrieve_docs,
+        self.remove_from_docs = to_streamed_response_wrapper(
+            tag.remove_from_docs,
         )
 
 
@@ -599,12 +603,12 @@ class AsyncTagResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             tag.delete,
         )
-        self.apply = async_to_streamed_response_wrapper(
-            tag.apply,
+        self.apply_to_docs = async_to_streamed_response_wrapper(
+            tag.apply_to_docs,
         )
-        self.remove = async_to_streamed_response_wrapper(
-            tag.remove,
+        self.get_docs = async_to_streamed_response_wrapper(
+            tag.get_docs,
         )
-        self.retrieve_docs = async_to_streamed_response_wrapper(
-            tag.retrieve_docs,
+        self.remove_from_docs = async_to_streamed_response_wrapper(
+            tag.remove_from_docs,
         )

@@ -13,6 +13,7 @@ from .user import (
     AsyncUserResourceWithStreamingResponse,
 )
 from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -21,9 +22,11 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ....types.api import conversation_update_title_params
 from ...._base_client import make_request_options
 from ....types.api.conversation_share_response import ConversationShareResponse
 from ....types.api.conversation_delete_response import ConversationDeleteResponse
+from ....types.api.conversation_update_title_response import ConversationUpdateTitleResponse
 from ....types.api.conversation_delete_message_response import ConversationDeleteMessageResponse
 from ....types.api.conversation_retrieve_threads_response import ConversationRetrieveThreadsResponse
 
@@ -198,6 +201,47 @@ class ConversationResource(SyncAPIResource):
             cast_to=ConversationShareResponse,
         )
 
+    def update_title(
+        self,
+        conversation_ext_id: str,
+        *,
+        title: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConversationUpdateTitleResponse:
+        """Update a conversation title.
+
+        RLS ensures the user can only update conversations
+        they have access to.
+
+        Args:
+          title: New conversation title (1-60 characters)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not conversation_ext_id:
+            raise ValueError(
+                f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
+            )
+        return self._patch(
+            f"/api/conversation/{conversation_ext_id}/title",
+            body=maybe_transform({"title": title}, conversation_update_title_params.ConversationUpdateTitleParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConversationUpdateTitleResponse,
+        )
+
 
 class AsyncConversationResource(AsyncAPIResource):
     @cached_property
@@ -367,6 +411,49 @@ class AsyncConversationResource(AsyncAPIResource):
             cast_to=ConversationShareResponse,
         )
 
+    async def update_title(
+        self,
+        conversation_ext_id: str,
+        *,
+        title: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ConversationUpdateTitleResponse:
+        """Update a conversation title.
+
+        RLS ensures the user can only update conversations
+        they have access to.
+
+        Args:
+          title: New conversation title (1-60 characters)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not conversation_ext_id:
+            raise ValueError(
+                f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
+            )
+        return await self._patch(
+            f"/api/conversation/{conversation_ext_id}/title",
+            body=await async_maybe_transform(
+                {"title": title}, conversation_update_title_params.ConversationUpdateTitleParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConversationUpdateTitleResponse,
+        )
+
 
 class ConversationResourceWithRawResponse:
     def __init__(self, conversation: ConversationResource) -> None:
@@ -383,6 +470,9 @@ class ConversationResourceWithRawResponse:
         )
         self.share = to_raw_response_wrapper(
             conversation.share,
+        )
+        self.update_title = to_raw_response_wrapper(
+            conversation.update_title,
         )
 
     @cached_property
@@ -406,6 +496,9 @@ class AsyncConversationResourceWithRawResponse:
         self.share = async_to_raw_response_wrapper(
             conversation.share,
         )
+        self.update_title = async_to_raw_response_wrapper(
+            conversation.update_title,
+        )
 
     @cached_property
     def user(self) -> AsyncUserResourceWithRawResponse:
@@ -428,6 +521,9 @@ class ConversationResourceWithStreamingResponse:
         self.share = to_streamed_response_wrapper(
             conversation.share,
         )
+        self.update_title = to_streamed_response_wrapper(
+            conversation.update_title,
+        )
 
     @cached_property
     def user(self) -> UserResourceWithStreamingResponse:
@@ -449,6 +545,9 @@ class AsyncConversationResourceWithStreamingResponse:
         )
         self.share = async_to_streamed_response_wrapper(
             conversation.share,
+        )
+        self.update_title = async_to_streamed_response_wrapper(
+            conversation.update_title,
         )
 
     @cached_property

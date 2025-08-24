@@ -1,34 +1,76 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Union, Optional
 from datetime import datetime
-from typing_extensions import Literal
+from typing_extensions import Literal, Annotated, TypeAlias
 
+from ..chunk import Chunk
+from ..._utils import PropertyInfo
 from ..._models import BaseModel
 
-__all__ = ["ConversationRetrieveThreadsResponse", "Thread", "ThreadHistory", "ThreadHistoryTools"]
+__all__ = [
+    "ConversationRetrieveThreadsResponse",
+    "Thread",
+    "ThreadHistory",
+    "ThreadHistoryTools",
+    "ThreadHistoryToolsModelCitationTool",
+    "ThreadHistoryToolsRetrievalChunkToolOutput",
+    "ThreadHistoryToolsRetrievalFullContextToolOutput",
+]
 
 
-class ThreadHistoryTools(BaseModel):
-    description: str
+class ThreadHistoryToolsModelCitationTool(BaseModel):
+    description: Optional[str] = None
 
-    name: str
+    name: Optional[Literal["model_citation"]] = None
 
-    tool_args: Dict[str, object]
+    tool_responses: Optional[Dict[str, List[str]]] = None
 
-    tool_responses: Optional[Dict[str, object]] = None
+
+class ThreadHistoryToolsRetrievalChunkToolOutput(BaseModel):
+    description: Optional[str] = None
+
+    name: Optional[Literal["retrieval_chunk"]] = None
+
+    tool_args: Optional[Dict[str, List[str]]] = None
+
+    tool_responses: Optional[Dict[str, List[Chunk]]] = None
+
+
+class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
+    description: Optional[str] = None
+
+    name: Optional[Literal["retrieval_full_context"]] = None
+
+    tool_args: Optional[Dict[str, List[str]]] = None
+
+    tool_responses: Optional[Dict[str, List[Chunk]]] = None
+
+
+ThreadHistoryTools: TypeAlias = Annotated[
+    Union[
+        ThreadHistoryToolsModelCitationTool,
+        ThreadHistoryToolsRetrievalChunkToolOutput,
+        ThreadHistoryToolsRetrievalFullContextToolOutput,
+    ],
+    PropertyInfo(discriminator="name"),
+]
 
 
 class ThreadHistory(BaseModel):
     content: str
 
+    conversation_ext_id: str
+
+    created_at: datetime
+
+    created_by_ext_id: str
+
+    external_id: str
+
     role: Literal["user", "assistant", "system"]
 
-    configurations_name: Optional[str] = None
-
-    created_at: Optional[datetime] = None
-
-    external_id: Optional[str] = None
+    config_ext_id: Optional[str] = None
 
     parent_message_ext_id: Optional[str] = None
 

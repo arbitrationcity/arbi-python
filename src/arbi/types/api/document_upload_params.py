@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Optional
 from typing_extensions import Required, TypedDict
 
 from ..._types import FileTypes
@@ -14,7 +14,10 @@ class DocumentUploadParams(TypedDict, total=False):
     workspace_ext_id: Required[str]
 
     files: Required[List[FileTypes]]
-    """Multiple files as UploadFile"""
+    """Multiple files to upload"""
+
+    config_ext_id: Optional[str]
+    """Configuration to use for processing"""
 
     shared: bool
     """Whether the document should be shared with workspace members"""

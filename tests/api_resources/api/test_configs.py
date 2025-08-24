@@ -10,10 +10,10 @@ import pytest
 from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
-    AllConfigs,
-    ConfigUpdateResponse,
-    ConfigRetrieveSchemaResponse,
-    ConfigRetrieveVersionsResponse,
+    ConfigCreateResponse,
+    ConfigDeleteResponse,
+    ConfigRetrieveResponse,
+    ConfigGetVersionsResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -22,218 +22,227 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestConfigs:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update(self, client: Arbi) -> None:
-        config = client.api.configs.update(
-            configs={},
-        )
-        assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+    def test_method_create(self, client: Arbi) -> None:
+        config = client.api.configs.create()
+        assert_matches_type(ConfigCreateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_update_with_all_params(self, client: Arbi) -> None:
-        config = client.api.configs.update(
-            configs={
-                "chunker": {},
-                "document_date_extractor_llm": {
-                    "api_type": "local",
-                    "max_char_size_to_answer": 0,
-                    "max_tokens": 0,
-                    "model_name": "MODEL_NAME",
-                    "system_instruction": "SYSTEM_INSTRUCTION",
-                    "temperature": 0,
-                },
-                "embedder": {
-                    "api_type": "local",
-                    "model_name": "MODEL_NAME",
-                },
-                "model_citation": {
-                    "model_name": "MODEL_NAME",
-                    "sim_threashold": 0,
-                },
-                "parser": {},
-                "query_llm": {
-                    "api_type": "local",
-                    "max_char_size_to_answer": 0,
-                    "max_tokens": 0,
-                    "model_name": "MODEL_NAME",
-                    "system_instruction": "SYSTEM_INSTRUCTION",
-                    "temperature": 0,
-                },
-                "reranker": {
-                    "api_type": "local",
-                    "max_numb_of_chunks": 1,
-                    "model_name": "MODEL_NAME",
-                },
-                "retriever": {
-                    "group_size": 1000,
-                    "max_distinct_documents": 100,
-                    "max_total_chunks_to_retrieve": 100,
-                    "min_retrieval_sim_score": 0,
-                },
-                "title_llm": {
-                    "api_type": "local",
-                    "max_char_size_to_answer": 0,
-                    "max_tokens": 0,
-                    "model_name": "MODEL_NAME",
-                    "system_instruction": "SYSTEM_INSTRUCTION",
-                    "temperature": 0,
-                },
+    def test_method_create_with_all_params(self, client: Arbi) -> None:
+        config = client.api.configs.create(
+            chunker={},
+            document_date_extractor_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
             },
-            filename_suffix="filename_suffix",
+            embedder={
+                "api_type": "local",
+                "model_name": "MODEL_NAME",
+            },
+            model_citation={
+                "max_numb_citations": 0,
+                "min_char_size_to_answer": 0,
+                "sim_model_name": "SIM_MODEL_NAME",
+                "sim_threashold": 0,
+            },
+            parent_message_ext_id="parent_message_ext_id",
+            parser={},
+            query_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
+            reranker={
+                "api_type": "local",
+                "max_numb_of_chunks": 1,
+                "model_name": "MODEL_NAME",
+            },
+            retriever={
+                "group_size": 1000,
+                "max_distinct_documents": 100,
+                "max_total_chunks_to_retrieve": 100,
+                "min_retrieval_sim_score": 0,
+            },
+            title="title",
+            title_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
         )
-        assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+        assert_matches_type(ConfigCreateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_update(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.update(
-            configs={},
+    def test_raw_response_create(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.create()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        config = response.parse()
+        assert_matches_type(ConfigCreateResponse, config, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.create() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            config = response.parse()
+            assert_matches_type(ConfigCreateResponse, config, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve(self, client: Arbi) -> None:
+        config = client.api.configs.retrieve(
+            "config_ext_id",
+        )
+        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.retrieve(
+            "config_ext_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = response.parse()
-        assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_update(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.update(
-            configs={},
+    def test_streaming_response_retrieve(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.retrieve(
+            "config_ext_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = response.parse()
-            assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+            assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_load(self, client: Arbi) -> None:
-        config = client.api.configs.load(
-            "version",
-        )
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_raw_response_load(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.load(
-            "version",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_streaming_response_load(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.load(
-            "version",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_path_params_load(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `version` but received ''"):
-            client.api.configs.with_raw_response.load(
+    def test_path_params_retrieve(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_ext_id` but received ''"):
+            client.api.configs.with_raw_response.retrieve(
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Arbi) -> None:
-        config = client.api.configs.retrieve()
-        assert_matches_type(AllConfigs, config, path=["response"])
+    def test_method_delete(self, client: Arbi) -> None:
+        config = client.api.configs.delete(
+            "config_ext_id",
+        )
+        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.retrieve()
+    def test_raw_response_delete(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.delete(
+            "config_ext_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
+        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.retrieve() as response:
+    def test_streaming_response_delete(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.delete(
+            "config_ext_id",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
+            assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_schema(self, client: Arbi) -> None:
-        config = client.api.configs.retrieve_schema()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+    def test_path_params_delete(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_ext_id` but received ''"):
+            client.api.configs.with_raw_response.delete(
+                "",
+            )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_schema(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.retrieve_schema()
+    def test_method_get_schema(self, client: Arbi) -> None:
+        config = client.api.configs.get_schema()
+        assert_matches_type(object, config, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_get_schema(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.get_schema()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = response.parse()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+        assert_matches_type(object, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_schema(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.retrieve_schema() as response:
+    def test_streaming_response_get_schema(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.get_schema() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = response.parse()
-            assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+            assert_matches_type(object, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve_versions(self, client: Arbi) -> None:
-        config = client.api.configs.retrieve_versions()
-        assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
+    def test_method_get_versions(self, client: Arbi) -> None:
+        config = client.api.configs.get_versions()
+        assert_matches_type(ConfigGetVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve_versions(self, client: Arbi) -> None:
-        response = client.api.configs.with_raw_response.retrieve_versions()
+    def test_raw_response_get_versions(self, client: Arbi) -> None:
+        response = client.api.configs.with_raw_response.get_versions()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = response.parse()
-        assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
+        assert_matches_type(ConfigGetVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve_versions(self, client: Arbi) -> None:
-        with client.api.configs.with_streaming_response.retrieve_versions() as response:
+    def test_streaming_response_get_versions(self, client: Arbi) -> None:
+        with client.api.configs.with_streaming_response.get_versions() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = response.parse()
-            assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
+            assert_matches_type(ConfigGetVersionsResponse, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -243,217 +252,226 @@ class TestAsyncConfigs:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.update(
-            configs={},
-        )
-        assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+    async def test_method_create(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.create()
+        assert_matches_type(ConfigCreateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.update(
-            configs={
-                "chunker": {},
-                "document_date_extractor_llm": {
-                    "api_type": "local",
-                    "max_char_size_to_answer": 0,
-                    "max_tokens": 0,
-                    "model_name": "MODEL_NAME",
-                    "system_instruction": "SYSTEM_INSTRUCTION",
-                    "temperature": 0,
-                },
-                "embedder": {
-                    "api_type": "local",
-                    "model_name": "MODEL_NAME",
-                },
-                "model_citation": {
-                    "model_name": "MODEL_NAME",
-                    "sim_threashold": 0,
-                },
-                "parser": {},
-                "query_llm": {
-                    "api_type": "local",
-                    "max_char_size_to_answer": 0,
-                    "max_tokens": 0,
-                    "model_name": "MODEL_NAME",
-                    "system_instruction": "SYSTEM_INSTRUCTION",
-                    "temperature": 0,
-                },
-                "reranker": {
-                    "api_type": "local",
-                    "max_numb_of_chunks": 1,
-                    "model_name": "MODEL_NAME",
-                },
-                "retriever": {
-                    "group_size": 1000,
-                    "max_distinct_documents": 100,
-                    "max_total_chunks_to_retrieve": 100,
-                    "min_retrieval_sim_score": 0,
-                },
-                "title_llm": {
-                    "api_type": "local",
-                    "max_char_size_to_answer": 0,
-                    "max_tokens": 0,
-                    "model_name": "MODEL_NAME",
-                    "system_instruction": "SYSTEM_INSTRUCTION",
-                    "temperature": 0,
-                },
+    async def test_method_create_with_all_params(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.create(
+            chunker={},
+            document_date_extractor_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
             },
-            filename_suffix="filename_suffix",
+            embedder={
+                "api_type": "local",
+                "model_name": "MODEL_NAME",
+            },
+            model_citation={
+                "max_numb_citations": 0,
+                "min_char_size_to_answer": 0,
+                "sim_model_name": "SIM_MODEL_NAME",
+                "sim_threashold": 0,
+            },
+            parent_message_ext_id="parent_message_ext_id",
+            parser={},
+            query_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
+            reranker={
+                "api_type": "local",
+                "max_numb_of_chunks": 1,
+                "model_name": "MODEL_NAME",
+            },
+            retriever={
+                "group_size": 1000,
+                "max_distinct_documents": 100,
+                "max_total_chunks_to_retrieve": 100,
+                "min_retrieval_sim_score": 0,
+            },
+            title="title",
+            title_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
         )
-        assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+        assert_matches_type(ConfigCreateResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.update(
-            configs={},
+    async def test_raw_response_create(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.create()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        config = await response.parse()
+        assert_matches_type(ConfigCreateResponse, config, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.create() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            config = await response.parse()
+            assert_matches_type(ConfigCreateResponse, config, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.retrieve(
+            "config_ext_id",
+        )
+        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.retrieve(
+            "config_ext_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = await response.parse()
-        assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+        assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.update(
-            configs={},
+    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.retrieve(
+            "config_ext_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = await response.parse()
-            assert_matches_type(ConfigUpdateResponse, config, path=["response"])
+            assert_matches_type(ConfigRetrieveResponse, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_load(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.load(
-            "version",
-        )
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_raw_response_load(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.load(
-            "version",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        config = await response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_streaming_response_load(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.load(
-            "version",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            config = await response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_path_params_load(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `version` but received ''"):
-            await async_client.api.configs.with_raw_response.load(
+    async def test_path_params_retrieve(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_ext_id` but received ''"):
+            await async_client.api.configs.with_raw_response.retrieve(
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.retrieve()
-        assert_matches_type(AllConfigs, config, path=["response"])
+    async def test_method_delete(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.delete(
+            "config_ext_id",
+        )
+        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.retrieve()
+    async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.delete(
+            "config_ext_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = await response.parse()
-        assert_matches_type(AllConfigs, config, path=["response"])
+        assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.retrieve() as response:
+    async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.delete(
+            "config_ext_id",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = await response.parse()
-            assert_matches_type(AllConfigs, config, path=["response"])
+            assert_matches_type(ConfigDeleteResponse, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_schema(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.retrieve_schema()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+    async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `config_ext_id` but received ''"):
+            await async_client.api.configs.with_raw_response.delete(
+                "",
+            )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_schema(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.retrieve_schema()
+    async def test_method_get_schema(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.get_schema()
+        assert_matches_type(object, config, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_get_schema(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.get_schema()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = await response.parse()
-        assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+        assert_matches_type(object, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_schema(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.retrieve_schema() as response:
+    async def test_streaming_response_get_schema(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.get_schema() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = await response.parse()
-            assert_matches_type(ConfigRetrieveSchemaResponse, config, path=["response"])
+            assert_matches_type(object, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve_versions(self, async_client: AsyncArbi) -> None:
-        config = await async_client.api.configs.retrieve_versions()
-        assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
+    async def test_method_get_versions(self, async_client: AsyncArbi) -> None:
+        config = await async_client.api.configs.get_versions()
+        assert_matches_type(ConfigGetVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve_versions(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.configs.with_raw_response.retrieve_versions()
+    async def test_raw_response_get_versions(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.configs.with_raw_response.get_versions()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         config = await response.parse()
-        assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
+        assert_matches_type(ConfigGetVersionsResponse, config, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve_versions(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.configs.with_streaming_response.retrieve_versions() as response:
+    async def test_streaming_response_get_versions(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.configs.with_streaming_response.get_versions() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             config = await response.parse()
-            assert_matches_type(ConfigRetrieveVersionsResponse, config, path=["response"])
+            assert_matches_type(ConfigGetVersionsResponse, config, path=["response"])
 
         assert cast(Any, response.is_closed) is True
