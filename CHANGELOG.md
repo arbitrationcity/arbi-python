@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 (2025-08-26)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/arbitrationcity/arbi-python/compare/v0.1.0...v0.1.1)
+
+### Chores
+
+* **internal:** change ci workflow machines ([54e1ad5](https://github.com/arbitrationcity/arbi-python/commit/54e1ad548a490aced615402fef6069f8fb062346))
+
 ## 0.1.0 (2025-08-24)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0](https://github.com/arbitrationcity/arbi-python/compare/v0.1.0-alpha.1...v0.1.0)
