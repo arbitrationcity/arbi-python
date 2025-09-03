@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
-from ..._types import FileTypes
+from ..._types import FileTypes, SequenceNotStr
 
 __all__ = ["DocumentUploadParams"]
 
@@ -13,7 +13,7 @@ __all__ = ["DocumentUploadParams"]
 class DocumentUploadParams(TypedDict, total=False):
     workspace_ext_id: Required[str]
 
-    files: Required[List[FileTypes]]
+    files: Required[SequenceNotStr[FileTypes]]
     """Multiple files to upload"""
 
     config_ext_id: Optional[str]

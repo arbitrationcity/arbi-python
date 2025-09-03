@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypeAlias, TypedDict
 
+from ..._types import SequenceNotStr
 from ..chunk_param import ChunkParam
 
 __all__ = [
@@ -33,7 +34,7 @@ class ToolsModelCitationTool(TypedDict, total=False):
 
     name: Literal["model_citation"]
 
-    tool_responses: Dict[str, List[str]]
+    tool_responses: Dict[str, SequenceNotStr[str]]
 
 
 class ToolsRetrievalChunkToolInput(TypedDict, total=False):
@@ -41,7 +42,7 @@ class ToolsRetrievalChunkToolInput(TypedDict, total=False):
 
     name: Literal["retrieval_chunk"]
 
-    tool_args: Dict[str, List[str]]
+    tool_args: Dict[str, SequenceNotStr[str]]
 
     tool_responses: Dict[str, Iterable[ChunkParam]]
 
@@ -51,7 +52,7 @@ class ToolsRetrievalFullContextToolInput(TypedDict, total=False):
 
     name: Literal["retrieval_full_context"]
 
-    tool_args: Dict[str, List[str]]
+    tool_args: Dict[str, SequenceNotStr[str]]
 
     tool_responses: Dict[str, Iterable[ChunkParam]]
 
