@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
+from ...._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven, SequenceNotStr
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -65,7 +65,7 @@ class SettingsResource(SyncAPIResource):
     def update(
         self,
         *,
-        pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        pinned_workspaces: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         show_document_navigator: Optional[bool] | NotGiven = NOT_GIVEN,
         show_help_page: Optional[bool] | NotGiven = NOT_GIVEN,
         show_invite_tab: Optional[bool] | NotGiven = NOT_GIVEN,
@@ -155,7 +155,7 @@ class AsyncSettingsResource(AsyncAPIResource):
     async def update(
         self,
         *,
-        pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        pinned_workspaces: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         show_document_navigator: Optional[bool] | NotGiven = NOT_GIVEN,
         show_help_page: Optional[bool] | NotGiven = NOT_GIVEN,
         show_invite_tab: Optional[bool] | NotGiven = NOT_GIVEN,

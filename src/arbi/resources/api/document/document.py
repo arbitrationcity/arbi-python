@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Mapping, Optional, cast
+from typing import Union, Mapping, Optional, cast
 from datetime import date
 from typing_extensions import Literal
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes, SequenceNotStr
 from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from .annotation import (
@@ -287,7 +287,7 @@ class DocumentResource(SyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
-        files: List[FileTypes],
+        files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -637,7 +637,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
-        files: List[FileTypes],
+        files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
         shared: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

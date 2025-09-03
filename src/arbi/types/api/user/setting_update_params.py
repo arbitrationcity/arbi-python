@@ -2,14 +2,16 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import TypedDict
+
+from ...._types import SequenceNotStr
 
 __all__ = ["SettingUpdateParams"]
 
 
 class SettingUpdateParams(TypedDict, total=False):
-    pinned_workspaces: Optional[List[str]]
+    pinned_workspaces: Optional[SequenceNotStr[str]]
 
     show_document_navigator: Optional[bool]
 
