@@ -37,7 +37,7 @@ from .configs import (
     ConfigsResourceWithStreamingResponse,
     AsyncConfigsResourceWithStreamingResponse,
 )
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import Body, Query, Headers, NotGiven, not_given
 from ..._compat import cached_property
 from .assistant import (
     AssistantResource,
@@ -154,7 +154,7 @@ class APIResource(_resource.SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Serves the admin application page with necessary configuration variables."""
         return self._get(
@@ -230,7 +230,7 @@ class AsyncAPIResource(_resource.AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Serves the admin application page with necessary configuration variables."""
         return await self._get(
