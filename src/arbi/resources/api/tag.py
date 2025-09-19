@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -53,14 +53,14 @@ class TagResource(SyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
-        parent_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        shared: Optional[bool] | NotGiven = NOT_GIVEN,
+        parent_ext_id: Optional[str] | Omit = omit,
+        shared: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagCreateResponse:
         """
         Create a new tag for a given workspace.
@@ -98,14 +98,14 @@ class TagResource(SyncAPIResource):
         self,
         tag_ext_id: str,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        shared: Optional[bool] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        shared: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagUpdateResponse:
         """
         Update a tag by its external ID.
@@ -145,7 +145,7 @@ class TagResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagDeleteResponse:
         """
         Delete a tag by its external ID.
@@ -179,7 +179,7 @@ class TagResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagApplyToDocsResponse:
         """
         Apply a tag to a list of documents.
@@ -213,7 +213,7 @@ class TagResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagGetDocsResponse:
         """
         Get all doctags for a given tag.
@@ -247,7 +247,7 @@ class TagResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagRemoveFromDocsResponse:
         """
         Remove a tag from a list of documents.
@@ -298,14 +298,14 @@ class AsyncTagResource(AsyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
-        parent_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        shared: Optional[bool] | NotGiven = NOT_GIVEN,
+        parent_ext_id: Optional[str] | Omit = omit,
+        shared: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagCreateResponse:
         """
         Create a new tag for a given workspace.
@@ -343,14 +343,14 @@ class AsyncTagResource(AsyncAPIResource):
         self,
         tag_ext_id: str,
         *,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        shared: Optional[bool] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | Omit = omit,
+        shared: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagUpdateResponse:
         """
         Update a tag by its external ID.
@@ -390,7 +390,7 @@ class AsyncTagResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagDeleteResponse:
         """
         Delete a tag by its external ID.
@@ -424,7 +424,7 @@ class AsyncTagResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagApplyToDocsResponse:
         """
         Apply a tag to a list of documents.
@@ -458,7 +458,7 @@ class AsyncTagResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagGetDocsResponse:
         """
         Get all doctags for a given tag.
@@ -492,7 +492,7 @@ class AsyncTagResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagRemoveFromDocsResponse:
         """
         Remove a tag from a list of documents.

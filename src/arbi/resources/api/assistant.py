@@ -6,7 +6,7 @@ from typing import Dict, Optional
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -47,15 +47,15 @@ class AssistantResource(SyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
-        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tools: Dict[str, assistant_retrieve_params.Tools] | NotGiven = NOT_GIVEN,
+        config_ext_id: Optional[str] | Omit = omit,
+        parent_message_ext_id: Optional[str] | Omit = omit,
+        tools: Dict[str, assistant_retrieve_params.Tools] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Retrieve relevant document chunks for a user message.
 
@@ -94,15 +94,15 @@ class AssistantResource(SyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
-        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tools: Dict[str, assistant_query_params.Tools] | NotGiven = NOT_GIVEN,
+        config_ext_id: Optional[str] | Omit = omit,
+        parent_message_ext_id: Optional[str] | Omit = omit,
+        tools: Dict[str, assistant_query_params.Tools] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Process a user query against documents in a workspace.
 
@@ -162,15 +162,15 @@ class AsyncAssistantResource(AsyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
-        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tools: Dict[str, assistant_retrieve_params.Tools] | NotGiven = NOT_GIVEN,
+        config_ext_id: Optional[str] | Omit = omit,
+        parent_message_ext_id: Optional[str] | Omit = omit,
+        tools: Dict[str, assistant_retrieve_params.Tools] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Retrieve relevant document chunks for a user message.
 
@@ -209,15 +209,15 @@ class AsyncAssistantResource(AsyncAPIResource):
         *,
         content: str,
         workspace_ext_id: str,
-        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        tools: Dict[str, assistant_query_params.Tools] | NotGiven = NOT_GIVEN,
+        config_ext_id: Optional[str] | Omit = omit,
+        parent_message_ext_id: Optional[str] | Omit = omit,
+        tools: Dict[str, assistant_query_params.Tools] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Process a user query against documents in a workspace.
 
