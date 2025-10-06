@@ -55,12 +55,14 @@ class TestSettings:
     @parametrize
     def test_method_update_with_all_params(self, client: Arbi) -> None:
         setting = client.api.user.settings.update(
+            ai_mode="ai_mode",
             pinned_workspaces=["wrk-bFXA5r3A"],
             show_document_navigator=True,
             show_help_page=True,
             show_invite_tab=True,
             show_security_settings=True,
             show_smart_search=True,
+            show_templates=True,
             show_thread_visualization=True,
         )
         assert setting is None
@@ -131,12 +133,14 @@ class TestAsyncSettings:
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
         setting = await async_client.api.user.settings.update(
+            ai_mode="ai_mode",
             pinned_workspaces=["wrk-bFXA5r3A"],
             show_document_navigator=True,
             show_help_page=True,
             show_invite_tab=True,
             show_security_settings=True,
             show_smart_search=True,
+            show_templates=True,
             show_thread_visualization=True,
         )
         assert setting is None

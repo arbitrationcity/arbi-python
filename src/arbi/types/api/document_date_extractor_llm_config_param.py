@@ -13,14 +13,14 @@ class DocumentDateExtractorLlmConfigParam(TypedDict, total=False):
     api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
     """The inference type (local or remote)."""
 
-    max_char_size_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_SIZE_TO_ANSWER")]
-    """Maximum character size to answer."""
+    max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
+    """Maximum characters in document for context."""
 
     max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
     """Maximum number of tokens allowed."""
 
     model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
-    """The name of the model to be used."""
+    """The name of the non-reasoning model to be used."""
 
     system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
 

@@ -14,9 +14,20 @@ __all__ = [
     "ThreadHistory",
     "ThreadHistoryTools",
     "ThreadHistoryToolsModelCitationTool",
+    "ThreadHistoryToolsModelCitationToolToolResponses",
     "ThreadHistoryToolsRetrievalChunkToolOutput",
     "ThreadHistoryToolsRetrievalFullContextToolOutput",
 ]
+
+
+class ThreadHistoryToolsModelCitationToolToolResponses(BaseModel):
+    chunk_ids: List[str]
+
+    offset_end: int
+
+    offset_start: int
+
+    statement: str
 
 
 class ThreadHistoryToolsModelCitationTool(BaseModel):
@@ -24,7 +35,7 @@ class ThreadHistoryToolsModelCitationTool(BaseModel):
 
     name: Optional[Literal["model_citation"]] = None
 
-    tool_responses: Optional[Dict[str, List[str]]] = None
+    tool_responses: Optional[Dict[str, ThreadHistoryToolsModelCitationToolToolResponses]] = None
 
 
 class ThreadHistoryToolsRetrievalChunkToolOutput(BaseModel):
@@ -42,7 +53,7 @@ class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
 
     name: Optional[Literal["retrieval_full_context"]] = None
 
-    tool_args: Optional[Dict[str, List[str]]] = None
+    tool_args: Optional[Dict[str, object]] = None
 
     tool_responses: Optional[Dict[str, List[Chunk]]] = None
 

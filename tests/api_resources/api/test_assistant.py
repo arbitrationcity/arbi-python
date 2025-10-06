@@ -37,7 +37,14 @@ class TestAssistant:
                 "foo": {
                     "description": "description",
                     "name": "model_citation",
-                    "tool_responses": {"foo": ["string"]},
+                    "tool_responses": {
+                        "foo": {
+                            "chunk_ids": ["string"],
+                            "offset_end": 0,
+                            "offset_start": 0,
+                            "statement": "statement",
+                        }
+                    },
                 }
             },
         )
@@ -92,7 +99,14 @@ class TestAssistant:
                 "foo": {
                     "description": "description",
                     "name": "model_citation",
-                    "tool_responses": {"foo": ["string"]},
+                    "tool_responses": {
+                        "foo": {
+                            "chunk_ids": ["string"],
+                            "offset_end": 0,
+                            "offset_start": 0,
+                            "statement": "statement",
+                        }
+                    },
                 }
             },
         )
@@ -153,7 +167,14 @@ class TestAsyncAssistant:
                 "foo": {
                     "description": "description",
                     "name": "model_citation",
-                    "tool_responses": {"foo": ["string"]},
+                    "tool_responses": {
+                        "foo": {
+                            "chunk_ids": ["string"],
+                            "offset_end": 0,
+                            "offset_start": 0,
+                            "statement": "statement",
+                        }
+                    },
                 }
             },
         )
@@ -208,7 +229,14 @@ class TestAsyncAssistant:
                 "foo": {
                     "description": "description",
                     "name": "model_citation",
-                    "tool_responses": {"foo": ["string"]},
+                    "tool_responses": {
+                        "foo": {
+                            "chunk_ids": ["string"],
+                            "offset_end": 0,
+                            "offset_start": 0,
+                            "statement": "statement",
+                        }
+                    },
                 }
             },
         )

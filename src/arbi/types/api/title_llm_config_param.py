@@ -20,7 +20,7 @@ class TitleLlmConfigParam(TypedDict, total=False):
     """Maximum number of tokens allowed."""
 
     model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
-    """The name of the model to be used."""
+    """The name of the non-reasoning model to be used."""
 
     system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
 

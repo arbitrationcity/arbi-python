@@ -21,7 +21,7 @@ class TitleLlmConfig(BaseModel):
     """Maximum number of tokens allowed."""
 
     api_model_name: Optional[str] = FieldInfo(alias="MODEL_NAME", default=None)
-    """The name of the model to be used."""
+    """The name of the non-reasoning model to be used."""
 
     system_instruction: Optional[str] = FieldInfo(alias="SYSTEM_INSTRUCTION", default=None)
 
