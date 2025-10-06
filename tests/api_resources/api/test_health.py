@@ -14,6 +14,8 @@ from arbi.types.api import (
     HealthGetModelsResponse,
     HealthCheckModelsResponse,
     HealthCheckServicesResponse,
+    HealthRetrieveStatusResponse,
+    HealthRetrieveVersionResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -134,6 +136,62 @@ class TestHealth:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_status(self, client: Arbi) -> None:
+        health = client.api.health.retrieve_status()
+        assert_matches_type(HealthRetrieveStatusResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_status(self, client: Arbi) -> None:
+        response = client.api.health.with_raw_response.retrieve_status()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        health = response.parse()
+        assert_matches_type(HealthRetrieveStatusResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_status(self, client: Arbi) -> None:
+        with client.api.health.with_streaming_response.retrieve_status() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            health = response.parse()
+            assert_matches_type(HealthRetrieveStatusResponse, health, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_version(self, client: Arbi) -> None:
+        health = client.api.health.retrieve_version()
+        assert_matches_type(HealthRetrieveVersionResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_version(self, client: Arbi) -> None:
+        response = client.api.health.with_raw_response.retrieve_version()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        health = response.parse()
+        assert_matches_type(HealthRetrieveVersionResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_version(self, client: Arbi) -> None:
+        with client.api.health.with_streaming_response.retrieve_version() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            health = response.parse()
+            assert_matches_type(HealthRetrieveVersionResponse, health, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncHealth:
     parametrize = pytest.mark.parametrize(
@@ -249,5 +307,61 @@ class TestAsyncHealth:
 
             health = await response.parse()
             assert_matches_type(HealthGetModelsResponse, health, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_status(self, async_client: AsyncArbi) -> None:
+        health = await async_client.api.health.retrieve_status()
+        assert_matches_type(HealthRetrieveStatusResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_status(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.health.with_raw_response.retrieve_status()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        health = await response.parse()
+        assert_matches_type(HealthRetrieveStatusResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_status(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.health.with_streaming_response.retrieve_status() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            health = await response.parse()
+            assert_matches_type(HealthRetrieveStatusResponse, health, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_version(self, async_client: AsyncArbi) -> None:
+        health = await async_client.api.health.retrieve_version()
+        assert_matches_type(HealthRetrieveVersionResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_version(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.health.with_raw_response.retrieve_version()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        health = await response.parse()
+        assert_matches_type(HealthRetrieveVersionResponse, health, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_version(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.health.with_streaming_response.retrieve_version() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            health = await response.parse()
+            assert_matches_type(HealthRetrieveVersionResponse, health, path=["response"])
 
         assert cast(Any, response.is_closed) is True

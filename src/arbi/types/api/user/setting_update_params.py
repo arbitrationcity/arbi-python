@@ -11,6 +11,8 @@ __all__ = ["SettingUpdateParams"]
 
 
 class SettingUpdateParams(TypedDict, total=False):
+    ai_mode: Optional[str]
+
     pinned_workspaces: Optional[SequenceNotStr[str]]
 
     show_document_navigator: Optional[bool]
@@ -22,5 +24,7 @@ class SettingUpdateParams(TypedDict, total=False):
     show_security_settings: Optional[bool]
 
     show_smart_search: Optional[bool]
+
+    show_templates: Optional[bool]
 
     show_thread_visualization: Optional[bool]

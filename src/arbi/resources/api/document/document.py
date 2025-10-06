@@ -2,24 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Union, Mapping, Optional, cast
+from typing import Union, Optional
 from datetime import date
 from typing_extensions import Literal
 
 import httpx
 
-from ...._types import (
-    Body,
-    Omit,
-    Query,
-    Headers,
-    NotGiven,
-    FileTypes,
-    SequenceNotStr,
-    omit,
-    not_given,
-)
-from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from .annotation import (
     AnnotationResource,
@@ -36,7 +26,12 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.api import document_view_params, document_update_params, document_upload_params
+from ....types.api import (
+    document_view_params,
+    document_update_params,
+    document_upload_params,
+    document_upload_from_url_params,
+)
 from ...._base_client import make_request_options
 from ....types.api.doc_response import DocResponse
 from ....types.api.document_delete_response import DocumentDeleteResponse
@@ -297,7 +292,6 @@ class DocumentResource(SyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
-        files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -313,7 +307,57 @@ class DocumentResource(SyncAPIResource):
         for processing, parsed, and indexed for vector search.
 
         Args:
-          files: Multiple files to upload
+          config_ext_id: Configuration to use for processing
+
+          shared: Whether the document should be shared with workspace members
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/document/upload",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "workspace_ext_id": workspace_ext_id,
+                        "config_ext_id": config_ext_id,
+                        "shared": shared,
+                    },
+                    document_upload_params.DocumentUploadParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
+    def upload_from_url(
+        self,
+        *,
+        urls: SequenceNotStr[str],
+        workspace_ext_id: str,
+        config_ext_id: Optional[str] | Omit = omit,
+        shared: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Download and upload documents from URLs to a workspace with encryption.
+        Documents are queued for processing, parsed, and indexed for vector search.
+
+        Args:
+          urls: URLs to download documents from
 
           config_ext_id: Configuration to use for processing
 
@@ -327,16 +371,8 @@ class DocumentResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"files": files})
-        extracted_files = extract_files(cast(Mapping[str, object], body), paths=[["files", "<array>"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
-            "/api/document/upload",
-            body=maybe_transform(body, document_upload_params.DocumentUploadParams),
-            files=extracted_files,
+            "/api/document/upload-url",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -344,11 +380,12 @@ class DocumentResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "urls": urls,
                         "workspace_ext_id": workspace_ext_id,
                         "config_ext_id": config_ext_id,
                         "shared": shared,
                     },
-                    document_upload_params.DocumentUploadParams,
+                    document_upload_from_url_params.DocumentUploadFromURLParams,
                 ),
             ),
             cast_to=object,
@@ -647,7 +684,6 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
-        files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -663,7 +699,57 @@ class AsyncDocumentResource(AsyncAPIResource):
         for processing, parsed, and indexed for vector search.
 
         Args:
-          files: Multiple files to upload
+          config_ext_id: Configuration to use for processing
+
+          shared: Whether the document should be shared with workspace members
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/document/upload",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "workspace_ext_id": workspace_ext_id,
+                        "config_ext_id": config_ext_id,
+                        "shared": shared,
+                    },
+                    document_upload_params.DocumentUploadParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
+    async def upload_from_url(
+        self,
+        *,
+        urls: SequenceNotStr[str],
+        workspace_ext_id: str,
+        config_ext_id: Optional[str] | Omit = omit,
+        shared: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Download and upload documents from URLs to a workspace with encryption.
+        Documents are queued for processing, parsed, and indexed for vector search.
+
+        Args:
+          urls: URLs to download documents from
 
           config_ext_id: Configuration to use for processing
 
@@ -677,16 +763,8 @@ class AsyncDocumentResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal({"files": files})
-        extracted_files = extract_files(cast(Mapping[str, object], body), paths=[["files", "<array>"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
-            "/api/document/upload",
-            body=await async_maybe_transform(body, document_upload_params.DocumentUploadParams),
-            files=extracted_files,
+            "/api/document/upload-url",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -694,11 +772,12 @@ class AsyncDocumentResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "urls": urls,
                         "workspace_ext_id": workspace_ext_id,
                         "config_ext_id": config_ext_id,
                         "shared": shared,
                     },
-                    document_upload_params.DocumentUploadParams,
+                    document_upload_from_url_params.DocumentUploadFromURLParams,
                 ),
             ),
             cast_to=object,
@@ -772,6 +851,9 @@ class DocumentResourceWithRawResponse:
         self.upload = to_raw_response_wrapper(
             document.upload,
         )
+        self.upload_from_url = to_raw_response_wrapper(
+            document.upload_from_url,
+        )
         self.view = to_raw_response_wrapper(
             document.view,
         )
@@ -805,6 +887,9 @@ class AsyncDocumentResourceWithRawResponse:
         )
         self.upload = async_to_raw_response_wrapper(
             document.upload,
+        )
+        self.upload_from_url = async_to_raw_response_wrapper(
+            document.upload_from_url,
         )
         self.view = async_to_raw_response_wrapper(
             document.view,
@@ -840,6 +925,9 @@ class DocumentResourceWithStreamingResponse:
         self.upload = to_streamed_response_wrapper(
             document.upload,
         )
+        self.upload_from_url = to_streamed_response_wrapper(
+            document.upload_from_url,
+        )
         self.view = to_streamed_response_wrapper(
             document.view,
         )
@@ -873,6 +961,9 @@ class AsyncDocumentResourceWithStreamingResponse:
         )
         self.upload = async_to_streamed_response_wrapper(
             document.upload,
+        )
+        self.upload_from_url = async_to_streamed_response_wrapper(
+            document.upload_from_url,
         )
         self.view = async_to_streamed_response_wrapper(
             document.view,

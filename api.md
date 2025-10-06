@@ -110,6 +110,7 @@ Methods:
 - <code title="get /api/document/{document_ext_id}/parsed-{stage}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get_parsed</a>(stage, \*, document_ext_id) -> <a href="./src/arbi/types/api/document_get_parsed_response.py">DocumentGetParsedResponse</a></code>
 - <code title="get /api/document/{doc_ext_id}/tags">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get_tags</a>(doc_ext_id) -> <a href="./src/arbi/types/api/document_get_tags_response.py">DocumentGetTagsResponse</a></code>
 - <code title="post /api/document/upload">client.api.document.<a href="./src/arbi/resources/api/document/document.py">upload</a>(\*\*<a href="src/arbi/types/api/document_upload_params.py">params</a>) -> object</code>
+- <code title="post /api/document/upload-url">client.api.document.<a href="./src/arbi/resources/api/document/document.py">upload_from_url</a>(\*\*<a href="src/arbi/types/api/document_upload_from_url_params.py">params</a>) -> object</code>
 - <code title="get /api/document/{document_ext_id}/view">client.api.document.<a href="./src/arbi/resources/api/document/document.py">view</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document_view_params.py">params</a>) -> object</code>
 
 ### Annotation
@@ -184,6 +185,8 @@ from arbi.types.api import (
     HealthCheckModelsResponse,
     HealthCheckServicesResponse,
     HealthGetModelsResponse,
+    HealthRetrieveStatusResponse,
+    HealthRetrieveVersionResponse,
 )
 ```
 
@@ -193,6 +196,8 @@ Methods:
 - <code title="get /api/health/remote-models">client.api.health.<a href="./src/arbi/resources/api/health.py">check_models</a>() -> <a href="./src/arbi/types/api/health_check_models_response.py">HealthCheckModelsResponse</a></code>
 - <code title="get /api/health/services">client.api.health.<a href="./src/arbi/resources/api/health.py">check_services</a>() -> <a href="./src/arbi/types/api/health_check_services_response.py">HealthCheckServicesResponse</a></code>
 - <code title="get /api/health/models">client.api.health.<a href="./src/arbi/resources/api/health.py">get_models</a>() -> <a href="./src/arbi/types/api/health_get_models_response.py">HealthGetModelsResponse</a></code>
+- <code title="get /api/health/">client.api.health.<a href="./src/arbi/resources/api/health.py">retrieve_status</a>() -> <a href="./src/arbi/types/api/health_retrieve_status_response.py">HealthRetrieveStatusResponse</a></code>
+- <code title="get /api/health/version">client.api.health.<a href="./src/arbi/resources/api/health.py">retrieve_version</a>() -> <a href="./src/arbi/types/api/health_retrieve_version_response.py">HealthRetrieveVersionResponse</a></code>
 
 ## Tag
 

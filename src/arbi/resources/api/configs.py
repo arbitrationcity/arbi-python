@@ -60,6 +60,8 @@ class ConfigsResource(SyncAPIResource):
     def create(
         self,
         *,
+        agent_llm: Optional[config_create_params.AgentLlm] | Omit = omit,
+        agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
@@ -94,6 +96,8 @@ class ConfigsResource(SyncAPIResource):
             "/api/configs/",
             body=maybe_transform(
                 {
+                    "agent_llm": agent_llm,
+                    "agents": agents,
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "embedder": embedder,
@@ -249,6 +253,8 @@ class AsyncConfigsResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        agent_llm: Optional[config_create_params.AgentLlm] | Omit = omit,
+        agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
@@ -283,6 +289,8 @@ class AsyncConfigsResource(AsyncAPIResource):
             "/api/configs/",
             body=await async_maybe_transform(
                 {
+                    "agent_llm": agent_llm,
+                    "agents": agents,
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "embedder": embedder,

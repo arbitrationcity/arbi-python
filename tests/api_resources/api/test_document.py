@@ -296,7 +296,6 @@ class TestDocument:
     def test_method_upload(self, client: Arbi) -> None:
         document = client.api.document.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
         )
         assert_matches_type(object, document, path=["response"])
 
@@ -305,7 +304,6 @@ class TestDocument:
     def test_method_upload_with_all_params(self, client: Arbi) -> None:
         document = client.api.document.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
             config_ext_id="config_ext_id",
             shared=True,
         )
@@ -316,7 +314,6 @@ class TestDocument:
     def test_raw_response_upload(self, client: Arbi) -> None:
         response = client.api.document.with_raw_response.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
         )
 
         assert response.is_closed is True
@@ -329,7 +326,54 @@ class TestDocument:
     def test_streaming_response_upload(self, client: Arbi) -> None:
         with client.api.document.with_streaming_response.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(object, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_upload_from_url(self, client: Arbi) -> None:
+        document = client.api.document.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_upload_from_url_with_all_params(self, client: Arbi) -> None:
+        document = client.api.document.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
+            config_ext_id="config_ext_id",
+            shared=True,
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_upload_from_url(self, client: Arbi) -> None:
+        response = client.api.document.with_raw_response.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_upload_from_url(self, client: Arbi) -> None:
+        with client.api.document.with_streaming_response.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -668,7 +712,6 @@ class TestAsyncDocument:
     async def test_method_upload(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
         )
         assert_matches_type(object, document, path=["response"])
 
@@ -677,7 +720,6 @@ class TestAsyncDocument:
     async def test_method_upload_with_all_params(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
             config_ext_id="config_ext_id",
             shared=True,
         )
@@ -688,7 +730,6 @@ class TestAsyncDocument:
     async def test_raw_response_upload(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.document.with_raw_response.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
         )
 
         assert response.is_closed is True
@@ -701,7 +742,54 @@ class TestAsyncDocument:
     async def test_streaming_response_upload(self, async_client: AsyncArbi) -> None:
         async with async_client.api.document.with_streaming_response.upload(
             workspace_ext_id="wrk",
-            files=[b"raw file contents"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(object, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_upload_from_url(self, async_client: AsyncArbi) -> None:
+        document = await async_client.api.document.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_upload_from_url_with_all_params(self, async_client: AsyncArbi) -> None:
+        document = await async_client.api.document.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
+            config_ext_id="config_ext_id",
+            shared=True,
+        )
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_upload_from_url(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.document.with_raw_response.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(object, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_upload_from_url(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.document.with_streaming_response.upload_from_url(
+            urls=["string"],
+            workspace_ext_id="wrk",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

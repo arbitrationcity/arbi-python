@@ -10,6 +10,8 @@ __all__ = ["SettingRetrieveResponse"]
 
 
 class SettingRetrieveResponse(BaseModel):
+    ai_mode: Optional[str] = None
+
     developer: Optional[bool] = None
 
     last_workspace: Optional[str] = None
@@ -25,6 +27,8 @@ class SettingRetrieveResponse(BaseModel):
     show_security_settings: Optional[bool] = None
 
     show_smart_search: Optional[bool] = None
+
+    show_templates: Optional[bool] = None
 
     show_thread_visualization: Optional[bool] = None
 
