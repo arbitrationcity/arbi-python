@@ -45,6 +45,7 @@ from .config_retrieve_response import ConfigRetrieveResponse as ConfigRetrieveRe
 from .document_delete_response import DocumentDeleteResponse as DocumentDeleteResponse
 from .document_update_response import DocumentUpdateResponse as DocumentUpdateResponse
 from .tag_apply_to_docs_params import TagApplyToDocsParams as TagApplyToDocsParams
+from .user_verify_email_params import UserVerifyEmailParams as UserVerifyEmailParams
 from .workspace_share_response import WorkspaceShareResponse as WorkspaceShareResponse
 from .assistant_retrieve_params import AssistantRetrieveParams as AssistantRetrieveParams
 from .health_check_app_response import HealthCheckAppResponse as HealthCheckAppResponse
@@ -52,6 +53,7 @@ from .workspace_delete_response import WorkspaceDeleteResponse as WorkspaceDelet
 from .document_get_tags_response import DocumentGetTagsResponse as DocumentGetTagsResponse
 from .health_get_models_response import HealthGetModelsResponse as HealthGetModelsResponse
 from .tag_apply_to_docs_response import TagApplyToDocsResponse as TagApplyToDocsResponse
+from .user_verify_email_response import UserVerifyEmailResponse as UserVerifyEmailResponse
 from .conversation_share_response import ConversationShareResponse as ConversationShareResponse
 from .model_citation_config_param import ModelCitationConfigParam as ModelCitationConfigParam
 from .tag_remove_from_docs_params import TagRemoveFromDocsParams as TagRemoveFromDocsParams

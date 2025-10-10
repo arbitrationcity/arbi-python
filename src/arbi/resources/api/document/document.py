@@ -2,14 +2,24 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Union, Mapping, Optional, cast
 from datetime import date
 from typing_extensions import Literal
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._types import (
+    Body,
+    Omit,
+    Query,
+    Headers,
+    NotGiven,
+    FileTypes,
+    SequenceNotStr,
+    omit,
+    not_given,
+)
+from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from .annotation import (
     AnnotationResource,
@@ -292,6 +302,7 @@ class DocumentResource(SyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
+        files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -307,6 +318,8 @@ class DocumentResource(SyncAPIResource):
         for processing, parsed, and indexed for vector search.
 
         Args:
+          files: Multiple files to upload
+
           config_ext_id: Configuration to use for processing
 
           shared: Whether the document should be shared with workspace members
@@ -319,8 +332,16 @@ class DocumentResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal({"files": files})
+        extracted_files = extract_files(cast(Mapping[str, object], body), paths=[["files", "<array>"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
             "/api/document/upload",
+            body=maybe_transform(body, document_upload_params.DocumentUploadParams),
+            files=extracted_files,
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -684,6 +705,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
+        files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -699,6 +721,8 @@ class AsyncDocumentResource(AsyncAPIResource):
         for processing, parsed, and indexed for vector search.
 
         Args:
+          files: Multiple files to upload
+
           config_ext_id: Configuration to use for processing
 
           shared: Whether the document should be shared with workspace members
@@ -711,8 +735,16 @@ class AsyncDocumentResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal({"files": files})
+        extracted_files = extract_files(cast(Mapping[str, object], body), paths=[["files", "<array>"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
             "/api/document/upload",
+            body=await async_maybe_transform(body, document_upload_params.DocumentUploadParams),
+            files=extracted_files,
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

@@ -15,7 +15,13 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api import Token, UserResponse, UserListWorkspacesResponse, UserLogoutResponse
+from arbi.types.api import (
+    Token,
+    UserResponse,
+    UserListWorkspacesResponse,
+    UserLogoutResponse,
+    UserVerifyEmailResponse,
+)
 ```
 
 Methods:
@@ -26,6 +32,7 @@ Methods:
 - <code title="post /api/user/token_refresh">client.api.user.<a href="./src/arbi/resources/api/user/user.py">refresh_token</a>() -> <a href="./src/arbi/types/api/token.py">Token</a></code>
 - <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
 - <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user/user.py">retrieve_me</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
+- <code title="post /api/user/verify-email">client.api.user.<a href="./src/arbi/resources/api/user/user.py">verify_email</a>(\*\*<a href="src/arbi/types/api/user_verify_email_params.py">params</a>) -> <a href="./src/arbi/types/api/user_verify_email_response.py">UserVerifyEmailResponse</a></code>
 
 ### Settings
 
