@@ -11,4 +11,6 @@ __all__ = ["WorkspaceUpdateParams"]
 class WorkspaceUpdateParams(TypedDict, total=False):
     description: Optional[str]
 
+    is_public: Optional[bool]
+
     name: Optional[str]
