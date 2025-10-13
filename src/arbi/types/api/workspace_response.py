@@ -17,6 +17,8 @@ class WorkspaceResponse(BaseModel):
 
     external_id: str
 
+    is_public: bool
+
     name: str
 
     updated_at: datetime

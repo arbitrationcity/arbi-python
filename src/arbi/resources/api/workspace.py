@@ -62,6 +62,7 @@ class WorkspaceResource(SyncAPIResource):
         workspace_ext_id: str,
         *,
         description: Optional[str] | Omit = omit,
+        is_public: Optional[bool] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -70,10 +71,12 @@ class WorkspaceResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceResponse:
-        """Update workspace metadata such as name or description.
+        """Update workspace metadata such as name, description, or public status.
 
-        Changes are persisted to
-        the database.
+        Changes
+        are persisted to the database.
+
+        Only developers can change the is_public field.
 
         Args:
           extra_headers: Send extra headers
@@ -91,6 +94,7 @@ class WorkspaceResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "description": description,
+                    "is_public": is_public,
                     "name": name,
                 },
                 workspace_update_params.WorkspaceUpdateParams,
@@ -143,6 +147,7 @@ class WorkspaceResource(SyncAPIResource):
         *,
         name: str,
         description: Optional[str] | Omit = omit,
+        is_public: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -154,6 +159,15 @@ class WorkspaceResource(SyncAPIResource):
 
         Sets up vector
         storage and associates the creator as the initial workspace user.
+
+        Public workspaces are visible to all users and grant non-members limited access:
+
+        - Non-members can view shared documents and tags
+        - Non-members can create conversations and send messages
+        - Only members can upload documents
+        - Only members can see the member list
+
+        Only users with developer flag can create public workspaces.
 
         Args:
           extra_headers: Send extra headers
@@ -170,6 +184,7 @@ class WorkspaceResource(SyncAPIResource):
                 {
                     "name": name,
                     "description": description,
+                    "is_public": is_public,
                 },
                 workspace_create_protected_params.WorkspaceCreateProtectedParams,
             ),
@@ -372,8 +387,8 @@ class WorkspaceResource(SyncAPIResource):
     ) -> WorkspaceGetUsersResponse:
         """Retrieve users with access to a specific workspace.
 
-        Leverages RLS to enforce
-        appropriate access controls.
+        RLS handles access control:
+        members can view private workspaces, anyone can view public workspaces.
 
         Args:
           extra_headers: Send extra headers
@@ -494,6 +509,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         workspace_ext_id: str,
         *,
         description: Optional[str] | Omit = omit,
+        is_public: Optional[bool] | Omit = omit,
         name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -502,10 +518,12 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceResponse:
-        """Update workspace metadata such as name or description.
+        """Update workspace metadata such as name, description, or public status.
 
-        Changes are persisted to
-        the database.
+        Changes
+        are persisted to the database.
+
+        Only developers can change the is_public field.
 
         Args:
           extra_headers: Send extra headers
@@ -523,6 +541,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "description": description,
+                    "is_public": is_public,
                     "name": name,
                 },
                 workspace_update_params.WorkspaceUpdateParams,
@@ -575,6 +594,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         *,
         name: str,
         description: Optional[str] | Omit = omit,
+        is_public: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -586,6 +606,15 @@ class AsyncWorkspaceResource(AsyncAPIResource):
 
         Sets up vector
         storage and associates the creator as the initial workspace user.
+
+        Public workspaces are visible to all users and grant non-members limited access:
+
+        - Non-members can view shared documents and tags
+        - Non-members can create conversations and send messages
+        - Only members can upload documents
+        - Only members can see the member list
+
+        Only users with developer flag can create public workspaces.
 
         Args:
           extra_headers: Send extra headers
@@ -602,6 +631,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
                 {
                     "name": name,
                     "description": description,
+                    "is_public": is_public,
                 },
                 workspace_create_protected_params.WorkspaceCreateProtectedParams,
             ),
@@ -804,8 +834,8 @@ class AsyncWorkspaceResource(AsyncAPIResource):
     ) -> WorkspaceGetUsersResponse:
         """Retrieve users with access to a specific workspace.
 
-        Leverages RLS to enforce
-        appropriate access controls.
+        RLS handles access control:
+        members can view private workspaces, anyone can view public workspaces.
 
         Args:
           extra_headers: Send extra headers
