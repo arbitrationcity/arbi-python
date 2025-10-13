@@ -4,10 +4,8 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-from ..._types import SequenceNotStr
-
-__all__ = ["TagApplyToDocsParams"]
+__all__ = ["UserVerifyEmailParams"]
 
 
-class TagApplyToDocsParams(TypedDict, total=False):
-    doc_ids: Required[SequenceNotStr[str]]
+class UserVerifyEmailParams(TypedDict, total=False):
+    email: Required[str]

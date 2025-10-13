@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -51,7 +51,7 @@ class SettingsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SettingRetrieveResponse:
         """Get current user's settings."""
         return self._get(
@@ -65,19 +65,21 @@ class SettingsResource(SyncAPIResource):
     def update(
         self,
         *,
-        pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        show_document_navigator: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_help_page: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_invite_tab: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_security_settings: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_smart_search: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_thread_visualization: Optional[bool] | NotGiven = NOT_GIVEN,
+        ai_mode: Optional[str] | Omit = omit,
+        pinned_workspaces: Optional[SequenceNotStr[str]] | Omit = omit,
+        show_document_navigator: Optional[bool] | Omit = omit,
+        show_help_page: Optional[bool] | Omit = omit,
+        show_invite_tab: Optional[bool] | Omit = omit,
+        show_security_settings: Optional[bool] | Omit = omit,
+        show_smart_search: Optional[bool] | Omit = omit,
+        show_templates: Optional[bool] | Omit = omit,
+        show_thread_visualization: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
         Update user's settings (merge with existing).
@@ -96,12 +98,14 @@ class SettingsResource(SyncAPIResource):
             "/api/user/settings",
             body=maybe_transform(
                 {
+                    "ai_mode": ai_mode,
                     "pinned_workspaces": pinned_workspaces,
                     "show_document_navigator": show_document_navigator,
                     "show_help_page": show_help_page,
                     "show_invite_tab": show_invite_tab,
                     "show_security_settings": show_security_settings,
                     "show_smart_search": show_smart_search,
+                    "show_templates": show_templates,
                     "show_thread_visualization": show_thread_visualization,
                 },
                 setting_update_params.SettingUpdateParams,
@@ -141,7 +145,7 @@ class AsyncSettingsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SettingRetrieveResponse:
         """Get current user's settings."""
         return await self._get(
@@ -155,19 +159,21 @@ class AsyncSettingsResource(AsyncAPIResource):
     async def update(
         self,
         *,
-        pinned_workspaces: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        show_document_navigator: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_help_page: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_invite_tab: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_security_settings: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_smart_search: Optional[bool] | NotGiven = NOT_GIVEN,
-        show_thread_visualization: Optional[bool] | NotGiven = NOT_GIVEN,
+        ai_mode: Optional[str] | Omit = omit,
+        pinned_workspaces: Optional[SequenceNotStr[str]] | Omit = omit,
+        show_document_navigator: Optional[bool] | Omit = omit,
+        show_help_page: Optional[bool] | Omit = omit,
+        show_invite_tab: Optional[bool] | Omit = omit,
+        show_security_settings: Optional[bool] | Omit = omit,
+        show_smart_search: Optional[bool] | Omit = omit,
+        show_templates: Optional[bool] | Omit = omit,
+        show_thread_visualization: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
         """
         Update user's settings (merge with existing).
@@ -186,12 +192,14 @@ class AsyncSettingsResource(AsyncAPIResource):
             "/api/user/settings",
             body=await async_maybe_transform(
                 {
+                    "ai_mode": ai_mode,
                     "pinned_workspaces": pinned_workspaces,
                     "show_document_navigator": show_document_navigator,
                     "show_help_page": show_help_page,
                     "show_invite_tab": show_invite_tab,
                     "show_security_settings": show_security_settings,
                     "show_smart_search": show_smart_search,
+                    "show_templates": show_templates,
                     "show_thread_visualization": show_thread_visualization,
                 },
                 setting_update_params.SettingUpdateParams,

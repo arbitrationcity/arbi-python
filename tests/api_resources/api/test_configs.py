@@ -32,10 +32,33 @@ class TestConfigs:
     @parametrize
     def test_method_create_with_all_params(self, client: Arbi) -> None:
         config = client.api.configs.create(
+            agent_llm={
+                "api_type": "local",
+                "enabled": True,
+                "max_char_size_to_answer": 0,
+                "max_context_tokens": 1000,
+                "max_iterations": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "show_interim_steps": True,
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
+            agents={
+                "agent_model_name": "AGENT_MODEL_NAME",
+                "agent_prompt": "AGENT_PROMPT",
+                "enabled": True,
+                "llm_page_filter_model_name": "LLM_PAGE_FILTER_MODEL_NAME",
+                "llm_page_filter_prompt": "LLM_PAGE_FILTER_PROMPT",
+                "llm_page_filter_temperature": 0,
+                "llm_summarise_model_name": "LLM_SUMMARISE_MODEL_NAME",
+                "llm_summarise_prompt": "LLM_SUMMARISE_PROMPT",
+                "llm_summarise_temperature": 0,
+            },
             chunker={},
             document_date_extractor_llm={
                 "api_type": "local",
-                "max_char_size_to_answer": 0,
+                "max_char_context_to_answer": 0,
                 "max_tokens": 0,
                 "model_name": "MODEL_NAME",
                 "system_instruction": "SYSTEM_INSTRUCTION",
@@ -43,7 +66,11 @@ class TestConfigs:
             },
             embedder={
                 "api_type": "local",
+                "batch_size": 0,
+                "embed_prefix": "EMBED_PREFIX",
+                "max_concurrent_requests": 0,
                 "model_name": "MODEL_NAME",
+                "query_prefix": "QUERY_PREFIX",
             },
             model_citation={
                 "max_numb_citations": 0,
@@ -262,10 +289,33 @@ class TestAsyncConfigs:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncArbi) -> None:
         config = await async_client.api.configs.create(
+            agent_llm={
+                "api_type": "local",
+                "enabled": True,
+                "max_char_size_to_answer": 0,
+                "max_context_tokens": 1000,
+                "max_iterations": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "show_interim_steps": True,
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
+            agents={
+                "agent_model_name": "AGENT_MODEL_NAME",
+                "agent_prompt": "AGENT_PROMPT",
+                "enabled": True,
+                "llm_page_filter_model_name": "LLM_PAGE_FILTER_MODEL_NAME",
+                "llm_page_filter_prompt": "LLM_PAGE_FILTER_PROMPT",
+                "llm_page_filter_temperature": 0,
+                "llm_summarise_model_name": "LLM_SUMMARISE_MODEL_NAME",
+                "llm_summarise_prompt": "LLM_SUMMARISE_PROMPT",
+                "llm_summarise_temperature": 0,
+            },
             chunker={},
             document_date_extractor_llm={
                 "api_type": "local",
-                "max_char_size_to_answer": 0,
+                "max_char_context_to_answer": 0,
                 "max_tokens": 0,
                 "model_name": "MODEL_NAME",
                 "system_instruction": "SYSTEM_INSTRUCTION",
@@ -273,7 +323,11 @@ class TestAsyncConfigs:
             },
             embedder={
                 "api_type": "local",
+                "batch_size": 0,
+                "embed_prefix": "EMBED_PREFIX",
+                "max_concurrent_requests": 0,
                 "model_name": "MODEL_NAME",
+                "query_prefix": "QUERY_PREFIX",
             },
             model_citation={
                 "max_numb_citations": 0,

@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.2.0 (2025-10-13)
+
+Full Changelog: [v0.1.1...v0.2.0](https://github.com/arbitrationcity/arbi-python/compare/v0.1.1...v0.2.0)
+
+### Features
+
+* DRAFT add email verification requirement for local user registration ([ba914da](https://github.com/arbitrationcity/arbi-python/commit/ba914dae291c8b58df7bfd3be5d01e27cdf456b7))
+* implement public workspaces with deployment key encryption ([9b25ecd](https://github.com/arbitrationcity/arbi-python/commit/9b25ecdced445221b56e1bd45caa44af7039d76d))
+* improve future compat with pydantic v3 ([be64906](https://github.com/arbitrationcity/arbi-python/commit/be64906d140b119239ab09b23564ada62ed4e7f4))
+* Llamaindex agent featureflag ([0464f7a](https://github.com/arbitrationcity/arbi-python/commit/0464f7af287125546d87896d6316d3b34aa1c9a1))
+* **types:** replace List[str] with SequenceNotStr in params ([bcc155b](https://github.com/arbitrationcity/arbi-python/commit/bcc155b44acb974cc0d72cf8ce20918f59f5c5e5))
+
+
+### Bug Fixes
+
+* avoid newer type syntax ([2008b65](https://github.com/arbitrationcity/arbi-python/commit/2008b653d1baba6824f79da6183fdbdf2543f605))
+* **compat:** compat with `pydantic&lt;2.8.0` when using additional fields ([0bc83c2](https://github.com/arbitrationcity/arbi-python/commit/0bc83c26322edf26307d9d1bfd4f26d0e4d131b3))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([6dfd710](https://github.com/arbitrationcity/arbi-python/commit/6dfd710821d6a0f81b42c65c40fdc91631769681))
+* **internal:** add Sequence related utils ([07de38e](https://github.com/arbitrationcity/arbi-python/commit/07de38eb8a532b5e82dfbbcf840afbdd55c38ac6))
+* **internal:** detect missing future annotations with ruff ([9740de5](https://github.com/arbitrationcity/arbi-python/commit/9740de55f5783fc2a8e9d0823ed09ec677b9a2c0))
+* **internal:** move mypy configurations to `pyproject.toml` file ([3907f70](https://github.com/arbitrationcity/arbi-python/commit/3907f7002aef0fa434c3cf024a36d1ec58b3d79d))
+* **internal:** update pydantic dependency ([89b016f](https://github.com/arbitrationcity/arbi-python/commit/89b016f708b3dd946973de2d9047688faf199f9d))
+* **internal:** update pyright exclude list ([7c356cf](https://github.com/arbitrationcity/arbi-python/commit/7c356cf1faea5ec7c787b961a07a4630f60b2805))
+* **tests:** simplify `get_platform` test ([b011a08](https://github.com/arbitrationcity/arbi-python/commit/b011a08fb145b126dbadb6847a1f43d8a8ee062b))
+* **types:** change optional parameter type from NotGiven to Omit ([4d1fbc7](https://github.com/arbitrationcity/arbi-python/commit/4d1fbc7bfeb2ef9a88f3458ae9ec7f5a0f932a8f))
+
 ## 0.1.1 (2025-08-26)
 
 Full Changelog: [v0.1.0...v0.1.1](https://github.com/arbitrationcity/arbi-python/compare/v0.1.0...v0.1.1)

@@ -2,13 +2,23 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Mapping, Optional, cast
+from typing import Union, Mapping, Optional, cast
 from datetime import date
 from typing_extensions import Literal
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ...._types import (
+    Body,
+    Omit,
+    Query,
+    Headers,
+    NotGiven,
+    FileTypes,
+    SequenceNotStr,
+    omit,
+    not_given,
+)
 from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from .annotation import (
@@ -26,7 +36,12 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.api import document_view_params, document_update_params, document_upload_params
+from ....types.api import (
+    document_view_params,
+    document_update_params,
+    document_upload_params,
+    document_upload_from_url_params,
+)
 from ...._base_client import make_request_options
 from ....types.api.doc_response import DocResponse
 from ....types.api.document_delete_response import DocumentDeleteResponse
@@ -65,15 +80,15 @@ class DocumentResource(SyncAPIResource):
         self,
         document_ext_id: str,
         *,
-        doc_date: Union[str, date, None] | NotGiven = NOT_GIVEN,
-        shared: Optional[bool] | NotGiven = NOT_GIVEN,
-        title: Optional[str] | NotGiven = NOT_GIVEN,
+        doc_date: Union[str, date, None] | Omit = omit,
+        shared: Optional[bool] | Omit = omit,
+        title: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentUpdateResponse:
         """Update document metadata such as title, date, or sharing status.
 
@@ -116,7 +131,7 @@ class DocumentResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentDeleteResponse:
         """Delete a document by its external ID.
 
@@ -151,7 +166,7 @@ class DocumentResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Download a document by its external ID.
 
@@ -186,7 +201,7 @@ class DocumentResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocResponse:
         """Retrieve document metadata by its external ID.
 
@@ -222,7 +237,7 @@ class DocumentResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetParsedResponse:
         """Retrieve the full parsed document to be handled by the frontend.
 
@@ -259,7 +274,7 @@ class DocumentResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetTagsResponse:
         """
         Get all tags applied to a specific document along with doctag metadata.
@@ -287,15 +302,15 @@ class DocumentResource(SyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
-        files: List[FileTypes],
-        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        shared: bool | NotGiven = NOT_GIVEN,
+        files: SequenceNotStr[FileTypes],
+        config_ext_id: Optional[str] | Omit = omit,
+        shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Upload multiple documents to a workspace with encryption.
 
@@ -344,17 +359,70 @@ class DocumentResource(SyncAPIResource):
             cast_to=object,
         )
 
-    def view(
+    def upload_from_url(
         self,
-        document_ext_id: str,
         *,
-        page: Optional[int] | NotGiven = NOT_GIVEN,
+        urls: SequenceNotStr[str],
+        workspace_ext_id: str,
+        config_ext_id: Optional[str] | Omit = omit,
+        shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Download and upload documents from URLs to a workspace with encryption.
+        Documents are queued for processing, parsed, and indexed for vector search.
+
+        Args:
+          urls: URLs to download documents from
+
+          config_ext_id: Configuration to use for processing
+
+          shared: Whether the document should be shared with workspace members
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/document/upload-url",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "urls": urls,
+                        "workspace_ext_id": workspace_ext_id,
+                        "config_ext_id": config_ext_id,
+                        "shared": shared,
+                    },
+                    document_upload_from_url_params.DocumentUploadFromURLParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
+    def view(
+        self,
+        document_ext_id: str,
+        *,
+        page: Optional[int] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """View a document inline in the browser.
 
@@ -415,15 +483,15 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         document_ext_id: str,
         *,
-        doc_date: Union[str, date, None] | NotGiven = NOT_GIVEN,
-        shared: Optional[bool] | NotGiven = NOT_GIVEN,
-        title: Optional[str] | NotGiven = NOT_GIVEN,
+        doc_date: Union[str, date, None] | Omit = omit,
+        shared: Optional[bool] | Omit = omit,
+        title: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentUpdateResponse:
         """Update document metadata such as title, date, or sharing status.
 
@@ -466,7 +534,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentDeleteResponse:
         """Delete a document by its external ID.
 
@@ -501,7 +569,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Download a document by its external ID.
 
@@ -536,7 +604,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocResponse:
         """Retrieve document metadata by its external ID.
 
@@ -572,7 +640,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetParsedResponse:
         """Retrieve the full parsed document to be handled by the frontend.
 
@@ -609,7 +677,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentGetTagsResponse:
         """
         Get all tags applied to a specific document along with doctag metadata.
@@ -637,15 +705,15 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         *,
         workspace_ext_id: str,
-        files: List[FileTypes],
-        config_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        shared: bool | NotGiven = NOT_GIVEN,
+        files: SequenceNotStr[FileTypes],
+        config_ext_id: Optional[str] | Omit = omit,
+        shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Upload multiple documents to a workspace with encryption.
 
@@ -694,17 +762,70 @@ class AsyncDocumentResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    async def view(
+    async def upload_from_url(
         self,
-        document_ext_id: str,
         *,
-        page: Optional[int] | NotGiven = NOT_GIVEN,
+        urls: SequenceNotStr[str],
+        workspace_ext_id: str,
+        config_ext_id: Optional[str] | Omit = omit,
+        shared: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Download and upload documents from URLs to a workspace with encryption.
+        Documents are queued for processing, parsed, and indexed for vector search.
+
+        Args:
+          urls: URLs to download documents from
+
+          config_ext_id: Configuration to use for processing
+
+          shared: Whether the document should be shared with workspace members
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/document/upload-url",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "urls": urls,
+                        "workspace_ext_id": workspace_ext_id,
+                        "config_ext_id": config_ext_id,
+                        "shared": shared,
+                    },
+                    document_upload_from_url_params.DocumentUploadFromURLParams,
+                ),
+            ),
+            cast_to=object,
+        )
+
+    async def view(
+        self,
+        document_ext_id: str,
+        *,
+        page: Optional[int] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """View a document inline in the browser.
 
@@ -762,6 +883,9 @@ class DocumentResourceWithRawResponse:
         self.upload = to_raw_response_wrapper(
             document.upload,
         )
+        self.upload_from_url = to_raw_response_wrapper(
+            document.upload_from_url,
+        )
         self.view = to_raw_response_wrapper(
             document.view,
         )
@@ -795,6 +919,9 @@ class AsyncDocumentResourceWithRawResponse:
         )
         self.upload = async_to_raw_response_wrapper(
             document.upload,
+        )
+        self.upload_from_url = async_to_raw_response_wrapper(
+            document.upload_from_url,
         )
         self.view = async_to_raw_response_wrapper(
             document.view,
@@ -830,6 +957,9 @@ class DocumentResourceWithStreamingResponse:
         self.upload = to_streamed_response_wrapper(
             document.upload,
         )
+        self.upload_from_url = to_streamed_response_wrapper(
+            document.upload_from_url,
+        )
         self.view = to_streamed_response_wrapper(
             document.view,
         )
@@ -863,6 +993,9 @@ class AsyncDocumentResourceWithStreamingResponse:
         )
         self.upload = async_to_streamed_response_wrapper(
             document.upload,
+        )
+        self.upload_from_url = async_to_streamed_response_wrapper(
+            document.upload_from_url,
         )
         self.view = async_to_streamed_response_wrapper(
             document.view,

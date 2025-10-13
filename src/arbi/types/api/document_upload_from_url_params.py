@@ -5,16 +5,16 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-from ..._types import FileTypes, SequenceNotStr
+from ..._types import SequenceNotStr
 
-__all__ = ["DocumentUploadParams"]
+__all__ = ["DocumentUploadFromURLParams"]
 
 
-class DocumentUploadParams(TypedDict, total=False):
+class DocumentUploadFromURLParams(TypedDict, total=False):
+    urls: Required[SequenceNotStr[str]]
+    """URLs to download documents from"""
+
     workspace_ext_id: Required[str]
-
-    files: Required[SequenceNotStr[FileTypes]]
-    """Multiple files to upload"""
 
     config_ext_id: Optional[str]
     """Configuration to use for processing"""

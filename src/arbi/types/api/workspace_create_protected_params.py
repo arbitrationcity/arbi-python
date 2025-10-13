@@ -12,3 +12,5 @@ class WorkspaceCreateProtectedParams(TypedDict, total=False):
     name: Required[str]
 
     description: Optional[str]
+
+    is_public: bool

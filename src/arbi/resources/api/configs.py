@@ -6,7 +6,7 @@ from typing import Any, Optional, cast
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -60,23 +60,25 @@ class ConfigsResource(SyncAPIResource):
     def create(
         self,
         *,
-        chunker: Optional[ChunkerConfigParam] | NotGiven = NOT_GIVEN,
-        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | NotGiven = NOT_GIVEN,
-        embedder: Optional[EmbedderConfigParam] | NotGiven = NOT_GIVEN,
-        model_citation: Optional[ModelCitationConfigParam] | NotGiven = NOT_GIVEN,
-        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        parser: Optional[ParserConfigParam] | NotGiven = NOT_GIVEN,
-        query_llm: Optional[QueryLlmConfigParam] | NotGiven = NOT_GIVEN,
-        reranker: Optional[RerankerConfigParam] | NotGiven = NOT_GIVEN,
-        retriever: Optional[RetrieverConfigParam] | NotGiven = NOT_GIVEN,
-        title: str | NotGiven = NOT_GIVEN,
-        title_llm: Optional[TitleLlmConfigParam] | NotGiven = NOT_GIVEN,
+        agent_llm: Optional[config_create_params.AgentLlm] | Omit = omit,
+        agents: Optional[config_create_params.Agents] | Omit = omit,
+        chunker: Optional[ChunkerConfigParam] | Omit = omit,
+        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
+        embedder: Optional[EmbedderConfigParam] | Omit = omit,
+        model_citation: Optional[ModelCitationConfigParam] | Omit = omit,
+        parent_message_ext_id: Optional[str] | Omit = omit,
+        parser: Optional[ParserConfigParam] | Omit = omit,
+        query_llm: Optional[QueryLlmConfigParam] | Omit = omit,
+        reranker: Optional[RerankerConfigParam] | Omit = omit,
+        retriever: Optional[RetrieverConfigParam] | Omit = omit,
+        title: str | Omit = omit,
+        title_llm: Optional[TitleLlmConfigParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigCreateResponse:
         """
         Save a new configuration.
@@ -94,6 +96,8 @@ class ConfigsResource(SyncAPIResource):
             "/api/configs/",
             body=maybe_transform(
                 {
+                    "agent_llm": agent_llm,
+                    "agents": agents,
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "embedder": embedder,
@@ -123,7 +127,7 @@ class ConfigsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigRetrieveResponse:
         """
         Read configurations from database to be displayed in the UI
@@ -163,7 +167,7 @@ class ConfigsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigDeleteResponse:
         """
         Delete a specific configuration from database
@@ -195,7 +199,7 @@ class ConfigsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Return the JSON schema for all config models"""
         return self._get(
@@ -214,7 +218,7 @@ class ConfigsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigGetVersionsResponse:
         """Returns a list of available configuration versions for the current user"""
         return self._get(
@@ -249,23 +253,25 @@ class AsyncConfigsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        chunker: Optional[ChunkerConfigParam] | NotGiven = NOT_GIVEN,
-        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | NotGiven = NOT_GIVEN,
-        embedder: Optional[EmbedderConfigParam] | NotGiven = NOT_GIVEN,
-        model_citation: Optional[ModelCitationConfigParam] | NotGiven = NOT_GIVEN,
-        parent_message_ext_id: Optional[str] | NotGiven = NOT_GIVEN,
-        parser: Optional[ParserConfigParam] | NotGiven = NOT_GIVEN,
-        query_llm: Optional[QueryLlmConfigParam] | NotGiven = NOT_GIVEN,
-        reranker: Optional[RerankerConfigParam] | NotGiven = NOT_GIVEN,
-        retriever: Optional[RetrieverConfigParam] | NotGiven = NOT_GIVEN,
-        title: str | NotGiven = NOT_GIVEN,
-        title_llm: Optional[TitleLlmConfigParam] | NotGiven = NOT_GIVEN,
+        agent_llm: Optional[config_create_params.AgentLlm] | Omit = omit,
+        agents: Optional[config_create_params.Agents] | Omit = omit,
+        chunker: Optional[ChunkerConfigParam] | Omit = omit,
+        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
+        embedder: Optional[EmbedderConfigParam] | Omit = omit,
+        model_citation: Optional[ModelCitationConfigParam] | Omit = omit,
+        parent_message_ext_id: Optional[str] | Omit = omit,
+        parser: Optional[ParserConfigParam] | Omit = omit,
+        query_llm: Optional[QueryLlmConfigParam] | Omit = omit,
+        reranker: Optional[RerankerConfigParam] | Omit = omit,
+        retriever: Optional[RetrieverConfigParam] | Omit = omit,
+        title: str | Omit = omit,
+        title_llm: Optional[TitleLlmConfigParam] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigCreateResponse:
         """
         Save a new configuration.
@@ -283,6 +289,8 @@ class AsyncConfigsResource(AsyncAPIResource):
             "/api/configs/",
             body=await async_maybe_transform(
                 {
+                    "agent_llm": agent_llm,
+                    "agents": agents,
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "embedder": embedder,
@@ -312,7 +320,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigRetrieveResponse:
         """
         Read configurations from database to be displayed in the UI
@@ -352,7 +360,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigDeleteResponse:
         """
         Delete a specific configuration from database
@@ -384,7 +392,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Return the JSON schema for all config models"""
         return await self._get(
@@ -403,7 +411,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ConfigGetVersionsResponse:
         """Returns a list of available configuration versions for the current user"""
         return await self._get(

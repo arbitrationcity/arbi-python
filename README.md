@@ -112,9 +112,9 @@ from arbi import Arbi
 client = Arbi()
 
 config = client.api.configs.create(
-    document_date_extractor_llm={},
+    agent_llm={},
 )
-print(config.document_date_extractor_llm)
+print(config.agent_llm)
 ```
 
 ## Handling errors

@@ -42,6 +42,7 @@ class TestWorkspace:
         workspace = client.api.workspace.update(
             workspace_ext_id="wrk",
             description="description",
+            is_public=True,
             name="name",
         )
         assert_matches_type(WorkspaceResponse, workspace, path=["response"])
@@ -136,6 +137,7 @@ class TestWorkspace:
         workspace = client.api.workspace.create_protected(
             name="name",
             description="description",
+            is_public=True,
         )
         assert_matches_type(WorkspaceResponse, workspace, path=["response"])
 
@@ -529,6 +531,7 @@ class TestAsyncWorkspace:
         workspace = await async_client.api.workspace.update(
             workspace_ext_id="wrk",
             description="description",
+            is_public=True,
             name="name",
         )
         assert_matches_type(WorkspaceResponse, workspace, path=["response"])
@@ -623,6 +626,7 @@ class TestAsyncWorkspace:
         workspace = await async_client.api.workspace.create_protected(
             name="name",
             description="description",
+            is_public=True,
         )
         assert_matches_type(WorkspaceResponse, workspace, path=["response"])
 

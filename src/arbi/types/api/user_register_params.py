@@ -15,3 +15,5 @@ class UserRegisterParams(TypedDict, total=False):
     name: Required[str]
 
     password: Required[str]
+
+    verification_code: Required[str]

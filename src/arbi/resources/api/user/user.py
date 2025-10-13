@@ -12,7 +12,7 @@ from .settings import (
     SettingsResourceWithStreamingResponse,
     AsyncSettingsResourceWithStreamingResponse,
 )
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._types import Body, Query, Headers, NotGiven, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -22,11 +22,12 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.api import user_login_params, user_register_params
+from ....types.api import user_login_params, user_register_params, user_verify_email_params
 from ...._base_client import make_request_options
 from ....types.api.token import Token
 from ....types.api.user_response import UserResponse
 from ....types.api.user_logout_response import UserLogoutResponse
+from ....types.api.user_verify_email_response import UserVerifyEmailResponse
 from ....types.api.user_list_workspaces_response import UserListWorkspacesResponse
 
 __all__ = ["UserResource", "AsyncUserResource"]
@@ -64,7 +65,7 @@ class UserResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserListWorkspacesResponse:
         """
         Retrieve the list of workspaces associated with the current authenticated user.
@@ -88,7 +89,7 @@ class UserResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Token:
         """
         Login a user and return a JWT token.
@@ -125,7 +126,7 @@ class UserResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserLogoutResponse:
         """Log out the current user by clearing cached keys and refresh token cookie."""
         return self._post(
@@ -144,7 +145,7 @@ class UserResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Token:
         """Refresh an expired access token using the refresh token cookie.
 
@@ -166,15 +167,16 @@ class UserResource(SyncAPIResource):
         last_name: str,
         name: str,
         password: str,
+        verification_code: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserResponse:
         """
-        Register a new user.
+        Register a new user with email verification.
 
         Args:
           extra_headers: Send extra headers
@@ -193,6 +195,7 @@ class UserResource(SyncAPIResource):
                     "last_name": last_name,
                     "name": name,
                     "password": password,
+                    "verification_code": verification_code,
                 },
                 user_register_params.UserRegisterParams,
             ),
@@ -210,7 +213,7 @@ class UserResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserResponse:
         """Retrieve current authenticated user information.
 
@@ -223,6 +226,43 @@ class UserResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UserResponse,
+        )
+
+    def verify_email(
+        self,
+        *,
+        email: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserVerifyEmailResponse:
+        """Send verification email with 3-word code to user.
+
+        Calls central server to send
+        the email.
+
+        Note: Fails silently if email already exists to prevent email enumeration
+        attacks.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/user/verify-email",
+            body=maybe_transform({"email": email}, user_verify_email_params.UserVerifyEmailParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserVerifyEmailResponse,
         )
 
 
@@ -258,7 +298,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserListWorkspacesResponse:
         """
         Retrieve the list of workspaces associated with the current authenticated user.
@@ -282,7 +322,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Token:
         """
         Login a user and return a JWT token.
@@ -319,7 +359,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserLogoutResponse:
         """Log out the current user by clearing cached keys and refresh token cookie."""
         return await self._post(
@@ -338,7 +378,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Token:
         """Refresh an expired access token using the refresh token cookie.
 
@@ -360,15 +400,16 @@ class AsyncUserResource(AsyncAPIResource):
         last_name: str,
         name: str,
         password: str,
+        verification_code: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserResponse:
         """
-        Register a new user.
+        Register a new user with email verification.
 
         Args:
           extra_headers: Send extra headers
@@ -387,6 +428,7 @@ class AsyncUserResource(AsyncAPIResource):
                     "last_name": last_name,
                     "name": name,
                     "password": password,
+                    "verification_code": verification_code,
                 },
                 user_register_params.UserRegisterParams,
             ),
@@ -404,7 +446,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserResponse:
         """Retrieve current authenticated user information.
 
@@ -417,6 +459,43 @@ class AsyncUserResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UserResponse,
+        )
+
+    async def verify_email(
+        self,
+        *,
+        email: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserVerifyEmailResponse:
+        """Send verification email with 3-word code to user.
+
+        Calls central server to send
+        the email.
+
+        Note: Fails silently if email already exists to prevent email enumeration
+        attacks.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/user/verify-email",
+            body=await async_maybe_transform({"email": email}, user_verify_email_params.UserVerifyEmailParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserVerifyEmailResponse,
         )
 
 
@@ -441,6 +520,9 @@ class UserResourceWithRawResponse:
         )
         self.retrieve_me = to_raw_response_wrapper(
             user.retrieve_me,
+        )
+        self.verify_email = to_raw_response_wrapper(
+            user.verify_email,
         )
 
     @cached_property
@@ -470,6 +552,9 @@ class AsyncUserResourceWithRawResponse:
         self.retrieve_me = async_to_raw_response_wrapper(
             user.retrieve_me,
         )
+        self.verify_email = async_to_raw_response_wrapper(
+            user.verify_email,
+        )
 
     @cached_property
     def settings(self) -> AsyncSettingsResourceWithRawResponse:
@@ -498,6 +583,9 @@ class UserResourceWithStreamingResponse:
         self.retrieve_me = to_streamed_response_wrapper(
             user.retrieve_me,
         )
+        self.verify_email = to_streamed_response_wrapper(
+            user.verify_email,
+        )
 
     @cached_property
     def settings(self) -> SettingsResourceWithStreamingResponse:
@@ -525,6 +613,9 @@ class AsyncUserResourceWithStreamingResponse:
         )
         self.retrieve_me = async_to_streamed_response_wrapper(
             user.retrieve_me,
+        )
+        self.verify_email = async_to_streamed_response_wrapper(
+            user.verify_email,
         )
 
     @cached_property
