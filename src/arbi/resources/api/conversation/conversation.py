@@ -12,8 +12,8 @@ from .user import (
     UserResourceWithStreamingResponse,
     AsyncUserResourceWithStreamingResponse,
 )
-from ...._types import Body, Query, Headers, NotGiven, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -28,6 +28,7 @@ from ....types.api.conversation_share_response import ConversationShareResponse
 from ....types.api.conversation_delete_response import ConversationDeleteResponse
 from ....types.api.conversation_update_title_response import ConversationUpdateTitleResponse
 from ....types.api.conversation_delete_message_response import ConversationDeleteMessageResponse
+from ....types.api.conversation_retrieve_message_response import ConversationRetrieveMessageResponse
 from ....types.api.conversation_retrieve_threads_response import ConversationRetrieveThreadsResponse
 
 __all__ = ["ConversationResource", "AsyncConversationResource"]
@@ -126,6 +127,42 @@ class ConversationResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ConversationDeleteMessageResponse,
+        )
+
+    def retrieve_message(
+        self,
+        message_ext_id: str,
+        *,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ConversationRetrieveMessageResponse:
+        """
+        Get a single message with full details including decrypted execution trace.
+        Always includes the trace with decrypted sensitive fields.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not message_ext_id:
+            raise ValueError(f"Expected a non-empty value for `message_ext_id` but received {message_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return self._get(
+            f"/api/conversation/message/{message_ext_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConversationRetrieveMessageResponse,
         )
 
     def retrieve_threads(
@@ -338,6 +375,42 @@ class AsyncConversationResource(AsyncAPIResource):
             cast_to=ConversationDeleteMessageResponse,
         )
 
+    async def retrieve_message(
+        self,
+        message_ext_id: str,
+        *,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ConversationRetrieveMessageResponse:
+        """
+        Get a single message with full details including decrypted execution trace.
+        Always includes the trace with decrypted sensitive fields.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not message_ext_id:
+            raise ValueError(f"Expected a non-empty value for `message_ext_id` but received {message_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return await self._get(
+            f"/api/conversation/message/{message_ext_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ConversationRetrieveMessageResponse,
+        )
+
     async def retrieve_threads(
         self,
         conversation_ext_id: str,
@@ -465,6 +538,9 @@ class ConversationResourceWithRawResponse:
         self.delete_message = to_raw_response_wrapper(
             conversation.delete_message,
         )
+        self.retrieve_message = to_raw_response_wrapper(
+            conversation.retrieve_message,
+        )
         self.retrieve_threads = to_raw_response_wrapper(
             conversation.retrieve_threads,
         )
@@ -489,6 +565,9 @@ class AsyncConversationResourceWithRawResponse:
         )
         self.delete_message = async_to_raw_response_wrapper(
             conversation.delete_message,
+        )
+        self.retrieve_message = async_to_raw_response_wrapper(
+            conversation.retrieve_message,
         )
         self.retrieve_threads = async_to_raw_response_wrapper(
             conversation.retrieve_threads,
@@ -515,6 +594,9 @@ class ConversationResourceWithStreamingResponse:
         self.delete_message = to_streamed_response_wrapper(
             conversation.delete_message,
         )
+        self.retrieve_message = to_streamed_response_wrapper(
+            conversation.retrieve_message,
+        )
         self.retrieve_threads = to_streamed_response_wrapper(
             conversation.retrieve_threads,
         )
@@ -539,6 +621,9 @@ class AsyncConversationResourceWithStreamingResponse:
         )
         self.delete_message = async_to_streamed_response_wrapper(
             conversation.delete_message,
+        )
+        self.retrieve_message = async_to_streamed_response_wrapper(
+            conversation.retrieve_message,
         )
         self.retrieve_threads = async_to_streamed_response_wrapper(
             conversation.retrieve_threads,

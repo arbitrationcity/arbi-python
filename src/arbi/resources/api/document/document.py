@@ -19,7 +19,13 @@ from ...._types import (
     omit,
     not_given,
 )
-from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from ...._utils import (
+    extract_files,
+    maybe_transform,
+    strip_not_given,
+    deepcopy_minimal,
+    async_maybe_transform,
+)
 from ...._compat import cached_property
 from .annotation import (
     AnnotationResource,
@@ -83,6 +89,7 @@ class DocumentResource(SyncAPIResource):
         doc_date: Union[str, date, None] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
         title: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -106,6 +113,7 @@ class DocumentResource(SyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
             f"/api/document/{document_ext_id}",
             body=maybe_transform(
@@ -161,6 +169,7 @@ class DocumentResource(SyncAPIResource):
         self,
         document_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -184,6 +193,7 @@ class DocumentResource(SyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/document/{document_ext_id}/download",
             options=make_request_options(
@@ -196,6 +206,7 @@ class DocumentResource(SyncAPIResource):
         self,
         document_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -219,6 +230,7 @@ class DocumentResource(SyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/document/{document_ext_id}",
             options=make_request_options(
@@ -232,6 +244,7 @@ class DocumentResource(SyncAPIResource):
         stage: Literal["marker", "subchunk", "final"],
         *,
         document_ext_id: str,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -257,6 +270,7 @@ class DocumentResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         if not stage:
             raise ValueError(f"Expected a non-empty value for `stage` but received {stage!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/document/{document_ext_id}/parsed-{stage}",
             options=make_request_options(
@@ -269,6 +283,7 @@ class DocumentResource(SyncAPIResource):
         self,
         doc_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -290,6 +305,7 @@ class DocumentResource(SyncAPIResource):
         """
         if not doc_ext_id:
             raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/document/{doc_ext_id}/tags",
             options=make_request_options(
@@ -305,6 +321,7 @@ class DocumentResource(SyncAPIResource):
         files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -332,6 +349,7 @@ class DocumentResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         body = deepcopy_minimal({"files": files})
         extracted_files = extract_files(cast(Mapping[str, object], body), paths=[["files", "<array>"]])
         # It should be noted that the actual Content-Type header that will be
@@ -366,6 +384,7 @@ class DocumentResource(SyncAPIResource):
         workspace_ext_id: str,
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -392,6 +411,7 @@ class DocumentResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
             "/api/document/upload-url",
             options=make_request_options(
@@ -417,6 +437,7 @@ class DocumentResource(SyncAPIResource):
         document_ext_id: str,
         *,
         page: Optional[int] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -442,6 +463,7 @@ class DocumentResource(SyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/document/{document_ext_id}/view",
             options=make_request_options(
@@ -486,6 +508,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         doc_date: Union[str, date, None] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
         title: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -509,6 +532,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
             f"/api/document/{document_ext_id}",
             body=await async_maybe_transform(
@@ -564,6 +588,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         document_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -587,6 +612,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/document/{document_ext_id}/download",
             options=make_request_options(
@@ -599,6 +625,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         document_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -622,6 +649,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/document/{document_ext_id}",
             options=make_request_options(
@@ -635,6 +663,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         stage: Literal["marker", "subchunk", "final"],
         *,
         document_ext_id: str,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -660,6 +689,7 @@ class AsyncDocumentResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         if not stage:
             raise ValueError(f"Expected a non-empty value for `stage` but received {stage!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/document/{document_ext_id}/parsed-{stage}",
             options=make_request_options(
@@ -672,6 +702,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         doc_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -693,6 +724,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         if not doc_ext_id:
             raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/document/{doc_ext_id}/tags",
             options=make_request_options(
@@ -708,6 +740,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         files: SequenceNotStr[FileTypes],
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -735,6 +768,7 @@ class AsyncDocumentResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         body = deepcopy_minimal({"files": files})
         extracted_files = extract_files(cast(Mapping[str, object], body), paths=[["files", "<array>"]])
         # It should be noted that the actual Content-Type header that will be
@@ -769,6 +803,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         workspace_ext_id: str,
         config_ext_id: Optional[str] | Omit = omit,
         shared: bool | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -795,6 +830,7 @@ class AsyncDocumentResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
             "/api/document/upload-url",
             options=make_request_options(
@@ -820,6 +856,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         document_ext_id: str,
         *,
         page: Optional[int] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -845,6 +882,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         if not document_ext_id:
             raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/document/{document_ext_id}/view",
             options=make_request_options(

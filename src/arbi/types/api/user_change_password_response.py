@@ -2,10 +2,10 @@
 
 from ..._models import BaseModel
 
-__all__ = ["SSORotatePasscodeResponse"]
+__all__ = ["UserChangePasswordResponse"]
 
 
-class SSORotatePasscodeResponse(BaseModel):
+class UserChangePasswordResponse(BaseModel):
     detail: str
 
-    new_passcode: str
+    workspaces_updated: int

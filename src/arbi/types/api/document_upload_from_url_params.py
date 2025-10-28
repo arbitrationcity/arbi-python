@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
 from ..._types import SequenceNotStr
+from ..._utils import PropertyInfo
 
 __all__ = ["DocumentUploadFromURLParams"]
 
@@ -21,3 +22,5 @@ class DocumentUploadFromURLParams(TypedDict, total=False):
 
     shared: bool
     """Whether the document should be shared with workspace members"""
+
+    workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

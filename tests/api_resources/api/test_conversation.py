@@ -14,6 +14,7 @@ from arbi.types.api import (
     ConversationDeleteResponse,
     ConversationUpdateTitleResponse,
     ConversationDeleteMessageResponse,
+    ConversationRetrieveMessageResponse,
     ConversationRetrieveThreadsResponse,
 )
 
@@ -105,6 +106,57 @@ class TestConversation:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
             client.api.conversation.with_raw_response.delete_message(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_message(self, client: Arbi) -> None:
+        conversation = client.api.conversation.retrieve_message(
+            message_ext_id="msg",
+        )
+        assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_message_with_all_params(self, client: Arbi) -> None:
+        conversation = client.api.conversation.retrieve_message(
+            message_ext_id="msg",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_message(self, client: Arbi) -> None:
+        response = client.api.conversation.with_raw_response.retrieve_message(
+            message_ext_id="msg",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = response.parse()
+        assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_message(self, client: Arbi) -> None:
+        with client.api.conversation.with_streaming_response.retrieve_message(
+            message_ext_id="msg",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = response.parse()
+            assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_message(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
+            client.api.conversation.with_raw_response.retrieve_message(
+                message_ext_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -325,6 +377,57 @@ class TestAsyncConversation:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
             await async_client.api.conversation.with_raw_response.delete_message(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_message(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.retrieve_message(
+            message_ext_id="msg",
+        )
+        assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_message_with_all_params(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.retrieve_message(
+            message_ext_id="msg",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_message(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.conversation.with_raw_response.retrieve_message(
+            message_ext_id="msg",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        conversation = await response.parse()
+        assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_message(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.conversation.with_streaming_response.retrieve_message(
+            message_ext_id="msg",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            conversation = await response.parse()
+            assert_matches_type(ConversationRetrieveMessageResponse, conversation, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_message(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_ext_id` but received ''"):
+            await async_client.api.conversation.with_raw_response.retrieve_message(
+                message_ext_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

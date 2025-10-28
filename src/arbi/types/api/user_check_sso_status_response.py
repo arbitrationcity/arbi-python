@@ -4,16 +4,14 @@ from typing import Optional
 
 from ..._models import BaseModel
 
-__all__ = ["UserResponse"]
+__all__ = ["UserCheckSSOStatusResponse"]
 
 
-class UserResponse(BaseModel):
-    email: Optional[str] = None
+class UserCheckSSOStatusResponse(BaseModel):
+    email: str
 
-    external_id: Optional[str] = None
+    status: str
 
     last_name: Optional[str] = None
 
     name: Optional[str] = None
-
-    public_key: Optional[str] = None

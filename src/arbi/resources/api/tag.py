@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -55,6 +55,7 @@ class TagResource(SyncAPIResource):
         workspace_ext_id: str,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -77,6 +78,7 @@ class TagResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
             "/api/tag/create",
             body=maybe_transform(
@@ -100,6 +102,7 @@ class TagResource(SyncAPIResource):
         *,
         name: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -121,6 +124,7 @@ class TagResource(SyncAPIResource):
         """
         if not tag_ext_id:
             raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
             f"/api/tag/{tag_ext_id}",
             body=maybe_transform(
@@ -208,6 +212,7 @@ class TagResource(SyncAPIResource):
         self,
         tag_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -229,6 +234,7 @@ class TagResource(SyncAPIResource):
         """
         if not tag_ext_id:
             raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/tag/{tag_ext_id}/docs",
             options=make_request_options(
@@ -300,6 +306,7 @@ class AsyncTagResource(AsyncAPIResource):
         workspace_ext_id: str,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -322,6 +329,7 @@ class AsyncTagResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
             "/api/tag/create",
             body=await async_maybe_transform(
@@ -345,6 +353,7 @@ class AsyncTagResource(AsyncAPIResource):
         *,
         name: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -366,6 +375,7 @@ class AsyncTagResource(AsyncAPIResource):
         """
         if not tag_ext_id:
             raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
             f"/api/tag/{tag_ext_id}",
             body=await async_maybe_transform(
@@ -453,6 +463,7 @@ class AsyncTagResource(AsyncAPIResource):
         self,
         tag_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -474,6 +485,7 @@ class AsyncTagResource(AsyncAPIResource):
         """
         if not tag_ext_id:
             raise ValueError(f"Expected a non-empty value for `tag_ext_id` but received {tag_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/tag/{tag_ext_id}/docs",
             options=make_request_options(

@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -64,6 +64,7 @@ class WorkspaceResource(SyncAPIResource):
         description: Optional[str] | Omit = omit,
         is_public: Optional[bool] | Omit = omit,
         name: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -76,7 +77,8 @@ class WorkspaceResource(SyncAPIResource):
         Changes
         are persisted to the database.
 
-        Only developers can change the is_public field.
+        Only developers can change the is_public field. When making a workspace public,
+        the backend uses the Workspace-Key header to get the workspace key.
 
         Args:
           extra_headers: Send extra headers
@@ -89,6 +91,7 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
             f"/api/workspace/{workspace_ext_id}",
             body=maybe_transform(
@@ -159,6 +162,9 @@ class WorkspaceResource(SyncAPIResource):
 
         Sets up vector
         storage and associates the creator as the initial workspace user.
+
+        Server generates the workspace symmetric key and wraps it with the user's public
+        key. The wrapped key is returned in the response for client-side storage.
 
         Public workspaces are visible to all users and grant non-members limited access:
 
@@ -242,6 +248,7 @@ class WorkspaceResource(SyncAPIResource):
         self,
         workspace_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -265,6 +272,7 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/workspace/{workspace_ext_id}/doctags",
             options=make_request_options(
@@ -277,6 +285,7 @@ class WorkspaceResource(SyncAPIResource):
         self,
         workspace_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -300,6 +309,7 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/workspace/{workspace_ext_id}/documents",
             options=make_request_options(
@@ -320,7 +330,11 @@ class WorkspaceResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceGetStatsResponse:
         """
-        Retrieves conversation and document counts for a specific workspace.
+        Retrieves conversation and document counts with shared/private breakdown for a
+        specific workspace.
+
+        - Conversations are "shared" if they have at least one shared message
+        - Documents are "shared" if their shared field is True
 
         Args:
           extra_headers: Send extra headers
@@ -345,6 +359,7 @@ class WorkspaceResource(SyncAPIResource):
         self,
         workspace_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -366,6 +381,7 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/workspace/{workspace_ext_id}/tags",
             options=make_request_options(
@@ -451,6 +467,7 @@ class WorkspaceResource(SyncAPIResource):
         workspace_ext_id: str,
         *,
         recipient_email: str,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -458,10 +475,11 @@ class WorkspaceResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceShareResponse:
-        """Share a workspace with another user via their email address.
+        """
+        Share a workspace with another user via their email address.
 
-        Securely transfers
-        workspace encryption keys to the recipient.
+        Client provides SealedBox-encrypted workspace key via Workspace-Key header.
+        Server decrypts it using session key, then wraps it with recipient's public key.
 
         Args:
           extra_headers: Send extra headers
@@ -474,6 +492,7 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
             f"/api/workspace/{workspace_ext_id}/share",
             body=maybe_transform({"recipient_email": recipient_email}, workspace_share_params.WorkspaceShareParams),
@@ -511,6 +530,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         description: Optional[str] | Omit = omit,
         is_public: Optional[bool] | Omit = omit,
         name: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -523,7 +543,8 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         Changes
         are persisted to the database.
 
-        Only developers can change the is_public field.
+        Only developers can change the is_public field. When making a workspace public,
+        the backend uses the Workspace-Key header to get the workspace key.
 
         Args:
           extra_headers: Send extra headers
@@ -536,6 +557,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
             f"/api/workspace/{workspace_ext_id}",
             body=await async_maybe_transform(
@@ -606,6 +628,9 @@ class AsyncWorkspaceResource(AsyncAPIResource):
 
         Sets up vector
         storage and associates the creator as the initial workspace user.
+
+        Server generates the workspace symmetric key and wraps it with the user's public
+        key. The wrapped key is returned in the response for client-side storage.
 
         Public workspaces are visible to all users and grant non-members limited access:
 
@@ -689,6 +714,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         self,
         workspace_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -712,6 +738,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/workspace/{workspace_ext_id}/doctags",
             options=make_request_options(
@@ -724,6 +751,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         self,
         workspace_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -747,6 +775,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/workspace/{workspace_ext_id}/documents",
             options=make_request_options(
@@ -767,7 +796,11 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceGetStatsResponse:
         """
-        Retrieves conversation and document counts for a specific workspace.
+        Retrieves conversation and document counts with shared/private breakdown for a
+        specific workspace.
+
+        - Conversations are "shared" if they have at least one shared message
+        - Documents are "shared" if their shared field is True
 
         Args:
           extra_headers: Send extra headers
@@ -792,6 +825,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         self,
         workspace_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -813,6 +847,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/workspace/{workspace_ext_id}/tags",
             options=make_request_options(
@@ -900,6 +935,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         workspace_ext_id: str,
         *,
         recipient_email: str,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -907,10 +943,11 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceShareResponse:
-        """Share a workspace with another user via their email address.
+        """
+        Share a workspace with another user via their email address.
 
-        Securely transfers
-        workspace encryption keys to the recipient.
+        Client provides SealedBox-encrypted workspace key via Workspace-Key header.
+        Server decrypts it using session key, then wraps it with recipient's public key.
 
         Args:
           extra_headers: Send extra headers
@@ -923,6 +960,7 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
             f"/api/workspace/{workspace_ext_id}/share",
             body=await async_maybe_transform(
