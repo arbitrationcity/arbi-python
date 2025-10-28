@@ -8,6 +8,10 @@ __all__ = ["WorkspaceGetStatsResponse"]
 
 
 class WorkspaceGetStatsResponse(BaseModel):
-    conversation_count: Optional[int] = None
+    private_conversation_count: Optional[int] = None
 
-    document_count: Optional[int] = None
+    private_document_count: Optional[int] = None
+
+    shared_conversation_count: Optional[int] = None
+
+    shared_document_count: Optional[int] = None

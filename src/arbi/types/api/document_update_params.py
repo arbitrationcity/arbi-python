@@ -17,3 +17,5 @@ class DocumentUpdateParams(TypedDict, total=False):
     shared: Optional[bool]
 
     title: Optional[str]
+
+    workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

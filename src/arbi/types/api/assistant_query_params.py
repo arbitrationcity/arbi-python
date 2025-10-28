@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Literal, Required, TypeAlias, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from ..._types import SequenceNotStr
+from ..._utils import PropertyInfo
 from ..chunk_param import ChunkParam
 
 __all__ = [
@@ -15,6 +16,7 @@ __all__ = [
     "ToolsModelCitationToolToolResponses",
     "ToolsRetrievalChunkToolInput",
     "ToolsRetrievalFullContextToolInput",
+    "ToolsTraceTool",
 ]
 
 
@@ -28,6 +30,8 @@ class AssistantQueryParams(TypedDict, total=False):
     parent_message_ext_id: Optional[str]
 
     tools: Dict[str, Tools]
+
+    workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]
 
 
 class ToolsModelCitationToolToolResponses(TypedDict, total=False):
@@ -68,4 +72,20 @@ class ToolsRetrievalFullContextToolInput(TypedDict, total=False):
     tool_responses: Dict[str, Iterable[ChunkParam]]
 
 
-Tools: TypeAlias = Union[ToolsModelCitationTool, ToolsRetrievalChunkToolInput, ToolsRetrievalFullContextToolInput]
+class ToolsTraceTool(TypedDict, total=False):
+    description: str
+
+    duration_seconds: Optional[float]
+
+    name: Literal["trace"]
+
+    start_time: Optional[float]
+
+    steps: Iterable[Dict[str, object]]
+
+    trace_id: Optional[str]
+
+
+Tools: TypeAlias = Union[
+    ToolsModelCitationTool, ToolsRetrievalChunkToolInput, ToolsRetrievalFullContextToolInput, ToolsTraceTool
+]

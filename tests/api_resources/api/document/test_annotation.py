@@ -36,6 +36,7 @@ class TestAnnotation:
             note="note",
             page_ref=0,
             tag_name="tag_name",
+            workspace_key="workspace-key",
         )
         assert_matches_type(DocTagResponse, annotation, path=["response"])
 
@@ -90,6 +91,7 @@ class TestAnnotation:
             doc_ext_id="doc",
             note="note",
             page_ref=0,
+            workspace_key="workspace-key",
         )
         assert_matches_type(DocTagResponse, annotation, path=["response"])
 
@@ -210,6 +212,7 @@ class TestAsyncAnnotation:
             note="note",
             page_ref=0,
             tag_name="tag_name",
+            workspace_key="workspace-key",
         )
         assert_matches_type(DocTagResponse, annotation, path=["response"])
 
@@ -264,6 +267,7 @@ class TestAsyncAnnotation:
             doc_ext_id="doc",
             note="note",
             page_ref=0,
+            workspace_key="workspace-key",
         )
         assert_matches_type(DocTagResponse, annotation, path=["response"])
 

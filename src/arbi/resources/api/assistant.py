@@ -7,7 +7,7 @@ from typing import Dict, Optional
 import httpx
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -50,6 +50,7 @@ class AssistantResource(SyncAPIResource):
         config_ext_id: Optional[str] | Omit = omit,
         parent_message_ext_id: Optional[str] | Omit = omit,
         tools: Dict[str, assistant_retrieve_params.Tools] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -71,6 +72,7 @@ class AssistantResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
             "/api/assistant/retrieve",
             body=maybe_transform(
@@ -97,6 +99,7 @@ class AssistantResource(SyncAPIResource):
         config_ext_id: Optional[str] | Omit = omit,
         parent_message_ext_id: Optional[str] | Omit = omit,
         tools: Dict[str, assistant_query_params.Tools] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -118,6 +121,7 @@ class AssistantResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
             "/api/assistant/query",
             body=maybe_transform(
@@ -165,6 +169,7 @@ class AsyncAssistantResource(AsyncAPIResource):
         config_ext_id: Optional[str] | Omit = omit,
         parent_message_ext_id: Optional[str] | Omit = omit,
         tools: Dict[str, assistant_retrieve_params.Tools] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -186,6 +191,7 @@ class AsyncAssistantResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
             "/api/assistant/retrieve",
             body=await async_maybe_transform(
@@ -212,6 +218,7 @@ class AsyncAssistantResource(AsyncAPIResource):
         config_ext_id: Optional[str] | Omit = omit,
         parent_message_ext_id: Optional[str] | Omit = omit,
         tools: Dict[str, assistant_query_params.Tools] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -233,6 +240,7 @@ class AsyncAssistantResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
             "/api/assistant/query",
             body=await async_maybe_transform(

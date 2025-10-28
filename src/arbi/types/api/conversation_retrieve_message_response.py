@@ -9,19 +9,17 @@ from ..._utils import PropertyInfo
 from ..._models import BaseModel
 
 __all__ = [
-    "ConversationRetrieveThreadsResponse",
-    "Thread",
-    "ThreadHistory",
-    "ThreadHistoryTools",
-    "ThreadHistoryToolsModelCitationTool",
-    "ThreadHistoryToolsModelCitationToolToolResponses",
-    "ThreadHistoryToolsRetrievalChunkToolOutput",
-    "ThreadHistoryToolsRetrievalFullContextToolOutput",
-    "ThreadHistoryToolsTraceTool",
+    "ConversationRetrieveMessageResponse",
+    "Tools",
+    "ToolsModelCitationTool",
+    "ToolsModelCitationToolToolResponses",
+    "ToolsRetrievalChunkToolOutput",
+    "ToolsRetrievalFullContextToolOutput",
+    "ToolsTraceTool",
 ]
 
 
-class ThreadHistoryToolsModelCitationToolToolResponses(BaseModel):
+class ToolsModelCitationToolToolResponses(BaseModel):
     chunk_ids: List[str]
 
     offset_end: int
@@ -31,15 +29,15 @@ class ThreadHistoryToolsModelCitationToolToolResponses(BaseModel):
     statement: str
 
 
-class ThreadHistoryToolsModelCitationTool(BaseModel):
+class ToolsModelCitationTool(BaseModel):
     description: Optional[str] = None
 
     name: Optional[Literal["model_citation"]] = None
 
-    tool_responses: Optional[Dict[str, ThreadHistoryToolsModelCitationToolToolResponses]] = None
+    tool_responses: Optional[Dict[str, ToolsModelCitationToolToolResponses]] = None
 
 
-class ThreadHistoryToolsRetrievalChunkToolOutput(BaseModel):
+class ToolsRetrievalChunkToolOutput(BaseModel):
     description: Optional[str] = None
 
     name: Optional[Literal["retrieval_chunk"]] = None
@@ -49,7 +47,7 @@ class ThreadHistoryToolsRetrievalChunkToolOutput(BaseModel):
     tool_responses: Optional[Dict[str, List[Chunk]]] = None
 
 
-class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
+class ToolsRetrievalFullContextToolOutput(BaseModel):
     description: Optional[str] = None
 
     name: Optional[Literal["retrieval_full_context"]] = None
@@ -59,7 +57,7 @@ class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
     tool_responses: Optional[Dict[str, List[Chunk]]] = None
 
 
-class ThreadHistoryToolsTraceTool(BaseModel):
+class ToolsTraceTool(BaseModel):
     description: Optional[str] = None
 
     duration_seconds: Optional[float] = None
@@ -73,18 +71,13 @@ class ThreadHistoryToolsTraceTool(BaseModel):
     trace_id: Optional[str] = None
 
 
-ThreadHistoryTools: TypeAlias = Annotated[
-    Union[
-        ThreadHistoryToolsModelCitationTool,
-        ThreadHistoryToolsRetrievalChunkToolOutput,
-        ThreadHistoryToolsRetrievalFullContextToolOutput,
-        ThreadHistoryToolsTraceTool,
-    ],
+Tools: TypeAlias = Annotated[
+    Union[ToolsModelCitationTool, ToolsRetrievalChunkToolOutput, ToolsRetrievalFullContextToolOutput, ToolsTraceTool],
     PropertyInfo(discriminator="name"),
 ]
 
 
-class ThreadHistory(BaseModel):
+class ConversationRetrieveMessageResponse(BaseModel):
     content: str
 
     conversation_ext_id: str
@@ -103,16 +96,4 @@ class ThreadHistory(BaseModel):
 
     shared: Optional[bool] = None
 
-    tools: Optional[Dict[str, ThreadHistoryTools]] = None
-
-
-class Thread(BaseModel):
-    history: List[ThreadHistory]
-
-    leaf_message_ext_id: str
-
-
-class ConversationRetrieveThreadsResponse(BaseModel):
-    conversation_ext_id: str
-
-    threads: List[Thread]
+    tools: Optional[Dict[str, Tools]] = None

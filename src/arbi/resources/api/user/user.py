@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Dict, Optional
+
 import httpx
 
 from .settings import (
@@ -12,7 +14,7 @@ from .settings import (
     SettingsResourceWithStreamingResponse,
     AsyncSettingsResourceWithStreamingResponse,
 )
-from ...._types import Body, Query, Headers, NotGiven, not_given
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -22,13 +24,22 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.api import user_login_params, user_register_params, user_verify_email_params
+from ....types.api import (
+    user_login_params,
+    user_invite_params,
+    user_register_params,
+    user_verify_email_params,
+    user_change_password_params,
+    user_check_sso_status_params,
+)
 from ...._base_client import make_request_options
-from ....types.api.token import Token
-from ....types.api.user_response import UserResponse
+from ....types.api.user_login_response import UserLoginResponse
+from ....types.api.user_invite_response import UserInviteResponse
 from ....types.api.user_logout_response import UserLogoutResponse
 from ....types.api.user_verify_email_response import UserVerifyEmailResponse
+from ....types.api.user_change_password_response import UserChangePasswordResponse
 from ....types.api.user_list_workspaces_response import UserListWorkspacesResponse
+from ....types.api.user_check_sso_status_response import UserCheckSSOStatusResponse
 
 __all__ = ["UserResource", "AsyncUserResource"]
 
@@ -57,6 +68,153 @@ class UserResource(SyncAPIResource):
         """
         return UserResourceWithStreamingResponse(self)
 
+    def change_password(
+        self,
+        *,
+        current_public_key: str,
+        new_public_key: str,
+        rewrapped_workspace_keys: Dict[str, str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserChangePasswordResponse:
+        """Change user's master password by re-keying all workspace keys.
+
+        Client must:
+
+        1.
+
+        Prove knowledge of current master password via X25519 public key
+        2. Provide new X25519 public key (derived from new master password)
+        3. Re-wrap all workspace keys with new X25519 public key
+
+        Server will:
+
+        1. Verify current master password (public key comparison)
+        2. Update X25519 public key
+        3. Update all workspace wrapped keys
+
+        Note: This changes the master password (encryption password), not authentication
+        password. Both local and SSO users can change their master password.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/user/change_password",
+            body=maybe_transform(
+                {
+                    "current_public_key": current_public_key,
+                    "new_public_key": new_public_key,
+                    "rewrapped_workspace_keys": rewrapped_workspace_keys,
+                },
+                user_change_password_params.UserChangePasswordParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserChangePasswordResponse,
+        )
+
+    def check_sso_status(
+        self,
+        *,
+        email: str,
+        sso_token: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserCheckSSOStatusResponse:
+        """Check SSO user registration state.
+
+        Returns one of three states:
+
+        1.
+
+        new_user: No user exists with this email
+        2. local_exists: User exists but registered locally (can link to SSO)
+        3. sso_exists: User exists and already linked to SSO
+
+        Frontend uses this to show appropriate UI:
+
+        - new_user -> "Set Master Password"
+        - local_exists -> "Link SSO? Enter current master password"
+        - sso_exists -> "Enter Master Password"
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/user/sso-status",
+            body=maybe_transform(
+                {
+                    "email": email,
+                    "sso_token": sso_token,
+                },
+                user_check_sso_status_params.UserCheckSSOStatusParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserCheckSSOStatusResponse,
+        )
+
+    def invite(
+        self,
+        *,
+        email: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserInviteResponse:
+        """Send invitation email with 3-word verification code to a new user.
+
+        Protected
+        endpoint - requires authentication. Includes inviter's name in the email for
+        personalization.
+
+        Note: Fails silently if email already exists to prevent email enumeration
+        attacks.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/user/invite",
+            body=maybe_transform({"email": email}, user_invite_params.UserInviteParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserInviteResponse,
+        )
+
     def list_workspaces(
         self,
         *,
@@ -69,7 +227,9 @@ class UserResource(SyncAPIResource):
     ) -> UserListWorkspacesResponse:
         """
         Retrieve the list of workspaces associated with the current authenticated user.
-        Leverages RLS to enforce access control.
+        Includes wrapped_key, stats (conversation/document counts with shared/private
+        breakdown), and users for each workspace. All data is fetched efficiently using
+        batch queries to avoid N+1 problems. Leverages RLS to enforce access control.
         """
         return self._get(
             "/api/user/workspaces",
@@ -83,16 +243,25 @@ class UserResource(SyncAPIResource):
         self,
         *,
         email: str,
-        password: str,
+        public_key: str,
+        sso_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Token:
+    ) -> UserLoginResponse:
         """
-        Login a user and return a JWT token.
+        Login with X25519 public key verification (local or SSO).
+
+        SIMPLEST POSSIBLE AUTH: Client derives X25519 public key from password and sends
+        it. Server compares with stored public key. Match = correct password!
+
+        For SSO users: Also validates SSO token before proceeding. For local users: Only
+        public key verification needed.
+
+        Returns encrypted login response that only the correct password can decrypt.
 
         Args:
           extra_headers: Send extra headers
@@ -108,14 +277,15 @@ class UserResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "email": email,
-                    "password": password,
+                    "public_key": public_key,
+                    "sso_token": sso_token,
                 },
                 user_login_params.UserLoginParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Token,
+            cast_to=UserLoginResponse,
         )
 
     def logout(
@@ -128,7 +298,7 @@ class UserResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserLogoutResponse:
-        """Log out the current user by clearing cached keys and refresh token cookie."""
+        """Log out the current user by clearing the refresh token cookie and session key."""
         return self._post(
             "/api/user/logout",
             options=make_request_options(
@@ -137,46 +307,30 @@ class UserResource(SyncAPIResource):
             cast_to=UserLogoutResponse,
         )
 
-    def refresh_token(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Token:
-        """Refresh an expired access token using the refresh token cookie.
-
-        Validates the
-        refresh token and issues a new access token.
-        """
-        return self._post(
-            "/api/user/token_refresh",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Token,
-        )
-
     def register(
         self,
         *,
         email: str,
-        last_name: str,
-        name: str,
-        password: str,
-        verification_code: str,
+        public_key: str,
+        verification_credential: str,
+        last_name: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserResponse:
+    ) -> object:
         """
-        Register a new user with email verification.
+        Register a new user with email verification (local or SSO).
+
+        Accepts either:
+
+        - 3-word verification code for local users
+        - SSO JWT token for SSO users
+
+        Auto-detects credential type and handles both flows.
 
         Args:
           extra_headers: Send extra headers
@@ -192,40 +346,17 @@ class UserResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "email": email,
+                    "public_key": public_key,
+                    "verification_credential": verification_credential,
                     "last_name": last_name,
                     "name": name,
-                    "password": password,
-                    "verification_code": verification_code,
                 },
                 user_register_params.UserRegisterParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserResponse,
-        )
-
-    def retrieve_me(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserResponse:
-        """Retrieve current authenticated user information.
-
-        This endpoint is useful for
-        validating tokens and checking authentication status.
-        """
-        return self._get(
-            "/api/user/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserResponse,
+            cast_to=object,
         )
 
     def verify_email(
@@ -290,6 +421,153 @@ class AsyncUserResource(AsyncAPIResource):
         """
         return AsyncUserResourceWithStreamingResponse(self)
 
+    async def change_password(
+        self,
+        *,
+        current_public_key: str,
+        new_public_key: str,
+        rewrapped_workspace_keys: Dict[str, str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserChangePasswordResponse:
+        """Change user's master password by re-keying all workspace keys.
+
+        Client must:
+
+        1.
+
+        Prove knowledge of current master password via X25519 public key
+        2. Provide new X25519 public key (derived from new master password)
+        3. Re-wrap all workspace keys with new X25519 public key
+
+        Server will:
+
+        1. Verify current master password (public key comparison)
+        2. Update X25519 public key
+        3. Update all workspace wrapped keys
+
+        Note: This changes the master password (encryption password), not authentication
+        password. Both local and SSO users can change their master password.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/user/change_password",
+            body=await async_maybe_transform(
+                {
+                    "current_public_key": current_public_key,
+                    "new_public_key": new_public_key,
+                    "rewrapped_workspace_keys": rewrapped_workspace_keys,
+                },
+                user_change_password_params.UserChangePasswordParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserChangePasswordResponse,
+        )
+
+    async def check_sso_status(
+        self,
+        *,
+        email: str,
+        sso_token: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserCheckSSOStatusResponse:
+        """Check SSO user registration state.
+
+        Returns one of three states:
+
+        1.
+
+        new_user: No user exists with this email
+        2. local_exists: User exists but registered locally (can link to SSO)
+        3. sso_exists: User exists and already linked to SSO
+
+        Frontend uses this to show appropriate UI:
+
+        - new_user -> "Set Master Password"
+        - local_exists -> "Link SSO? Enter current master password"
+        - sso_exists -> "Enter Master Password"
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/user/sso-status",
+            body=await async_maybe_transform(
+                {
+                    "email": email,
+                    "sso_token": sso_token,
+                },
+                user_check_sso_status_params.UserCheckSSOStatusParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserCheckSSOStatusResponse,
+        )
+
+    async def invite(
+        self,
+        *,
+        email: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserInviteResponse:
+        """Send invitation email with 3-word verification code to a new user.
+
+        Protected
+        endpoint - requires authentication. Includes inviter's name in the email for
+        personalization.
+
+        Note: Fails silently if email already exists to prevent email enumeration
+        attacks.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/user/invite",
+            body=await async_maybe_transform({"email": email}, user_invite_params.UserInviteParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserInviteResponse,
+        )
+
     async def list_workspaces(
         self,
         *,
@@ -302,7 +580,9 @@ class AsyncUserResource(AsyncAPIResource):
     ) -> UserListWorkspacesResponse:
         """
         Retrieve the list of workspaces associated with the current authenticated user.
-        Leverages RLS to enforce access control.
+        Includes wrapped_key, stats (conversation/document counts with shared/private
+        breakdown), and users for each workspace. All data is fetched efficiently using
+        batch queries to avoid N+1 problems. Leverages RLS to enforce access control.
         """
         return await self._get(
             "/api/user/workspaces",
@@ -316,16 +596,25 @@ class AsyncUserResource(AsyncAPIResource):
         self,
         *,
         email: str,
-        password: str,
+        public_key: str,
+        sso_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Token:
+    ) -> UserLoginResponse:
         """
-        Login a user and return a JWT token.
+        Login with X25519 public key verification (local or SSO).
+
+        SIMPLEST POSSIBLE AUTH: Client derives X25519 public key from password and sends
+        it. Server compares with stored public key. Match = correct password!
+
+        For SSO users: Also validates SSO token before proceeding. For local users: Only
+        public key verification needed.
+
+        Returns encrypted login response that only the correct password can decrypt.
 
         Args:
           extra_headers: Send extra headers
@@ -341,14 +630,15 @@ class AsyncUserResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "email": email,
-                    "password": password,
+                    "public_key": public_key,
+                    "sso_token": sso_token,
                 },
                 user_login_params.UserLoginParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Token,
+            cast_to=UserLoginResponse,
         )
 
     async def logout(
@@ -361,7 +651,7 @@ class AsyncUserResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserLogoutResponse:
-        """Log out the current user by clearing cached keys and refresh token cookie."""
+        """Log out the current user by clearing the refresh token cookie and session key."""
         return await self._post(
             "/api/user/logout",
             options=make_request_options(
@@ -370,46 +660,30 @@ class AsyncUserResource(AsyncAPIResource):
             cast_to=UserLogoutResponse,
         )
 
-    async def refresh_token(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Token:
-        """Refresh an expired access token using the refresh token cookie.
-
-        Validates the
-        refresh token and issues a new access token.
-        """
-        return await self._post(
-            "/api/user/token_refresh",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Token,
-        )
-
     async def register(
         self,
         *,
         email: str,
-        last_name: str,
-        name: str,
-        password: str,
-        verification_code: str,
+        public_key: str,
+        verification_credential: str,
+        last_name: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserResponse:
+    ) -> object:
         """
-        Register a new user with email verification.
+        Register a new user with email verification (local or SSO).
+
+        Accepts either:
+
+        - 3-word verification code for local users
+        - SSO JWT token for SSO users
+
+        Auto-detects credential type and handles both flows.
 
         Args:
           extra_headers: Send extra headers
@@ -425,40 +699,17 @@ class AsyncUserResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "email": email,
+                    "public_key": public_key,
+                    "verification_credential": verification_credential,
                     "last_name": last_name,
                     "name": name,
-                    "password": password,
-                    "verification_code": verification_code,
                 },
                 user_register_params.UserRegisterParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=UserResponse,
-        )
-
-    async def retrieve_me(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserResponse:
-        """Retrieve current authenticated user information.
-
-        This endpoint is useful for
-        validating tokens and checking authentication status.
-        """
-        return await self._get(
-            "/api/user/me",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserResponse,
+            cast_to=object,
         )
 
     async def verify_email(
@@ -503,6 +754,15 @@ class UserResourceWithRawResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
+        self.change_password = to_raw_response_wrapper(
+            user.change_password,
+        )
+        self.check_sso_status = to_raw_response_wrapper(
+            user.check_sso_status,
+        )
+        self.invite = to_raw_response_wrapper(
+            user.invite,
+        )
         self.list_workspaces = to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -512,14 +772,8 @@ class UserResourceWithRawResponse:
         self.logout = to_raw_response_wrapper(
             user.logout,
         )
-        self.refresh_token = to_raw_response_wrapper(
-            user.refresh_token,
-        )
         self.register = to_raw_response_wrapper(
             user.register,
-        )
-        self.retrieve_me = to_raw_response_wrapper(
-            user.retrieve_me,
         )
         self.verify_email = to_raw_response_wrapper(
             user.verify_email,
@@ -534,6 +788,15 @@ class AsyncUserResourceWithRawResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
+        self.change_password = async_to_raw_response_wrapper(
+            user.change_password,
+        )
+        self.check_sso_status = async_to_raw_response_wrapper(
+            user.check_sso_status,
+        )
+        self.invite = async_to_raw_response_wrapper(
+            user.invite,
+        )
         self.list_workspaces = async_to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -543,14 +806,8 @@ class AsyncUserResourceWithRawResponse:
         self.logout = async_to_raw_response_wrapper(
             user.logout,
         )
-        self.refresh_token = async_to_raw_response_wrapper(
-            user.refresh_token,
-        )
         self.register = async_to_raw_response_wrapper(
             user.register,
-        )
-        self.retrieve_me = async_to_raw_response_wrapper(
-            user.retrieve_me,
         )
         self.verify_email = async_to_raw_response_wrapper(
             user.verify_email,
@@ -565,6 +822,15 @@ class UserResourceWithStreamingResponse:
     def __init__(self, user: UserResource) -> None:
         self._user = user
 
+        self.change_password = to_streamed_response_wrapper(
+            user.change_password,
+        )
+        self.check_sso_status = to_streamed_response_wrapper(
+            user.check_sso_status,
+        )
+        self.invite = to_streamed_response_wrapper(
+            user.invite,
+        )
         self.list_workspaces = to_streamed_response_wrapper(
             user.list_workspaces,
         )
@@ -574,14 +840,8 @@ class UserResourceWithStreamingResponse:
         self.logout = to_streamed_response_wrapper(
             user.logout,
         )
-        self.refresh_token = to_streamed_response_wrapper(
-            user.refresh_token,
-        )
         self.register = to_streamed_response_wrapper(
             user.register,
-        )
-        self.retrieve_me = to_streamed_response_wrapper(
-            user.retrieve_me,
         )
         self.verify_email = to_streamed_response_wrapper(
             user.verify_email,
@@ -596,6 +856,15 @@ class AsyncUserResourceWithStreamingResponse:
     def __init__(self, user: AsyncUserResource) -> None:
         self._user = user
 
+        self.change_password = async_to_streamed_response_wrapper(
+            user.change_password,
+        )
+        self.check_sso_status = async_to_streamed_response_wrapper(
+            user.check_sso_status,
+        )
+        self.invite = async_to_streamed_response_wrapper(
+            user.invite,
+        )
         self.list_workspaces = async_to_streamed_response_wrapper(
             user.list_workspaces,
         )
@@ -605,14 +874,8 @@ class AsyncUserResourceWithStreamingResponse:
         self.logout = async_to_streamed_response_wrapper(
             user.logout,
         )
-        self.refresh_token = async_to_streamed_response_wrapper(
-            user.refresh_token,
-        )
         self.register = async_to_streamed_response_wrapper(
             user.register,
-        )
-        self.retrieve_me = async_to_streamed_response_wrapper(
-            user.retrieve_me,
         )
         self.verify_email = async_to_streamed_response_wrapper(
             user.verify_email,

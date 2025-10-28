@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -51,6 +51,7 @@ class AnnotationResource(SyncAPIResource):
         note: Optional[str] | Omit = omit,
         page_ref: Optional[int] | Omit = omit,
         tag_name: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -76,6 +77,7 @@ class AnnotationResource(SyncAPIResource):
         """
         if not doc_ext_id:
             raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
             f"/api/document/{doc_ext_id}/annotation",
             body=maybe_transform(
@@ -99,6 +101,7 @@ class AnnotationResource(SyncAPIResource):
         doc_ext_id: str,
         note: Optional[str] | Omit = omit,
         page_ref: Optional[int] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -122,6 +125,7 @@ class AnnotationResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
         if not doctag_ext_id:
             raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
             f"/api/document/{doc_ext_id}/annotation/{doctag_ext_id}",
             body=maybe_transform(
@@ -201,6 +205,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         note: Optional[str] | Omit = omit,
         page_ref: Optional[int] | Omit = omit,
         tag_name: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -226,6 +231,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         """
         if not doc_ext_id:
             raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
             f"/api/document/{doc_ext_id}/annotation",
             body=await async_maybe_transform(
@@ -249,6 +255,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
         doc_ext_id: str,
         note: Optional[str] | Omit = omit,
         page_ref: Optional[int] | Omit = omit,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -272,6 +279,7 @@ class AsyncAnnotationResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
         if not doctag_ext_id:
             raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
             f"/api/document/{doc_ext_id}/annotation/{doctag_ext_id}",
             body=await async_maybe_transform(
