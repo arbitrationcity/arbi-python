@@ -9,7 +9,11 @@ __all__ = ["WorkspaceGetUsersResponse", "WorkspaceGetUsersResponseItem"]
 
 
 class WorkspaceGetUsersResponseItem(BaseModel):
-    user_email: str
+    email: str
+
+    last_name: str
+
+    name: str
 
     user_ext_id: str
 

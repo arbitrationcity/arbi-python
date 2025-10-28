@@ -2,15 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SSOLoginParams"]
+__all__ = ["UserInviteParams"]
 
 
-class SSOLoginParams(TypedDict, total=False):
-    token: Required[str]
-
+class UserInviteParams(TypedDict, total=False):
     email: Required[str]
-
-    passcode: Optional[str]

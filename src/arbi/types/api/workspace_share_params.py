@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
+
+from ..._utils import PropertyInfo
 
 __all__ = ["WorkspaceShareParams"]
 
 
 class WorkspaceShareParams(TypedDict, total=False):
     recipient_email: Required[str]
+
+    workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

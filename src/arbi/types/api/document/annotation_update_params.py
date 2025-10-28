@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
+
+from ...._utils import PropertyInfo
 
 __all__ = ["AnnotationUpdateParams"]
 
@@ -14,3 +16,5 @@ class AnnotationUpdateParams(TypedDict, total=False):
     note: Optional[str]
 
     page_ref: Optional[int]
+
+    workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

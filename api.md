@@ -16,9 +16,11 @@ Types:
 
 ```python
 from arbi.types.api import (
-    Token,
-    UserResponse,
+    UserChangePasswordResponse,
+    UserCheckSSOStatusResponse,
+    UserInviteResponse,
     UserListWorkspacesResponse,
+    UserLoginResponse,
     UserLogoutResponse,
     UserVerifyEmailResponse,
 )
@@ -26,12 +28,13 @@ from arbi.types.api import (
 
 Methods:
 
+- <code title="post /api/user/change_password">client.api.user.<a href="./src/arbi/resources/api/user/user.py">change_password</a>(\*\*<a href="src/arbi/types/api/user_change_password_params.py">params</a>) -> <a href="./src/arbi/types/api/user_change_password_response.py">UserChangePasswordResponse</a></code>
+- <code title="post /api/user/sso-status">client.api.user.<a href="./src/arbi/resources/api/user/user.py">check_sso_status</a>(\*\*<a href="src/arbi/types/api/user_check_sso_status_params.py">params</a>) -> <a href="./src/arbi/types/api/user_check_sso_status_response.py">UserCheckSSOStatusResponse</a></code>
+- <code title="post /api/user/invite">client.api.user.<a href="./src/arbi/resources/api/user/user.py">invite</a>(\*\*<a href="src/arbi/types/api/user_invite_params.py">params</a>) -> <a href="./src/arbi/types/api/user_invite_response.py">UserInviteResponse</a></code>
 - <code title="get /api/user/workspaces">client.api.user.<a href="./src/arbi/resources/api/user/user.py">list_workspaces</a>() -> <a href="./src/arbi/types/api/user_list_workspaces_response.py">UserListWorkspacesResponse</a></code>
-- <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/token.py">Token</a></code>
+- <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/user_login_response.py">UserLoginResponse</a></code>
 - <code title="post /api/user/logout">client.api.user.<a href="./src/arbi/resources/api/user/user.py">logout</a>() -> <a href="./src/arbi/types/api/user_logout_response.py">UserLogoutResponse</a></code>
-- <code title="post /api/user/token_refresh">client.api.user.<a href="./src/arbi/resources/api/user/user.py">refresh_token</a>() -> <a href="./src/arbi/types/api/token.py">Token</a></code>
-- <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
-- <code title="get /api/user/me">client.api.user.<a href="./src/arbi/resources/api/user/user.py">retrieve_me</a>() -> <a href="./src/arbi/types/api/user_response.py">UserResponse</a></code>
+- <code title="post /api/user/register">client.api.user.<a href="./src/arbi/resources/api/user/user.py">register</a>(\*\*<a href="src/arbi/types/api/user_register_params.py">params</a>) -> object</code>
 - <code title="post /api/user/verify-email">client.api.user.<a href="./src/arbi/resources/api/user/user.py">verify_email</a>(\*\*<a href="src/arbi/types/api/user_verify_email_params.py">params</a>) -> <a href="./src/arbi/types/api/user_verify_email_response.py">UserVerifyEmailResponse</a></code>
 
 ### Settings
@@ -46,20 +49,6 @@ Methods:
 
 - <code title="get /api/user/settings">client.api.user.settings.<a href="./src/arbi/resources/api/user/settings.py">retrieve</a>() -> <a href="./src/arbi/types/api/user/setting_retrieve_response.py">SettingRetrieveResponse</a></code>
 - <code title="patch /api/user/settings">client.api.user.settings.<a href="./src/arbi/resources/api/user/settings.py">update</a>(\*\*<a href="src/arbi/types/api/user/setting_update_params.py">params</a>) -> None</code>
-
-## SSO
-
-Types:
-
-```python
-from arbi.types.api import SSOInviteResponse, SSOLoginResponse, SSORotatePasscodeResponse
-```
-
-Methods:
-
-- <code title="post /api/sso/invite">client.api.sso.<a href="./src/arbi/resources/api/sso.py">invite</a>(\*\*<a href="src/arbi/types/api/sso_invite_params.py">params</a>) -> <a href="./src/arbi/types/api/sso_invite_response.py">SSOInviteResponse</a></code>
-- <code title="post /api/sso/login">client.api.sso.<a href="./src/arbi/resources/api/sso.py">login</a>(\*\*<a href="src/arbi/types/api/sso_login_params.py">params</a>) -> <a href="./src/arbi/types/api/sso_login_response.py">SSOLoginResponse</a></code>
-- <code title="post /api/sso/rotate_passcode">client.api.sso.<a href="./src/arbi/resources/api/sso.py">rotate_passcode</a>() -> <a href="./src/arbi/types/api/sso_rotate_passcode_response.py">SSORotatePasscodeResponse</a></code>
 
 ## Workspace
 
@@ -142,6 +131,7 @@ Types:
 from arbi.types.api import (
     ConversationDeleteResponse,
     ConversationDeleteMessageResponse,
+    ConversationRetrieveMessageResponse,
     ConversationRetrieveThreadsResponse,
     ConversationShareResponse,
     ConversationUpdateTitleResponse,
@@ -152,6 +142,7 @@ Methods:
 
 - <code title="delete /api/conversation/{conversation_ext_id}">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">delete</a>(conversation_ext_id) -> <a href="./src/arbi/types/api/conversation_delete_response.py">ConversationDeleteResponse</a></code>
 - <code title="delete /api/conversation/message/{message_ext_id}">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">delete_message</a>(message_ext_id) -> <a href="./src/arbi/types/api/conversation_delete_message_response.py">ConversationDeleteMessageResponse</a></code>
+- <code title="get /api/conversation/message/{message_ext_id}">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">retrieve_message</a>(message_ext_id) -> <a href="./src/arbi/types/api/conversation_retrieve_message_response.py">ConversationRetrieveMessageResponse</a></code>
 - <code title="get /api/conversation/{conversation_ext_id}/threads">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">retrieve_threads</a>(conversation_ext_id) -> <a href="./src/arbi/types/api/conversation_retrieve_threads_response.py">ConversationRetrieveThreadsResponse</a></code>
 - <code title="post /api/conversation/{conversation_ext_id}/share">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">share</a>(conversation_ext_id) -> <a href="./src/arbi/types/api/conversation_share_response.py">ConversationShareResponse</a></code>
 - <code title="patch /api/conversation/{conversation_ext_id}/title">client.api.conversation.<a href="./src/arbi/resources/api/conversation/conversation.py">update_title</a>(conversation_ext_id, \*\*<a href="src/arbi/types/api/conversation_update_title_params.py">params</a>) -> <a href="./src/arbi/types/api/conversation_update_title_response.py">ConversationUpdateTitleResponse</a></code>

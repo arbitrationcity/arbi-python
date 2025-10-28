@@ -47,6 +47,7 @@ class TestAssistant:
                     },
                 }
             },
+            workspace_key="workspace-key",
         )
         assert_matches_type(object, assistant, path=["response"])
 
@@ -109,6 +110,7 @@ class TestAssistant:
                     },
                 }
             },
+            workspace_key="workspace-key",
         )
         assert_matches_type(object, assistant, path=["response"])
 
@@ -177,6 +179,7 @@ class TestAsyncAssistant:
                     },
                 }
             },
+            workspace_key="workspace-key",
         )
         assert_matches_type(object, assistant, path=["response"])
 
@@ -239,6 +242,7 @@ class TestAsyncAssistant:
                     },
                 }
             },
+            workspace_key="workspace-key",
         )
         assert_matches_type(object, assistant, path=["response"])
 

@@ -4,8 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SSOInviteParams"]
+__all__ = ["UserCheckSSOStatusParams"]
 
 
-class SSOInviteParams(TypedDict, total=False):
+class UserCheckSSOStatusParams(TypedDict, total=False):
     email: Required[str]
+
+    sso_token: Required[str]

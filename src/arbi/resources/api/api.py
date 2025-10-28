@@ -5,14 +5,6 @@ from __future__ import annotations
 import httpx
 
 from ... import _resource
-from .sso import (
-    SSOResource,
-    AsyncSSOResource,
-    SSOResourceWithRawResponse,
-    AsyncSSOResourceWithRawResponse,
-    SSOResourceWithStreamingResponse,
-    AsyncSSOResourceWithStreamingResponse,
-)
 from .tag import (
     TagResource,
     AsyncTagResource,
@@ -96,10 +88,6 @@ class APIResource(_resource.SyncAPIResource):
         return UserResource(self._client)
 
     @cached_property
-    def sso(self) -> SSOResource:
-        return SSOResource(self._client)
-
-    @cached_property
     def workspace(self) -> WorkspaceResource:
         return WorkspaceResource(self._client)
 
@@ -170,10 +158,6 @@ class AsyncAPIResource(_resource.AsyncAPIResource):
     @cached_property
     def user(self) -> AsyncUserResource:
         return AsyncUserResource(self._client)
-
-    @cached_property
-    def sso(self) -> AsyncSSOResource:
-        return AsyncSSOResource(self._client)
 
     @cached_property
     def workspace(self) -> AsyncWorkspaceResource:
@@ -255,10 +239,6 @@ class APIResourceWithRawResponse:
         return UserResourceWithRawResponse(self._api.user)
 
     @cached_property
-    def sso(self) -> SSOResourceWithRawResponse:
-        return SSOResourceWithRawResponse(self._api.sso)
-
-    @cached_property
     def workspace(self) -> WorkspaceResourceWithRawResponse:
         return WorkspaceResourceWithRawResponse(self._api.workspace)
 
@@ -298,10 +278,6 @@ class AsyncAPIResourceWithRawResponse:
     @cached_property
     def user(self) -> AsyncUserResourceWithRawResponse:
         return AsyncUserResourceWithRawResponse(self._api.user)
-
-    @cached_property
-    def sso(self) -> AsyncSSOResourceWithRawResponse:
-        return AsyncSSOResourceWithRawResponse(self._api.sso)
 
     @cached_property
     def workspace(self) -> AsyncWorkspaceResourceWithRawResponse:
@@ -345,10 +321,6 @@ class APIResourceWithStreamingResponse:
         return UserResourceWithStreamingResponse(self._api.user)
 
     @cached_property
-    def sso(self) -> SSOResourceWithStreamingResponse:
-        return SSOResourceWithStreamingResponse(self._api.sso)
-
-    @cached_property
     def workspace(self) -> WorkspaceResourceWithStreamingResponse:
         return WorkspaceResourceWithStreamingResponse(self._api.workspace)
 
@@ -388,10 +360,6 @@ class AsyncAPIResourceWithStreamingResponse:
     @cached_property
     def user(self) -> AsyncUserResourceWithStreamingResponse:
         return AsyncUserResourceWithStreamingResponse(self._api.user)
-
-    @cached_property
-    def sso(self) -> AsyncSSOResourceWithStreamingResponse:
-        return AsyncSSOResourceWithStreamingResponse(self._api.sso)
 
     @cached_property
     def workspace(self) -> AsyncWorkspaceResourceWithStreamingResponse:

@@ -8,14 +8,6 @@ from .api import (
     APIResourceWithStreamingResponse,
     AsyncAPIResourceWithStreamingResponse,
 )
-from .sso import (
-    SSOResource,
-    AsyncSSOResource,
-    SSOResourceWithRawResponse,
-    AsyncSSOResourceWithRawResponse,
-    SSOResourceWithStreamingResponse,
-    AsyncSSOResourceWithStreamingResponse,
-)
 from .tag import (
     TagResource,
     AsyncTagResource,
@@ -88,12 +80,6 @@ __all__ = [
     "AsyncUserResourceWithRawResponse",
     "UserResourceWithStreamingResponse",
     "AsyncUserResourceWithStreamingResponse",
-    "SSOResource",
-    "AsyncSSOResource",
-    "SSOResourceWithRawResponse",
-    "AsyncSSOResourceWithRawResponse",
-    "SSOResourceWithStreamingResponse",
-    "AsyncSSOResourceWithStreamingResponse",
     "WorkspaceResource",
     "AsyncWorkspaceResource",
     "WorkspaceResourceWithRawResponse",
