@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -17,6 +17,7 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ...types.api import (
+    workspace_copy_params,
     workspace_share_params,
     workspace_update_params,
     workspace_remove_user_params,
@@ -24,6 +25,7 @@ from ...types.api import (
 )
 from ..._base_client import make_request_options
 from ...types.api.workspace_response import WorkspaceResponse
+from ...types.api.workspace_copy_response import WorkspaceCopyResponse
 from ...types.api.workspace_share_response import WorkspaceShareResponse
 from ...types.api.workspace_delete_response import WorkspaceDeleteResponse
 from ...types.api.workspace_get_tags_response import WorkspaceGetTagsResponse
@@ -143,6 +145,75 @@ class WorkspaceResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WorkspaceDeleteResponse,
+        )
+
+    def copy(
+        self,
+        workspace_ext_id: str,
+        *,
+        items: SequenceNotStr[str],
+        target_workspace_ext_id: str,
+        target_workspace_key: str | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WorkspaceCopyResponse:
+        """
+        Copy documents from source workspace to target workspace.
+
+        Requires:
+
+        - User must have access to source workspace (RLS enforced)
+        - Target workspace must exist and user must have access
+        - Workspace-Key header with source workspace key (optional for public
+          workspaces, required for private)
+        - Target-Workspace-Key header with target workspace key (required)
+
+        Copies:
+
+        - Document metadata (title, doc_date, shared status, etc.)
+        - MinIO encrypted files (downloaded to server memory, re-encrypted, uploaded)
+        - Qdrant vectors (with updated doc_ext_id and chunk_ext_id references)
+
+        Args:
+          items: List of document external IDs to copy (e.g., ['doc-a1b2c3d4', 'doc-e5f6g7h8'])
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_ext_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {
+            **strip_not_given(
+                {
+                    "target-workspace-key": target_workspace_key,
+                    "workspace-key": workspace_key,
+                }
+            ),
+            **(extra_headers or {}),
+        }
+        return self._post(
+            f"/api/workspace/{workspace_ext_id}/copy",
+            body=maybe_transform(
+                {
+                    "items": items,
+                    "target_workspace_ext_id": target_workspace_ext_id,
+                },
+                workspace_copy_params.WorkspaceCopyParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WorkspaceCopyResponse,
         )
 
     def create_protected(
@@ -611,6 +682,75 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             cast_to=WorkspaceDeleteResponse,
         )
 
+    async def copy(
+        self,
+        workspace_ext_id: str,
+        *,
+        items: SequenceNotStr[str],
+        target_workspace_ext_id: str,
+        target_workspace_key: str | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WorkspaceCopyResponse:
+        """
+        Copy documents from source workspace to target workspace.
+
+        Requires:
+
+        - User must have access to source workspace (RLS enforced)
+        - Target workspace must exist and user must have access
+        - Workspace-Key header with source workspace key (optional for public
+          workspaces, required for private)
+        - Target-Workspace-Key header with target workspace key (required)
+
+        Copies:
+
+        - Document metadata (title, doc_date, shared status, etc.)
+        - MinIO encrypted files (downloaded to server memory, re-encrypted, uploaded)
+        - Qdrant vectors (with updated doc_ext_id and chunk_ext_id references)
+
+        Args:
+          items: List of document external IDs to copy (e.g., ['doc-a1b2c3d4', 'doc-e5f6g7h8'])
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_ext_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {
+            **strip_not_given(
+                {
+                    "target-workspace-key": target_workspace_key,
+                    "workspace-key": workspace_key,
+                }
+            ),
+            **(extra_headers or {}),
+        }
+        return await self._post(
+            f"/api/workspace/{workspace_ext_id}/copy",
+            body=await async_maybe_transform(
+                {
+                    "items": items,
+                    "target_workspace_ext_id": target_workspace_ext_id,
+                },
+                workspace_copy_params.WorkspaceCopyParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WorkspaceCopyResponse,
+        )
+
     async def create_protected(
         self,
         *,
@@ -983,6 +1123,9 @@ class WorkspaceResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             workspace.delete,
         )
+        self.copy = to_raw_response_wrapper(
+            workspace.copy,
+        )
         self.create_protected = to_raw_response_wrapper(
             workspace.create_protected,
         )
@@ -1021,6 +1164,9 @@ class AsyncWorkspaceResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             workspace.delete,
+        )
+        self.copy = async_to_raw_response_wrapper(
+            workspace.copy,
         )
         self.create_protected = async_to_raw_response_wrapper(
             workspace.create_protected,
@@ -1061,6 +1207,9 @@ class WorkspaceResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             workspace.delete,
         )
+        self.copy = to_streamed_response_wrapper(
+            workspace.copy,
+        )
         self.create_protected = to_streamed_response_wrapper(
             workspace.create_protected,
         )
@@ -1099,6 +1248,9 @@ class AsyncWorkspaceResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             workspace.delete,
+        )
+        self.copy = async_to_streamed_response_wrapper(
+            workspace.copy,
         )
         self.create_protected = async_to_streamed_response_wrapper(
             workspace.create_protected,
