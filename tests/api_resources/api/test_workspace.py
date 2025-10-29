@@ -11,6 +11,7 @@ from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
     WorkspaceResponse,
+    WorkspaceCopyResponse,
     WorkspaceShareResponse,
     WorkspaceDeleteResponse,
     WorkspaceGetTagsResponse,
@@ -122,6 +123,68 @@ class TestWorkspace:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
             client.api.workspace.with_raw_response.delete(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_copy(self, client: Arbi) -> None:
+        workspace = client.api.workspace.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+        )
+        assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_copy_with_all_params(self, client: Arbi) -> None:
+        workspace = client.api.workspace.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+            target_workspace_key="target-workspace-key",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_copy(self, client: Arbi) -> None:
+        response = client.api.workspace.with_raw_response.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = response.parse()
+        assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_copy(self, client: Arbi) -> None:
+        with client.api.workspace.with_streaming_response.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = response.parse()
+            assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_copy(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
+            client.api.workspace.with_raw_response.copy(
+                workspace_ext_id="",
+                items=["string"],
+                target_workspace_ext_id="wrk-bFXA5r3A",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -649,6 +712,68 @@ class TestAsyncWorkspace:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
             await async_client.api.workspace.with_raw_response.delete(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_copy(self, async_client: AsyncArbi) -> None:
+        workspace = await async_client.api.workspace.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+        )
+        assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_copy_with_all_params(self, async_client: AsyncArbi) -> None:
+        workspace = await async_client.api.workspace.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+            target_workspace_key="target-workspace-key",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_copy(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.workspace.with_raw_response.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = await response.parse()
+        assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_copy(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.workspace.with_streaming_response.copy(
+            workspace_ext_id="wrk",
+            items=["string"],
+            target_workspace_ext_id="wrk-bFXA5r3A",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = await response.parse()
+            assert_matches_type(WorkspaceCopyResponse, workspace, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_copy(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
+            await async_client.api.workspace.with_raw_response.copy(
+                workspace_ext_id="",
+                items=["string"],
+                target_workspace_ext_id="wrk-bFXA5r3A",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

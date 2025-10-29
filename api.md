@@ -58,6 +58,7 @@ Types:
 from arbi.types.api import (
     WorkspaceResponse,
     WorkspaceDeleteResponse,
+    WorkspaceCopyResponse,
     WorkspaceGetConversationsResponse,
     WorkspaceGetDoctagsResponse,
     WorkspaceGetDocumentsResponse,
@@ -73,6 +74,7 @@ Methods:
 
 - <code title="patch /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">update</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_update_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
 - <code title="delete /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">delete</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_delete_response.py">WorkspaceDeleteResponse</a></code>
+- <code title="post /api/workspace/{workspace_ext_id}/copy">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">copy</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_copy_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_copy_response.py">WorkspaceCopyResponse</a></code>
 - <code title="post /api/workspace/create_protected">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">create_protected</a>(\*\*<a href="src/arbi/types/api/workspace_create_protected_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/conversations">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_conversations</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_conversations_response.py">WorkspaceGetConversationsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/doctags">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_doctags</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_doctags_response.py">WorkspaceGetDoctagsResponse</a></code>

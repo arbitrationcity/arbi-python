@@ -28,6 +28,7 @@ from .embedder_config_param import EmbedderConfigParam as EmbedderConfigParam
 from .model_citation_config import ModelCitationConfig as ModelCitationConfig
 from .reranker_config_param import RerankerConfigParam as RerankerConfigParam
 from .tag_get_docs_response import TagGetDocsResponse as TagGetDocsResponse
+from .workspace_copy_params import WorkspaceCopyParams as WorkspaceCopyParams
 from .assistant_query_params import AssistantQueryParams as AssistantQueryParams
 from .config_create_response import ConfigCreateResponse as ConfigCreateResponse
 from .config_delete_response import ConfigDeleteResponse as ConfigDeleteResponse
@@ -37,6 +38,7 @@ from .query_llm_config_param import QueryLlmConfigParam as QueryLlmConfigParam
 from .retriever_config_param import RetrieverConfigParam as RetrieverConfigParam
 from .title_llm_config_param import TitleLlmConfigParam as TitleLlmConfigParam
 from .workspace_share_params import WorkspaceShareParams as WorkspaceShareParams
+from .workspace_copy_response import WorkspaceCopyResponse as WorkspaceCopyResponse
 from .workspace_update_params import WorkspaceUpdateParams as WorkspaceUpdateParams
 from .config_retrieve_response import ConfigRetrieveResponse as ConfigRetrieveResponse
 from .document_delete_response import DocumentDeleteResponse as DocumentDeleteResponse
