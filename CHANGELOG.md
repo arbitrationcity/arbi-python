@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0 (2025-10-30)
+
+Full Changelog: [v0.2.1...v0.3.0](https://github.com/arbitrationcity/arbi-python/compare/v0.2.1...v0.3.0)
+
+### Features
+
+* Add workspace document copy endpoint ([1c9fd95](https://github.com/arbitrationcity/arbi-python/commit/1c9fd95ebd51302eb2d39a526d1cfdf8d29c3feb))
+* DRAFT: Client-side key generation with JWE encryption ([8ab2fa9](https://github.com/arbitrationcity/arbi-python/commit/8ab2fa931309cec57317aa6894bce47025da447f))
+
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([9b32ba6](https://github.com/arbitrationcity/arbi-python/commit/9b32ba6c3335273feaed012dbf0d8d7b147e5342))
+
 ## 0.2.1 (2025-10-18)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/arbitrationcity/arbi-python/compare/v0.2.0...v0.2.1)
