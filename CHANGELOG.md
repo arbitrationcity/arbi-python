@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2025-10-31)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/arbitrationcity/arbi-python/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* **internal/tests:** avoid race condition with implicit client cleanup ([8bd34d5](https://github.com/arbitrationcity/arbi-python/commit/8bd34d51fcfa6975cf8034617b13dd3024a13f1f))
+
 ## 0.3.0 (2025-10-30)
 
 Full Changelog: [v0.2.1...v0.3.0](https://github.com/arbitrationcity/arbi-python/compare/v0.2.1...v0.3.0)
