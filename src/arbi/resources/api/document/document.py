@@ -334,6 +334,8 @@ class DocumentResource(SyncAPIResource):
         Documents are queued
         for processing, parsed, and indexed for vector search.
 
+        Requires active subscription (paid/trial/dev) if Stripe is configured.
+
         Args:
           files: Multiple files to upload
 
@@ -395,6 +397,8 @@ class DocumentResource(SyncAPIResource):
         """
         Download and upload documents from URLs to a workspace with encryption.
         Documents are queued for processing, parsed, and indexed for vector search.
+
+        Requires active subscription (paid/trial/dev) if Stripe is configured.
 
         Args:
           urls: URLs to download documents from
@@ -753,6 +757,8 @@ class AsyncDocumentResource(AsyncAPIResource):
         Documents are queued
         for processing, parsed, and indexed for vector search.
 
+        Requires active subscription (paid/trial/dev) if Stripe is configured.
+
         Args:
           files: Multiple files to upload
 
@@ -814,6 +820,8 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         Download and upload documents from URLs to a workspace with encryption.
         Documents are queued for processing, parsed, and indexed for vector search.
+
+        Requires active subscription (paid/trial/dev) if Stripe is configured.
 
         Args:
           urls: URLs to download documents from

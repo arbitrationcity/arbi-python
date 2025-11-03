@@ -43,6 +43,8 @@ class WorkspaceResponse(BaseModel):
 
     shared_document_count: Optional[int] = None
 
+    user_files_mb: Optional[float] = None
+
     users: Optional[List[User]] = None
 
     wrapped_key: Optional[str] = None

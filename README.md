@@ -111,10 +111,9 @@ from arbi import Arbi
 
 client = Arbi()
 
-config = client.api.configs.create(
-    agent_llm={},
+client.api.user.settings.update(
+    subscription={},
 )
-print(config.agent_llm)
 ```
 
 ## Handling errors
