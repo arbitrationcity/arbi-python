@@ -74,6 +74,7 @@ class SettingsResource(SyncAPIResource):
         show_smart_search: Optional[bool] | Omit = omit,
         show_templates: Optional[bool] | Omit = omit,
         show_thread_visualization: Optional[bool] | Omit = omit,
+        subscription: Optional[setting_update_params.Subscription] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -84,7 +85,11 @@ class SettingsResource(SyncAPIResource):
         """
         Update user's settings (merge with existing).
 
+        Note: subscription fields are managed automatically and cannot be patched.
+
         Args:
+          subscription: Trial update - only trial_expires can be set, and only if currently null.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -107,6 +112,7 @@ class SettingsResource(SyncAPIResource):
                     "show_smart_search": show_smart_search,
                     "show_templates": show_templates,
                     "show_thread_visualization": show_thread_visualization,
+                    "subscription": subscription,
                 },
                 setting_update_params.SettingUpdateParams,
             ),
@@ -168,6 +174,7 @@ class AsyncSettingsResource(AsyncAPIResource):
         show_smart_search: Optional[bool] | Omit = omit,
         show_templates: Optional[bool] | Omit = omit,
         show_thread_visualization: Optional[bool] | Omit = omit,
+        subscription: Optional[setting_update_params.Subscription] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -178,7 +185,11 @@ class AsyncSettingsResource(AsyncAPIResource):
         """
         Update user's settings (merge with existing).
 
+        Note: subscription fields are managed automatically and cannot be patched.
+
         Args:
+          subscription: Trial update - only trial_expires can be set, and only if currently null.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -201,6 +212,7 @@ class AsyncSettingsResource(AsyncAPIResource):
                     "show_smart_search": show_smart_search,
                     "show_templates": show_templates,
                     "show_thread_visualization": show_thread_visualization,
+                    "subscription": subscription,
                 },
                 setting_update_params.SettingUpdateParams,
             ),

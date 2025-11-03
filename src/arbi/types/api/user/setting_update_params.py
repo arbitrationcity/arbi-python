@@ -7,7 +7,7 @@ from typing_extensions import TypedDict
 
 from ...._types import SequenceNotStr
 
-__all__ = ["SettingUpdateParams"]
+__all__ = ["SettingUpdateParams", "Subscription"]
 
 
 class SettingUpdateParams(TypedDict, total=False):
@@ -28,3 +28,10 @@ class SettingUpdateParams(TypedDict, total=False):
     show_templates: Optional[bool]
 
     show_thread_visualization: Optional[bool]
+
+    subscription: Optional[Subscription]
+    """Trial update - only trial_expires can be set, and only if currently null."""
+
+
+class Subscription(TypedDict, total=False):
+    trial_expires: Optional[int]

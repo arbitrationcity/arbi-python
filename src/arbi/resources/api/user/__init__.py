@@ -16,6 +16,14 @@ from .settings import (
     SettingsResourceWithStreamingResponse,
     AsyncSettingsResourceWithStreamingResponse,
 )
+from .subscription import (
+    SubscriptionResource,
+    AsyncSubscriptionResource,
+    SubscriptionResourceWithRawResponse,
+    AsyncSubscriptionResourceWithRawResponse,
+    SubscriptionResourceWithStreamingResponse,
+    AsyncSubscriptionResourceWithStreamingResponse,
+)
 
 __all__ = [
     "SettingsResource",
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncSettingsResourceWithRawResponse",
     "SettingsResourceWithStreamingResponse",
     "AsyncSettingsResourceWithStreamingResponse",
+    "SubscriptionResource",
+    "AsyncSubscriptionResource",
+    "SubscriptionResourceWithRawResponse",
+    "AsyncSubscriptionResourceWithRawResponse",
+    "SubscriptionResourceWithStreamingResponse",
+    "AsyncSubscriptionResourceWithStreamingResponse",
     "UserResource",
     "AsyncUserResource",
     "UserResourceWithRawResponse",

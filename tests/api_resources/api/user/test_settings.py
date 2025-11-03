@@ -64,6 +64,7 @@ class TestSettings:
             show_smart_search=True,
             show_templates=True,
             show_thread_visualization=True,
+            subscription={"trial_expires": 0},
         )
         assert setting is None
 
@@ -142,6 +143,7 @@ class TestAsyncSettings:
             show_smart_search=True,
             show_templates=True,
             show_thread_visualization=True,
+            subscription={"trial_expires": 0},
         )
         assert setting is None
 

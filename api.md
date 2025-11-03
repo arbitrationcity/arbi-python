@@ -19,6 +19,7 @@ from arbi.types.api import (
     UserChangePasswordResponse,
     UserCheckSSOStatusResponse,
     UserInviteResponse,
+    UserListProductsResponse,
     UserListWorkspacesResponse,
     UserLoginResponse,
     UserLogoutResponse,
@@ -31,6 +32,7 @@ Methods:
 - <code title="post /api/user/change_password">client.api.user.<a href="./src/arbi/resources/api/user/user.py">change_password</a>(\*\*<a href="src/arbi/types/api/user_change_password_params.py">params</a>) -> <a href="./src/arbi/types/api/user_change_password_response.py">UserChangePasswordResponse</a></code>
 - <code title="post /api/user/sso-status">client.api.user.<a href="./src/arbi/resources/api/user/user.py">check_sso_status</a>(\*\*<a href="src/arbi/types/api/user_check_sso_status_params.py">params</a>) -> <a href="./src/arbi/types/api/user_check_sso_status_response.py">UserCheckSSOStatusResponse</a></code>
 - <code title="post /api/user/invite">client.api.user.<a href="./src/arbi/resources/api/user/user.py">invite</a>(\*\*<a href="src/arbi/types/api/user_invite_params.py">params</a>) -> <a href="./src/arbi/types/api/user_invite_response.py">UserInviteResponse</a></code>
+- <code title="get /api/user/products">client.api.user.<a href="./src/arbi/resources/api/user/user.py">list_products</a>() -> <a href="./src/arbi/types/api/user_list_products_response.py">UserListProductsResponse</a></code>
 - <code title="get /api/user/workspaces">client.api.user.<a href="./src/arbi/resources/api/user/user.py">list_workspaces</a>() -> <a href="./src/arbi/types/api/user_list_workspaces_response.py">UserListWorkspacesResponse</a></code>
 - <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/user_login_response.py">UserLoginResponse</a></code>
 - <code title="post /api/user/logout">client.api.user.<a href="./src/arbi/resources/api/user/user.py">logout</a>() -> <a href="./src/arbi/types/api/user_logout_response.py">UserLogoutResponse</a></code>
@@ -49,6 +51,19 @@ Methods:
 
 - <code title="get /api/user/settings">client.api.user.settings.<a href="./src/arbi/resources/api/user/settings.py">retrieve</a>() -> <a href="./src/arbi/types/api/user/setting_retrieve_response.py">SettingRetrieveResponse</a></code>
 - <code title="patch /api/user/settings">client.api.user.settings.<a href="./src/arbi/resources/api/user/settings.py">update</a>(\*\*<a href="src/arbi/types/api/user/setting_update_params.py">params</a>) -> None</code>
+
+### Subscription
+
+Types:
+
+```python
+from arbi.types.api.user import SubscriptionCreateResponse, SubscriptionRetrieveResponse
+```
+
+Methods:
+
+- <code title="post /api/user/subscription">client.api.user.subscription.<a href="./src/arbi/resources/api/user/subscription.py">create</a>(\*\*<a href="src/arbi/types/api/user/subscription_create_params.py">params</a>) -> <a href="./src/arbi/types/api/user/subscription_create_response.py">SubscriptionCreateResponse</a></code>
+- <code title="get /api/user/subscription">client.api.user.subscription.<a href="./src/arbi/resources/api/user/subscription.py">retrieve</a>() -> <a href="./src/arbi/types/api/user/subscription_retrieve_response.py">SubscriptionRetrieveResponse</a></code>
 
 ## Workspace
 

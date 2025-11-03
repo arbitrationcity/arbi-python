@@ -112,6 +112,8 @@ class AssistantResource(SyncAPIResource):
         Performs retrieval
         augmented generation with streaming response.
 
+        Requires active subscription (paid/trial/dev) if Stripe is configured.
+
         Args:
           extra_headers: Send extra headers
 
@@ -230,6 +232,8 @@ class AsyncAssistantResource(AsyncAPIResource):
 
         Performs retrieval
         augmented generation with streaming response.
+
+        Requires active subscription (paid/trial/dev) if Stripe is configured.
 
         Args:
           extra_headers: Send extra headers

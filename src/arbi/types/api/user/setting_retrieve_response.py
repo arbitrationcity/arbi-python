@@ -6,7 +6,13 @@ from pydantic import Field as FieldInfo
 
 from ...._models import BaseModel
 
-__all__ = ["SettingRetrieveResponse"]
+__all__ = ["SettingRetrieveResponse", "Subscription"]
+
+
+class Subscription(BaseModel):
+    status: Optional[str] = None
+
+    trial_expires: Optional[int] = None
 
 
 class SettingRetrieveResponse(BaseModel):
@@ -31,6 +37,14 @@ class SettingRetrieveResponse(BaseModel):
     show_templates: Optional[bool] = None
 
     show_thread_visualization: Optional[bool] = None
+
+    subscription: Optional[Subscription] = None
+    """Subscription info exposed to frontend in user settings.
+
+    Note: stripe_customer_id is deliberately excluded for security. This is a
+    minimal model used in UserSettingsResponse. For full subscription details, use
+    GET /subscription endpoint.
+    """
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
