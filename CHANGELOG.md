@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2025-11-03)
+
+Full Changelog: [v0.3.1...v0.4.0](https://github.com/arbitrationcity/arbi-python/compare/v0.3.1...v0.4.0)
+
+### Features
+
+* Feat/stripe-backend ([952850c](https://github.com/arbitrationcity/arbi-python/commit/952850c48f36859194f79398269af95bf1092f6f))
+
 ## 0.3.1 (2025-10-31)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/arbitrationcity/arbi-python/compare/v0.3.0...v0.3.1)
