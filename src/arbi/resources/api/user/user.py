@@ -32,11 +32,20 @@ from ....types.api import (
     user_change_password_params,
     user_check_sso_status_params,
 )
+from .subscription import (
+    SubscriptionResource,
+    AsyncSubscriptionResource,
+    SubscriptionResourceWithRawResponse,
+    AsyncSubscriptionResourceWithRawResponse,
+    SubscriptionResourceWithStreamingResponse,
+    AsyncSubscriptionResourceWithStreamingResponse,
+)
 from ...._base_client import make_request_options
 from ....types.api.user_login_response import UserLoginResponse
 from ....types.api.user_invite_response import UserInviteResponse
 from ....types.api.user_logout_response import UserLogoutResponse
 from ....types.api.user_verify_email_response import UserVerifyEmailResponse
+from ....types.api.user_list_products_response import UserListProductsResponse
 from ....types.api.user_change_password_response import UserChangePasswordResponse
 from ....types.api.user_list_workspaces_response import UserListWorkspacesResponse
 from ....types.api.user_check_sso_status_response import UserCheckSSOStatusResponse
@@ -48,6 +57,10 @@ class UserResource(SyncAPIResource):
     @cached_property
     def settings(self) -> SettingsResource:
         return SettingsResource(self._client)
+
+    @cached_property
+    def subscription(self) -> SubscriptionResource:
+        return SubscriptionResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> UserResourceWithRawResponse:
@@ -213,6 +226,25 @@ class UserResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UserInviteResponse,
+        )
+
+    def list_products(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserListProductsResponse:
+        """Get available subscription products and prices from Stripe."""
+        return self._get(
+            "/api/user/products",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserListProductsResponse,
         )
 
     def list_workspaces(
@@ -403,6 +435,10 @@ class AsyncUserResource(AsyncAPIResource):
         return AsyncSettingsResource(self._client)
 
     @cached_property
+    def subscription(self) -> AsyncSubscriptionResource:
+        return AsyncSubscriptionResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncUserResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -566,6 +602,25 @@ class AsyncUserResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UserInviteResponse,
+        )
+
+    async def list_products(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserListProductsResponse:
+        """Get available subscription products and prices from Stripe."""
+        return await self._get(
+            "/api/user/products",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserListProductsResponse,
         )
 
     async def list_workspaces(
@@ -763,6 +818,9 @@ class UserResourceWithRawResponse:
         self.invite = to_raw_response_wrapper(
             user.invite,
         )
+        self.list_products = to_raw_response_wrapper(
+            user.list_products,
+        )
         self.list_workspaces = to_raw_response_wrapper(
             user.list_workspaces,
         )
@@ -783,6 +841,10 @@ class UserResourceWithRawResponse:
     def settings(self) -> SettingsResourceWithRawResponse:
         return SettingsResourceWithRawResponse(self._user.settings)
 
+    @cached_property
+    def subscription(self) -> SubscriptionResourceWithRawResponse:
+        return SubscriptionResourceWithRawResponse(self._user.subscription)
+
 
 class AsyncUserResourceWithRawResponse:
     def __init__(self, user: AsyncUserResource) -> None:
@@ -796,6 +858,9 @@ class AsyncUserResourceWithRawResponse:
         )
         self.invite = async_to_raw_response_wrapper(
             user.invite,
+        )
+        self.list_products = async_to_raw_response_wrapper(
+            user.list_products,
         )
         self.list_workspaces = async_to_raw_response_wrapper(
             user.list_workspaces,
@@ -817,6 +882,10 @@ class AsyncUserResourceWithRawResponse:
     def settings(self) -> AsyncSettingsResourceWithRawResponse:
         return AsyncSettingsResourceWithRawResponse(self._user.settings)
 
+    @cached_property
+    def subscription(self) -> AsyncSubscriptionResourceWithRawResponse:
+        return AsyncSubscriptionResourceWithRawResponse(self._user.subscription)
+
 
 class UserResourceWithStreamingResponse:
     def __init__(self, user: UserResource) -> None:
@@ -830,6 +899,9 @@ class UserResourceWithStreamingResponse:
         )
         self.invite = to_streamed_response_wrapper(
             user.invite,
+        )
+        self.list_products = to_streamed_response_wrapper(
+            user.list_products,
         )
         self.list_workspaces = to_streamed_response_wrapper(
             user.list_workspaces,
@@ -851,6 +923,10 @@ class UserResourceWithStreamingResponse:
     def settings(self) -> SettingsResourceWithStreamingResponse:
         return SettingsResourceWithStreamingResponse(self._user.settings)
 
+    @cached_property
+    def subscription(self) -> SubscriptionResourceWithStreamingResponse:
+        return SubscriptionResourceWithStreamingResponse(self._user.subscription)
+
 
 class AsyncUserResourceWithStreamingResponse:
     def __init__(self, user: AsyncUserResource) -> None:
@@ -864,6 +940,9 @@ class AsyncUserResourceWithStreamingResponse:
         )
         self.invite = async_to_streamed_response_wrapper(
             user.invite,
+        )
+        self.list_products = async_to_streamed_response_wrapper(
+            user.list_products,
         )
         self.list_workspaces = async_to_streamed_response_wrapper(
             user.list_workspaces,
@@ -884,3 +963,7 @@ class AsyncUserResourceWithStreamingResponse:
     @cached_property
     def settings(self) -> AsyncSettingsResourceWithStreamingResponse:
         return AsyncSettingsResourceWithStreamingResponse(self._user.settings)
+
+    @cached_property
+    def subscription(self) -> AsyncSubscriptionResourceWithStreamingResponse:
+        return AsyncSubscriptionResourceWithStreamingResponse(self._user.subscription)
