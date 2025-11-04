@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2025-11-04)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/arbitrationcity/arbi-python/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** grammar fix (it's -&gt; its) ([355e525](https://github.com/arbitrationcity/arbi-python/commit/355e5251f95c5cc04dc5f1c9e6e200eb94496aec))
+
 ## 0.4.0 (2025-11-03)
 
 Full Changelog: [v0.3.1...v0.4.0](https://github.com/arbitrationcity/arbi-python/compare/v0.3.1...v0.4.0)
