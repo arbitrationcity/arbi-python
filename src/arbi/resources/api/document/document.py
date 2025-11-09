@@ -8,6 +8,14 @@ from typing_extensions import Literal
 
 import httpx
 
+from .doctag import (
+    DoctagResource,
+    AsyncDoctagResource,
+    DoctagResourceWithRawResponse,
+    AsyncDoctagResourceWithRawResponse,
+    DoctagResourceWithStreamingResponse,
+    AsyncDoctagResourceWithStreamingResponse,
+)
 from ...._types import (
     Body,
     Omit,
@@ -27,14 +35,6 @@ from ...._utils import (
     async_maybe_transform,
 )
 from ...._compat import cached_property
-from .annotation import (
-    AnnotationResource,
-    AsyncAnnotationResource,
-    AnnotationResourceWithRawResponse,
-    AsyncAnnotationResourceWithRawResponse,
-    AnnotationResourceWithStreamingResponse,
-    AsyncAnnotationResourceWithStreamingResponse,
-)
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
     to_raw_response_wrapper,
@@ -52,7 +52,6 @@ from ...._base_client import make_request_options
 from ....types.api.doc_response import DocResponse
 from ....types.api.document_delete_response import DocumentDeleteResponse
 from ....types.api.document_update_response import DocumentUpdateResponse
-from ....types.api.document_get_tags_response import DocumentGetTagsResponse
 from ....types.api.document_get_parsed_response import DocumentGetParsedResponse
 
 __all__ = ["DocumentResource", "AsyncDocumentResource"]
@@ -60,8 +59,8 @@ __all__ = ["DocumentResource", "AsyncDocumentResource"]
 
 class DocumentResource(SyncAPIResource):
     @cached_property
-    def annotation(self) -> AnnotationResource:
-        return AnnotationResource(self._client)
+    def doctag(self) -> DoctagResource:
+        return DoctagResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> DocumentResourceWithRawResponse:
@@ -279,41 +278,6 @@ class DocumentResource(SyncAPIResource):
             cast_to=DocumentGetParsedResponse,
         )
 
-    def get_tags(
-        self,
-        doc_ext_id: str,
-        *,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentGetTagsResponse:
-        """
-        Get all tags applied to a specific document along with doctag metadata.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return self._get(
-            f"/api/document/{doc_ext_id}/tags",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocumentGetTagsResponse,
-        )
-
     def upload(
         self,
         *,
@@ -483,8 +447,8 @@ class DocumentResource(SyncAPIResource):
 
 class AsyncDocumentResource(AsyncAPIResource):
     @cached_property
-    def annotation(self) -> AsyncAnnotationResource:
-        return AsyncAnnotationResource(self._client)
+    def doctag(self) -> AsyncDoctagResource:
+        return AsyncDoctagResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncDocumentResourceWithRawResponse:
@@ -702,41 +666,6 @@ class AsyncDocumentResource(AsyncAPIResource):
             cast_to=DocumentGetParsedResponse,
         )
 
-    async def get_tags(
-        self,
-        doc_ext_id: str,
-        *,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentGetTagsResponse:
-        """
-        Get all tags applied to a specific document along with doctag metadata.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return await self._get(
-            f"/api/document/{doc_ext_id}/tags",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocumentGetTagsResponse,
-        )
-
     async def upload(
         self,
         *,
@@ -923,9 +852,6 @@ class DocumentResourceWithRawResponse:
         self.get_parsed = to_raw_response_wrapper(
             document.get_parsed,
         )
-        self.get_tags = to_raw_response_wrapper(
-            document.get_tags,
-        )
         self.upload = to_raw_response_wrapper(
             document.upload,
         )
@@ -937,8 +863,8 @@ class DocumentResourceWithRawResponse:
         )
 
     @cached_property
-    def annotation(self) -> AnnotationResourceWithRawResponse:
-        return AnnotationResourceWithRawResponse(self._document.annotation)
+    def doctag(self) -> DoctagResourceWithRawResponse:
+        return DoctagResourceWithRawResponse(self._document.doctag)
 
 
 class AsyncDocumentResourceWithRawResponse:
@@ -960,9 +886,6 @@ class AsyncDocumentResourceWithRawResponse:
         self.get_parsed = async_to_raw_response_wrapper(
             document.get_parsed,
         )
-        self.get_tags = async_to_raw_response_wrapper(
-            document.get_tags,
-        )
         self.upload = async_to_raw_response_wrapper(
             document.upload,
         )
@@ -974,8 +897,8 @@ class AsyncDocumentResourceWithRawResponse:
         )
 
     @cached_property
-    def annotation(self) -> AsyncAnnotationResourceWithRawResponse:
-        return AsyncAnnotationResourceWithRawResponse(self._document.annotation)
+    def doctag(self) -> AsyncDoctagResourceWithRawResponse:
+        return AsyncDoctagResourceWithRawResponse(self._document.doctag)
 
 
 class DocumentResourceWithStreamingResponse:
@@ -997,9 +920,6 @@ class DocumentResourceWithStreamingResponse:
         self.get_parsed = to_streamed_response_wrapper(
             document.get_parsed,
         )
-        self.get_tags = to_streamed_response_wrapper(
-            document.get_tags,
-        )
         self.upload = to_streamed_response_wrapper(
             document.upload,
         )
@@ -1011,8 +931,8 @@ class DocumentResourceWithStreamingResponse:
         )
 
     @cached_property
-    def annotation(self) -> AnnotationResourceWithStreamingResponse:
-        return AnnotationResourceWithStreamingResponse(self._document.annotation)
+    def doctag(self) -> DoctagResourceWithStreamingResponse:
+        return DoctagResourceWithStreamingResponse(self._document.doctag)
 
 
 class AsyncDocumentResourceWithStreamingResponse:
@@ -1034,9 +954,6 @@ class AsyncDocumentResourceWithStreamingResponse:
         self.get_parsed = async_to_streamed_response_wrapper(
             document.get_parsed,
         )
-        self.get_tags = async_to_streamed_response_wrapper(
-            document.get_tags,
-        )
         self.upload = async_to_streamed_response_wrapper(
             document.upload,
         )
@@ -1048,5 +965,5 @@ class AsyncDocumentResourceWithStreamingResponse:
         )
 
     @cached_property
-    def annotation(self) -> AsyncAnnotationResourceWithStreamingResponse:
-        return AsyncAnnotationResourceWithStreamingResponse(self._document.annotation)
+    def doctag(self) -> AsyncDoctagResourceWithStreamingResponse:
+        return AsyncDoctagResourceWithStreamingResponse(self._document.doctag)

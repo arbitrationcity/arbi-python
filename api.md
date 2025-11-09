@@ -75,7 +75,6 @@ from arbi.types.api import (
     WorkspaceDeleteResponse,
     WorkspaceCopyResponse,
     WorkspaceGetConversationsResponse,
-    WorkspaceGetDoctagsResponse,
     WorkspaceGetDocumentsResponse,
     WorkspaceGetStatsResponse,
     WorkspaceGetTagsResponse,
@@ -92,7 +91,6 @@ Methods:
 - <code title="post /api/workspace/{workspace_ext_id}/copy">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">copy</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_copy_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_copy_response.py">WorkspaceCopyResponse</a></code>
 - <code title="post /api/workspace/create_protected">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">create_protected</a>(\*\*<a href="src/arbi/types/api/workspace_create_protected_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/conversations">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_conversations</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_conversations_response.py">WorkspaceGetConversationsResponse</a></code>
-- <code title="get /api/workspace/{workspace_ext_id}/doctags">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_doctags</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_doctags_response.py">WorkspaceGetDoctagsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/documents">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_documents</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_documents_response.py">WorkspaceGetDocumentsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/stats">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_stats</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_stats_response.py">WorkspaceGetStatsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/tags">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_tags</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_tags_response.py">WorkspaceGetTagsResponse</a></code>
@@ -110,7 +108,6 @@ from arbi.types.api import (
     DocumentUpdateResponse,
     DocumentDeleteResponse,
     DocumentGetParsedResponse,
-    DocumentGetTagsResponse,
 )
 ```
 
@@ -121,7 +118,6 @@ Methods:
 - <code title="get /api/document/{document_ext_id}/download">client.api.document.<a href="./src/arbi/resources/api/document/document.py">download</a>(document_ext_id) -> object</code>
 - <code title="get /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get</a>(document_ext_id) -> <a href="./src/arbi/types/api/doc_response.py">DocResponse</a></code>
 - <code title="get /api/document/{document_ext_id}/parsed-{stage}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get_parsed</a>(stage, \*, document_ext_id) -> <a href="./src/arbi/types/api/document_get_parsed_response.py">DocumentGetParsedResponse</a></code>
-- <code title="get /api/document/{doc_ext_id}/tags">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get_tags</a>(doc_ext_id) -> <a href="./src/arbi/types/api/document_get_tags_response.py">DocumentGetTagsResponse</a></code>
 - <code title="post /api/document/upload">client.api.document.<a href="./src/arbi/resources/api/document/document.py">upload</a>(\*\*<a href="src/arbi/types/api/document_upload_params.py">params</a>) -> object</code>
 - <code title="post /api/document/upload-url">client.api.document.<a href="./src/arbi/resources/api/document/document.py">upload_from_url</a>(\*\*<a href="src/arbi/types/api/document_upload_from_url_params.py">params</a>) -> object</code>
 - <code title="get /api/document/{document_ext_id}/view">client.api.document.<a href="./src/arbi/resources/api/document/document.py">view</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document_view_params.py">params</a>) -> object</code>
@@ -131,14 +127,22 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api.document import DocTagResponse, AnnotationDeleteResponse
+from arbi.types.api.document import DocTagResponse
+```
+
+### Doctag
+
+Types:
+
+```python
+from arbi.types.api.document import DoctagDeleteResponse
 ```
 
 Methods:
 
-- <code title="post /api/document/{doc_ext_id}/annotation">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">create</a>(doc_ext_id, \*\*<a href="src/arbi/types/api/document/annotation_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
-- <code title="patch /api/document/{doc_ext_id}/annotation/{doctag_ext_id}">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">update</a>(doctag_ext_id, \*, doc_ext_id, \*\*<a href="src/arbi/types/api/document/annotation_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
-- <code title="delete /api/document/{doc_ext_id}/annotation/{doctag_ext_id}">client.api.document.annotation.<a href="./src/arbi/resources/api/document/annotation.py">delete</a>(doctag_ext_id, \*, doc_ext_id) -> <a href="./src/arbi/types/api/document/annotation_delete_response.py">AnnotationDeleteResponse</a></code>
+- <code title="post /api/document/{document_ext_id}/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">create</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document/doctag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
+- <code title="patch /api/document/{document_ext_id}/doctag/{doctag_ext_id}">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">update</a>(doctag_ext_id, \*, document_ext_id, \*\*<a href="src/arbi/types/api/document/doctag_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
+- <code title="delete /api/document/{document_ext_id}/doctag/{doctag_ext_id}">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">delete</a>(doctag_ext_id, \*, document_ext_id) -> <a href="./src/arbi/types/api/document/doctag_delete_response.py">DoctagDeleteResponse</a></code>
 
 ## Conversation
 
@@ -219,25 +223,14 @@ Methods:
 Types:
 
 ```python
-from arbi.types.api import (
-    TagOperation,
-    TagCreateResponse,
-    TagUpdateResponse,
-    TagDeleteResponse,
-    TagApplyToDocsResponse,
-    TagGetDocsResponse,
-    TagRemoveFromDocsResponse,
-)
+from arbi.types.api import TagCreateResponse, TagUpdateResponse, TagDeleteResponse
 ```
 
 Methods:
 
-- <code title="post /api/tag/create">client.api.tag.<a href="./src/arbi/resources/api/tag.py">create</a>(\*\*<a href="src/arbi/types/api/tag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_create_response.py">TagCreateResponse</a></code>
+- <code title="post /api/tag">client.api.tag.<a href="./src/arbi/resources/api/tag.py">create</a>(\*\*<a href="src/arbi/types/api/tag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_create_response.py">TagCreateResponse</a></code>
 - <code title="patch /api/tag/{tag_ext_id}">client.api.tag.<a href="./src/arbi/resources/api/tag.py">update</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_update_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_update_response.py">TagUpdateResponse</a></code>
-- <code title="delete /api/tag/{tag_ext_id}/delete">client.api.tag.<a href="./src/arbi/resources/api/tag.py">delete</a>(tag_ext_id) -> <a href="./src/arbi/types/api/tag_delete_response.py">TagDeleteResponse</a></code>
-- <code title="post /api/tag/{tag_ext_id}/apply">client.api.tag.<a href="./src/arbi/resources/api/tag.py">apply_to_docs</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_apply_to_docs_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_apply_to_docs_response.py">TagApplyToDocsResponse</a></code>
-- <code title="get /api/tag/{tag_ext_id}/docs">client.api.tag.<a href="./src/arbi/resources/api/tag.py">get_docs</a>(tag_ext_id) -> <a href="./src/arbi/types/api/tag_get_docs_response.py">TagGetDocsResponse</a></code>
-- <code title="delete /api/tag/{tag_ext_id}/remove">client.api.tag.<a href="./src/arbi/resources/api/tag.py">remove_from_docs</a>(tag_ext_id, \*\*<a href="src/arbi/types/api/tag_remove_from_docs_params.py">params</a>) -> <a href="./src/arbi/types/api/tag_remove_from_docs_response.py">TagRemoveFromDocsResponse</a></code>
+- <code title="delete /api/tag/{tag_ext_id}">client.api.tag.<a href="./src/arbi/resources/api/tag.py">delete</a>(tag_ext_id) -> <a href="./src/arbi/types/api/tag_delete_response.py">TagDeleteResponse</a></code>
 
 ## Configs
 

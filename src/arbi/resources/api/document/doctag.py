@@ -17,40 +17,39 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.api.document import annotation_create_params, annotation_update_params
+from ....types.api.document import doctag_create_params, doctag_update_params
 from ....types.api.document.doc_tag_response import DocTagResponse
-from ....types.api.document.annotation_delete_response import AnnotationDeleteResponse
+from ....types.api.document.doctag_delete_response import DoctagDeleteResponse
 
-__all__ = ["AnnotationResource", "AsyncAnnotationResource"]
+__all__ = ["DoctagResource", "AsyncDoctagResource"]
 
 
-class AnnotationResource(SyncAPIResource):
+class DoctagResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AnnotationResourceWithRawResponse:
+    def with_raw_response(self) -> DoctagResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
         """
-        return AnnotationResourceWithRawResponse(self)
+        return DoctagResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AnnotationResourceWithStreamingResponse:
+    def with_streaming_response(self) -> DoctagResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
-        return AnnotationResourceWithStreamingResponse(self)
+        return DoctagResourceWithStreamingResponse(self)
 
     def create(
         self,
-        doc_ext_id: str,
+        document_ext_id: str,
         *,
+        tag_ext_id: str,
         note: Optional[str] | Omit = omit,
-        page_ref: Optional[int] | Omit = omit,
-        tag_name: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -60,11 +59,14 @@ class AnnotationResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
         """
-        Create an annotation for a document.
+        Create a doctag by applying a tag to this document.
 
-        If tag_name is provided, uses existing tag or creates new one. If tag_name is
-        not provided, auto-generates a system tag. The shared status inherits from
-        document unless explicitly overridden.
+        Unique constraint ensures each tag can only be applied to a document once
+        (idempotent). Note field semantics by tag type:
+
+        - date: note contains the date value (yyyy-mm-dd)
+        - annotation: note contains the comment text
+        - checkbox/list: note is optional contextual metadata
 
         Args:
           extra_headers: Send extra headers
@@ -75,18 +77,17 @@ class AnnotationResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._post(
-            f"/api/document/{doc_ext_id}/annotation",
+            f"/api/document/{document_ext_id}/doctag",
             body=maybe_transform(
                 {
+                    "tag_ext_id": tag_ext_id,
                     "note": note,
-                    "page_ref": page_ref,
-                    "tag_name": tag_name,
                 },
-                annotation_create_params.AnnotationCreateParams,
+                doctag_create_params.DoctagCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -98,9 +99,8 @@ class AnnotationResource(SyncAPIResource):
         self,
         doctag_ext_id: str,
         *,
-        doc_ext_id: str,
+        document_ext_id: str,
         note: Optional[str] | Omit = omit,
-        page_ref: Optional[int] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -109,8 +109,9 @@ class AnnotationResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
-        """
-        Update an annotation (doctag) for a document.
+        """Update a doctag's note.
+
+        Can be used to update note for any tag type.
 
         Args:
           extra_headers: Send extra headers
@@ -121,20 +122,14 @@ class AnnotationResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         if not doctag_ext_id:
             raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
-            f"/api/document/{doc_ext_id}/annotation/{doctag_ext_id}",
-            body=maybe_transform(
-                {
-                    "note": note,
-                    "page_ref": page_ref,
-                },
-                annotation_update_params.AnnotationUpdateParams,
-            ),
+            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
+            body=maybe_transform({"note": note}, doctag_update_params.DoctagUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -145,16 +140,16 @@ class AnnotationResource(SyncAPIResource):
         self,
         doctag_ext_id: str,
         *,
-        doc_ext_id: str,
+        document_ext_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AnnotationDeleteResponse:
+    ) -> DoctagDeleteResponse:
         """
-        Delete a specific annotation (doctag) for a document.
+        Delete a doctag by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -165,46 +160,45 @@ class AnnotationResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         if not doctag_ext_id:
             raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
         return self._delete(
-            f"/api/document/{doc_ext_id}/annotation/{doctag_ext_id}",
+            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AnnotationDeleteResponse,
+            cast_to=DoctagDeleteResponse,
         )
 
 
-class AsyncAnnotationResource(AsyncAPIResource):
+class AsyncDoctagResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncAnnotationResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncDoctagResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/arbitrationcity/arbi-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncAnnotationResourceWithRawResponse(self)
+        return AsyncDoctagResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncAnnotationResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncDoctagResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
-        return AsyncAnnotationResourceWithStreamingResponse(self)
+        return AsyncDoctagResourceWithStreamingResponse(self)
 
     async def create(
         self,
-        doc_ext_id: str,
+        document_ext_id: str,
         *,
+        tag_ext_id: str,
         note: Optional[str] | Omit = omit,
-        page_ref: Optional[int] | Omit = omit,
-        tag_name: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -214,11 +208,14 @@ class AsyncAnnotationResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
         """
-        Create an annotation for a document.
+        Create a doctag by applying a tag to this document.
 
-        If tag_name is provided, uses existing tag or creates new one. If tag_name is
-        not provided, auto-generates a system tag. The shared status inherits from
-        document unless explicitly overridden.
+        Unique constraint ensures each tag can only be applied to a document once
+        (idempotent). Note field semantics by tag type:
+
+        - date: note contains the date value (yyyy-mm-dd)
+        - annotation: note contains the comment text
+        - checkbox/list: note is optional contextual metadata
 
         Args:
           extra_headers: Send extra headers
@@ -229,18 +226,17 @@ class AsyncAnnotationResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._post(
-            f"/api/document/{doc_ext_id}/annotation",
+            f"/api/document/{document_ext_id}/doctag",
             body=await async_maybe_transform(
                 {
+                    "tag_ext_id": tag_ext_id,
                     "note": note,
-                    "page_ref": page_ref,
-                    "tag_name": tag_name,
                 },
-                annotation_create_params.AnnotationCreateParams,
+                doctag_create_params.DoctagCreateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -252,9 +248,8 @@ class AsyncAnnotationResource(AsyncAPIResource):
         self,
         doctag_ext_id: str,
         *,
-        doc_ext_id: str,
+        document_ext_id: str,
         note: Optional[str] | Omit = omit,
-        page_ref: Optional[int] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -263,8 +258,9 @@ class AsyncAnnotationResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
-        """
-        Update an annotation (doctag) for a document.
+        """Update a doctag's note.
+
+        Can be used to update note for any tag type.
 
         Args:
           extra_headers: Send extra headers
@@ -275,20 +271,14 @@ class AsyncAnnotationResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         if not doctag_ext_id:
             raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
-            f"/api/document/{doc_ext_id}/annotation/{doctag_ext_id}",
-            body=await async_maybe_transform(
-                {
-                    "note": note,
-                    "page_ref": page_ref,
-                },
-                annotation_update_params.AnnotationUpdateParams,
-            ),
+            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
+            body=await async_maybe_transform({"note": note}, doctag_update_params.DoctagUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -299,16 +289,16 @@ class AsyncAnnotationResource(AsyncAPIResource):
         self,
         doctag_ext_id: str,
         *,
-        doc_ext_id: str,
+        document_ext_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AnnotationDeleteResponse:
+    ) -> DoctagDeleteResponse:
         """
-        Delete a specific annotation (doctag) for a document.
+        Delete a doctag by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -319,74 +309,74 @@ class AsyncAnnotationResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not doc_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doc_ext_id` but received {doc_ext_id!r}")
+        if not document_ext_id:
+            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         if not doctag_ext_id:
             raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
         return await self._delete(
-            f"/api/document/{doc_ext_id}/annotation/{doctag_ext_id}",
+            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AnnotationDeleteResponse,
+            cast_to=DoctagDeleteResponse,
         )
 
 
-class AnnotationResourceWithRawResponse:
-    def __init__(self, annotation: AnnotationResource) -> None:
-        self._annotation = annotation
+class DoctagResourceWithRawResponse:
+    def __init__(self, doctag: DoctagResource) -> None:
+        self._doctag = doctag
 
         self.create = to_raw_response_wrapper(
-            annotation.create,
+            doctag.create,
         )
         self.update = to_raw_response_wrapper(
-            annotation.update,
+            doctag.update,
         )
         self.delete = to_raw_response_wrapper(
-            annotation.delete,
+            doctag.delete,
         )
 
 
-class AsyncAnnotationResourceWithRawResponse:
-    def __init__(self, annotation: AsyncAnnotationResource) -> None:
-        self._annotation = annotation
+class AsyncDoctagResourceWithRawResponse:
+    def __init__(self, doctag: AsyncDoctagResource) -> None:
+        self._doctag = doctag
 
         self.create = async_to_raw_response_wrapper(
-            annotation.create,
+            doctag.create,
         )
         self.update = async_to_raw_response_wrapper(
-            annotation.update,
+            doctag.update,
         )
         self.delete = async_to_raw_response_wrapper(
-            annotation.delete,
+            doctag.delete,
         )
 
 
-class AnnotationResourceWithStreamingResponse:
-    def __init__(self, annotation: AnnotationResource) -> None:
-        self._annotation = annotation
+class DoctagResourceWithStreamingResponse:
+    def __init__(self, doctag: DoctagResource) -> None:
+        self._doctag = doctag
 
         self.create = to_streamed_response_wrapper(
-            annotation.create,
+            doctag.create,
         )
         self.update = to_streamed_response_wrapper(
-            annotation.update,
+            doctag.update,
         )
         self.delete = to_streamed_response_wrapper(
-            annotation.delete,
+            doctag.delete,
         )
 
 
-class AsyncAnnotationResourceWithStreamingResponse:
-    def __init__(self, annotation: AsyncAnnotationResource) -> None:
-        self._annotation = annotation
+class AsyncDoctagResourceWithStreamingResponse:
+    def __init__(self, doctag: AsyncDoctagResource) -> None:
+        self._doctag = doctag
 
         self.create = async_to_streamed_response_wrapper(
-            annotation.create,
+            doctag.create,
         )
         self.update = async_to_streamed_response_wrapper(
-            annotation.update,
+            doctag.update,
         )
         self.delete = async_to_streamed_response_wrapper(
-            annotation.delete,
+            doctag.delete,
         )
