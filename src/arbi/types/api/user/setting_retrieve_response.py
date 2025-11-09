@@ -6,13 +6,21 @@ from pydantic import Field as FieldInfo
 
 from ...._models import BaseModel
 
-__all__ = ["SettingRetrieveResponse", "Subscription"]
+__all__ = ["SettingRetrieveResponse", "Subscription", "Tableview"]
 
 
 class Subscription(BaseModel):
     status: Optional[str] = None
 
     trial_expires: Optional[int] = None
+
+
+class Tableview(BaseModel):
+    columns: List[str]
+
+    name: str
+
+    workspace: str
 
 
 class SettingRetrieveResponse(BaseModel):
@@ -45,6 +53,8 @@ class SettingRetrieveResponse(BaseModel):
     minimal model used in UserSettingsResponse. For full subscription details, use
     GET /subscription endpoint.
     """
+
+    tableviews: Optional[List[Tableview]] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a

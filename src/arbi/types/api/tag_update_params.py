@@ -13,6 +13,8 @@ __all__ = ["TagUpdateParams"]
 class TagUpdateParams(TypedDict, total=False):
     name: Optional[str]
 
+    parent_ext_id: Optional[str]
+
     shared: Optional[bool]
 
     workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

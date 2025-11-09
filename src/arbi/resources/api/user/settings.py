@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Iterable, Optional
 
 import httpx
 
@@ -75,6 +75,7 @@ class SettingsResource(SyncAPIResource):
         show_templates: Optional[bool] | Omit = omit,
         show_thread_visualization: Optional[bool] | Omit = omit,
         subscription: Optional[setting_update_params.Subscription] | Omit = omit,
+        tableviews: Optional[Iterable[setting_update_params.Tableview]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -113,6 +114,7 @@ class SettingsResource(SyncAPIResource):
                     "show_templates": show_templates,
                     "show_thread_visualization": show_thread_visualization,
                     "subscription": subscription,
+                    "tableviews": tableviews,
                 },
                 setting_update_params.SettingUpdateParams,
             ),
@@ -175,6 +177,7 @@ class AsyncSettingsResource(AsyncAPIResource):
         show_templates: Optional[bool] | Omit = omit,
         show_thread_visualization: Optional[bool] | Omit = omit,
         subscription: Optional[setting_update_params.Subscription] | Omit = omit,
+        tableviews: Optional[Iterable[setting_update_params.Tableview]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -213,6 +216,7 @@ class AsyncSettingsResource(AsyncAPIResource):
                     "show_templates": show_templates,
                     "show_thread_visualization": show_thread_visualization,
                     "subscription": subscription,
+                    "tableviews": tableviews,
                 },
                 setting_update_params.SettingUpdateParams,
             ),

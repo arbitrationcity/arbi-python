@@ -3,18 +3,16 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
 from ...._utils import PropertyInfo
 
-__all__ = ["AnnotationCreateParams"]
+__all__ = ["DoctagUpdateParams"]
 
 
-class AnnotationCreateParams(TypedDict, total=False):
+class DoctagUpdateParams(TypedDict, total=False):
+    document_ext_id: Required[str]
+
     note: Optional[str]
-
-    page_ref: Optional[int]
-
-    tag_name: Optional[str]
 
     workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

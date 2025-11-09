@@ -1,17 +1,46 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
+from datetime import datetime
+from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["TagUpdateResponse"]
+__all__ = ["TagUpdateResponse", "TagType"]
+
+
+class TagType(BaseModel):
+    options: Optional[List[str]] = None
+
+    type: Optional[Literal["checkbox", "text", "number", "select", "folder"]] = None
 
 
 class TagUpdateResponse(BaseModel):
-    detail: str
+    created_at: datetime
 
-    tag_id: str
+    created_by_ext_id: str
 
-    name: Optional[str] = None
+    doctag_count: int
 
-    shared: Optional[bool] = None
+    external_id: str
+
+    name: str
+
+    shared: bool
+
+    tag_type: TagType
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+
+    - select: options (list of choices, can be single or multi-select)
+    - checkbox, text, number, folder: type only
+    """
+
+    updated_at: datetime
+
+    workspace_ext_id: str
+
+    parent_ext_id: Optional[str] = None
+
+    updated_by_ext_id: Optional[str] = None

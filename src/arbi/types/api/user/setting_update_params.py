@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import TypedDict
+from typing import Iterable, Optional
+from typing_extensions import Required, TypedDict
 
 from ...._types import SequenceNotStr
 
-__all__ = ["SettingUpdateParams", "Subscription"]
+__all__ = ["SettingUpdateParams", "Subscription", "Tableview"]
 
 
 class SettingUpdateParams(TypedDict, total=False):
@@ -32,6 +32,16 @@ class SettingUpdateParams(TypedDict, total=False):
     subscription: Optional[Subscription]
     """Trial update - only trial_expires can be set, and only if currently null."""
 
+    tableviews: Optional[Iterable[Tableview]]
+
 
 class Subscription(TypedDict, total=False):
     trial_expires: Optional[int]
+
+
+class Tableview(TypedDict, total=False):
+    columns: Required[SequenceNotStr[str]]
+
+    name: Required[str]
+
+    workspace: Required[str]
