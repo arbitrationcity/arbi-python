@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 (2025-11-09)
+
+Full Changelog: [v0.4.1...v0.5.0](https://github.com/arbitrationcity/arbi-python/compare/v0.4.1...v0.5.0)
+
+### Features
+
+* Streamlining and enhancing tags/annotations (backend fixes) ([b18a331](https://github.com/arbitrationcity/arbi-python/commit/b18a331e27b4be4425e79c1660999e6829004c6a))
+
 ## 0.4.1 (2025-11-04)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/arbitrationcity/arbi-python/compare/v0.4.0...v0.4.1)

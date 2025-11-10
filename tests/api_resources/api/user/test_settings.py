@@ -65,6 +65,13 @@ class TestSettings:
             show_templates=True,
             show_thread_visualization=True,
             subscription={"trial_expires": 0},
+            tableviews=[
+                {
+                    "columns": ["string"],
+                    "name": "name",
+                    "workspace": "wrk-bFXA5r3A",
+                }
+            ],
         )
         assert setting is None
 
@@ -144,6 +151,13 @@ class TestAsyncSettings:
             show_templates=True,
             show_thread_visualization=True,
             subscription={"trial_expires": 0},
+            tableviews=[
+                {
+                    "columns": ["string"],
+                    "name": "name",
+                    "workspace": "wrk-bFXA5r3A",
+                }
+            ],
         )
         assert setting is None
 

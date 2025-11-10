@@ -14,7 +14,6 @@ from arbi.types.api import (
     DocResponse,
     DocumentDeleteResponse,
     DocumentUpdateResponse,
-    DocumentGetTagsResponse,
     DocumentGetParsedResponse,
 )
 
@@ -276,57 +275,6 @@ class TestDocument:
             client.api.document.with_raw_response.get_parsed(
                 stage="marker",
                 document_ext_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_tags(self, client: Arbi) -> None:
-        document = client.api.document.get_tags(
-            doc_ext_id="doc",
-        )
-        assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_tags_with_all_params(self, client: Arbi) -> None:
-        document = client.api.document.get_tags(
-            doc_ext_id="doc",
-            workspace_key="workspace-key",
-        )
-        assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_get_tags(self, client: Arbi) -> None:
-        response = client.api.document.with_raw_response.get_tags(
-            doc_ext_id="doc",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = response.parse()
-        assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_get_tags(self, client: Arbi) -> None:
-        with client.api.document.with_streaming_response.get_tags(
-            doc_ext_id="doc",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = response.parse()
-            assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_get_tags(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_ext_id` but received ''"):
-            client.api.document.with_raw_response.get_tags(
-                doc_ext_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -737,57 +685,6 @@ class TestAsyncDocument:
             await async_client.api.document.with_raw_response.get_parsed(
                 stage="marker",
                 document_ext_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_tags(self, async_client: AsyncArbi) -> None:
-        document = await async_client.api.document.get_tags(
-            doc_ext_id="doc",
-        )
-        assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_tags_with_all_params(self, async_client: AsyncArbi) -> None:
-        document = await async_client.api.document.get_tags(
-            doc_ext_id="doc",
-            workspace_key="workspace-key",
-        )
-        assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_get_tags(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.document.with_raw_response.get_tags(
-            doc_ext_id="doc",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = await response.parse()
-        assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_get_tags(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.document.with_streaming_response.get_tags(
-            doc_ext_id="doc",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = await response.parse()
-            assert_matches_type(DocumentGetTagsResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_get_tags(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_ext_id` but received ''"):
-            await async_client.api.document.with_raw_response.get_tags(
-                doc_ext_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")

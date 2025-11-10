@@ -3,6 +3,6 @@
 from __future__ import annotations
 
 from .doc_tag_response import DocTagResponse as DocTagResponse
-from .annotation_create_params import AnnotationCreateParams as AnnotationCreateParams
-from .annotation_update_params import AnnotationUpdateParams as AnnotationUpdateParams
-from .annotation_delete_response import AnnotationDeleteResponse as AnnotationDeleteResponse
+from .doctag_create_params import DoctagCreateParams as DoctagCreateParams
+from .doctag_update_params import DoctagUpdateParams as DoctagUpdateParams
+from .doctag_delete_response import DoctagDeleteResponse as DoctagDeleteResponse

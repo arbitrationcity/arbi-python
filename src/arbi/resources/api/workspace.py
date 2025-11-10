@@ -31,7 +31,6 @@ from ...types.api.workspace_delete_response import WorkspaceDeleteResponse
 from ...types.api.workspace_get_tags_response import WorkspaceGetTagsResponse
 from ...types.api.workspace_get_stats_response import WorkspaceGetStatsResponse
 from ...types.api.workspace_get_users_response import WorkspaceGetUsersResponse
-from ...types.api.workspace_get_doctags_response import WorkspaceGetDoctagsResponse
 from ...types.api.workspace_remove_user_response import WorkspaceRemoveUserResponse
 from ...types.api.workspace_get_documents_response import WorkspaceGetDocumentsResponse
 from ...types.api.workspace_get_conversations_response import WorkspaceGetConversationsResponse
@@ -313,43 +312,6 @@ class WorkspaceResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WorkspaceGetConversationsResponse,
-        )
-
-    def get_doctags(
-        self,
-        workspace_ext_id: str,
-        *,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> WorkspaceGetDoctagsResponse:
-        """Get all doctags (document-tag associations) in a given workspace.
-
-        RLS is used to
-        enforce proper access controls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_ext_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return self._get(
-            f"/api/workspace/{workspace_ext_id}/doctags",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=WorkspaceGetDoctagsResponse,
         )
 
     def get_documents(
@@ -850,43 +812,6 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             cast_to=WorkspaceGetConversationsResponse,
         )
 
-    async def get_doctags(
-        self,
-        workspace_ext_id: str,
-        *,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> WorkspaceGetDoctagsResponse:
-        """Get all doctags (document-tag associations) in a given workspace.
-
-        RLS is used to
-        enforce proper access controls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_ext_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return await self._get(
-            f"/api/workspace/{workspace_ext_id}/doctags",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=WorkspaceGetDoctagsResponse,
-        )
-
     async def get_documents(
         self,
         workspace_ext_id: str,
@@ -1132,9 +1057,6 @@ class WorkspaceResourceWithRawResponse:
         self.get_conversations = to_raw_response_wrapper(
             workspace.get_conversations,
         )
-        self.get_doctags = to_raw_response_wrapper(
-            workspace.get_doctags,
-        )
         self.get_documents = to_raw_response_wrapper(
             workspace.get_documents,
         )
@@ -1173,9 +1095,6 @@ class AsyncWorkspaceResourceWithRawResponse:
         )
         self.get_conversations = async_to_raw_response_wrapper(
             workspace.get_conversations,
-        )
-        self.get_doctags = async_to_raw_response_wrapper(
-            workspace.get_doctags,
         )
         self.get_documents = async_to_raw_response_wrapper(
             workspace.get_documents,
@@ -1216,9 +1135,6 @@ class WorkspaceResourceWithStreamingResponse:
         self.get_conversations = to_streamed_response_wrapper(
             workspace.get_conversations,
         )
-        self.get_doctags = to_streamed_response_wrapper(
-            workspace.get_doctags,
-        )
         self.get_documents = to_streamed_response_wrapper(
             workspace.get_documents,
         )
@@ -1257,9 +1173,6 @@ class AsyncWorkspaceResourceWithStreamingResponse:
         )
         self.get_conversations = async_to_streamed_response_wrapper(
             workspace.get_conversations,
-        )
-        self.get_doctags = async_to_streamed_response_wrapper(
-            workspace.get_doctags,
         )
         self.get_documents = async_to_streamed_response_wrapper(
             workspace.get_documents,

@@ -7,14 +7,12 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from ...._utils import PropertyInfo
 
-__all__ = ["AnnotationUpdateParams"]
+__all__ = ["DoctagCreateParams"]
 
 
-class AnnotationUpdateParams(TypedDict, total=False):
-    doc_ext_id: Required[str]
+class DoctagCreateParams(TypedDict, total=False):
+    tag_ext_id: Required[str]
 
     note: Optional[str]
-
-    page_ref: Optional[int]
 
     workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]

@@ -23,4 +23,4 @@ class DocTagResponse(BaseModel):
 
     note: Optional[str] = None
 
-    page_ref: Optional[int] = None
+    updated_by_ext_id: Optional[str] = None
