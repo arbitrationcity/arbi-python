@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.1 (2025-11-11)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/arbitrationcity/arbi-python/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* compat with Python 3.14 ([daab14d](https://github.com/arbitrationcity/arbi-python/commit/daab14d0ecf79492957c9a85ad16f463eb2c2d14))
+
+
+### Chores
+
+* **package:** drop Python 3.8 support ([082ffc5](https://github.com/arbitrationcity/arbi-python/commit/082ffc57d5aeaff4614d20c19d179f8300264869))
+
 ## 0.5.0 (2025-11-09)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/arbitrationcity/arbi-python/compare/v0.4.1...v0.5.0)
