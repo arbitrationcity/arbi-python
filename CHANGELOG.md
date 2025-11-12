@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.2 (2025-11-12)
+
+Full Changelog: [v0.5.1...v0.5.2](https://github.com/arbitrationcity/arbi-python/compare/v0.5.1...v0.5.2)
+
+### Bug Fixes
+
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([1a59cf4](https://github.com/arbitrationcity/arbi-python/commit/1a59cf4969222bbcf4438beac6dd12c808d32b1a))
+
 ## 0.5.1 (2025-11-11)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/arbitrationcity/arbi-python/compare/v0.5.0...v0.5.1)
