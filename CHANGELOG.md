@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.3 (2025-11-22)
+
+Full Changelog: [v0.5.2...v0.5.3](https://github.com/arbitrationcity/arbi-python/compare/v0.5.2...v0.5.3)
+
+### Chores
+
+* add Python 3.14 classifier and testing ([cc66f00](https://github.com/arbitrationcity/arbi-python/commit/cc66f00d15b0b55ac6bd17dec1fc70b9e1c0c390))
+
 ## 0.5.2 (2025-11-12)
 
 Full Changelog: [v0.5.1...v0.5.2](https://github.com/arbitrationcity/arbi-python/compare/v0.5.1...v0.5.2)
