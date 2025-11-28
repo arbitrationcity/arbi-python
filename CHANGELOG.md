@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.3 (2025-11-28)
+
+Full Changelog: [v0.5.2...v0.5.3](https://github.com/arbitrationcity/arbi-python/compare/v0.5.2...v0.5.3)
+
+### Bug Fixes
+
+* ensure streams are always closed ([7d744df](https://github.com/arbitrationcity/arbi-python/commit/7d744dfa6037f694c612f1e9a48f2f06f0602c95))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([cc66f00](https://github.com/arbitrationcity/arbi-python/commit/cc66f00d15b0b55ac6bd17dec1fc70b9e1c0c390))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([2577f6f](https://github.com/arbitrationcity/arbi-python/commit/2577f6fa9651f2bae3e5d3872e8ab0a8ae650d94))
+
 ## 0.5.2 (2025-11-12)
 
 Full Changelog: [v0.5.1...v0.5.2](https://github.com/arbitrationcity/arbi-python/compare/v0.5.1...v0.5.2)
