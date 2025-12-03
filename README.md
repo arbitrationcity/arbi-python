@@ -77,6 +77,7 @@ pip install arbi[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from arbi import DefaultAioHttpClient
 from arbi import AsyncArbi
@@ -84,7 +85,7 @@ from arbi import AsyncArbi
 
 async def main() -> None:
     async with AsyncArbi(
-        api_key="My API Key",
+        api_key=os.environ.get("ARBI_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.api.index()
