@@ -11,9 +11,8 @@ from arbi import Arbi, AsyncArbi
 from arbi._utils import parse_date
 from tests.utils import assert_matches_type
 from arbi.types.api import (
-    DocResponse,
-    DocumentDeleteResponse,
     DocumentUpdateResponse,
+    DocumentRetrieveResponse,
     DocumentGetParsedResponse,
 )
 
@@ -25,9 +24,52 @@ class TestDocument:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_retrieve(self, client: Arbi) -> None:
+        document = client.api.document.retrieve(
+            external_ids=["string"],
+        )
+        assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params(self, client: Arbi) -> None:
+        document = client.api.document.retrieve(
+            external_ids=["string"],
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve(self, client: Arbi) -> None:
+        response = client.api.document.with_raw_response.retrieve(
+            external_ids=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve(self, client: Arbi) -> None:
+        with client.api.document.with_streaming_response.retrieve(
+            external_ids=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_method_update(self, client: Arbi) -> None:
         document = client.api.document.update(
-            document_ext_id="doc",
+            documents=[{"external_id": "doc-bFXA5r3A"}],
         )
         assert_matches_type(DocumentUpdateResponse, document, path=["response"])
 
@@ -35,10 +77,14 @@ class TestDocument:
     @parametrize
     def test_method_update_with_all_params(self, client: Arbi) -> None:
         document = client.api.document.update(
-            document_ext_id="doc",
-            doc_date=parse_date("2019-12-27"),
-            shared=True,
-            title="title",
+            documents=[
+                {
+                    "external_id": "doc-bFXA5r3A",
+                    "doc_date": parse_date("2019-12-27"),
+                    "shared": True,
+                    "title": "title",
+                }
+            ],
             workspace_key="workspace-key",
         )
         assert_matches_type(DocumentUpdateResponse, document, path=["response"])
@@ -47,7 +93,7 @@ class TestDocument:
     @parametrize
     def test_raw_response_update(self, client: Arbi) -> None:
         response = client.api.document.with_raw_response.update(
-            document_ext_id="doc",
+            documents=[{"external_id": "doc-bFXA5r3A"}],
         )
 
         assert response.is_closed is True
@@ -59,7 +105,7 @@ class TestDocument:
     @parametrize
     def test_streaming_response_update(self, client: Arbi) -> None:
         with client.api.document.with_streaming_response.update(
-            document_ext_id="doc",
+            documents=[{"external_id": "doc-bFXA5r3A"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -71,53 +117,37 @@ class TestDocument:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_update(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
-            client.api.document.with_raw_response.update(
-                document_ext_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     def test_method_delete(self, client: Arbi) -> None:
         document = client.api.document.delete(
-            "doc",
+            external_ids=["string"],
         )
-        assert_matches_type(DocumentDeleteResponse, document, path=["response"])
+        assert document is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Arbi) -> None:
         response = client.api.document.with_raw_response.delete(
-            "doc",
+            external_ids=["string"],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document = response.parse()
-        assert_matches_type(DocumentDeleteResponse, document, path=["response"])
+        assert document is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Arbi) -> None:
         with client.api.document.with_streaming_response.delete(
-            "doc",
+            external_ids=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document = response.parse()
-            assert_matches_type(DocumentDeleteResponse, document, path=["response"])
+            assert document is None
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_delete(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
-            client.api.document.with_raw_response.delete(
-                "",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -167,57 +197,6 @@ class TestDocument:
     def test_path_params_download(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
             client.api.document.with_raw_response.download(
-                document_ext_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get(self, client: Arbi) -> None:
-        document = client.api.document.get(
-            document_ext_id="doc",
-        )
-        assert_matches_type(DocResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_get_with_all_params(self, client: Arbi) -> None:
-        document = client.api.document.get(
-            document_ext_id="doc",
-            workspace_key="workspace-key",
-        )
-        assert_matches_type(DocResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_get(self, client: Arbi) -> None:
-        response = client.api.document.with_raw_response.get(
-            document_ext_id="doc",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = response.parse()
-        assert_matches_type(DocResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_get(self, client: Arbi) -> None:
-        with client.api.document.with_streaming_response.get(
-            document_ext_id="doc",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = response.parse()
-            assert_matches_type(DocResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_get(self, client: Arbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
-            client.api.document.with_raw_response.get(
                 document_ext_id="",
             )
 
@@ -388,7 +367,6 @@ class TestDocument:
     def test_method_view_with_all_params(self, client: Arbi) -> None:
         document = client.api.document.view(
             document_ext_id="doc",
-            page=0,
             workspace_key="workspace-key",
         )
         assert_matches_type(object, document, path=["response"])
@@ -435,9 +413,52 @@ class TestAsyncDocument:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    async def test_method_retrieve(self, async_client: AsyncArbi) -> None:
+        document = await async_client.api.document.retrieve(
+            external_ids=["string"],
+        )
+        assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncArbi) -> None:
+        document = await async_client.api.document.retrieve(
+            external_ids=["string"],
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.document.with_raw_response.retrieve(
+            external_ids=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.document.with_streaming_response.retrieve(
+            external_ids=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentRetrieveResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     async def test_method_update(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.update(
-            document_ext_id="doc",
+            documents=[{"external_id": "doc-bFXA5r3A"}],
         )
         assert_matches_type(DocumentUpdateResponse, document, path=["response"])
 
@@ -445,10 +466,14 @@ class TestAsyncDocument:
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.update(
-            document_ext_id="doc",
-            doc_date=parse_date("2019-12-27"),
-            shared=True,
-            title="title",
+            documents=[
+                {
+                    "external_id": "doc-bFXA5r3A",
+                    "doc_date": parse_date("2019-12-27"),
+                    "shared": True,
+                    "title": "title",
+                }
+            ],
             workspace_key="workspace-key",
         )
         assert_matches_type(DocumentUpdateResponse, document, path=["response"])
@@ -457,7 +482,7 @@ class TestAsyncDocument:
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.document.with_raw_response.update(
-            document_ext_id="doc",
+            documents=[{"external_id": "doc-bFXA5r3A"}],
         )
 
         assert response.is_closed is True
@@ -469,7 +494,7 @@ class TestAsyncDocument:
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncArbi) -> None:
         async with async_client.api.document.with_streaming_response.update(
-            document_ext_id="doc",
+            documents=[{"external_id": "doc-bFXA5r3A"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -481,53 +506,37 @@ class TestAsyncDocument:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_update(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
-            await async_client.api.document.with_raw_response.update(
-                document_ext_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
     async def test_method_delete(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.delete(
-            "doc",
+            external_ids=["string"],
         )
-        assert_matches_type(DocumentDeleteResponse, document, path=["response"])
+        assert document is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.document.with_raw_response.delete(
-            "doc",
+            external_ids=["string"],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         document = await response.parse()
-        assert_matches_type(DocumentDeleteResponse, document, path=["response"])
+        assert document is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncArbi) -> None:
         async with async_client.api.document.with_streaming_response.delete(
-            "doc",
+            external_ids=["string"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             document = await response.parse()
-            assert_matches_type(DocumentDeleteResponse, document, path=["response"])
+            assert document is None
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_delete(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
-            await async_client.api.document.with_raw_response.delete(
-                "",
-            )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -577,57 +586,6 @@ class TestAsyncDocument:
     async def test_path_params_download(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
             await async_client.api.document.with_raw_response.download(
-                document_ext_id="",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get(self, async_client: AsyncArbi) -> None:
-        document = await async_client.api.document.get(
-            document_ext_id="doc",
-        )
-        assert_matches_type(DocResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_get_with_all_params(self, async_client: AsyncArbi) -> None:
-        document = await async_client.api.document.get(
-            document_ext_id="doc",
-            workspace_key="workspace-key",
-        )
-        assert_matches_type(DocResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_get(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.document.with_raw_response.get(
-            document_ext_id="doc",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        document = await response.parse()
-        assert_matches_type(DocResponse, document, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_get(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.document.with_streaming_response.get(
-            document_ext_id="doc",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            document = await response.parse()
-            assert_matches_type(DocResponse, document, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_get(self, async_client: AsyncArbi) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `document_ext_id` but received ''"):
-            await async_client.api.document.with_raw_response.get(
                 document_ext_id="",
             )
 
@@ -798,7 +756,6 @@ class TestAsyncDocument:
     async def test_method_view_with_all_params(self, async_client: AsyncArbi) -> None:
         document = await async_client.api.document.view(
             document_ext_id="doc",
-            page=0,
             workspace_key="workspace-key",
         )
         assert_matches_type(object, document, path=["response"])

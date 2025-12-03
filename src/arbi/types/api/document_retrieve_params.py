@@ -2,19 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import Required, Annotated, TypedDict
 
-from ...._utils import PropertyInfo
+from ..._types import SequenceNotStr
+from ..._utils import PropertyInfo
 
-__all__ = ["DoctagUpdateParams"]
+__all__ = ["DocumentRetrieveParams"]
 
 
-class DoctagUpdateParams(TypedDict, total=False):
-    doc_ext_id: Required[str]
-
-    tag_ext_id: Required[str]
-
-    note: Optional[str]
+class DocumentRetrieveParams(TypedDict, total=False):
+    external_ids: Required[SequenceNotStr[str]]
 
     workspace_key: Annotated[str, PropertyInfo(alias="workspace-key")]
