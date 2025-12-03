@@ -20,7 +20,6 @@ from .tag_update_response import TagUpdateResponse as TagUpdateResponse
 from .user_login_response import UserLoginResponse as UserLoginResponse
 from .chunker_config_param import ChunkerConfigParam as ChunkerConfigParam
 from .config_create_params import ConfigCreateParams as ConfigCreateParams
-from .document_view_params import DocumentViewParams as DocumentViewParams
 from .user_invite_response import UserInviteResponse as UserInviteResponse
 from .user_logout_response import UserLogoutResponse as UserLogoutResponse
 from .user_register_params import UserRegisterParams as UserRegisterParams
@@ -31,6 +30,7 @@ from .workspace_copy_params import WorkspaceCopyParams as WorkspaceCopyParams
 from .assistant_query_params import AssistantQueryParams as AssistantQueryParams
 from .config_create_response import ConfigCreateResponse as ConfigCreateResponse
 from .config_delete_response import ConfigDeleteResponse as ConfigDeleteResponse
+from .document_delete_params import DocumentDeleteParams as DocumentDeleteParams
 from .document_update_params import DocumentUpdateParams as DocumentUpdateParams
 from .document_upload_params import DocumentUploadParams as DocumentUploadParams
 from .query_llm_config_param import QueryLlmConfigParam as QueryLlmConfigParam
@@ -40,13 +40,14 @@ from .workspace_share_params import WorkspaceShareParams as WorkspaceShareParams
 from .workspace_copy_response import WorkspaceCopyResponse as WorkspaceCopyResponse
 from .workspace_update_params import WorkspaceUpdateParams as WorkspaceUpdateParams
 from .config_retrieve_response import ConfigRetrieveResponse as ConfigRetrieveResponse
-from .document_delete_response import DocumentDeleteResponse as DocumentDeleteResponse
+from .document_retrieve_params import DocumentRetrieveParams as DocumentRetrieveParams
 from .document_update_response import DocumentUpdateResponse as DocumentUpdateResponse
 from .user_verify_email_params import UserVerifyEmailParams as UserVerifyEmailParams
 from .workspace_share_response import WorkspaceShareResponse as WorkspaceShareResponse
 from .assistant_retrieve_params import AssistantRetrieveParams as AssistantRetrieveParams
 from .health_check_app_response import HealthCheckAppResponse as HealthCheckAppResponse
 from .workspace_delete_response import WorkspaceDeleteResponse as WorkspaceDeleteResponse
+from .document_retrieve_response import DocumentRetrieveResponse as DocumentRetrieveResponse
 from .health_get_models_response import HealthGetModelsResponse as HealthGetModelsResponse
 from .user_verify_email_response import UserVerifyEmailResponse as UserVerifyEmailResponse
 from .conversation_share_response import ConversationShareResponse as ConversationShareResponse

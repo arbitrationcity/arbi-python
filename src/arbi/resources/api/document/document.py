@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Mapping, Optional, cast
-from datetime import date
+from typing import Mapping, Iterable, Optional, cast
 from typing_extensions import Literal
 
 import httpx
@@ -21,6 +20,7 @@ from ...._types import (
     Omit,
     Query,
     Headers,
+    NoneType,
     NotGiven,
     FileTypes,
     SequenceNotStr,
@@ -43,15 +43,15 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ....types.api import (
-    document_view_params,
+    document_delete_params,
     document_update_params,
     document_upload_params,
+    document_retrieve_params,
     document_upload_from_url_params,
 )
 from ...._base_client import make_request_options
-from ....types.api.doc_response import DocResponse
-from ....types.api.document_delete_response import DocumentDeleteResponse
 from ....types.api.document_update_response import DocumentUpdateResponse
+from ....types.api.document_retrieve_response import DocumentRetrieveResponse
 from ....types.api.document_get_parsed_response import DocumentGetParsedResponse
 
 __all__ = ["DocumentResource", "AsyncDocumentResource"]
@@ -81,13 +81,47 @@ class DocumentResource(SyncAPIResource):
         """
         return DocumentResourceWithStreamingResponse(self)
 
+    def retrieve(
+        self,
+        *,
+        external_ids: SequenceNotStr[str],
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrieveResponse:
+        """
+        Get one or more documents by external IDs.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return self._get(
+            "/api/document/",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"external_ids": external_ids}, document_retrieve_params.DocumentRetrieveParams),
+            ),
+            cast_to=DocumentRetrieveResponse,
+        )
+
     def update(
         self,
-        document_ext_id: str,
         *,
-        doc_date: Union[str, date, None] | Omit = omit,
-        shared: Optional[bool] | Omit = omit,
-        title: Optional[str] | Omit = omit,
+        documents: Iterable[document_update_params.Document],
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -96,10 +130,8 @@ class DocumentResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentUpdateResponse:
-        """Update document metadata such as title, date, or sharing status.
-
-        Changes are
-        encrypted before storage in the database.
+        """
+        Update one or more documents.
 
         Args:
           extra_headers: Send extra headers
@@ -110,19 +142,10 @@ class DocumentResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
-            f"/api/document/{document_ext_id}",
-            body=maybe_transform(
-                {
-                    "doc_date": doc_date,
-                    "shared": shared,
-                    "title": title,
-                },
-                document_update_params.DocumentUpdateParams,
-            ),
+            "/api/document/",
+            body=maybe_transform({"documents": documents}, document_update_params.DocumentUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -131,19 +154,17 @@ class DocumentResource(SyncAPIResource):
 
     def delete(
         self,
-        document_ext_id: str,
         *,
+        external_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentDeleteResponse:
-        """Delete a document by its external ID.
-
-        Removes the document from both database
-        and vector store.
+    ) -> None:
+        """
+        Delete one or more documents.
 
         Args:
           extra_headers: Send extra headers
@@ -154,14 +175,14 @@ class DocumentResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/document/{document_ext_id}",
+            "/api/document/",
+            body=maybe_transform({"external_ids": external_ids}, document_delete_params.DocumentDeleteParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentDeleteResponse,
+            cast_to=NoneType,
         )
 
     def download(
@@ -199,43 +220,6 @@ class DocumentResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
-        )
-
-    def get(
-        self,
-        document_ext_id: str,
-        *,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocResponse:
-        """Retrieve document metadata by its external ID.
-
-        Returns decrypted document
-        information with proper access controls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return self._get(
-            f"/api/document/{document_ext_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocResponse,
         )
 
     def get_parsed(
@@ -404,7 +388,6 @@ class DocumentResource(SyncAPIResource):
         self,
         document_ext_id: str,
         *,
-        page: Optional[int] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -419,8 +402,6 @@ class DocumentResource(SyncAPIResource):
         inline viewing with optional page specification.
 
         Args:
-          page: Optional page to open on load
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -435,11 +416,7 @@ class DocumentResource(SyncAPIResource):
         return self._get(
             f"/api/document/{document_ext_id}/view",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"page": page}, document_view_params.DocumentViewParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
         )
@@ -469,13 +446,49 @@ class AsyncDocumentResource(AsyncAPIResource):
         """
         return AsyncDocumentResourceWithStreamingResponse(self)
 
+    async def retrieve(
+        self,
+        *,
+        external_ids: SequenceNotStr[str],
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrieveResponse:
+        """
+        Get one or more documents by external IDs.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return await self._get(
+            "/api/document/",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"external_ids": external_ids}, document_retrieve_params.DocumentRetrieveParams
+                ),
+            ),
+            cast_to=DocumentRetrieveResponse,
+        )
+
     async def update(
         self,
-        document_ext_id: str,
         *,
-        doc_date: Union[str, date, None] | Omit = omit,
-        shared: Optional[bool] | Omit = omit,
-        title: Optional[str] | Omit = omit,
+        documents: Iterable[document_update_params.Document],
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -484,10 +497,8 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocumentUpdateResponse:
-        """Update document metadata such as title, date, or sharing status.
-
-        Changes are
-        encrypted before storage in the database.
+        """
+        Update one or more documents.
 
         Args:
           extra_headers: Send extra headers
@@ -498,19 +509,10 @@ class AsyncDocumentResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
-            f"/api/document/{document_ext_id}",
-            body=await async_maybe_transform(
-                {
-                    "doc_date": doc_date,
-                    "shared": shared,
-                    "title": title,
-                },
-                document_update_params.DocumentUpdateParams,
-            ),
+            "/api/document/",
+            body=await async_maybe_transform({"documents": documents}, document_update_params.DocumentUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -519,19 +521,17 @@ class AsyncDocumentResource(AsyncAPIResource):
 
     async def delete(
         self,
-        document_ext_id: str,
         *,
+        external_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocumentDeleteResponse:
-        """Delete a document by its external ID.
-
-        Removes the document from both database
-        and vector store.
+    ) -> None:
+        """
+        Delete one or more documents.
 
         Args:
           extra_headers: Send extra headers
@@ -542,14 +542,16 @@ class AsyncDocumentResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/document/{document_ext_id}",
+            "/api/document/",
+            body=await async_maybe_transform(
+                {"external_ids": external_ids}, document_delete_params.DocumentDeleteParams
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DocumentDeleteResponse,
+            cast_to=NoneType,
         )
 
     async def download(
@@ -587,43 +589,6 @@ class AsyncDocumentResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
-        )
-
-    async def get(
-        self,
-        document_ext_id: str,
-        *,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocResponse:
-        """Retrieve document metadata by its external ID.
-
-        Returns decrypted document
-        information with proper access controls.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return await self._get(
-            f"/api/document/{document_ext_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocResponse,
         )
 
     async def get_parsed(
@@ -792,7 +757,6 @@ class AsyncDocumentResource(AsyncAPIResource):
         self,
         document_ext_id: str,
         *,
-        page: Optional[int] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -807,8 +771,6 @@ class AsyncDocumentResource(AsyncAPIResource):
         inline viewing with optional page specification.
 
         Args:
-          page: Optional page to open on load
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -823,11 +785,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         return await self._get(
             f"/api/document/{document_ext_id}/view",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"page": page}, document_view_params.DocumentViewParams),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
         )
@@ -837,6 +795,9 @@ class DocumentResourceWithRawResponse:
     def __init__(self, document: DocumentResource) -> None:
         self._document = document
 
+        self.retrieve = to_raw_response_wrapper(
+            document.retrieve,
+        )
         self.update = to_raw_response_wrapper(
             document.update,
         )
@@ -845,9 +806,6 @@ class DocumentResourceWithRawResponse:
         )
         self.download = to_raw_response_wrapper(
             document.download,
-        )
-        self.get = to_raw_response_wrapper(
-            document.get,
         )
         self.get_parsed = to_raw_response_wrapper(
             document.get_parsed,
@@ -871,6 +829,9 @@ class AsyncDocumentResourceWithRawResponse:
     def __init__(self, document: AsyncDocumentResource) -> None:
         self._document = document
 
+        self.retrieve = async_to_raw_response_wrapper(
+            document.retrieve,
+        )
         self.update = async_to_raw_response_wrapper(
             document.update,
         )
@@ -879,9 +840,6 @@ class AsyncDocumentResourceWithRawResponse:
         )
         self.download = async_to_raw_response_wrapper(
             document.download,
-        )
-        self.get = async_to_raw_response_wrapper(
-            document.get,
         )
         self.get_parsed = async_to_raw_response_wrapper(
             document.get_parsed,
@@ -905,6 +863,9 @@ class DocumentResourceWithStreamingResponse:
     def __init__(self, document: DocumentResource) -> None:
         self._document = document
 
+        self.retrieve = to_streamed_response_wrapper(
+            document.retrieve,
+        )
         self.update = to_streamed_response_wrapper(
             document.update,
         )
@@ -913,9 +874,6 @@ class DocumentResourceWithStreamingResponse:
         )
         self.download = to_streamed_response_wrapper(
             document.download,
-        )
-        self.get = to_streamed_response_wrapper(
-            document.get,
         )
         self.get_parsed = to_streamed_response_wrapper(
             document.get_parsed,
@@ -939,6 +897,9 @@ class AsyncDocumentResourceWithStreamingResponse:
     def __init__(self, document: AsyncDocumentResource) -> None:
         self._document = document
 
+        self.retrieve = async_to_streamed_response_wrapper(
+            document.retrieve,
+        )
         self.update = async_to_streamed_response_wrapper(
             document.update,
         )
@@ -947,9 +908,6 @@ class AsyncDocumentResourceWithStreamingResponse:
         )
         self.download = async_to_streamed_response_wrapper(
             document.download,
-        )
-        self.get = async_to_streamed_response_wrapper(
-            document.get,
         )
         self.get_parsed = async_to_streamed_response_wrapper(
             document.get_parsed,

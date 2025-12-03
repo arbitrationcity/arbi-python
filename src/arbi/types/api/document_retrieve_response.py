@@ -5,6 +5,6 @@ from typing_extensions import TypeAlias
 
 from .doc_response import DocResponse
 
-__all__ = ["DocumentUpdateResponse"]
+__all__ = ["DocumentRetrieveResponse"]
 
-DocumentUpdateResponse: TypeAlias = List[DocResponse]
+DocumentRetrieveResponse: TypeAlias = List[DocResponse]

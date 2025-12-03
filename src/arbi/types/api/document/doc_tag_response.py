@@ -15,8 +15,6 @@ class DocTagResponse(BaseModel):
 
     doc_ext_id: str
 
-    doctag_ext_id: str
-
     tag_ext_id: str
 
     updated_at: datetime

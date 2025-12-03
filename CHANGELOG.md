@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0 (2025-12-03)
+
+Full Changelog: [v0.5.3...v0.6.0](https://github.com/arbitrationcity/arbi-python/compare/v0.5.3...v0.6.0)
+
+### Features
+
+* add batch PATCH and DELETE endpoints for documents ([062e667](https://github.com/arbitrationcity/arbi-python/commit/062e667087bc1c2ba17fa55a91e2970523dd861d))
+
+
+### Chores
+
+* **docs:** use environment variables for authentication in code snippets ([a573dfa](https://github.com/arbitrationcity/arbi-python/commit/a573dfa06bfde880f6c6624658b207d9911df0ce))
+* update lockfile ([7f3aedc](https://github.com/arbitrationcity/arbi-python/commit/7f3aedc55ec9ad454eb6bf44d8fb7468a5591c70))
+
 ## 0.5.3 (2025-11-28)
 
 Full Changelog: [v0.5.2...v0.5.3](https://github.com/arbitrationcity/arbi-python/compare/v0.5.2...v0.5.3)
