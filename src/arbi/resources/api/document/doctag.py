@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -17,9 +17,9 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.api.document import doctag_create_params, doctag_update_params
+from ....types.api.document import doctag_create_params, doctag_delete_params, doctag_update_params
 from ....types.api.document.doc_tag_response import DocTagResponse
-from ....types.api.document.doctag_delete_response import DoctagDeleteResponse
+from ....types.api.document.doctag_create_response import DoctagCreateResponse
 
 __all__ = ["DoctagResource", "AsyncDoctagResource"]
 
@@ -46,8 +46,51 @@ class DoctagResource(SyncAPIResource):
 
     def create(
         self,
-        document_ext_id: str,
         *,
+        doc_ext_ids: SequenceNotStr[str],
+        tag_ext_id: str,
+        note: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DoctagCreateResponse:
+        """
+        Apply a tag to one or more documents.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return self._post(
+            "/api/document/doctag",
+            body=maybe_transform(
+                {
+                    "doc_ext_ids": doc_ext_ids,
+                    "tag_ext_id": tag_ext_id,
+                    "note": note,
+                },
+                doctag_create_params.DoctagCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DoctagCreateResponse,
+        )
+
+    def update(
+        self,
+        *,
+        doc_ext_id: str,
         tag_ext_id: str,
         note: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
@@ -59,14 +102,7 @@ class DoctagResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
         """
-        Create a doctag by applying a tag to this document.
-
-        Unique constraint ensures each tag can only be applied to a document once
-        (idempotent). Note field semantics by tag type:
-
-        - date: note contains the date value (yyyy-mm-dd)
-        - annotation: note contains the comment text
-        - checkbox/list: note is optional contextual metadata
+        Update a doctag's note.
 
         Args:
           extra_headers: Send extra headers
@@ -77,59 +113,17 @@ class DoctagResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return self._post(
-            f"/api/document/{document_ext_id}/doctag",
+        return self._patch(
+            "/api/document/doctag",
             body=maybe_transform(
                 {
+                    "doc_ext_id": doc_ext_id,
                     "tag_ext_id": tag_ext_id,
                     "note": note,
                 },
-                doctag_create_params.DoctagCreateParams,
+                doctag_update_params.DoctagUpdateParams,
             ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocTagResponse,
-        )
-
-    def update(
-        self,
-        doctag_ext_id: str,
-        *,
-        document_ext_id: str,
-        note: Optional[str] | Omit = omit,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocTagResponse:
-        """Update a doctag's note.
-
-        Can be used to update note for any tag type.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        if not doctag_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return self._patch(
-            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
-            body=maybe_transform({"note": note}, doctag_update_params.DoctagUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -138,18 +132,18 @@ class DoctagResource(SyncAPIResource):
 
     def delete(
         self,
-        doctag_ext_id: str,
         *,
-        document_ext_id: str,
+        doc_ext_ids: SequenceNotStr[str],
+        tag_ext_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DoctagDeleteResponse:
+    ) -> None:
         """
-        Delete a doctag by its ID.
+        Remove a tag from one or more documents.
 
         Args:
           extra_headers: Send extra headers
@@ -160,16 +154,20 @@ class DoctagResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        if not doctag_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
+            "/api/document/doctag",
+            body=maybe_transform(
+                {
+                    "doc_ext_ids": doc_ext_ids,
+                    "tag_ext_id": tag_ext_id,
+                },
+                doctag_delete_params.DoctagDeleteParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DoctagDeleteResponse,
+            cast_to=NoneType,
         )
 
 
@@ -195,8 +193,51 @@ class AsyncDoctagResource(AsyncAPIResource):
 
     async def create(
         self,
-        document_ext_id: str,
         *,
+        doc_ext_ids: SequenceNotStr[str],
+        tag_ext_id: str,
+        note: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DoctagCreateResponse:
+        """
+        Apply a tag to one or more documents.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return await self._post(
+            "/api/document/doctag",
+            body=await async_maybe_transform(
+                {
+                    "doc_ext_ids": doc_ext_ids,
+                    "tag_ext_id": tag_ext_id,
+                    "note": note,
+                },
+                doctag_create_params.DoctagCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DoctagCreateResponse,
+        )
+
+    async def update(
+        self,
+        *,
+        doc_ext_id: str,
         tag_ext_id: str,
         note: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
@@ -208,14 +249,7 @@ class AsyncDoctagResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
         """
-        Create a doctag by applying a tag to this document.
-
-        Unique constraint ensures each tag can only be applied to a document once
-        (idempotent). Note field semantics by tag type:
-
-        - date: note contains the date value (yyyy-mm-dd)
-        - annotation: note contains the comment text
-        - checkbox/list: note is optional contextual metadata
+        Update a doctag's note.
 
         Args:
           extra_headers: Send extra headers
@@ -226,59 +260,17 @@ class AsyncDoctagResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
         extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return await self._post(
-            f"/api/document/{document_ext_id}/doctag",
+        return await self._patch(
+            "/api/document/doctag",
             body=await async_maybe_transform(
                 {
+                    "doc_ext_id": doc_ext_id,
                     "tag_ext_id": tag_ext_id,
                     "note": note,
                 },
-                doctag_create_params.DoctagCreateParams,
+                doctag_update_params.DoctagUpdateParams,
             ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=DocTagResponse,
-        )
-
-    async def update(
-        self,
-        doctag_ext_id: str,
-        *,
-        document_ext_id: str,
-        note: Optional[str] | Omit = omit,
-        workspace_key: str | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DocTagResponse:
-        """Update a doctag's note.
-
-        Can be used to update note for any tag type.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        if not doctag_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return await self._patch(
-            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
-            body=await async_maybe_transform({"note": note}, doctag_update_params.DoctagUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -287,18 +279,18 @@ class AsyncDoctagResource(AsyncAPIResource):
 
     async def delete(
         self,
-        doctag_ext_id: str,
         *,
-        document_ext_id: str,
+        doc_ext_ids: SequenceNotStr[str],
+        tag_ext_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DoctagDeleteResponse:
+    ) -> None:
         """
-        Delete a doctag by its ID.
+        Remove a tag from one or more documents.
 
         Args:
           extra_headers: Send extra headers
@@ -309,16 +301,20 @@ class AsyncDoctagResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not document_ext_id:
-            raise ValueError(f"Expected a non-empty value for `document_ext_id` but received {document_ext_id!r}")
-        if not doctag_ext_id:
-            raise ValueError(f"Expected a non-empty value for `doctag_ext_id` but received {doctag_ext_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/document/{document_ext_id}/doctag/{doctag_ext_id}",
+            "/api/document/doctag",
+            body=await async_maybe_transform(
+                {
+                    "doc_ext_ids": doc_ext_ids,
+                    "tag_ext_id": tag_ext_id,
+                },
+                doctag_delete_params.DoctagDeleteParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DoctagDeleteResponse,
+            cast_to=NoneType,
         )
 
 

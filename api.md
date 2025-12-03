@@ -105,22 +105,22 @@ Types:
 ```python
 from arbi.types.api import (
     DocResponse,
+    DocumentRetrieveResponse,
     DocumentUpdateResponse,
-    DocumentDeleteResponse,
     DocumentGetParsedResponse,
 )
 ```
 
 Methods:
 
-- <code title="patch /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">update</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document_update_response.py">DocumentUpdateResponse</a></code>
-- <code title="delete /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">delete</a>(document_ext_id) -> <a href="./src/arbi/types/api/document_delete_response.py">DocumentDeleteResponse</a></code>
+- <code title="get /api/document/">client.api.document.<a href="./src/arbi/resources/api/document/document.py">retrieve</a>(\*\*<a href="src/arbi/types/api/document_retrieve_params.py">params</a>) -> <a href="./src/arbi/types/api/document_retrieve_response.py">DocumentRetrieveResponse</a></code>
+- <code title="patch /api/document/">client.api.document.<a href="./src/arbi/resources/api/document/document.py">update</a>(\*\*<a href="src/arbi/types/api/document_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document_update_response.py">DocumentUpdateResponse</a></code>
+- <code title="delete /api/document/">client.api.document.<a href="./src/arbi/resources/api/document/document.py">delete</a>(\*\*<a href="src/arbi/types/api/document_delete_params.py">params</a>) -> None</code>
 - <code title="get /api/document/{document_ext_id}/download">client.api.document.<a href="./src/arbi/resources/api/document/document.py">download</a>(document_ext_id) -> object</code>
-- <code title="get /api/document/{document_ext_id}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get</a>(document_ext_id) -> <a href="./src/arbi/types/api/doc_response.py">DocResponse</a></code>
 - <code title="get /api/document/{document_ext_id}/parsed-{stage}">client.api.document.<a href="./src/arbi/resources/api/document/document.py">get_parsed</a>(stage, \*, document_ext_id) -> <a href="./src/arbi/types/api/document_get_parsed_response.py">DocumentGetParsedResponse</a></code>
 - <code title="post /api/document/upload">client.api.document.<a href="./src/arbi/resources/api/document/document.py">upload</a>(\*\*<a href="src/arbi/types/api/document_upload_params.py">params</a>) -> object</code>
 - <code title="post /api/document/upload-url">client.api.document.<a href="./src/arbi/resources/api/document/document.py">upload_from_url</a>(\*\*<a href="src/arbi/types/api/document_upload_from_url_params.py">params</a>) -> object</code>
-- <code title="get /api/document/{document_ext_id}/view">client.api.document.<a href="./src/arbi/resources/api/document/document.py">view</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document_view_params.py">params</a>) -> object</code>
+- <code title="get /api/document/{document_ext_id}/view">client.api.document.<a href="./src/arbi/resources/api/document/document.py">view</a>(document_ext_id) -> object</code>
 
 ### Annotation
 
@@ -135,14 +135,14 @@ from arbi.types.api.document import DocTagResponse
 Types:
 
 ```python
-from arbi.types.api.document import DoctagDeleteResponse
+from arbi.types.api.document import DoctagCreateResponse
 ```
 
 Methods:
 
-- <code title="post /api/document/{document_ext_id}/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">create</a>(document_ext_id, \*\*<a href="src/arbi/types/api/document/doctag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
-- <code title="patch /api/document/{document_ext_id}/doctag/{doctag_ext_id}">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">update</a>(doctag_ext_id, \*, document_ext_id, \*\*<a href="src/arbi/types/api/document/doctag_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
-- <code title="delete /api/document/{document_ext_id}/doctag/{doctag_ext_id}">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">delete</a>(doctag_ext_id, \*, document_ext_id) -> <a href="./src/arbi/types/api/document/doctag_delete_response.py">DoctagDeleteResponse</a></code>
+- <code title="post /api/document/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">create</a>(\*\*<a href="src/arbi/types/api/document/doctag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doctag_create_response.py">DoctagCreateResponse</a></code>
+- <code title="patch /api/document/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">update</a>(\*\*<a href="src/arbi/types/api/document/doctag_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
+- <code title="delete /api/document/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">delete</a>(\*\*<a href="src/arbi/types/api/document/doctag_delete_params.py">params</a>) -> None</code>
 
 ## Conversation
 
