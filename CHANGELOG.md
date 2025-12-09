@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 (2025-12-09)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/arbitrationcity/arbi-python/compare/v0.6.0...v0.6.1)
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([00d04bf](https://github.com/arbitrationcity/arbi-python/commit/00d04bfca8e78c642cabd3f26f306cc654e4ef3c))
+
 ## 0.6.0 (2025-12-03)
 
 Full Changelog: [v0.5.3...v0.6.0](https://github.com/arbitrationcity/arbi-python/compare/v0.5.3...v0.6.0)
