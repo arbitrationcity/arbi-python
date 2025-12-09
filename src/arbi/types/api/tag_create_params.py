@@ -33,6 +33,13 @@ class TagCreateParams(TypedDict, total=False):
 
 
 class TagType(TypedDict, total=False):
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+    - select: options (list of choices, can be single or multi-select)
+    - checkbox, text, number, folder: type only
+    """
+
     options: SequenceNotStr[str]
 
     type: Literal["checkbox", "text", "number", "select", "folder"]

@@ -134,6 +134,8 @@ class AllConfigs(BaseModel):
 
 
 class NonDeveloperConfig(BaseModel):
+    """Limited configuration response for non-developer users"""
+
     agent_llm: Dict[str, bool] = FieldInfo(alias="AgentLLM")
 
     query_llm: Dict[str, str] = FieldInfo(alias="QueryLLM")

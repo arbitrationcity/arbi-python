@@ -32,6 +32,10 @@ class Service(BaseModel):
 
 
 class HealthRetrieveStatusResponse(BaseModel):
+    """
+    Consolidated health response containing all system status and version information
+    """
+
     status: str
 
     available_models: Optional[List[str]] = None

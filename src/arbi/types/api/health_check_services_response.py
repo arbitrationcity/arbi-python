@@ -18,6 +18,8 @@ class Service(BaseModel):
 
 
 class HealthCheckServicesResponse(BaseModel):
+    """Health status of the application and its services"""
+
     services: List[Service]
 
     application: Optional[str] = None

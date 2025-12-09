@@ -18,6 +18,8 @@ class DocumentUpdateParams(TypedDict, total=False):
 
 
 class Document(TypedDict, total=False):
+    """Document update request - identifies doc and fields to update."""
+
     external_id: Required[str]
 
     doc_date: Annotated[Union[str, date, None], PropertyInfo(format="iso8601")]

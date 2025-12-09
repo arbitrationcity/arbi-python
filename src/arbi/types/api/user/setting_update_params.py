@@ -36,10 +36,19 @@ class SettingUpdateParams(TypedDict, total=False):
 
 
 class Subscription(TypedDict, total=False):
+    """Trial update - only trial_expires can be set, and only if currently null."""
+
     trial_expires: Optional[int]
 
 
 class Tableview(TypedDict, total=False):
+    """Saved column configuration for the document table.
+
+    Column ID formats:
+    - Standard columns: "doc_date", "title", "file_name", "status", "n_pages", "created_at"
+    - Tags: tag external ID (e.g., "tag-a1b2c3d4")
+    """
+
     columns: Required[SequenceNotStr[str]]
 
     name: Required[str]
