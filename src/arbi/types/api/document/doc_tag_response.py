@@ -9,6 +9,8 @@ __all__ = ["DocTagResponse"]
 
 
 class DocTagResponse(BaseModel):
+    """Response for doctag operations - the link between a document and a tag."""
+
     created_at: datetime
 
     created_by_ext_id: str

@@ -10,12 +10,26 @@ __all__ = ["SettingRetrieveResponse", "Subscription", "Tableview"]
 
 
 class Subscription(BaseModel):
+    """Subscription info exposed to frontend in user settings.
+
+    Note: stripe_customer_id is deliberately excluded for security.
+    This is a minimal model used in UserSettingsResponse.
+    For full subscription details, use GET /subscription endpoint.
+    """
+
     status: Optional[str] = None
 
     trial_expires: Optional[int] = None
 
 
 class Tableview(BaseModel):
+    """Saved column configuration for the document table.
+
+    Column ID formats:
+    - Standard columns: "doc_date", "title", "file_name", "status", "n_pages", "created_at"
+    - Tags: tag external ID (e.g., "tag-a1b2c3d4")
+    """
+
     columns: List[str]
 
     name: str
@@ -24,6 +38,8 @@ class Tableview(BaseModel):
 
 
 class SettingRetrieveResponse(BaseModel):
+    """User settings response."""
+
     ai_mode: Optional[str] = None
 
     developer: Optional[bool] = None

@@ -8,6 +8,8 @@ __all__ = ["ConfigCreateResponse"]
 
 
 class ConfigCreateResponse(BaseModel):
+    """Response model for configuration save endpoint"""
+
     created_at: str
 
     external_id: str

@@ -22,6 +22,8 @@ __all__ = [
 
 
 class ThreadHistoryToolsModelCitationToolToolResponses(BaseModel):
+    """Data for a single citation"""
+
     chunk_ids: List[str]
 
     offset_end: int
@@ -60,6 +62,8 @@ class ThreadHistoryToolsRetrievalFullContextToolOutput(BaseModel):
 
 
 class ThreadHistoryToolsTraceTool(BaseModel):
+    """Execution trace tool that captures the full execution history of a request."""
+
     description: Optional[str] = None
 
     duration_seconds: Optional[float] = None
@@ -85,6 +89,8 @@ ThreadHistoryTools: TypeAlias = Annotated[
 
 
 class ThreadHistory(BaseModel):
+    """DTO for API responses to frontend - all fields guaranteed to be present"""
+
     content: str
 
     conversation_ext_id: str

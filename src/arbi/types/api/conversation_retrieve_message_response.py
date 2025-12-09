@@ -20,6 +20,8 @@ __all__ = [
 
 
 class ToolsModelCitationToolToolResponses(BaseModel):
+    """Data for a single citation"""
+
     chunk_ids: List[str]
 
     offset_end: int
@@ -58,6 +60,8 @@ class ToolsRetrievalFullContextToolOutput(BaseModel):
 
 
 class ToolsTraceTool(BaseModel):
+    """Execution trace tool that captures the full execution history of a request."""
+
     description: Optional[str] = None
 
     duration_seconds: Optional[float] = None
@@ -78,6 +82,8 @@ Tools: TypeAlias = Annotated[
 
 
 class ConversationRetrieveMessageResponse(BaseModel):
+    """DTO for API responses to frontend - all fields guaranteed to be present"""
+
     content: str
 
     conversation_ext_id: str

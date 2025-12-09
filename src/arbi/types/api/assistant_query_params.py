@@ -35,6 +35,8 @@ class AssistantQueryParams(TypedDict, total=False):
 
 
 class ToolsModelCitationToolToolResponses(TypedDict, total=False):
+    """Data for a single citation"""
+
     chunk_ids: Required[SequenceNotStr[str]]
 
     offset_end: Required[int]
@@ -73,6 +75,8 @@ class ToolsRetrievalFullContextToolInput(TypedDict, total=False):
 
 
 class ToolsTraceTool(TypedDict, total=False):
+    """Execution trace tool that captures the full execution history of a request."""
+
     description: str
 
     duration_seconds: Optional[float]

@@ -9,6 +9,8 @@ __all__ = ["UserListProductsResponse", "UserListProductsResponseItem", "UserList
 
 
 class UserListProductsResponseItemPrice(BaseModel):
+    """Stripe product price information."""
+
     amount: int
 
     currency: str
@@ -21,6 +23,8 @@ class UserListProductsResponseItemPrice(BaseModel):
 
 
 class UserListProductsResponseItem(BaseModel):
+    """Stripe product with pricing information."""
+
     name: str
 
     prices: List[UserListProductsResponseItemPrice]
