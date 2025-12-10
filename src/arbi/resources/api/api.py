@@ -61,6 +61,14 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from .notifications import (
+    NotificationsResource,
+    AsyncNotificationsResource,
+    NotificationsResourceWithRawResponse,
+    AsyncNotificationsResourceWithRawResponse,
+    NotificationsResourceWithStreamingResponse,
+    AsyncNotificationsResourceWithStreamingResponse,
+)
 from ..._base_client import make_request_options
 from .document.document import (
     DocumentResource,
@@ -114,6 +122,10 @@ class APIResource(_resource.SyncAPIResource):
     @cached_property
     def configs(self) -> ConfigsResource:
         return ConfigsResource(self._client)
+
+    @cached_property
+    def notifications(self) -> NotificationsResource:
+        return NotificationsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> APIResourceWithRawResponse:
@@ -186,6 +198,10 @@ class AsyncAPIResource(_resource.AsyncAPIResource):
     @cached_property
     def configs(self) -> AsyncConfigsResource:
         return AsyncConfigsResource(self._client)
+
+    @cached_property
+    def notifications(self) -> AsyncNotificationsResource:
+        return AsyncNotificationsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncAPIResourceWithRawResponse:
@@ -266,6 +282,10 @@ class APIResourceWithRawResponse:
     def configs(self) -> ConfigsResourceWithRawResponse:
         return ConfigsResourceWithRawResponse(self._api.configs)
 
+    @cached_property
+    def notifications(self) -> NotificationsResourceWithRawResponse:
+        return NotificationsResourceWithRawResponse(self._api.notifications)
+
 
 class AsyncAPIResourceWithRawResponse:
     def __init__(self, api: AsyncAPIResource) -> None:
@@ -306,6 +326,10 @@ class AsyncAPIResourceWithRawResponse:
     @cached_property
     def configs(self) -> AsyncConfigsResourceWithRawResponse:
         return AsyncConfigsResourceWithRawResponse(self._api.configs)
+
+    @cached_property
+    def notifications(self) -> AsyncNotificationsResourceWithRawResponse:
+        return AsyncNotificationsResourceWithRawResponse(self._api.notifications)
 
 
 class APIResourceWithStreamingResponse:
@@ -348,6 +372,10 @@ class APIResourceWithStreamingResponse:
     def configs(self) -> ConfigsResourceWithStreamingResponse:
         return ConfigsResourceWithStreamingResponse(self._api.configs)
 
+    @cached_property
+    def notifications(self) -> NotificationsResourceWithStreamingResponse:
+        return NotificationsResourceWithStreamingResponse(self._api.notifications)
+
 
 class AsyncAPIResourceWithStreamingResponse:
     def __init__(self, api: AsyncAPIResource) -> None:
@@ -388,3 +416,7 @@ class AsyncAPIResourceWithStreamingResponse:
     @cached_property
     def configs(self) -> AsyncConfigsResourceWithStreamingResponse:
         return AsyncConfigsResourceWithStreamingResponse(self._api.configs)
+
+    @cached_property
+    def notifications(self) -> AsyncNotificationsResourceWithStreamingResponse:
+        return AsyncNotificationsResourceWithStreamingResponse(self._api.notifications)

@@ -18,7 +18,6 @@ Types:
 from arbi.types.api import (
     UserChangePasswordResponse,
     UserCheckSSOStatusResponse,
-    UserInviteResponse,
     UserListProductsResponse,
     UserListWorkspacesResponse,
     UserLoginResponse,
@@ -31,7 +30,6 @@ Methods:
 
 - <code title="post /api/user/change_password">client.api.user.<a href="./src/arbi/resources/api/user/user.py">change_password</a>(\*\*<a href="src/arbi/types/api/user_change_password_params.py">params</a>) -> <a href="./src/arbi/types/api/user_change_password_response.py">UserChangePasswordResponse</a></code>
 - <code title="post /api/user/sso-status">client.api.user.<a href="./src/arbi/resources/api/user/user.py">check_sso_status</a>(\*\*<a href="src/arbi/types/api/user_check_sso_status_params.py">params</a>) -> <a href="./src/arbi/types/api/user_check_sso_status_response.py">UserCheckSSOStatusResponse</a></code>
-- <code title="post /api/user/invite">client.api.user.<a href="./src/arbi/resources/api/user/user.py">invite</a>(\*\*<a href="src/arbi/types/api/user_invite_params.py">params</a>) -> <a href="./src/arbi/types/api/user_invite_response.py">UserInviteResponse</a></code>
 - <code title="get /api/user/products">client.api.user.<a href="./src/arbi/resources/api/user/user.py">list_products</a>() -> <a href="./src/arbi/types/api/user_list_products_response.py">UserListProductsResponse</a></code>
 - <code title="get /api/user/workspaces">client.api.user.<a href="./src/arbi/resources/api/user/user.py">list_workspaces</a>() -> <a href="./src/arbi/types/api/user_list_workspaces_response.py">UserListWorkspacesResponse</a></code>
 - <code title="post /api/user/login">client.api.user.<a href="./src/arbi/resources/api/user/user.py">login</a>(\*\*<a href="src/arbi/types/api/user_login_params.py">params</a>) -> <a href="./src/arbi/types/api/user_login_response.py">UserLoginResponse</a></code>
@@ -64,6 +62,20 @@ Methods:
 
 - <code title="post /api/user/subscription">client.api.user.subscription.<a href="./src/arbi/resources/api/user/subscription.py">create</a>(\*\*<a href="src/arbi/types/api/user/subscription_create_params.py">params</a>) -> <a href="./src/arbi/types/api/user/subscription_create_response.py">SubscriptionCreateResponse</a></code>
 - <code title="get /api/user/subscription">client.api.user.subscription.<a href="./src/arbi/resources/api/user/subscription.py">retrieve</a>() -> <a href="./src/arbi/types/api/user/subscription_retrieve_response.py">SubscriptionRetrieveResponse</a></code>
+
+### Contacts
+
+Types:
+
+```python
+from arbi.types.api.user import ContactCreateResponse, ContactListResponse
+```
+
+Methods:
+
+- <code title="post /api/user/contacts">client.api.user.contacts.<a href="./src/arbi/resources/api/user/contacts.py">create</a>(\*\*<a href="src/arbi/types/api/user/contact_create_params.py">params</a>) -> <a href="./src/arbi/types/api/user/contact_create_response.py">ContactCreateResponse</a></code>
+- <code title="get /api/user/contacts">client.api.user.contacts.<a href="./src/arbi/resources/api/user/contacts.py">list</a>() -> <a href="./src/arbi/types/api/user/contact_list_response.py">ContactListResponse</a></code>
+- <code title="delete /api/user/contacts">client.api.user.contacts.<a href="./src/arbi/resources/api/user/contacts.py">delete</a>(\*\*<a href="src/arbi/types/api/user/contact_delete_params.py">params</a>) -> None</code>
 
 ## Workspace
 
@@ -261,3 +273,15 @@ Methods:
 - <code title="delete /api/configs/{config_ext_id}">client.api.configs.<a href="./src/arbi/resources/api/configs.py">delete</a>(config_ext_id) -> <a href="./src/arbi/types/api/config_delete_response.py">ConfigDeleteResponse</a></code>
 - <code title="get /api/configs/schema">client.api.configs.<a href="./src/arbi/resources/api/configs.py">get_schema</a>() -> object</code>
 - <code title="get /api/configs/versions">client.api.configs.<a href="./src/arbi/resources/api/configs.py">get_versions</a>() -> <a href="./src/arbi/types/api/config_get_versions_response.py">ConfigGetVersionsResponse</a></code>
+
+## Notifications
+
+Types:
+
+```python
+from arbi.types.api import NotificationGetSchemasResponse
+```
+
+Methods:
+
+- <code title="get /api/notifications/ws-schemas">client.api.notifications.<a href="./src/arbi/resources/api/notifications.py">get_schemas</a>() -> <a href="./src/arbi/types/api/notification_get_schemas_response.py">NotificationGetSchemasResponse</a></code>

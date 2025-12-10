@@ -10,6 +10,13 @@ __all__ = ["TagCreateResponse", "TagType"]
 
 
 class TagType(BaseModel):
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+    - select: options (list of choices, can be single or multi-select)
+    - checkbox, text, number, folder: type only
+    """
+
     options: Optional[List[str]] = None
 
     type: Optional[Literal["checkbox", "text", "number", "select", "folder"]] = None

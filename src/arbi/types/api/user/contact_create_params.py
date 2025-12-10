@@ -4,8 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["UserInviteParams"]
+from ...._types import SequenceNotStr
+
+__all__ = ["ContactCreateParams"]
 
 
-class UserInviteParams(TypedDict, total=False):
-    email: Required[str]
+class ContactCreateParams(TypedDict, total=False):
+    emails: Required[SequenceNotStr[str]]

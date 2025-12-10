@@ -8,6 +8,15 @@ __all__ = ["SubscriptionRetrieveResponse"]
 
 
 class SubscriptionRetrieveResponse(BaseModel):
+    """Subscription status response - unified model for all subscription states.
+
+    Status can be:
+    - "trialing": User is on trial (has trial_expires, days_remaining)
+    - "active": Active Stripe subscription (has plan, amount, currency, etc.)
+    - "canceled": Had subscription but canceled (has portal_url)
+    - "none": No subscription or trial
+    """
+
     status: str
 
     amount: Optional[int] = None

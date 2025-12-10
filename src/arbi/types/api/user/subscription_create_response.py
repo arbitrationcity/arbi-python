@@ -6,4 +6,6 @@ __all__ = ["SubscriptionCreateResponse"]
 
 
 class SubscriptionCreateResponse(BaseModel):
+    """Response containing Stripe checkout session client secret."""
+
     client_secret: str

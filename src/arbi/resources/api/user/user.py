@@ -6,6 +6,14 @@ from typing import Dict, Optional
 
 import httpx
 
+from .contacts import (
+    ContactsResource,
+    AsyncContactsResource,
+    ContactsResourceWithRawResponse,
+    AsyncContactsResourceWithRawResponse,
+    ContactsResourceWithStreamingResponse,
+    AsyncContactsResourceWithStreamingResponse,
+)
 from .settings import (
     SettingsResource,
     AsyncSettingsResource,
@@ -26,7 +34,6 @@ from ...._response import (
 )
 from ....types.api import (
     user_login_params,
-    user_invite_params,
     user_register_params,
     user_verify_email_params,
     user_change_password_params,
@@ -42,7 +49,6 @@ from .subscription import (
 )
 from ...._base_client import make_request_options
 from ....types.api.user_login_response import UserLoginResponse
-from ....types.api.user_invite_response import UserInviteResponse
 from ....types.api.user_logout_response import UserLogoutResponse
 from ....types.api.user_verify_email_response import UserVerifyEmailResponse
 from ....types.api.user_list_products_response import UserListProductsResponse
@@ -61,6 +67,10 @@ class UserResource(SyncAPIResource):
     @cached_property
     def subscription(self) -> SubscriptionResource:
         return SubscriptionResource(self._client)
+
+    @cached_property
+    def contacts(self) -> ContactsResource:
+        return ContactsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> UserResourceWithRawResponse:
@@ -188,44 +198,6 @@ class UserResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UserCheckSSOStatusResponse,
-        )
-
-    def invite(
-        self,
-        *,
-        email: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserInviteResponse:
-        """Send invitation email with 3-word verification code to a new user.
-
-        Protected
-        endpoint - requires authentication. Includes inviter's name in the email for
-        personalization.
-
-        Note: Fails silently if email already exists to prevent email enumeration
-        attacks.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/api/user/invite",
-            body=maybe_transform({"email": email}, user_invite_params.UserInviteParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserInviteResponse,
         )
 
     def list_products(
@@ -439,6 +411,10 @@ class AsyncUserResource(AsyncAPIResource):
         return AsyncSubscriptionResource(self._client)
 
     @cached_property
+    def contacts(self) -> AsyncContactsResource:
+        return AsyncContactsResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncUserResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -564,44 +540,6 @@ class AsyncUserResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=UserCheckSSOStatusResponse,
-        )
-
-    async def invite(
-        self,
-        *,
-        email: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserInviteResponse:
-        """Send invitation email with 3-word verification code to a new user.
-
-        Protected
-        endpoint - requires authentication. Includes inviter's name in the email for
-        personalization.
-
-        Note: Fails silently if email already exists to prevent email enumeration
-        attacks.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/user/invite",
-            body=await async_maybe_transform({"email": email}, user_invite_params.UserInviteParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserInviteResponse,
         )
 
     async def list_products(
@@ -815,9 +753,6 @@ class UserResourceWithRawResponse:
         self.check_sso_status = to_raw_response_wrapper(
             user.check_sso_status,
         )
-        self.invite = to_raw_response_wrapper(
-            user.invite,
-        )
         self.list_products = to_raw_response_wrapper(
             user.list_products,
         )
@@ -845,6 +780,10 @@ class UserResourceWithRawResponse:
     def subscription(self) -> SubscriptionResourceWithRawResponse:
         return SubscriptionResourceWithRawResponse(self._user.subscription)
 
+    @cached_property
+    def contacts(self) -> ContactsResourceWithRawResponse:
+        return ContactsResourceWithRawResponse(self._user.contacts)
+
 
 class AsyncUserResourceWithRawResponse:
     def __init__(self, user: AsyncUserResource) -> None:
@@ -855,9 +794,6 @@ class AsyncUserResourceWithRawResponse:
         )
         self.check_sso_status = async_to_raw_response_wrapper(
             user.check_sso_status,
-        )
-        self.invite = async_to_raw_response_wrapper(
-            user.invite,
         )
         self.list_products = async_to_raw_response_wrapper(
             user.list_products,
@@ -886,6 +822,10 @@ class AsyncUserResourceWithRawResponse:
     def subscription(self) -> AsyncSubscriptionResourceWithRawResponse:
         return AsyncSubscriptionResourceWithRawResponse(self._user.subscription)
 
+    @cached_property
+    def contacts(self) -> AsyncContactsResourceWithRawResponse:
+        return AsyncContactsResourceWithRawResponse(self._user.contacts)
+
 
 class UserResourceWithStreamingResponse:
     def __init__(self, user: UserResource) -> None:
@@ -896,9 +836,6 @@ class UserResourceWithStreamingResponse:
         )
         self.check_sso_status = to_streamed_response_wrapper(
             user.check_sso_status,
-        )
-        self.invite = to_streamed_response_wrapper(
-            user.invite,
         )
         self.list_products = to_streamed_response_wrapper(
             user.list_products,
@@ -927,6 +864,10 @@ class UserResourceWithStreamingResponse:
     def subscription(self) -> SubscriptionResourceWithStreamingResponse:
         return SubscriptionResourceWithStreamingResponse(self._user.subscription)
 
+    @cached_property
+    def contacts(self) -> ContactsResourceWithStreamingResponse:
+        return ContactsResourceWithStreamingResponse(self._user.contacts)
+
 
 class AsyncUserResourceWithStreamingResponse:
     def __init__(self, user: AsyncUserResource) -> None:
@@ -937,9 +878,6 @@ class AsyncUserResourceWithStreamingResponse:
         )
         self.check_sso_status = async_to_streamed_response_wrapper(
             user.check_sso_status,
-        )
-        self.invite = async_to_streamed_response_wrapper(
-            user.invite,
         )
         self.list_products = async_to_streamed_response_wrapper(
             user.list_products,
@@ -967,3 +905,7 @@ class AsyncUserResourceWithStreamingResponse:
     @cached_property
     def subscription(self) -> AsyncSubscriptionResourceWithStreamingResponse:
         return AsyncSubscriptionResourceWithStreamingResponse(self._user.subscription)
+
+    @cached_property
+    def contacts(self) -> AsyncContactsResourceWithStreamingResponse:
+        return AsyncContactsResourceWithStreamingResponse(self._user.contacts)

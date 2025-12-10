@@ -11,7 +11,6 @@ from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
     UserLoginResponse,
-    UserInviteResponse,
     UserLogoutResponse,
     UserVerifyEmailResponse,
     UserListProductsResponse,
@@ -100,40 +99,6 @@ class TestUser:
 
             user = response.parse()
             assert_matches_type(UserCheckSSOStatusResponse, user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_invite(self, client: Arbi) -> None:
-        user = client.api.user.invite(
-            email="dev@stainless.com",
-        )
-        assert_matches_type(UserInviteResponse, user, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_invite(self, client: Arbi) -> None:
-        response = client.api.user.with_raw_response.invite(
-            email="dev@stainless.com",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(UserInviteResponse, user, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_invite(self, client: Arbi) -> None:
-        with client.api.user.with_streaming_response.invite(
-            email="dev@stainless.com",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = response.parse()
-            assert_matches_type(UserInviteResponse, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -434,40 +399,6 @@ class TestAsyncUser:
 
             user = await response.parse()
             assert_matches_type(UserCheckSSOStatusResponse, user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_invite(self, async_client: AsyncArbi) -> None:
-        user = await async_client.api.user.invite(
-            email="dev@stainless.com",
-        )
-        assert_matches_type(UserInviteResponse, user, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_invite(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.user.with_raw_response.invite(
-            email="dev@stainless.com",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(UserInviteResponse, user, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_invite(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.user.with_streaming_response.invite(
-            email="dev@stainless.com",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = await response.parse()
-            assert_matches_type(UserInviteResponse, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
