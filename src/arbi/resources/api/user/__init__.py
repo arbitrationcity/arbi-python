@@ -8,6 +8,14 @@ from .user import (
     UserResourceWithStreamingResponse,
     AsyncUserResourceWithStreamingResponse,
 )
+from .contacts import (
+    ContactsResource,
+    AsyncContactsResource,
+    ContactsResourceWithRawResponse,
+    AsyncContactsResourceWithRawResponse,
+    ContactsResourceWithStreamingResponse,
+    AsyncContactsResourceWithStreamingResponse,
+)
 from .settings import (
     SettingsResource,
     AsyncSettingsResource,
@@ -38,6 +46,12 @@ __all__ = [
     "AsyncSubscriptionResourceWithRawResponse",
     "SubscriptionResourceWithStreamingResponse",
     "AsyncSubscriptionResourceWithStreamingResponse",
+    "ContactsResource",
+    "AsyncContactsResource",
+    "ContactsResourceWithRawResponse",
+    "AsyncContactsResourceWithRawResponse",
+    "ContactsResourceWithStreamingResponse",
+    "AsyncContactsResourceWithStreamingResponse",
     "UserResource",
     "AsyncUserResource",
     "UserResourceWithRawResponse",

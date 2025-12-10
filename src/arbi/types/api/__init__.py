@@ -11,7 +11,6 @@ from .title_llm_config import TitleLlmConfig as TitleLlmConfig
 from .tag_create_params import TagCreateParams as TagCreateParams
 from .tag_update_params import TagUpdateParams as TagUpdateParams
 from .user_login_params import UserLoginParams as UserLoginParams
-from .user_invite_params import UserInviteParams as UserInviteParams
 from .workspace_response import WorkspaceResponse as WorkspaceResponse
 from .parser_config_param import ParserConfigParam as ParserConfigParam
 from .tag_create_response import TagCreateResponse as TagCreateResponse
@@ -20,7 +19,6 @@ from .tag_update_response import TagUpdateResponse as TagUpdateResponse
 from .user_login_response import UserLoginResponse as UserLoginResponse
 from .chunker_config_param import ChunkerConfigParam as ChunkerConfigParam
 from .config_create_params import ConfigCreateParams as ConfigCreateParams
-from .user_invite_response import UserInviteResponse as UserInviteResponse
 from .user_logout_response import UserLogoutResponse as UserLogoutResponse
 from .user_register_params import UserRegisterParams as UserRegisterParams
 from .embedder_config_param import EmbedderConfigParam as EmbedderConfigParam
@@ -73,6 +71,7 @@ from .health_retrieve_status_response import HealthRetrieveStatusResponse as Hea
 from .conversation_update_title_params import ConversationUpdateTitleParams as ConversationUpdateTitleParams
 from .health_retrieve_version_response import HealthRetrieveVersionResponse as HealthRetrieveVersionResponse
 from .workspace_get_documents_response import WorkspaceGetDocumentsResponse as WorkspaceGetDocumentsResponse
+from .notification_get_schemas_response import NotificationGetSchemasResponse as NotificationGetSchemasResponse
 from .workspace_create_protected_params import WorkspaceCreateProtectedParams as WorkspaceCreateProtectedParams
 from .conversation_update_title_response import ConversationUpdateTitleResponse as ConversationUpdateTitleResponse
 from .document_date_extractor_llm_config import DocumentDateExtractorLlmConfig as DocumentDateExtractorLlmConfig

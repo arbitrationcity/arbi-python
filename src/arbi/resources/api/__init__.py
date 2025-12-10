@@ -72,6 +72,14 @@ from .conversation import (
     ConversationResourceWithStreamingResponse,
     AsyncConversationResourceWithStreamingResponse,
 )
+from .notifications import (
+    NotificationsResource,
+    AsyncNotificationsResource,
+    NotificationsResourceWithRawResponse,
+    AsyncNotificationsResourceWithRawResponse,
+    NotificationsResourceWithStreamingResponse,
+    AsyncNotificationsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "UserResource",
@@ -122,6 +130,12 @@ __all__ = [
     "AsyncConfigsResourceWithRawResponse",
     "ConfigsResourceWithStreamingResponse",
     "AsyncConfigsResourceWithStreamingResponse",
+    "NotificationsResource",
+    "AsyncNotificationsResource",
+    "NotificationsResourceWithRawResponse",
+    "AsyncNotificationsResourceWithRawResponse",
+    "NotificationsResourceWithStreamingResponse",
+    "AsyncNotificationsResourceWithStreamingResponse",
     "APIResource",
     "AsyncAPIResource",
     "APIResourceWithRawResponse",
