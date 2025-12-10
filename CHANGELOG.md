@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 (2025-12-10)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/arbitrationcity/arbi-python/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* move doc_date and title fields into doc_metadata JSONB ([2d9e908](https://github.com/arbitrationcity/arbi-python/commit/2d9e908cb4ff3bd5ddfa6e0d94e3b7f71205e019))
+
 ## 0.7.0 (2025-12-10)
 
 Full Changelog: [v0.6.1...v0.7.0](https://github.com/arbitrationcity/arbi-python/compare/v0.6.1...v0.7.0)
