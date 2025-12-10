@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0 (2025-12-10)
+
+Full Changelog: [v0.6.1...v0.7.0](https://github.com/arbitrationcity/arbi-python/compare/v0.6.1...v0.7.0)
+
+### Features
+
+* refactor invitations to contacts system ([d76f5b1](https://github.com/arbitrationcity/arbi-python/commit/d76f5b1304f9bfd7a3b016c33b28f4630bf7fe11))
+
+
+### Chores
+
+* add missing docstrings ([46df0e0](https://github.com/arbitrationcity/arbi-python/commit/46df0e08899a11026e3d73731139b3f4572d935e))
+
 ## 0.6.1 (2025-12-09)
 
 Full Changelog: [v0.6.0...v0.6.1](https://github.com/arbitrationcity/arbi-python/compare/v0.6.0...v0.6.1)
