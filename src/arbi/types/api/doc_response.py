@@ -6,11 +6,23 @@ from datetime import date, datetime
 from ..._models import BaseModel
 from .document.doc_tag_response import DocTagResponse
 
-__all__ = ["DocResponse"]
+__all__ = ["DocResponse", "DocMetadata"]
+
+
+class DocMetadata(BaseModel):
+    """Structured model for document metadata stored in JSONB column."""
+
+    doc_date: Optional[date] = None
+
+    doc_summary: Optional[str] = None
+
+    title: Optional[str] = None
 
 
 class DocResponse(BaseModel):
     created_at: datetime
+
+    doc_date: Optional[date] = None
 
     external_id: str
 
@@ -24,7 +36,8 @@ class DocResponse(BaseModel):
 
     created_by_ext_id: Optional[str] = None
 
-    doc_date: Optional[date] = None
+    doc_metadata: Optional[DocMetadata] = None
+    """Structured model for document metadata stored in JSONB column."""
 
     doctags: Optional[List[DocTagResponse]] = None
 
