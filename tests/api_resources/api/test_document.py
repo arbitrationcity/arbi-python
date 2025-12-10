@@ -80,9 +80,12 @@ class TestDocument:
             documents=[
                 {
                     "external_id": "doc-bFXA5r3A",
-                    "doc_date": parse_date("2019-12-27"),
+                    "doc_metadata": {
+                        "doc_date": parse_date("2019-12-27"),
+                        "doc_summary": "doc_summary",
+                        "title": "title",
+                    },
                     "shared": True,
-                    "title": "title",
                 }
             ],
             workspace_key="workspace-key",
@@ -469,9 +472,12 @@ class TestAsyncDocument:
             documents=[
                 {
                     "external_id": "doc-bFXA5r3A",
-                    "doc_date": parse_date("2019-12-27"),
+                    "doc_metadata": {
+                        "doc_date": parse_date("2019-12-27"),
+                        "doc_summary": "doc_summary",
+                        "title": "title",
+                    },
                     "shared": True,
-                    "title": "title",
                 }
             ],
             workspace_key="workspace-key",
