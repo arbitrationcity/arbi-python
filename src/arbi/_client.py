@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,6 +20,7 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import ArbiError, APIStatusError
@@ -28,16 +29,15 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.api import api
+
+if TYPE_CHECKING:
+    from .resources import api
+    from .resources.api.api import APIResource, AsyncAPIResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Arbi", "AsyncArbi", "Client", "AsyncClient"]
 
 
 class Arbi(SyncAPIClient):
-    api: api.APIResource
-    with_raw_response: ArbiWithRawResponse
-    with_streaming_response: ArbiWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -92,9 +92,19 @@ class Arbi(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.api = api.APIResource(self)
-        self.with_raw_response = ArbiWithRawResponse(self)
-        self.with_streaming_response = ArbiWithStreamedResponse(self)
+    @cached_property
+    def api(self) -> APIResource:
+        from .resources.api import APIResource
+
+        return APIResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> ArbiWithRawResponse:
+        return ArbiWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> ArbiWithStreamedResponse:
+        return ArbiWithStreamedResponse(self)
 
     @property
     @override
@@ -202,10 +212,6 @@ class Arbi(SyncAPIClient):
 
 
 class AsyncArbi(AsyncAPIClient):
-    api: api.AsyncAPIResource
-    with_raw_response: AsyncArbiWithRawResponse
-    with_streaming_response: AsyncArbiWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -260,9 +266,19 @@ class AsyncArbi(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.api = api.AsyncAPIResource(self)
-        self.with_raw_response = AsyncArbiWithRawResponse(self)
-        self.with_streaming_response = AsyncArbiWithStreamedResponse(self)
+    @cached_property
+    def api(self) -> AsyncAPIResource:
+        from .resources.api import AsyncAPIResource
+
+        return AsyncAPIResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncArbiWithRawResponse:
+        return AsyncArbiWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncArbiWithStreamedResponse:
+        return AsyncArbiWithStreamedResponse(self)
 
     @property
     @override
@@ -370,23 +386,55 @@ class AsyncArbi(AsyncAPIClient):
 
 
 class ArbiWithRawResponse:
+    _client: Arbi
+
     def __init__(self, client: Arbi) -> None:
-        self.api = api.APIResourceWithRawResponse(client.api)
+        self._client = client
+
+    @cached_property
+    def api(self) -> api.APIResourceWithRawResponse:
+        from .resources.api import APIResourceWithRawResponse
+
+        return APIResourceWithRawResponse(self._client.api)
 
 
 class AsyncArbiWithRawResponse:
+    _client: AsyncArbi
+
     def __init__(self, client: AsyncArbi) -> None:
-        self.api = api.AsyncAPIResourceWithRawResponse(client.api)
+        self._client = client
+
+    @cached_property
+    def api(self) -> api.AsyncAPIResourceWithRawResponse:
+        from .resources.api import AsyncAPIResourceWithRawResponse
+
+        return AsyncAPIResourceWithRawResponse(self._client.api)
 
 
 class ArbiWithStreamedResponse:
+    _client: Arbi
+
     def __init__(self, client: Arbi) -> None:
-        self.api = api.APIResourceWithStreamingResponse(client.api)
+        self._client = client
+
+    @cached_property
+    def api(self) -> api.APIResourceWithStreamingResponse:
+        from .resources.api import APIResourceWithStreamingResponse
+
+        return APIResourceWithStreamingResponse(self._client.api)
 
 
 class AsyncArbiWithStreamedResponse:
+    _client: AsyncArbi
+
     def __init__(self, client: AsyncArbi) -> None:
-        self.api = api.AsyncAPIResourceWithStreamingResponse(client.api)
+        self._client = client
+
+    @cached_property
+    def api(self) -> api.AsyncAPIResourceWithStreamingResponse:
+        from .resources.api import AsyncAPIResourceWithStreamingResponse
+
+        return AsyncAPIResourceWithStreamingResponse(self._client.api)
 
 
 Client = Arbi
