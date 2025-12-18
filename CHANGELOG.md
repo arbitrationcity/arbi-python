@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.1 (2025-12-18)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/arbitrationcity/arbi-python/compare/v0.8.0...v0.8.1)
+
+### Bug Fixes
+
+* use async_to_httpx_files in patch method ([026b68f](https://github.com/arbitrationcity/arbi-python/commit/026b68f1718bc25dac2733da29635efe79fc0d1c))
+
+
+### Chores
+
+* **internal:** add missing files argument to base client ([e7fefa4](https://github.com/arbitrationcity/arbi-python/commit/e7fefa4dc36beacecbbc9cec089c020bd7f221de))
+* speedup initial import ([dc42b42](https://github.com/arbitrationcity/arbi-python/commit/dc42b4274e3d879ca7a5d736bfdf72cfd70043db))
+
 ## 0.8.0 (2025-12-10)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/arbitrationcity/arbi-python/compare/v0.7.0...v0.8.0)
