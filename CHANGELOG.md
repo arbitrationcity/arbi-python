@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.0 (2025-12-19)
+
+Full Changelog: [v0.8.1...v0.9.0](https://github.com/arbitrationcity/arbi-python/compare/v0.8.1...v0.9.0)
+
+### Features
+
+* Refactor websocket task updates to minimal message structure ([85b0c28](https://github.com/arbitrationcity/arbi-python/commit/85b0c28596ef691c41525547de22f52fb4e8cd06))
+
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([cbc74b5](https://github.com/arbitrationcity/arbi-python/commit/cbc74b5e4187368cc4f003821803464d276e37a2))
+
 ## 0.8.1 (2025-12-18)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/arbitrationcity/arbi-python/compare/v0.8.0...v0.8.1)

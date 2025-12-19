@@ -380,7 +380,8 @@ class UserResource(SyncAPIResource):
         the email.
 
         Note: Fails silently if email already exists to prevent email enumeration
-        attacks.
+        attacks. Also returns success even on rate limit/errors to avoid information
+        disclosure.
 
         Args:
           extra_headers: Send extra headers
@@ -722,7 +723,8 @@ class AsyncUserResource(AsyncAPIResource):
         the email.
 
         Note: Fails silently if email already exists to prevent email enumeration
-        attacks.
+        attacks. Also returns success even on rate limit/errors to avoid information
+        disclosure.
 
         Args:
           extra_headers: Send extra headers
