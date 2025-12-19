@@ -49,12 +49,17 @@ class NotificationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NotificationGetSchemasResponse:
-        """Get JSON schemas for all WebSocket message types.
+        """Expose WebSocket message types in the OpenAPI schema.
 
-        Frontend can use these schemas
-        to generate TypeScript types for type-safe WebSocket communication.
+        Frontend can autogenerate
+        TypeScript types from the OpenAPI schema components.
 
-        Returns a dictionary mapping message type names to their JSON schemas.
+        This endpoint returns an empty list at runtime but includes all WebSocket
+        message types in the OpenAPI schema components for type generation purposes.
+
+        All message types are available in the OpenAPI schema at:
+        components.schemas.TaskUpdateMessage components.schemas.AuthResultMessage
+        components.schemas.NotificationMessage etc.
         """
         return self._get(
             "/api/notifications/ws-schemas",
@@ -95,12 +100,17 @@ class AsyncNotificationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NotificationGetSchemasResponse:
-        """Get JSON schemas for all WebSocket message types.
+        """Expose WebSocket message types in the OpenAPI schema.
 
-        Frontend can use these schemas
-        to generate TypeScript types for type-safe WebSocket communication.
+        Frontend can autogenerate
+        TypeScript types from the OpenAPI schema components.
 
-        Returns a dictionary mapping message type names to their JSON schemas.
+        This endpoint returns an empty list at runtime but includes all WebSocket
+        message types in the OpenAPI schema components for type generation purposes.
+
+        All message types are available in the OpenAPI schema at:
+        components.schemas.TaskUpdateMessage components.schemas.AuthResultMessage
+        components.schemas.NotificationMessage etc.
         """
         return await self._get(
             "/api/notifications/ws-schemas",

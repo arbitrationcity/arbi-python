@@ -163,7 +163,16 @@ class TestConversation:
     @parametrize
     def test_method_retrieve_threads(self, client: Arbi) -> None:
         conversation = client.api.conversation.retrieve_threads(
-            "con",
+            conversation_ext_id="con",
+        )
+        assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_threads_with_all_params(self, client: Arbi) -> None:
+        conversation = client.api.conversation.retrieve_threads(
+            conversation_ext_id="con",
+            workspace_key="workspace-key",
         )
         assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
 
@@ -171,7 +180,7 @@ class TestConversation:
     @parametrize
     def test_raw_response_retrieve_threads(self, client: Arbi) -> None:
         response = client.api.conversation.with_raw_response.retrieve_threads(
-            "con",
+            conversation_ext_id="con",
         )
 
         assert response.is_closed is True
@@ -183,7 +192,7 @@ class TestConversation:
     @parametrize
     def test_streaming_response_retrieve_threads(self, client: Arbi) -> None:
         with client.api.conversation.with_streaming_response.retrieve_threads(
-            "con",
+            conversation_ext_id="con",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -198,7 +207,7 @@ class TestConversation:
     def test_path_params_retrieve_threads(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             client.api.conversation.with_raw_response.retrieve_threads(
-                "",
+                conversation_ext_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -249,6 +258,16 @@ class TestConversation:
         conversation = client.api.conversation.update_title(
             conversation_ext_id="con",
             title="x",
+        )
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_update_title_with_all_params(self, client: Arbi) -> None:
+        conversation = client.api.conversation.update_title(
+            conversation_ext_id="con",
+            title="x",
+            workspace_key="workspace-key",
         )
         assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
 
@@ -434,7 +453,16 @@ class TestAsyncConversation:
     @parametrize
     async def test_method_retrieve_threads(self, async_client: AsyncArbi) -> None:
         conversation = await async_client.api.conversation.retrieve_threads(
-            "con",
+            conversation_ext_id="con",
+        )
+        assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_threads_with_all_params(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.retrieve_threads(
+            conversation_ext_id="con",
+            workspace_key="workspace-key",
         )
         assert_matches_type(ConversationRetrieveThreadsResponse, conversation, path=["response"])
 
@@ -442,7 +470,7 @@ class TestAsyncConversation:
     @parametrize
     async def test_raw_response_retrieve_threads(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.conversation.with_raw_response.retrieve_threads(
-            "con",
+            conversation_ext_id="con",
         )
 
         assert response.is_closed is True
@@ -454,7 +482,7 @@ class TestAsyncConversation:
     @parametrize
     async def test_streaming_response_retrieve_threads(self, async_client: AsyncArbi) -> None:
         async with async_client.api.conversation.with_streaming_response.retrieve_threads(
-            "con",
+            conversation_ext_id="con",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -469,7 +497,7 @@ class TestAsyncConversation:
     async def test_path_params_retrieve_threads(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `conversation_ext_id` but received ''"):
             await async_client.api.conversation.with_raw_response.retrieve_threads(
-                "",
+                conversation_ext_id="",
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -520,6 +548,16 @@ class TestAsyncConversation:
         conversation = await async_client.api.conversation.update_title(
             conversation_ext_id="con",
             title="x",
+        )
+        assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_update_title_with_all_params(self, async_client: AsyncArbi) -> None:
+        conversation = await async_client.api.conversation.update_title(
+            conversation_ext_id="con",
+            title="x",
+            workspace_key="workspace-key",
         )
         assert_matches_type(ConversationUpdateTitleResponse, conversation, path=["response"])
 

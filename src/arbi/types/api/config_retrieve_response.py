@@ -69,6 +69,9 @@ class AllConfigsAgents(BaseModel):
     enabled: Optional[bool] = FieldInfo(alias="ENABLED", default=None)
     """Whether to use agents mode for queries."""
 
+    llm_agent_temperature: Optional[float] = FieldInfo(alias="LLM_AGENT_TEMPERATURE", default=None)
+    """Temperature value for randomness."""
+
     llm_page_filter_model_name: Optional[str] = FieldInfo(alias="LLM_PAGE_FILTER_MODEL_NAME", default=None)
     """The name of the model to be used for the llm page filter model."""
 
