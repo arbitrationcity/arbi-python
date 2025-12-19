@@ -51,8 +51,10 @@ from ....types.api import (
 )
 from ...._base_client import make_request_options
 from ....types.api.document_update_response import DocumentUpdateResponse
+from ....types.api.document_upload_response import DocumentUploadResponse
 from ....types.api.document_retrieve_response import DocumentRetrieveResponse
 from ....types.api.document_get_parsed_response import DocumentGetParsedResponse
+from ....types.api.document_upload_from_url_response import DocumentUploadFromURLResponse
 
 __all__ = ["DocumentResource", "AsyncDocumentResource"]
 
@@ -276,7 +278,7 @@ class DocumentResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> DocumentUploadResponse:
         """Upload multiple documents to a workspace with encryption.
 
         Documents are queued
@@ -324,7 +326,7 @@ class DocumentResource(SyncAPIResource):
                     document_upload_params.DocumentUploadParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=DocumentUploadResponse,
         )
 
     def upload_from_url(
@@ -341,7 +343,7 @@ class DocumentResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> DocumentUploadFromURLResponse:
         """
         Download and upload documents from URLs to a workspace with encryption.
         Documents are queued for processing, parsed, and indexed for vector search.
@@ -381,7 +383,7 @@ class DocumentResource(SyncAPIResource):
                     document_upload_from_url_params.DocumentUploadFromURLParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=DocumentUploadFromURLResponse,
         )
 
     def view(
@@ -645,7 +647,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> DocumentUploadResponse:
         """Upload multiple documents to a workspace with encryption.
 
         Documents are queued
@@ -693,7 +695,7 @@ class AsyncDocumentResource(AsyncAPIResource):
                     document_upload_params.DocumentUploadParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=DocumentUploadResponse,
         )
 
     async def upload_from_url(
@@ -710,7 +712,7 @@ class AsyncDocumentResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> DocumentUploadFromURLResponse:
         """
         Download and upload documents from URLs to a workspace with encryption.
         Documents are queued for processing, parsed, and indexed for vector search.
@@ -750,7 +752,7 @@ class AsyncDocumentResource(AsyncAPIResource):
                     document_upload_from_url_params.DocumentUploadFromURLParams,
                 ),
             ),
-            cast_to=object,
+            cast_to=DocumentUploadFromURLResponse,
         )
 
     async def view(

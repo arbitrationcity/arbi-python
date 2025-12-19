@@ -93,6 +93,9 @@ class Agents(TypedDict, total=False):
     enabled: Annotated[bool, PropertyInfo(alias="ENABLED")]
     """Whether to use agents mode for queries."""
 
+    llm_agent_temperature: Annotated[float, PropertyInfo(alias="LLM_AGENT_TEMPERATURE")]
+    """Temperature value for randomness."""
+
     llm_page_filter_model_name: Annotated[str, PropertyInfo(alias="LLM_PAGE_FILTER_MODEL_NAME")]
     """The name of the model to be used for the llm page filter model."""
 

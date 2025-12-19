@@ -22,11 +22,7 @@ class DocMetadata(BaseModel):
 class DocResponse(BaseModel):
     created_at: datetime
 
-    doc_date: Optional[date] = None
-
     external_id: str
-
-    title: str
 
     updated_at: datetime
 

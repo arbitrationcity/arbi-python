@@ -169,6 +169,7 @@ class ConversationResource(SyncAPIResource):
         self,
         conversation_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -193,6 +194,7 @@ class ConversationResource(SyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
             )
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._get(
             f"/api/conversation/{conversation_ext_id}/threads",
             options=make_request_options(
@@ -243,6 +245,7 @@ class ConversationResource(SyncAPIResource):
         conversation_ext_id: str,
         *,
         title: str,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -270,6 +273,7 @@ class ConversationResource(SyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
             )
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return self._patch(
             f"/api/conversation/{conversation_ext_id}/title",
             body=maybe_transform({"title": title}, conversation_update_title_params.ConversationUpdateTitleParams),
@@ -415,6 +419,7 @@ class AsyncConversationResource(AsyncAPIResource):
         self,
         conversation_ext_id: str,
         *,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -439,6 +444,7 @@ class AsyncConversationResource(AsyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
             )
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._get(
             f"/api/conversation/{conversation_ext_id}/threads",
             options=make_request_options(
@@ -489,6 +495,7 @@ class AsyncConversationResource(AsyncAPIResource):
         conversation_ext_id: str,
         *,
         title: str,
+        workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -516,6 +523,7 @@ class AsyncConversationResource(AsyncAPIResource):
             raise ValueError(
                 f"Expected a non-empty value for `conversation_ext_id` but received {conversation_ext_id!r}"
             )
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
         return await self._patch(
             f"/api/conversation/{conversation_ext_id}/title",
             body=await async_maybe_transform(
