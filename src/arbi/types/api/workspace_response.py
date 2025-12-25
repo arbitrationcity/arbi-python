@@ -4,18 +4,9 @@ from typing import List, Optional
 from datetime import datetime
 
 from ..._models import BaseModel
+from .user_response import UserResponse
 
-__all__ = ["WorkspaceResponse", "User"]
-
-
-class User(BaseModel):
-    email: str
-
-    last_name: str
-
-    name: str
-
-    user_ext_id: str
+__all__ = ["WorkspaceResponse"]
 
 
 class WorkspaceResponse(BaseModel):
@@ -33,8 +24,6 @@ class WorkspaceResponse(BaseModel):
 
     updated_at: datetime
 
-    updated_by_ext_id: Optional[str] = None
-
     private_conversation_count: Optional[int] = None
 
     private_document_count: Optional[int] = None
@@ -43,8 +32,10 @@ class WorkspaceResponse(BaseModel):
 
     shared_document_count: Optional[int] = None
 
+    updated_by_ext_id: Optional[str] = None
+
     user_files_mb: Optional[float] = None
 
-    users: Optional[List[User]] = None
+    users: Optional[List[UserResponse]] = None
 
     wrapped_key: Optional[str] = None

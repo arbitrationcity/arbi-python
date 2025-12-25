@@ -94,9 +94,10 @@ class UserResource(SyncAPIResource):
     def change_password(
         self,
         *,
-        current_public_key: str,
-        new_public_key: str,
+        new_signing_key: str,
         rewrapped_workspace_keys: Dict[str, str],
+        signature: str,
+        timestamp: int,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -110,15 +111,15 @@ class UserResource(SyncAPIResource):
 
         1.
 
-        Prove knowledge of current master password via X25519 public key
-        2. Provide new X25519 public key (derived from new master password)
+        Sign "email|timestamp" with current Ed25519 key (proves current password)
+        2. Provide new Ed25519 signing key (derived from new password)
         3. Re-wrap all workspace keys with new X25519 public key
 
         Server will:
 
-        1. Verify current master password (public key comparison)
-        2. Update X25519 public key
-        3. Update all workspace wrapped keys
+        1. Verify signature with stored signing_key_pub
+        2. Derive new X25519 encryption key from new Ed25519 signing key
+        3. Update both keys and all workspace wrapped keys
 
         Note: This changes the master password (encryption password), not authentication
         password. Both local and SSO users can change their master password.
@@ -136,9 +137,10 @@ class UserResource(SyncAPIResource):
             "/api/user/change_password",
             body=maybe_transform(
                 {
-                    "current_public_key": current_public_key,
-                    "new_public_key": new_public_key,
+                    "new_signing_key": new_signing_key,
                     "rewrapped_workspace_keys": rewrapped_workspace_keys,
+                    "signature": signature,
+                    "timestamp": timestamp,
                 },
                 user_change_password_params.UserChangePasswordParams,
             ),
@@ -153,6 +155,9 @@ class UserResource(SyncAPIResource):
         *,
         email: str,
         sso_token: str,
+        family_name: Optional[str] | Omit = omit,
+        given_name: Optional[str] | Omit = omit,
+        picture: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -191,6 +196,9 @@ class UserResource(SyncAPIResource):
                 {
                     "email": email,
                     "sso_token": sso_token,
+                    "family_name": family_name,
+                    "given_name": given_name,
+                    "picture": picture,
                 },
                 user_check_sso_status_params.UserCheckSSOStatusParams,
             ),
@@ -247,7 +255,8 @@ class UserResource(SyncAPIResource):
         self,
         *,
         email: str,
-        public_key: str,
+        signature: str,
+        timestamp: int,
         sso_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -257,13 +266,16 @@ class UserResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserLoginResponse:
         """
-        Login with X25519 public key verification (local or SSO).
+        Login with Ed25519 signature verification (local or SSO).
 
-        SIMPLEST POSSIBLE AUTH: Client derives X25519 public key from password and sends
-        it. Server compares with stored public key. Match = correct password!
+        Authentication flow:
 
-        For SSO users: Also validates SSO token before proceeding. For local users: Only
-        public key verification needed.
+        1. Client derives Ed25519 keypair from password
+        2. Client signs "email|timestamp" with Ed25519 private key
+        3. Server verifies signature using stored Ed25519 public key
+        4. Server encrypts response with stored X25519 public key
+
+        For SSO users: Also validates SSO token before proceeding.
 
         Returns encrypted login response that only the correct password can decrypt.
 
@@ -281,7 +293,8 @@ class UserResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "email": email,
-                    "public_key": public_key,
+                    "signature": signature,
+                    "timestamp": timestamp,
                     "sso_token": sso_token,
                 },
                 user_login_params.UserLoginParams,
@@ -315,10 +328,11 @@ class UserResource(SyncAPIResource):
         self,
         *,
         email: str,
-        public_key: str,
+        signing_key: str,
         verification_credential: str,
-        last_name: Optional[str] | Omit = omit,
-        name: Optional[str] | Omit = omit,
+        family_name: Optional[str] | Omit = omit,
+        given_name: Optional[str] | Omit = omit,
+        picture: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -350,10 +364,11 @@ class UserResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "email": email,
-                    "public_key": public_key,
+                    "signing_key": signing_key,
                     "verification_credential": verification_credential,
-                    "last_name": last_name,
-                    "name": name,
+                    "family_name": family_name,
+                    "given_name": given_name,
+                    "picture": picture,
                 },
                 user_register_params.UserRegisterParams,
             ),
@@ -437,9 +452,10 @@ class AsyncUserResource(AsyncAPIResource):
     async def change_password(
         self,
         *,
-        current_public_key: str,
-        new_public_key: str,
+        new_signing_key: str,
         rewrapped_workspace_keys: Dict[str, str],
+        signature: str,
+        timestamp: int,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -453,15 +469,15 @@ class AsyncUserResource(AsyncAPIResource):
 
         1.
 
-        Prove knowledge of current master password via X25519 public key
-        2. Provide new X25519 public key (derived from new master password)
+        Sign "email|timestamp" with current Ed25519 key (proves current password)
+        2. Provide new Ed25519 signing key (derived from new password)
         3. Re-wrap all workspace keys with new X25519 public key
 
         Server will:
 
-        1. Verify current master password (public key comparison)
-        2. Update X25519 public key
-        3. Update all workspace wrapped keys
+        1. Verify signature with stored signing_key_pub
+        2. Derive new X25519 encryption key from new Ed25519 signing key
+        3. Update both keys and all workspace wrapped keys
 
         Note: This changes the master password (encryption password), not authentication
         password. Both local and SSO users can change their master password.
@@ -479,9 +495,10 @@ class AsyncUserResource(AsyncAPIResource):
             "/api/user/change_password",
             body=await async_maybe_transform(
                 {
-                    "current_public_key": current_public_key,
-                    "new_public_key": new_public_key,
+                    "new_signing_key": new_signing_key,
                     "rewrapped_workspace_keys": rewrapped_workspace_keys,
+                    "signature": signature,
+                    "timestamp": timestamp,
                 },
                 user_change_password_params.UserChangePasswordParams,
             ),
@@ -496,6 +513,9 @@ class AsyncUserResource(AsyncAPIResource):
         *,
         email: str,
         sso_token: str,
+        family_name: Optional[str] | Omit = omit,
+        given_name: Optional[str] | Omit = omit,
+        picture: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -534,6 +554,9 @@ class AsyncUserResource(AsyncAPIResource):
                 {
                     "email": email,
                     "sso_token": sso_token,
+                    "family_name": family_name,
+                    "given_name": given_name,
+                    "picture": picture,
                 },
                 user_check_sso_status_params.UserCheckSSOStatusParams,
             ),
@@ -590,7 +613,8 @@ class AsyncUserResource(AsyncAPIResource):
         self,
         *,
         email: str,
-        public_key: str,
+        signature: str,
+        timestamp: int,
         sso_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -600,13 +624,16 @@ class AsyncUserResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserLoginResponse:
         """
-        Login with X25519 public key verification (local or SSO).
+        Login with Ed25519 signature verification (local or SSO).
 
-        SIMPLEST POSSIBLE AUTH: Client derives X25519 public key from password and sends
-        it. Server compares with stored public key. Match = correct password!
+        Authentication flow:
 
-        For SSO users: Also validates SSO token before proceeding. For local users: Only
-        public key verification needed.
+        1. Client derives Ed25519 keypair from password
+        2. Client signs "email|timestamp" with Ed25519 private key
+        3. Server verifies signature using stored Ed25519 public key
+        4. Server encrypts response with stored X25519 public key
+
+        For SSO users: Also validates SSO token before proceeding.
 
         Returns encrypted login response that only the correct password can decrypt.
 
@@ -624,7 +651,8 @@ class AsyncUserResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "email": email,
-                    "public_key": public_key,
+                    "signature": signature,
+                    "timestamp": timestamp,
                     "sso_token": sso_token,
                 },
                 user_login_params.UserLoginParams,
@@ -658,10 +686,11 @@ class AsyncUserResource(AsyncAPIResource):
         self,
         *,
         email: str,
-        public_key: str,
+        signing_key: str,
         verification_credential: str,
-        last_name: Optional[str] | Omit = omit,
-        name: Optional[str] | Omit = omit,
+        family_name: Optional[str] | Omit = omit,
+        given_name: Optional[str] | Omit = omit,
+        picture: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -693,10 +722,11 @@ class AsyncUserResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "email": email,
-                    "public_key": public_key,
+                    "signing_key": signing_key,
                     "verification_credential": verification_credential,
-                    "last_name": last_name,
-                    "name": name,
+                    "family_name": family_name,
+                    "given_name": given_name,
+                    "picture": picture,
                 },
                 user_register_params.UserRegisterParams,
             ),

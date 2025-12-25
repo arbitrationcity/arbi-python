@@ -3,19 +3,8 @@
 from typing import List
 from typing_extensions import TypeAlias
 
-from ..._models import BaseModel
+from .user_response import UserResponse
 
-__all__ = ["WorkspaceGetUsersResponse", "WorkspaceGetUsersResponseItem"]
+__all__ = ["WorkspaceGetUsersResponse"]
 
-
-class WorkspaceGetUsersResponseItem(BaseModel):
-    email: str
-
-    last_name: str
-
-    name: str
-
-    user_ext_id: str
-
-
-WorkspaceGetUsersResponse: TypeAlias = List[WorkspaceGetUsersResponseItem]
+WorkspaceGetUsersResponse: TypeAlias = List[UserResponse]

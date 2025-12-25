@@ -76,7 +76,6 @@ class TestConfigs:
             model_citation={
                 "max_numb_citations": 0,
                 "min_char_size_to_answer": 0,
-                "sim_model_name": "SIM_MODEL_NAME",
                 "sim_threashold": 0,
             },
             parent_message_ext_id="parent_message_ext_id",
@@ -334,7 +333,6 @@ class TestAsyncConfigs:
             model_citation={
                 "max_numb_citations": 0,
                 "min_char_size_to_answer": 0,
-                "sim_model_name": "SIM_MODEL_NAME",
                 "sim_threashold": 0,
             },
             parent_message_ext_id="parent_message_ext_id",
