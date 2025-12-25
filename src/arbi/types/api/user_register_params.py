@@ -11,10 +11,12 @@ __all__ = ["UserRegisterParams"]
 class UserRegisterParams(TypedDict, total=False):
     email: Required[str]
 
-    public_key: Required[str]
+    signing_key: Required[str]
 
     verification_credential: Required[str]
 
-    last_name: Optional[str]
+    family_name: Optional[str]
 
-    name: Optional[str]
+    given_name: Optional[str]
+
+    picture: Optional[str]

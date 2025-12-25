@@ -16,6 +16,7 @@ Types:
 
 ```python
 from arbi.types.api import (
+    UserResponse,
     UserChangePasswordResponse,
     UserCheckSSOStatusResponse,
     UserListProductsResponse,

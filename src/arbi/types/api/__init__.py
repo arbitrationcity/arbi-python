@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .doc_response import DocResponse as DocResponse
+from .user_response import UserResponse as UserResponse
 from .embedder_config import EmbedderConfig as EmbedderConfig
 from .reranker_config import RerankerConfig as RerankerConfig
 from .query_llm_config import QueryLlmConfig as QueryLlmConfig

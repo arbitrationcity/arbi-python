@@ -9,8 +9,10 @@ __all__ = ["UserChangePasswordParams"]
 
 
 class UserChangePasswordParams(TypedDict, total=False):
-    current_public_key: Required[str]
-
-    new_public_key: Required[str]
+    new_signing_key: Required[str]
 
     rewrapped_workspace_keys: Required[Dict[str, str]]
+
+    signature: Required[str]
+
+    timestamp: Required[int]

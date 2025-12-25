@@ -29,9 +29,10 @@ class TestUser:
     @parametrize
     def test_method_change_password(self, client: Arbi) -> None:
         user = client.api.user.change_password(
-            current_public_key="current_public_key",
-            new_public_key="new_public_key",
+            new_signing_key="new_signing_key",
             rewrapped_workspace_keys={"foo": "string"},
+            signature="signature",
+            timestamp=0,
         )
         assert_matches_type(UserChangePasswordResponse, user, path=["response"])
 
@@ -39,9 +40,10 @@ class TestUser:
     @parametrize
     def test_raw_response_change_password(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.change_password(
-            current_public_key="current_public_key",
-            new_public_key="new_public_key",
+            new_signing_key="new_signing_key",
             rewrapped_workspace_keys={"foo": "string"},
+            signature="signature",
+            timestamp=0,
         )
 
         assert response.is_closed is True
@@ -53,9 +55,10 @@ class TestUser:
     @parametrize
     def test_streaming_response_change_password(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.change_password(
-            current_public_key="current_public_key",
-            new_public_key="new_public_key",
+            new_signing_key="new_signing_key",
             rewrapped_workspace_keys={"foo": "string"},
+            signature="signature",
+            timestamp=0,
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -71,6 +74,18 @@ class TestUser:
         user = client.api.user.check_sso_status(
             email="dev@stainless.com",
             sso_token="sso_token",
+        )
+        assert_matches_type(UserCheckSSOStatusResponse, user, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_check_sso_status_with_all_params(self, client: Arbi) -> None:
+        user = client.api.user.check_sso_status(
+            email="dev@stainless.com",
+            sso_token="sso_token",
+            family_name="family_name",
+            given_name="given_name",
+            picture="picture",
         )
         assert_matches_type(UserCheckSSOStatusResponse, user, path=["response"])
 
@@ -163,7 +178,8 @@ class TestUser:
     def test_method_login(self, client: Arbi) -> None:
         user = client.api.user.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
         )
         assert_matches_type(UserLoginResponse, user, path=["response"])
 
@@ -172,7 +188,8 @@ class TestUser:
     def test_method_login_with_all_params(self, client: Arbi) -> None:
         user = client.api.user.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
             sso_token="sso_token",
         )
         assert_matches_type(UserLoginResponse, user, path=["response"])
@@ -182,7 +199,8 @@ class TestUser:
     def test_raw_response_login(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
         )
 
         assert response.is_closed is True
@@ -195,7 +213,8 @@ class TestUser:
     def test_streaming_response_login(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -238,7 +257,7 @@ class TestUser:
     def test_method_register(self, client: Arbi) -> None:
         user = client.api.user.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
         )
         assert_matches_type(object, user, path=["response"])
@@ -248,10 +267,11 @@ class TestUser:
     def test_method_register_with_all_params(self, client: Arbi) -> None:
         user = client.api.user.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
-            last_name="last_name",
-            name="name",
+            family_name="family_name",
+            given_name="given_name",
+            picture="picture",
         )
         assert_matches_type(object, user, path=["response"])
 
@@ -260,7 +280,7 @@ class TestUser:
     def test_raw_response_register(self, client: Arbi) -> None:
         response = client.api.user.with_raw_response.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
         )
 
@@ -274,7 +294,7 @@ class TestUser:
     def test_streaming_response_register(self, client: Arbi) -> None:
         with client.api.user.with_streaming_response.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
         ) as response:
             assert not response.is_closed
@@ -329,9 +349,10 @@ class TestAsyncUser:
     @parametrize
     async def test_method_change_password(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.change_password(
-            current_public_key="current_public_key",
-            new_public_key="new_public_key",
+            new_signing_key="new_signing_key",
             rewrapped_workspace_keys={"foo": "string"},
+            signature="signature",
+            timestamp=0,
         )
         assert_matches_type(UserChangePasswordResponse, user, path=["response"])
 
@@ -339,9 +360,10 @@ class TestAsyncUser:
     @parametrize
     async def test_raw_response_change_password(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.change_password(
-            current_public_key="current_public_key",
-            new_public_key="new_public_key",
+            new_signing_key="new_signing_key",
             rewrapped_workspace_keys={"foo": "string"},
+            signature="signature",
+            timestamp=0,
         )
 
         assert response.is_closed is True
@@ -353,9 +375,10 @@ class TestAsyncUser:
     @parametrize
     async def test_streaming_response_change_password(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.change_password(
-            current_public_key="current_public_key",
-            new_public_key="new_public_key",
+            new_signing_key="new_signing_key",
             rewrapped_workspace_keys={"foo": "string"},
+            signature="signature",
+            timestamp=0,
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -371,6 +394,18 @@ class TestAsyncUser:
         user = await async_client.api.user.check_sso_status(
             email="dev@stainless.com",
             sso_token="sso_token",
+        )
+        assert_matches_type(UserCheckSSOStatusResponse, user, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_check_sso_status_with_all_params(self, async_client: AsyncArbi) -> None:
+        user = await async_client.api.user.check_sso_status(
+            email="dev@stainless.com",
+            sso_token="sso_token",
+            family_name="family_name",
+            given_name="given_name",
+            picture="picture",
         )
         assert_matches_type(UserCheckSSOStatusResponse, user, path=["response"])
 
@@ -463,7 +498,8 @@ class TestAsyncUser:
     async def test_method_login(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
         )
         assert_matches_type(UserLoginResponse, user, path=["response"])
 
@@ -472,7 +508,8 @@ class TestAsyncUser:
     async def test_method_login_with_all_params(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
             sso_token="sso_token",
         )
         assert_matches_type(UserLoginResponse, user, path=["response"])
@@ -482,7 +519,8 @@ class TestAsyncUser:
     async def test_raw_response_login(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
         )
 
         assert response.is_closed is True
@@ -495,7 +533,8 @@ class TestAsyncUser:
     async def test_streaming_response_login(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.login(
             email="dev@stainless.com",
-            public_key="public_key",
+            signature="signature",
+            timestamp=0,
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -538,7 +577,7 @@ class TestAsyncUser:
     async def test_method_register(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
         )
         assert_matches_type(object, user, path=["response"])
@@ -548,10 +587,11 @@ class TestAsyncUser:
     async def test_method_register_with_all_params(self, async_client: AsyncArbi) -> None:
         user = await async_client.api.user.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
-            last_name="last_name",
-            name="name",
+            family_name="family_name",
+            given_name="given_name",
+            picture="picture",
         )
         assert_matches_type(object, user, path=["response"])
 
@@ -560,7 +600,7 @@ class TestAsyncUser:
     async def test_raw_response_register(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.user.with_raw_response.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
         )
 
@@ -574,7 +614,7 @@ class TestAsyncUser:
     async def test_streaming_response_register(self, async_client: AsyncArbi) -> None:
         async with async_client.api.user.with_streaming_response.register(
             email="dev@stainless.com",
-            public_key="public_key",
+            signing_key="signing_key",
             verification_credential="verification_credential",
         ) as response:
             assert not response.is_closed

@@ -20,6 +20,6 @@ class UserCheckSSOStatusResponse(BaseModel):
 
     status: str
 
-    last_name: Optional[str] = None
+    family_name: Optional[str] = None
 
-    name: Optional[str] = None
+    given_name: Optional[str] = None

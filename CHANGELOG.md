@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 (2025-12-25)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/arbitrationcity/arbi-python/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* Ed25519 signature-based login authentication ([be3ef38](https://github.com/arbitrationcity/arbi-python/commit/be3ef38c3e6b94cfa2bc1109918b83e6e81f4148))
+
 ## 0.9.0 (2025-12-19)
 
 Full Changelog: [v0.8.1...v0.9.0](https://github.com/arbitrationcity/arbi-python/compare/v0.8.1...v0.9.0)

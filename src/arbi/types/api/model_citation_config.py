@@ -16,8 +16,5 @@ class ModelCitationConfig(BaseModel):
     min_char_size_to_answer: Optional[int] = FieldInfo(alias="MIN_CHAR_SIZE_TO_ANSWER", default=None)
     """Minimum character length to be considered as a statement for citation."""
 
-    sim_model_name: Optional[str] = FieldInfo(alias="SIM_MODEL_NAME", default=None)
-    """Name of the model to be used."""
-
     sim_threashold: Optional[float] = FieldInfo(alias="SIM_THREASHOLD", default=None)
     """How similar does the statement needs to be to be considered as citation."""
