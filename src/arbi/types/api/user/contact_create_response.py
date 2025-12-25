@@ -4,15 +4,13 @@ from typing import List, Optional
 from typing_extensions import Literal, TypeAlias
 
 from ...._models import BaseModel
+from ..user_response import UserResponse
 
 __all__ = ["ContactCreateResponse", "ContactCreateResponseItem"]
 
 
 class ContactCreateResponseItem(BaseModel):
-    """Response model for contact records.
-
-    Matches WorkspaceUserResponse structure for consistency.
-    """
+    """Contact record - may or may not be a registered user."""
 
     created_at: str
 
@@ -22,11 +20,11 @@ class ContactCreateResponseItem(BaseModel):
 
     status: Literal["invitation_pending", "invitation_expired", "invitation_accepted", "existing_user"]
 
-    last_name: Optional[str] = None
+    user: Optional[UserResponse] = None
+    """Standard user representation used across all endpoints.
 
-    name: Optional[str] = None
-
-    user_ext_id: Optional[str] = None
+    Used for: login response, workspace users, contacts (when registered).
+    """
 
 
 ContactCreateResponse: TypeAlias = List[ContactCreateResponseItem]

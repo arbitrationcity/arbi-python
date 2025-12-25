@@ -12,9 +12,9 @@ __all__ = ["WorkspaceGetConversationsResponse", "WorkspaceGetConversationsRespon
 class WorkspaceGetConversationsResponseItem(BaseModel):
     created_at: datetime
 
-    external_id: str
+    created_by_ext_id: str
 
-    is_creator: bool
+    external_id: str
 
     message_count: int
 
@@ -23,6 +23,8 @@ class WorkspaceGetConversationsResponseItem(BaseModel):
     updated_at: datetime
 
     is_shared: Optional[bool] = None
+
+    updated_by_ext_id: Optional[str] = None
 
 
 WorkspaceGetConversationsResponse: TypeAlias = List[WorkspaceGetConversationsResponseItem]

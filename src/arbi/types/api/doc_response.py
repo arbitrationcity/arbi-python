@@ -22,6 +22,8 @@ class DocMetadata(BaseModel):
 class DocResponse(BaseModel):
     created_at: datetime
 
+    created_by_ext_id: str
+
     external_id: str
 
     updated_at: datetime
@@ -29,8 +31,6 @@ class DocResponse(BaseModel):
     workspace_ext_id: str
 
     config_ext_id: Optional[str] = None
-
-    created_by_ext_id: Optional[str] = None
 
     doc_metadata: Optional[DocMetadata] = None
     """Structured model for document metadata stored in JSONB column."""
@@ -58,3 +58,5 @@ class DocResponse(BaseModel):
     storage_uri: Optional[str] = None
 
     tokens: Optional[int] = None
+
+    updated_by_ext_id: Optional[str] = None

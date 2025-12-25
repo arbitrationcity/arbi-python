@@ -11,6 +11,8 @@ __all__ = ["UserLoginParams"]
 class UserLoginParams(TypedDict, total=False):
     email: Required[str]
 
-    public_key: Required[str]
+    signature: Required[str]
+
+    timestamp: Required[int]
 
     sso_token: Optional[str]
