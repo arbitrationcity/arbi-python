@@ -13,6 +13,8 @@ __all__ = ["SettingUpdateParams", "Subscription", "Tableview"]
 class SettingUpdateParams(TypedDict, total=False):
     ai_mode: Optional[str]
 
+    hide_online_status: Optional[bool]
+
     pinned_workspaces: Optional[SequenceNotStr[str]]
 
     show_document_navigator: Optional[bool]

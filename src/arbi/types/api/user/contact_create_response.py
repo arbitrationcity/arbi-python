@@ -18,7 +18,7 @@ class ContactCreateResponseItem(BaseModel):
 
     external_id: str
 
-    status: Literal["invitation_pending", "invitation_expired", "invitation_accepted", "existing_user"]
+    status: Literal["invitation_pending", "invitation_expired", "registered"]
 
     user: Optional[UserResponse] = None
     """Standard user representation used across all endpoints.

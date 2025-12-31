@@ -1,25 +1,37 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Union, Optional
+from datetime import datetime
 from typing_extensions import Literal, TypeAlias
 
 from ..._models import BaseModel
+from .user_response import UserResponse
 
 __all__ = [
     "NotificationGetSchemasResponse",
-    "NotificationGetSchemasResponseItem",
-    "NotificationGetSchemasResponseItemAuthResultMessage",
-    "NotificationGetSchemasResponseItemConnectionClosedMessage",
-    "NotificationGetSchemasResponseItemPongMessage",
-    "NotificationGetSchemasResponseItemTaskUpdateMessage",
-    "NotificationGetSchemasResponseItemNotificationMessage",
-    "NotificationGetSchemasResponseItemWorkspaceShareMessage",
-    "NotificationGetSchemasResponseItemContactAcceptedMessage",
+    "ClientMessage",
+    "ServerMessage",
+    "ServerMessageAuthResultMessage",
+    "ServerMessageConnectionClosedMessage",
+    "ServerMessagePresenceUpdateMessage",
+    "ServerMessageErrorMessage",
+    "ServerMessageTaskUpdateMessage",
+    "ServerMessageUserMessageNotification",
+    "ServerMessageWorkspaceShareNotification",
+    "ServerMessageContactAcceptedNotification",
 ]
 
 
-class NotificationGetSchemasResponseItemAuthResultMessage(BaseModel):
-    """Sent by server after authentication attempt."""
+class ClientMessage(BaseModel):
+    """Client authentication message."""
+
+    token: str
+
+    type: Optional[Literal["auth"]] = None
+
+
+class ServerMessageAuthResultMessage(BaseModel):
+    """Server response to authentication."""
 
     success: bool
 
@@ -28,22 +40,36 @@ class NotificationGetSchemasResponseItemAuthResultMessage(BaseModel):
     type: Optional[Literal["auth_result"]] = None
 
 
-class NotificationGetSchemasResponseItemConnectionClosedMessage(BaseModel):
-    """Sent when connection is being closed due to another active connection."""
+class ServerMessageConnectionClosedMessage(BaseModel):
+    """Sent when connection is closed (e.g., another tab opened)."""
 
     message: str
 
     type: Optional[Literal["connection_closed"]] = None
 
 
-class NotificationGetSchemasResponseItemPongMessage(BaseModel):
-    """Response to ping message."""
+class ServerMessagePresenceUpdateMessage(BaseModel):
+    """Sent when a contact's online status changes."""
 
-    type: Optional[Literal["pong"]] = None
+    status: Literal["online", "offline"]
+
+    timestamp: str
+
+    user_id: str
+
+    type: Optional[Literal["presence_update"]] = None
 
 
-class NotificationGetSchemasResponseItemTaskUpdateMessage(BaseModel):
-    """Document processing task update."""
+class ServerMessageErrorMessage(BaseModel):
+    """Sent when server fails to process a client message."""
+
+    message: str
+
+    type: Optional[Literal["error"]] = None
+
+
+class ServerMessageTaskUpdateMessage(BaseModel):
+    """Document processing progress update."""
 
     doc_ext_id: str
 
@@ -58,42 +84,114 @@ class NotificationGetSchemasResponseItemTaskUpdateMessage(BaseModel):
     type: Optional[Literal["task_update"]] = None
 
 
-class NotificationGetSchemasResponseItemNotificationMessage(BaseModel):
-    """Generic notification message."""
+class ServerMessageUserMessageNotification(BaseModel):
+    """E2E encrypted message (bilateral).
 
-    message: str
+    One row, both parties see it via RLS.
+    Client: sender == me → I sent it, else I received it.
+    """
 
-    type: Optional[Literal["notification"]] = None
+    content: str
+
+    created_at: datetime
+
+    external_id: str
+
+    new: bool
+
+    recipient: UserResponse
+    """Standard user representation used across all endpoints.
+
+    Used for: login response, workspace users, contacts (when registered).
+    """
+
+    sender: UserResponse
+    """Standard user representation used across all endpoints.
+
+    Used for: login response, workspace users, contacts (when registered).
+    """
+
+    updated_at: datetime
+
+    type: Optional[Literal["user_message"]] = None
 
 
-class NotificationGetSchemasResponseItemWorkspaceShareMessage(BaseModel):
-    """Notification when a workspace is shared with you."""
+class ServerMessageWorkspaceShareNotification(BaseModel):
+    """Workspace shared (bilateral).
 
-    message: str
+    One row, both parties see it via RLS.
+    """
+
+    created_at: datetime
+
+    external_id: str
+
+    new: bool
+
+    recipient: UserResponse
+    """Standard user representation used across all endpoints.
+
+    Used for: login response, workspace users, contacts (when registered).
+    """
+
+    sender: UserResponse
+    """Standard user representation used across all endpoints.
+
+    Used for: login response, workspace users, contacts (when registered).
+    """
+
+    updated_at: datetime
+
+    workspace_ext_id: str
 
     type: Optional[Literal["workspace_share"]] = None
 
 
-class NotificationGetSchemasResponseItemContactAcceptedMessage(BaseModel):
-    """Notification when someone accepts your invitation."""
+class ServerMessageContactAcceptedNotification(BaseModel):
+    """Contact invitation accepted.
 
-    contact_email: str
+    Sent to inviter when their invited contact registers.
+    sender = new user who registered, recipient = inviter.
+    """
 
-    contact_id: str
+    created_at: datetime
 
-    message: str
+    external_id: str
+
+    new: bool
+
+    recipient: UserResponse
+    """Standard user representation used across all endpoints.
+
+    Used for: login response, workspace users, contacts (when registered).
+    """
+
+    sender: UserResponse
+    """Standard user representation used across all endpoints.
+
+    Used for: login response, workspace users, contacts (when registered).
+    """
+
+    updated_at: datetime
 
     type: Optional[Literal["contact_accepted"]] = None
 
 
-NotificationGetSchemasResponseItem: TypeAlias = Union[
-    NotificationGetSchemasResponseItemAuthResultMessage,
-    NotificationGetSchemasResponseItemConnectionClosedMessage,
-    NotificationGetSchemasResponseItemPongMessage,
-    NotificationGetSchemasResponseItemTaskUpdateMessage,
-    NotificationGetSchemasResponseItemNotificationMessage,
-    NotificationGetSchemasResponseItemWorkspaceShareMessage,
-    NotificationGetSchemasResponseItemContactAcceptedMessage,
+ServerMessage: TypeAlias = Union[
+    ServerMessageAuthResultMessage,
+    ServerMessageConnectionClosedMessage,
+    ServerMessagePresenceUpdateMessage,
+    ServerMessageErrorMessage,
+    ServerMessageTaskUpdateMessage,
+    ServerMessageUserMessageNotification,
+    ServerMessageWorkspaceShareNotification,
+    ServerMessageContactAcceptedNotification,
 ]
 
-NotificationGetSchemasResponse: TypeAlias = List[NotificationGetSchemasResponseItem]
+
+class NotificationGetSchemasResponse(BaseModel):
+    """Container for all WebSocket message schemas."""
+
+    client_messages: Optional[List[ClientMessage]] = None
+
+    server_messages: Optional[List[ServerMessage]] = None

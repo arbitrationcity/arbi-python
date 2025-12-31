@@ -61,14 +61,6 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .notifications import (
-    NotificationsResource,
-    AsyncNotificationsResource,
-    NotificationsResourceWithRawResponse,
-    AsyncNotificationsResourceWithRawResponse,
-    NotificationsResourceWithStreamingResponse,
-    AsyncNotificationsResourceWithStreamingResponse,
-)
 from ..._base_client import make_request_options
 from .document.document import (
     DocumentResource,
@@ -85,6 +77,14 @@ from .conversation.conversation import (
     AsyncConversationResourceWithRawResponse,
     ConversationResourceWithStreamingResponse,
     AsyncConversationResourceWithStreamingResponse,
+)
+from .notifications.notifications import (
+    NotificationsResource,
+    AsyncNotificationsResource,
+    NotificationsResourceWithRawResponse,
+    AsyncNotificationsResourceWithRawResponse,
+    NotificationsResourceWithStreamingResponse,
+    AsyncNotificationsResourceWithStreamingResponse,
 )
 
 __all__ = ["APIResource", "AsyncAPIResource"]
