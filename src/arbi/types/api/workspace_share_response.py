@@ -2,19 +2,11 @@
 
 from ..._models import BaseModel
 
-__all__ = ["WorkspaceShareResponse", "Notifications"]
-
-
-class Notifications(BaseModel):
-    recipient: str
-
-    sender: str
+__all__ = ["WorkspaceShareResponse"]
 
 
 class WorkspaceShareResponse(BaseModel):
     detail: str
-
-    notifications: Notifications
 
     shared_with: str
 

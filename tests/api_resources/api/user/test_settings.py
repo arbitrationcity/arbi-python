@@ -56,6 +56,7 @@ class TestSettings:
     def test_method_update_with_all_params(self, client: Arbi) -> None:
         setting = client.api.user.settings.update(
             ai_mode="ai_mode",
+            hide_online_status=True,
             pinned_workspaces=["wrk-bFXA5r3A"],
             show_document_navigator=True,
             show_help_page=True,
@@ -142,6 +143,7 @@ class TestAsyncSettings:
     async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
         setting = await async_client.api.user.settings.update(
             ai_mode="ai_mode",
+            hide_online_status=True,
             pinned_workspaces=["wrk-bFXA5r3A"],
             show_document_navigator=True,
             show_help_page=True,
