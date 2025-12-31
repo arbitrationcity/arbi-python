@@ -44,7 +44,11 @@ class SettingRetrieveResponse(BaseModel):
 
     developer: Optional[bool] = None
 
+    hide_online_status: Optional[bool] = None
+
     last_workspace: Optional[str] = None
+
+    notifications_last_seen_at: Optional[str] = None
 
     pinned_workspaces: Optional[List[str]] = None
 

@@ -66,6 +66,7 @@ class SettingsResource(SyncAPIResource):
         self,
         *,
         ai_mode: Optional[str] | Omit = omit,
+        hide_online_status: Optional[bool] | Omit = omit,
         pinned_workspaces: Optional[SequenceNotStr[str]] | Omit = omit,
         show_document_navigator: Optional[bool] | Omit = omit,
         show_help_page: Optional[bool] | Omit = omit,
@@ -105,6 +106,7 @@ class SettingsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "ai_mode": ai_mode,
+                    "hide_online_status": hide_online_status,
                     "pinned_workspaces": pinned_workspaces,
                     "show_document_navigator": show_document_navigator,
                     "show_help_page": show_help_page,
@@ -168,6 +170,7 @@ class AsyncSettingsResource(AsyncAPIResource):
         self,
         *,
         ai_mode: Optional[str] | Omit = omit,
+        hide_online_status: Optional[bool] | Omit = omit,
         pinned_workspaces: Optional[SequenceNotStr[str]] | Omit = omit,
         show_document_navigator: Optional[bool] | Omit = omit,
         show_help_page: Optional[bool] | Omit = omit,
@@ -207,6 +210,7 @@ class AsyncSettingsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "ai_mode": ai_mode,
+                    "hide_online_status": hide_online_status,
                     "pinned_workspaces": pinned_workspaces,
                     "show_document_navigator": show_document_navigator,
                     "show_help_page": show_help_page,
