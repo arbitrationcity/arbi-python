@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.0 (2026-01-01)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/arbitrationcity/arbi-python/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* contact-based presence, hide_online_status setting, reciprocal contacts ([95009fe](https://github.com/arbitrationcity/arbi-python/commit/95009fe0a448518ca0ab922dcb64a6a2165a3fde))
+
+
+### Bug Fixes
+
+* presence system fixes and improvements ([80b35fb](https://github.com/arbitrationcity/arbi-python/commit/80b35fb552ee5917aaf0fc143f92f231ea12cabd))
+
 ## 0.10.0 (2025-12-25)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/arbitrationcity/arbi-python/compare/v0.9.0...v0.10.0)
