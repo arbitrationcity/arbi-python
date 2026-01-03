@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0 (2026-01-03)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/arbitrationcity/arbi-python/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** api update ([9d5f3f2](https://github.com/arbitrationcity/arbi-python/commit/9d5f3f29e0beef8d3cadac9a9fcbd1798944c4b2))
+
 ## 0.12.0 (2026-01-03)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/arbitrationcity/arbi-python/compare/v0.11.0...v0.12.0)
