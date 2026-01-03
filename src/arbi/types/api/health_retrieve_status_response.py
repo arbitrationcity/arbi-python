@@ -36,7 +36,7 @@ class HealthRetrieveStatusResponse(BaseModel):
     Consolidated health response containing all system status and version information
     """
 
-    status: str
+    health_status: str
 
     available_models: Optional[List[str]] = None
 
