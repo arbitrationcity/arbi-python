@@ -7,10 +7,10 @@ from typing_extensions import TypeAlias
 from ..._models import BaseModel
 from .user_response import UserResponse
 
-__all__ = ["NotificationSendResponse", "NotificationSendResponseItem"]
+__all__ = ["NotificationCreateResponse", "NotificationCreateResponseItem"]
 
 
-class NotificationSendResponseItem(BaseModel):
+class NotificationCreateResponseItem(BaseModel):
     """Notification response model for API and WebSocket.
 
     Bilateral: both sender and recipient see the same row.
@@ -44,4 +44,4 @@ class NotificationSendResponseItem(BaseModel):
     workspace_ext_id: Optional[str] = None
 
 
-NotificationSendResponse: TypeAlias = List[NotificationSendResponseItem]
+NotificationCreateResponse: TypeAlias = List[NotificationCreateResponseItem]

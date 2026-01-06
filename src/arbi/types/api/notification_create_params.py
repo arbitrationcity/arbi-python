@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Iterable
 from typing_extensions import Required, TypedDict
 
-__all__ = ["NotificationSendParams", "Message"]
+__all__ = ["NotificationCreateParams", "Message"]
 
 
-class NotificationSendParams(TypedDict, total=False):
+class NotificationCreateParams(TypedDict, total=False):
     messages: Required[Iterable[Message]]
 
 

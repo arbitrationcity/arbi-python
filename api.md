@@ -277,17 +277,17 @@ Types:
 
 ```python
 from arbi.types.api import (
+    NotificationCreateResponse,
     NotificationUpdateResponse,
     NotificationListResponse,
     NotificationGetSchemasResponse,
-    NotificationSendResponse,
 )
 ```
 
 Methods:
 
-- <code title="patch /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications/notifications.py">update</a>(\*\*<a href="src/arbi/types/api/notification_update_params.py">params</a>) -> <a href="./src/arbi/types/api/notification_update_response.py">NotificationUpdateResponse</a></code>
-- <code title="get /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications/notifications.py">list</a>() -> <a href="./src/arbi/types/api/notification_list_response.py">NotificationListResponse</a></code>
-- <code title="delete /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications/notifications.py">delete</a>(\*\*<a href="src/arbi/types/api/notification_delete_params.py">params</a>) -> None</code>
-- <code title="get /api/notifications/ws-schemas">client.api.notifications.<a href="./src/arbi/resources/api/notifications/notifications.py">get_schemas</a>() -> <a href="./src/arbi/types/api/notification_get_schemas_response.py">NotificationGetSchemasResponse</a></code>
-- <code title="post /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications/notifications.py">send</a>(\*\*<a href="src/arbi/types/api/notification_send_params.py">params</a>) -> <a href="./src/arbi/types/api/notification_send_response.py">NotificationSendResponse</a></code>
+- <code title="post /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications.py">create</a>(\*\*<a href="src/arbi/types/api/notification_create_params.py">params</a>) -> <a href="./src/arbi/types/api/notification_create_response.py">NotificationCreateResponse</a></code>
+- <code title="patch /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications.py">update</a>(\*\*<a href="src/arbi/types/api/notification_update_params.py">params</a>) -> <a href="./src/arbi/types/api/notification_update_response.py">NotificationUpdateResponse</a></code>
+- <code title="get /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications.py">list</a>() -> <a href="./src/arbi/types/api/notification_list_response.py">NotificationListResponse</a></code>
+- <code title="delete /api/notifications/">client.api.notifications.<a href="./src/arbi/resources/api/notifications.py">delete</a>(\*\*<a href="src/arbi/types/api/notification_delete_params.py">params</a>) -> None</code>
+- <code title="get /api/notifications/ws-schemas">client.api.notifications.<a href="./src/arbi/resources/api/notifications.py">get_schemas</a>() -> <a href="./src/arbi/types/api/notification_get_schemas_response.py">NotificationGetSchemasResponse</a></code>

@@ -21,6 +21,7 @@ __all__ = [
     "AllConfigsAgents",
     "AllConfigsDocumentSummaryExtractorLlm",
     "AllConfigsEvaluatorLlm",
+    "AllConfigsKeywordEmbedder",
     "NonDeveloperConfig",
 ]
 
@@ -128,6 +129,35 @@ class AllConfigsEvaluatorLlm(BaseModel):
     """Low temperature for consistent evaluation."""
 
 
+class AllConfigsKeywordEmbedder(BaseModel):
+    """Configuration for keyword embedder with BM25 scoring."""
+
+    bm25_avgdl: Optional[float] = FieldInfo(alias="BM25_AVGDL", default=None)
+    """Average document length in tokens.
+
+    Adjust based on your documents: chat messages ~20-50, articles ~100-300, papers
+    ~1000+
+    """
+
+    bm25_b: Optional[float] = FieldInfo(alias="BM25_B", default=None)
+    """BM25 document length normalization (0.0-1.0).
+
+    0=ignore length, 1=full penalty for long docs. Default 0.75 is standard.
+    """
+
+    bm25_k1: Optional[float] = FieldInfo(alias="BM25_K1", default=None)
+    """BM25 term frequency saturation (1.2-2.0).
+
+    Higher = more weight on term repetition. Default 1.5 works for most cases.
+    """
+
+    dimension_space: Optional[int] = FieldInfo(alias="DIMENSION_SPACE", default=None)
+    """Total dimension space for hash trick (1,048,576 dimensions)"""
+
+    filter_stopwords: Optional[bool] = FieldInfo(alias="FILTER_STOPWORDS", default=None)
+    """Remove common stopwords to reduce noise"""
+
+
 class AllConfigs(BaseModel):
     agent_llm: Optional[AllConfigsAgentLlm] = FieldInfo(alias="AgentLLM", default=None)
 
@@ -146,6 +176,9 @@ class AllConfigs(BaseModel):
     embedder: Optional[EmbedderConfig] = FieldInfo(alias="Embedder", default=None)
 
     evaluator_llm: Optional[AllConfigsEvaluatorLlm] = FieldInfo(alias="EvaluatorLLM", default=None)
+
+    keyword_embedder: Optional[AllConfigsKeywordEmbedder] = FieldInfo(alias="KeywordEmbedder", default=None)
+    """Configuration for keyword embedder with BM25 scoring."""
 
     api_model_citation: Optional[ModelCitationConfig] = FieldInfo(alias="ModelCitation", default=None)
 

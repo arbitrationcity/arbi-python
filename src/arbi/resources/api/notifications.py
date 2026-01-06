@@ -6,22 +6,22 @@ from typing import Iterable
 
 import httpx
 
-from ...._types import Body, Query, Headers, NoneType, NotGiven, SequenceNotStr, not_given
-from ...._utils import maybe_transform, async_maybe_transform
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
-from ...._response import (
+from ..._types import Body, Query, Headers, NoneType, NotGiven, SequenceNotStr, not_given
+from ..._utils import maybe_transform, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....types.api import notification_send_params, notification_delete_params, notification_update_params
-from ...._base_client import make_request_options
-from ....types.api.notification_list_response import NotificationListResponse
-from ....types.api.notification_send_response import NotificationSendResponse
-from ....types.api.notification_update_response import NotificationUpdateResponse
-from ....types.api.notification_get_schemas_response import NotificationGetSchemasResponse
+from ...types.api import notification_create_params, notification_delete_params, notification_update_params
+from ..._base_client import make_request_options
+from ...types.api.notification_list_response import NotificationListResponse
+from ...types.api.notification_create_response import NotificationCreateResponse
+from ...types.api.notification_update_response import NotificationUpdateResponse
+from ...types.api.notification_get_schemas_response import NotificationGetSchemasResponse
 
 __all__ = ["NotificationsResource", "AsyncNotificationsResource"]
 
@@ -45,6 +45,44 @@ class NotificationsResource(SyncAPIResource):
         For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
         return NotificationsResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        messages: Iterable[notification_create_params.Message],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> NotificationCreateResponse:
+        """
+        Send E2E encrypted messages to one or more users.
+
+        Each message is encrypted with the recipient's individual shared key. Creates
+        bilateral notifications visible to both sender and recipient. If recipient is
+        online via WebSocket, delivers in real-time.
+
+        Returns the created notifications.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/api/notifications/",
+            body=maybe_transform({"messages": messages}, notification_create_params.NotificationCreateParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NotificationCreateResponse,
+        )
 
     def update(
         self,
@@ -168,44 +206,6 @@ class NotificationsResource(SyncAPIResource):
             cast_to=NotificationGetSchemasResponse,
         )
 
-    def send(
-        self,
-        *,
-        messages: Iterable[notification_send_params.Message],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> NotificationSendResponse:
-        """
-        Send E2E encrypted messages to one or more users.
-
-        Each message is encrypted with the recipient's individual shared key. Creates
-        bilateral notifications visible to both sender and recipient. If recipient is
-        online via WebSocket, delivers in real-time.
-
-        Returns the created notifications.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/api/notifications/",
-            body=maybe_transform({"messages": messages}, notification_send_params.NotificationSendParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NotificationSendResponse,
-        )
-
 
 class AsyncNotificationsResource(AsyncAPIResource):
     @cached_property
@@ -226,6 +226,46 @@ class AsyncNotificationsResource(AsyncAPIResource):
         For more information, see https://www.github.com/arbitrationcity/arbi-python#with_streaming_response
         """
         return AsyncNotificationsResourceWithStreamingResponse(self)
+
+    async def create(
+        self,
+        *,
+        messages: Iterable[notification_create_params.Message],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> NotificationCreateResponse:
+        """
+        Send E2E encrypted messages to one or more users.
+
+        Each message is encrypted with the recipient's individual shared key. Creates
+        bilateral notifications visible to both sender and recipient. If recipient is
+        online via WebSocket, delivers in real-time.
+
+        Returns the created notifications.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/api/notifications/",
+            body=await async_maybe_transform(
+                {"messages": messages}, notification_create_params.NotificationCreateParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NotificationCreateResponse,
+        )
 
     async def update(
         self,
@@ -351,49 +391,14 @@ class AsyncNotificationsResource(AsyncAPIResource):
             cast_to=NotificationGetSchemasResponse,
         )
 
-    async def send(
-        self,
-        *,
-        messages: Iterable[notification_send_params.Message],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> NotificationSendResponse:
-        """
-        Send E2E encrypted messages to one or more users.
-
-        Each message is encrypted with the recipient's individual shared key. Creates
-        bilateral notifications visible to both sender and recipient. If recipient is
-        online via WebSocket, delivers in real-time.
-
-        Returns the created notifications.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._post(
-            "/api/notifications/",
-            body=await async_maybe_transform({"messages": messages}, notification_send_params.NotificationSendParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NotificationSendResponse,
-        )
-
 
 class NotificationsResourceWithRawResponse:
     def __init__(self, notifications: NotificationsResource) -> None:
         self._notifications = notifications
 
+        self.create = to_raw_response_wrapper(
+            notifications.create,
+        )
         self.update = to_raw_response_wrapper(
             notifications.update,
         )
@@ -406,15 +411,15 @@ class NotificationsResourceWithRawResponse:
         self.get_schemas = to_raw_response_wrapper(
             notifications.get_schemas,
         )
-        self.send = to_raw_response_wrapper(
-            notifications.send,
-        )
 
 
 class AsyncNotificationsResourceWithRawResponse:
     def __init__(self, notifications: AsyncNotificationsResource) -> None:
         self._notifications = notifications
 
+        self.create = async_to_raw_response_wrapper(
+            notifications.create,
+        )
         self.update = async_to_raw_response_wrapper(
             notifications.update,
         )
@@ -427,15 +432,15 @@ class AsyncNotificationsResourceWithRawResponse:
         self.get_schemas = async_to_raw_response_wrapper(
             notifications.get_schemas,
         )
-        self.send = async_to_raw_response_wrapper(
-            notifications.send,
-        )
 
 
 class NotificationsResourceWithStreamingResponse:
     def __init__(self, notifications: NotificationsResource) -> None:
         self._notifications = notifications
 
+        self.create = to_streamed_response_wrapper(
+            notifications.create,
+        )
         self.update = to_streamed_response_wrapper(
             notifications.update,
         )
@@ -448,15 +453,15 @@ class NotificationsResourceWithStreamingResponse:
         self.get_schemas = to_streamed_response_wrapper(
             notifications.get_schemas,
         )
-        self.send = to_streamed_response_wrapper(
-            notifications.send,
-        )
 
 
 class AsyncNotificationsResourceWithStreamingResponse:
     def __init__(self, notifications: AsyncNotificationsResource) -> None:
         self._notifications = notifications
 
+        self.create = async_to_streamed_response_wrapper(
+            notifications.create,
+        )
         self.update = async_to_streamed_response_wrapper(
             notifications.update,
         )
@@ -468,7 +473,4 @@ class AsyncNotificationsResourceWithStreamingResponse:
         )
         self.get_schemas = async_to_streamed_response_wrapper(
             notifications.get_schemas,
-        )
-        self.send = async_to_streamed_response_wrapper(
-            notifications.send,
         )

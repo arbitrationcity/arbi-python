@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.0 (2026-01-06)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/arbitrationcity/arbi-python/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* Add keyword search with BM25 scoring and workspace-scoped encryption ([be2b829](https://github.com/arbitrationcity/arbi-python/commit/be2b8292106f3e0bd1f2ac6645bd72b0602c8739))
+
 ## 0.13.0 (2026-01-03)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/arbitrationcity/arbi-python/compare/v0.12.0...v0.13.0)
