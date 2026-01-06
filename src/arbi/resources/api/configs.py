@@ -64,7 +64,10 @@ class ConfigsResource(SyncAPIResource):
         agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
+        document_summary_extractor_llm: Optional[config_create_params.DocumentSummaryExtractorLlm] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
+        evaluator_llm: Optional[config_create_params.EvaluatorLlm] | Omit = omit,
+        keyword_embedder: Optional[config_create_params.KeywordEmbedder] | Omit = omit,
         model_citation: Optional[ModelCitationConfigParam] | Omit = omit,
         parent_message_ext_id: Optional[str] | Omit = omit,
         parser: Optional[ParserConfigParam] | Omit = omit,
@@ -84,6 +87,8 @@ class ConfigsResource(SyncAPIResource):
         Save a new configuration.
 
         Args:
+          keyword_embedder: Configuration for keyword embedder with BM25 scoring.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -100,7 +105,10 @@ class ConfigsResource(SyncAPIResource):
                     "agents": agents,
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
+                    "document_summary_extractor_llm": document_summary_extractor_llm,
                     "embedder": embedder,
+                    "evaluator_llm": evaluator_llm,
+                    "keyword_embedder": keyword_embedder,
                     "model_citation": model_citation,
                     "parent_message_ext_id": parent_message_ext_id,
                     "parser": parser,
@@ -257,7 +265,10 @@ class AsyncConfigsResource(AsyncAPIResource):
         agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
+        document_summary_extractor_llm: Optional[config_create_params.DocumentSummaryExtractorLlm] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
+        evaluator_llm: Optional[config_create_params.EvaluatorLlm] | Omit = omit,
+        keyword_embedder: Optional[config_create_params.KeywordEmbedder] | Omit = omit,
         model_citation: Optional[ModelCitationConfigParam] | Omit = omit,
         parent_message_ext_id: Optional[str] | Omit = omit,
         parser: Optional[ParserConfigParam] | Omit = omit,
@@ -277,6 +288,8 @@ class AsyncConfigsResource(AsyncAPIResource):
         Save a new configuration.
 
         Args:
+          keyword_embedder: Configuration for keyword embedder with BM25 scoring.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -293,7 +306,10 @@ class AsyncConfigsResource(AsyncAPIResource):
                     "agents": agents,
                     "chunker": chunker,
                     "document_date_extractor_llm": document_date_extractor_llm,
+                    "document_summary_extractor_llm": document_summary_extractor_llm,
                     "embedder": embedder,
+                    "evaluator_llm": evaluator_llm,
+                    "keyword_embedder": keyword_embedder,
                     "model_citation": model_citation,
                     "parent_message_ext_id": parent_message_ext_id,
                     "parser": parser,

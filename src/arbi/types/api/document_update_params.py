@@ -20,9 +20,13 @@ class DocumentUpdateParams(TypedDict, total=False):
 class DocumentDocMetadata(TypedDict, total=False):
     """Structured model for document metadata stored in JSONB column."""
 
+    doc_author: Optional[str]
+
     doc_date: Annotated[Union[str, date, None], PropertyInfo(format="iso8601")]
 
-    doc_summary: Optional[str]
+    doc_nature: Optional[str]
+
+    doc_subject: Optional[str]
 
     title: Optional[str]
 

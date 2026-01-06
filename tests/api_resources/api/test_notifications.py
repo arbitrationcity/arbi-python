@@ -11,7 +11,7 @@ from arbi import Arbi, AsyncArbi
 from tests.utils import assert_matches_type
 from arbi.types.api import (
     NotificationListResponse,
-    NotificationSendResponse,
+    NotificationCreateResponse,
     NotificationUpdateResponse,
     NotificationGetSchemasResponse,
 )
@@ -21,6 +21,55 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestNotifications:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_create(self, client: Arbi) -> None:
+        notification = client.api.notifications.create(
+            messages=[
+                {
+                    "content": "content",
+                    "recipient_ext_id": "usr-bFXA5r3A",
+                }
+            ],
+        )
+        assert_matches_type(NotificationCreateResponse, notification, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: Arbi) -> None:
+        response = client.api.notifications.with_raw_response.create(
+            messages=[
+                {
+                    "content": "content",
+                    "recipient_ext_id": "usr-bFXA5r3A",
+                }
+            ],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        notification = response.parse()
+        assert_matches_type(NotificationCreateResponse, notification, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: Arbi) -> None:
+        with client.api.notifications.with_streaming_response.create(
+            messages=[
+                {
+                    "content": "content",
+                    "recipient_ext_id": "usr-bFXA5r3A",
+                }
+            ],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            notification = response.parse()
+            assert_matches_type(NotificationCreateResponse, notification, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -161,10 +210,16 @@ class TestNotifications:
 
         assert cast(Any, response.is_closed) is True
 
+
+class TestAsyncNotifications:
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
+
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_send(self, client: Arbi) -> None:
-        notification = client.api.notifications.send(
+    async def test_method_create(self, async_client: AsyncArbi) -> None:
+        notification = await async_client.api.notifications.create(
             messages=[
                 {
                     "content": "content",
@@ -172,12 +227,12 @@ class TestNotifications:
                 }
             ],
         )
-        assert_matches_type(NotificationSendResponse, notification, path=["response"])
+        assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_send(self, client: Arbi) -> None:
-        response = client.api.notifications.with_raw_response.send(
+    async def test_raw_response_create(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.notifications.with_raw_response.create(
             messages=[
                 {
                     "content": "content",
@@ -188,13 +243,13 @@ class TestNotifications:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        notification = response.parse()
-        assert_matches_type(NotificationSendResponse, notification, path=["response"])
+        notification = await response.parse()
+        assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_send(self, client: Arbi) -> None:
-        with client.api.notifications.with_streaming_response.send(
+    async def test_streaming_response_create(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.notifications.with_streaming_response.create(
             messages=[
                 {
                     "content": "content",
@@ -205,16 +260,10 @@ class TestNotifications:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            notification = response.parse()
-            assert_matches_type(NotificationSendResponse, notification, path=["response"])
+            notification = await response.parse()
+            assert_matches_type(NotificationCreateResponse, notification, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-
-class TestAsyncNotifications:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -352,54 +401,5 @@ class TestAsyncNotifications:
 
             notification = await response.parse()
             assert_matches_type(NotificationGetSchemasResponse, notification, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_send(self, async_client: AsyncArbi) -> None:
-        notification = await async_client.api.notifications.send(
-            messages=[
-                {
-                    "content": "content",
-                    "recipient_ext_id": "usr-bFXA5r3A",
-                }
-            ],
-        )
-        assert_matches_type(NotificationSendResponse, notification, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_send(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.notifications.with_raw_response.send(
-            messages=[
-                {
-                    "content": "content",
-                    "recipient_ext_id": "usr-bFXA5r3A",
-                }
-            ],
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        notification = await response.parse()
-        assert_matches_type(NotificationSendResponse, notification, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_send(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.notifications.with_streaming_response.send(
-            messages=[
-                {
-                    "content": "content",
-                    "recipient_ext_id": "usr-bFXA5r3A",
-                }
-            ],
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            notification = await response.parse()
-            assert_matches_type(NotificationSendResponse, notification, path=["response"])
 
         assert cast(Any, response.is_closed) is True
