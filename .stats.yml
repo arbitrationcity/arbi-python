@@ -1,4 +1,4 @@
 configured_endpoints: 64
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/arbi-city%2Farbi-463769c4b0f29bae8918acba5c9edcf35a290dea2b4aacef78b95c362fc61627.yml
-openapi_spec_hash: 42b46b6f988f1595ca66e1e18b7736d9
-config_hash: 025f5620491d9013d3bb1c18e5da8a88
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/arbi-city%2Farbi-1c863a2a0ea7cb7c252fa154df8724329c3aa77e65b67860d39db3e1e16f8b5f.yml
+openapi_spec_hash: a0bafdfdf8f0d943b0b7e923141cb381
+config_hash: 39788eb64ad9209230085325a8aa3619

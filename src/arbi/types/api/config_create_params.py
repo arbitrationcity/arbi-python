@@ -16,7 +16,7 @@ from .title_llm_config_param import TitleLlmConfigParam
 from .model_citation_config_param import ModelCitationConfigParam
 from .document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
-__all__ = ["ConfigCreateParams", "AgentLlm", "Agents"]
+__all__ = ["ConfigCreateParams", "AgentLlm", "Agents", "DocumentSummaryExtractorLlm", "EvaluatorLlm", "KeywordEmbedder"]
 
 
 class ConfigCreateParams(TypedDict, total=False):
@@ -30,7 +30,16 @@ class ConfigCreateParams(TypedDict, total=False):
         Optional[DocumentDateExtractorLlmConfigParam], PropertyInfo(alias="DocumentDateExtractorLLM")
     ]
 
+    document_summary_extractor_llm: Annotated[
+        Optional[DocumentSummaryExtractorLlm], PropertyInfo(alias="DocumentSummaryExtractorLLM")
+    ]
+
     embedder: Annotated[Optional[EmbedderConfigParam], PropertyInfo(alias="Embedder")]
+
+    evaluator_llm: Annotated[Optional[EvaluatorLlm], PropertyInfo(alias="EvaluatorLLM")]
+
+    keyword_embedder: Annotated[Optional[KeywordEmbedder], PropertyInfo(alias="KeywordEmbedder")]
+    """Configuration for keyword embedder with BM25 scoring."""
 
     model_citation: Annotated[Optional[ModelCitationConfigParam], PropertyInfo(alias="ModelCitation")]
 
@@ -111,3 +120,71 @@ class Agents(TypedDict, total=False):
 
     llm_summarise_temperature: Annotated[float, PropertyInfo(alias="LLM_SUMMARISE_TEMPERATURE")]
     """Temperature value for randomness."""
+
+
+class DocumentSummaryExtractorLlm(TypedDict, total=False):
+    api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
+    """The inference type (local or remote)."""
+
+    max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
+    """Maximum characters in document for context."""
+
+    max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
+    """Maximum number of tokens allowed."""
+
+    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
+    """The name of the non-reasoning model to be used."""
+
+    system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
+
+    temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
+    """Temperature value for randomness."""
+
+
+class EvaluatorLlm(TypedDict, total=False):
+    api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
+    """The inference type (local or remote)."""
+
+    max_char_size_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_SIZE_TO_ANSWER")]
+    """Maximum character size for evaluation context."""
+
+    max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
+    """Maximum tokens for evaluation response."""
+
+    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
+    """The name of the non-reasoning model to be used."""
+
+    system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
+    """The system instruction for chunk evaluation."""
+
+    temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
+    """Low temperature for consistent evaluation."""
+
+
+class KeywordEmbedder(TypedDict, total=False):
+    """Configuration for keyword embedder with BM25 scoring."""
+
+    bm25_avgdl: Annotated[float, PropertyInfo(alias="BM25_AVGDL")]
+    """Average document length in tokens.
+
+    Adjust based on your documents: chat messages ~20-50, articles ~100-300, papers
+    ~1000+
+    """
+
+    bm25_b: Annotated[float, PropertyInfo(alias="BM25_B")]
+    """BM25 document length normalization (0.0-1.0).
+
+    0=ignore length, 1=full penalty for long docs. Default 0.75 is standard.
+    """
+
+    bm25_k1: Annotated[float, PropertyInfo(alias="BM25_K1")]
+    """BM25 term frequency saturation (1.2-2.0).
+
+    Higher = more weight on term repetition. Default 1.5 works for most cases.
+    """
+
+    dimension_space: Annotated[int, PropertyInfo(alias="DIMENSION_SPACE")]
+    """Total dimension space for hash trick (1,048,576 dimensions)"""
+
+    filter_stopwords: Annotated[bool, PropertyInfo(alias="FILTER_STOPWORDS")]
+    """Remove common stopwords to reduce noise"""

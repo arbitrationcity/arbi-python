@@ -65,6 +65,14 @@ class TestConfigs:
                 "system_instruction": "SYSTEM_INSTRUCTION",
                 "temperature": 0,
             },
+            document_summary_extractor_llm={
+                "api_type": "local",
+                "max_char_context_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
             embedder={
                 "api_type": "local",
                 "batch_size": 0,
@@ -72,6 +80,21 @@ class TestConfigs:
                 "max_concurrent_requests": 0,
                 "model_name": "MODEL_NAME",
                 "query_prefix": "QUERY_PREFIX",
+            },
+            evaluator_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
+            keyword_embedder={
+                "bm25_avgdl": 1,
+                "bm25_b": 0,
+                "bm25_k1": 0,
+                "dimension_space": 0,
+                "filter_stopwords": True,
             },
             model_citation={
                 "max_numb_citations": 0,
@@ -95,9 +118,13 @@ class TestConfigs:
             },
             retriever={
                 "group_size": 1000,
+                "hybrid_dense_weight": 0,
+                "hybrid_reranker_weight": 0,
+                "hybrid_sparse_weight": 0,
                 "max_distinct_documents": 100,
                 "max_total_chunks_to_retrieve": 100,
                 "min_retrieval_sim_score": 0,
+                "search_mode": "semantic",
             },
             title="title",
             title_llm={
@@ -322,6 +349,14 @@ class TestAsyncConfigs:
                 "system_instruction": "SYSTEM_INSTRUCTION",
                 "temperature": 0,
             },
+            document_summary_extractor_llm={
+                "api_type": "local",
+                "max_char_context_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
             embedder={
                 "api_type": "local",
                 "batch_size": 0,
@@ -329,6 +364,21 @@ class TestAsyncConfigs:
                 "max_concurrent_requests": 0,
                 "model_name": "MODEL_NAME",
                 "query_prefix": "QUERY_PREFIX",
+            },
+            evaluator_llm={
+                "api_type": "local",
+                "max_char_size_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
+            keyword_embedder={
+                "bm25_avgdl": 1,
+                "bm25_b": 0,
+                "bm25_k1": 0,
+                "dimension_space": 0,
+                "filter_stopwords": True,
             },
             model_citation={
                 "max_numb_citations": 0,
@@ -352,9 +402,13 @@ class TestAsyncConfigs:
             },
             retriever={
                 "group_size": 1000,
+                "hybrid_dense_weight": 0,
+                "hybrid_reranker_weight": 0,
+                "hybrid_sparse_weight": 0,
                 "max_distinct_documents": 100,
                 "max_total_chunks_to_retrieve": 100,
                 "min_retrieval_sim_score": 0,
+                "search_mode": "semantic",
             },
             title="title",
             title_llm={

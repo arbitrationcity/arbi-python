@@ -12,9 +12,13 @@ __all__ = ["DocResponse", "DocMetadata"]
 class DocMetadata(BaseModel):
     """Structured model for document metadata stored in JSONB column."""
 
+    doc_author: Optional[str] = None
+
     doc_date: Optional[date] = None
 
-    doc_summary: Optional[str] = None
+    doc_nature: Optional[str] = None
+
+    doc_subject: Optional[str] = None
 
     title: Optional[str] = None
 

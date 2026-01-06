@@ -83,8 +83,10 @@ class TestDocument:
                 {
                     "external_id": "doc-bFXA5r3A",
                     "doc_metadata": {
+                        "doc_author": "doc_author",
                         "doc_date": parse_date("2019-12-27"),
-                        "doc_summary": "doc_summary",
+                        "doc_nature": "doc_nature",
+                        "doc_subject": "doc_subject",
                         "title": "title",
                     },
                     "shared": True,
@@ -475,8 +477,10 @@ class TestAsyncDocument:
                 {
                     "external_id": "doc-bFXA5r3A",
                     "doc_metadata": {
+                        "doc_author": "doc_author",
                         "doc_date": parse_date("2019-12-27"),
-                        "doc_summary": "doc_summary",
+                        "doc_nature": "doc_nature",
+                        "doc_subject": "doc_subject",
                         "title": "title",
                     },
                     "shared": True,
