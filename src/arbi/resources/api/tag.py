@@ -73,6 +73,7 @@ class TagResource(SyncAPIResource):
               Type-specific fields:
 
               - select: options (list of choices, can be single or multi-select)
+              - search: tag name is the query, chunks include relevance scores
               - checkbox, text, number, folder: type only
 
           extra_headers: Send extra headers
@@ -230,6 +231,7 @@ class AsyncTagResource(AsyncAPIResource):
               Type-specific fields:
 
               - select: options (list of choices, can be single or multi-select)
+              - search: tag name is the query, chunks include relevance scores
               - checkbox, text, number, folder: type only
 
           extra_headers: Send extra headers

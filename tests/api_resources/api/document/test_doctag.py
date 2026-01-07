@@ -35,6 +35,14 @@ class TestDoctag:
         doctag = client.api.document.doctag.create(
             doc_ext_ids=["string"],
             tag_ext_id="tag-bFXA5r3A",
+            citations={
+                "foo": {
+                    "chunk_ids": ["string"],
+                    "offset_end": 0,
+                    "offset_start": 0,
+                    "statement": "statement",
+                }
+            },
             note="note",
             workspace_key="workspace-key",
         )
@@ -83,6 +91,14 @@ class TestDoctag:
         doctag = client.api.document.doctag.update(
             doc_ext_id="doc-bFXA5r3A",
             tag_ext_id="tag-bFXA5r3A",
+            citations={
+                "foo": {
+                    "chunk_ids": ["string"],
+                    "offset_end": 0,
+                    "offset_start": 0,
+                    "statement": "statement",
+                }
+            },
             note="note",
             workspace_key="workspace-key",
         )
@@ -174,6 +190,14 @@ class TestAsyncDoctag:
         doctag = await async_client.api.document.doctag.create(
             doc_ext_ids=["string"],
             tag_ext_id="tag-bFXA5r3A",
+            citations={
+                "foo": {
+                    "chunk_ids": ["string"],
+                    "offset_end": 0,
+                    "offset_start": 0,
+                    "statement": "statement",
+                }
+            },
             note="note",
             workspace_key="workspace-key",
         )
@@ -222,6 +246,14 @@ class TestAsyncDoctag:
         doctag = await async_client.api.document.doctag.update(
             doc_ext_id="doc-bFXA5r3A",
             tag_ext_id="tag-bFXA5r3A",
+            citations={
+                "foo": {
+                    "chunk_ids": ["string"],
+                    "offset_end": 0,
+                    "offset_start": 0,
+                    "statement": "statement",
+                }
+            },
             note="note",
             workspace_key="workspace-key",
         )

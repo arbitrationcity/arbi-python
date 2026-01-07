@@ -26,6 +26,7 @@ class TagCreateParams(TypedDict, total=False):
     Type-specific fields:
 
     - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
     - checkbox, text, number, folder: type only
     """
 
@@ -37,9 +38,10 @@ class TagType(TypedDict, total=False):
 
     Type-specific fields:
     - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
     - checkbox, text, number, folder: type only
     """
 
     options: SequenceNotStr[str]
 
-    type: Literal["checkbox", "text", "number", "select", "folder"]
+    type: Literal["checkbox", "text", "number", "select", "folder", "search"]
