@@ -35,7 +35,7 @@ class AssistantRetrieveParams(TypedDict, total=False):
 
 
 class ToolsModelCitationToolToolResponses(TypedDict, total=False):
-    """Data for a single citation"""
+    """Data for a single citation - shared by DocTags and ModelCitationTool."""
 
     chunk_ids: Required[SequenceNotStr[str]]
 

@@ -14,12 +14,13 @@ class WorkspaceGetTagsResponseItemTagType(BaseModel):
 
     Type-specific fields:
     - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
     - checkbox, text, number, folder: type only
     """
 
     options: Optional[List[str]] = None
 
-    type: Optional[Literal["checkbox", "text", "number", "select", "folder"]] = None
+    type: Optional[Literal["checkbox", "text", "number", "select", "folder", "search"]] = None
 
 
 class WorkspaceGetTagsResponseItem(BaseModel):
@@ -41,6 +42,7 @@ class WorkspaceGetTagsResponseItem(BaseModel):
     Type-specific fields:
 
     - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
     - checkbox, text, number, folder: type only
     """
 

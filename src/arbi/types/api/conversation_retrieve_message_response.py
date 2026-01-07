@@ -20,7 +20,7 @@ __all__ = [
 
 
 class ToolsModelCitationToolToolResponses(BaseModel):
-    """Data for a single citation"""
+    """Data for a single citation - shared by DocTags and ModelCitationTool."""
 
     chunk_ids: List[str]
 

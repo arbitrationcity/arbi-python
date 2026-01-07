@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Dict, Optional
 
 import httpx
 
@@ -49,6 +49,7 @@ class DoctagResource(SyncAPIResource):
         *,
         doc_ext_ids: SequenceNotStr[str],
         tag_ext_id: str,
+        citations: Optional[Dict[str, doctag_create_params.Citations]] | Omit = omit,
         note: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -77,6 +78,7 @@ class DoctagResource(SyncAPIResource):
                 {
                     "doc_ext_ids": doc_ext_ids,
                     "tag_ext_id": tag_ext_id,
+                    "citations": citations,
                     "note": note,
                 },
                 doctag_create_params.DoctagCreateParams,
@@ -92,6 +94,7 @@ class DoctagResource(SyncAPIResource):
         *,
         doc_ext_id: str,
         tag_ext_id: str,
+        citations: Optional[Dict[str, doctag_update_params.Citations]] | Omit = omit,
         note: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -102,7 +105,7 @@ class DoctagResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
         """
-        Update a doctag's note.
+        Update a doctag's note or citations.
 
         Args:
           extra_headers: Send extra headers
@@ -120,6 +123,7 @@ class DoctagResource(SyncAPIResource):
                 {
                     "doc_ext_id": doc_ext_id,
                     "tag_ext_id": tag_ext_id,
+                    "citations": citations,
                     "note": note,
                 },
                 doctag_update_params.DoctagUpdateParams,
@@ -196,6 +200,7 @@ class AsyncDoctagResource(AsyncAPIResource):
         *,
         doc_ext_ids: SequenceNotStr[str],
         tag_ext_id: str,
+        citations: Optional[Dict[str, doctag_create_params.Citations]] | Omit = omit,
         note: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -224,6 +229,7 @@ class AsyncDoctagResource(AsyncAPIResource):
                 {
                     "doc_ext_ids": doc_ext_ids,
                     "tag_ext_id": tag_ext_id,
+                    "citations": citations,
                     "note": note,
                 },
                 doctag_create_params.DoctagCreateParams,
@@ -239,6 +245,7 @@ class AsyncDoctagResource(AsyncAPIResource):
         *,
         doc_ext_id: str,
         tag_ext_id: str,
+        citations: Optional[Dict[str, doctag_update_params.Citations]] | Omit = omit,
         note: Optional[str] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -249,7 +256,7 @@ class AsyncDoctagResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DocTagResponse:
         """
-        Update a doctag's note.
+        Update a doctag's note or citations.
 
         Args:
           extra_headers: Send extra headers
@@ -267,6 +274,7 @@ class AsyncDoctagResource(AsyncAPIResource):
                 {
                     "doc_ext_id": doc_ext_id,
                     "tag_ext_id": tag_ext_id,
+                    "citations": citations,
                     "note": note,
                 },
                 doctag_update_params.DoctagUpdateParams,
