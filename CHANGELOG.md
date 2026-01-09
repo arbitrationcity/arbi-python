@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 (2026-01-07)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/arbitrationcity/arbi-python/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* add chunks field to doctags and search tag type ([ad48108](https://github.com/arbitrationcity/arbi-python/commit/ad48108e74d557e6d6374eaf07f93b2c94639f4c))
+
 ## 0.14.0 (2026-01-06)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/arbitrationcity/arbi-python/compare/v0.13.0...v0.14.0)
