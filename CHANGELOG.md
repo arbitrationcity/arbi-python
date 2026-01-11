@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.0 (2026-01-11)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/arbitrationcity/arbi-python/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* Add muted users, notification read status, and simplify presence ([d3d2370](https://github.com/arbitrationcity/arbi-python/commit/d3d2370916321769ea902c42347f1de5977c7dce))
+
 ## 0.15.0 (2026-01-07)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/arbitrationcity/arbi-python/compare/v0.14.0...v0.15.0)

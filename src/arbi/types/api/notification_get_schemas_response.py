@@ -51,7 +51,7 @@ class ServerMessageConnectionClosedMessage(BaseModel):
 class ServerMessagePresenceUpdateMessage(BaseModel):
     """Sent when a contact's online status changes or is no longer tracked."""
 
-    status: Literal["online", "offline", "unknown"]
+    status: Literal["online", "unknown"]
 
     timestamp: str
 
