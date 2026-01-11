@@ -48,7 +48,7 @@ class SettingRetrieveResponse(BaseModel):
 
     last_workspace: Optional[str] = None
 
-    notifications_last_seen_at: Optional[str] = None
+    muted_users: Optional[List[str]] = None
 
     pinned_workspaces: Optional[List[str]] = None
 

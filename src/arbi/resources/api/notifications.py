@@ -96,10 +96,12 @@ class NotificationsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NotificationUpdateResponse:
         """
-        Bulk update notification content (for key rotation re-encryption).
+        Bulk update notifications.
 
-        User can update content for notifications they sent OR received. On key
-        rotation, user re-encrypts all their messages with new shared secrets.
+        Supports:
+
+        - content: Re-encrypt content (sender OR recipient can do this)
+        - read: Mark as read (only recipient can do this)
 
         Returns the updated notifications.
 
@@ -135,9 +137,8 @@ class NotificationsResource(SyncAPIResource):
         Retrieve all notifications for the current user.
 
         Returns notifications ordered by most recent first. Bilateral model: user sees
-        notifications they sent OR received. Updates
-        user.settings.notifications_last_seen_at after response to mark notifications as
-        seen.
+        notifications they sent OR received. Use POST /notifications/read to mark
+        specific notifications as read.
         """
         return self._get(
             "/api/notifications/",
@@ -279,10 +280,12 @@ class AsyncNotificationsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NotificationUpdateResponse:
         """
-        Bulk update notification content (for key rotation re-encryption).
+        Bulk update notifications.
 
-        User can update content for notifications they sent OR received. On key
-        rotation, user re-encrypts all their messages with new shared secrets.
+        Supports:
+
+        - content: Re-encrypt content (sender OR recipient can do this)
+        - read: Mark as read (only recipient can do this)
 
         Returns the updated notifications.
 
@@ -318,9 +321,8 @@ class AsyncNotificationsResource(AsyncAPIResource):
         Retrieve all notifications for the current user.
 
         Returns notifications ordered by most recent first. Bilateral model: user sees
-        notifications they sent OR received. Updates
-        user.settings.notifications_last_seen_at after response to mark notifications as
-        seen.
+        notifications they sent OR received. Use POST /notifications/read to mark
+        specific notifications as read.
         """
         return await self._get(
             "/api/notifications/",
