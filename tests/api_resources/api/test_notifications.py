@@ -75,12 +75,7 @@ class TestNotifications:
     @parametrize
     def test_method_update(self, client: Arbi) -> None:
         notification = client.api.notifications.update(
-            updates=[
-                {
-                    "content": "content",
-                    "external_id": "ntf-bFXA5r3A",
-                }
-            ],
+            updates=[{"external_id": "ntf-bFXA5r3A"}],
         )
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
@@ -88,12 +83,7 @@ class TestNotifications:
     @parametrize
     def test_raw_response_update(self, client: Arbi) -> None:
         response = client.api.notifications.with_raw_response.update(
-            updates=[
-                {
-                    "content": "content",
-                    "external_id": "ntf-bFXA5r3A",
-                }
-            ],
+            updates=[{"external_id": "ntf-bFXA5r3A"}],
         )
 
         assert response.is_closed is True
@@ -105,12 +95,7 @@ class TestNotifications:
     @parametrize
     def test_streaming_response_update(self, client: Arbi) -> None:
         with client.api.notifications.with_streaming_response.update(
-            updates=[
-                {
-                    "content": "content",
-                    "external_id": "ntf-bFXA5r3A",
-                }
-            ],
+            updates=[{"external_id": "ntf-bFXA5r3A"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -269,12 +254,7 @@ class TestAsyncNotifications:
     @parametrize
     async def test_method_update(self, async_client: AsyncArbi) -> None:
         notification = await async_client.api.notifications.update(
-            updates=[
-                {
-                    "content": "content",
-                    "external_id": "ntf-bFXA5r3A",
-                }
-            ],
+            updates=[{"external_id": "ntf-bFXA5r3A"}],
         )
         assert_matches_type(NotificationUpdateResponse, notification, path=["response"])
 
@@ -282,12 +262,7 @@ class TestAsyncNotifications:
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncArbi) -> None:
         response = await async_client.api.notifications.with_raw_response.update(
-            updates=[
-                {
-                    "content": "content",
-                    "external_id": "ntf-bFXA5r3A",
-                }
-            ],
+            updates=[{"external_id": "ntf-bFXA5r3A"}],
         )
 
         assert response.is_closed is True
@@ -299,12 +274,7 @@ class TestAsyncNotifications:
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncArbi) -> None:
         async with async_client.api.notifications.with_streaming_response.update(
-            updates=[
-                {
-                    "content": "content",
-                    "external_id": "ntf-bFXA5r3A",
-                }
-            ],
+            updates=[{"external_id": "ntf-bFXA5r3A"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

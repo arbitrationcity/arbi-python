@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from typing import Iterable, Optional
 from typing_extensions import Required, TypedDict
 
 __all__ = ["NotificationUpdateParams", "Update"]
@@ -13,8 +13,15 @@ class NotificationUpdateParams(TypedDict, total=False):
 
 
 class Update(TypedDict, total=False):
-    """Single notification update for bulk PATCH."""
+    """Single notification update for bulk PATCH.
 
-    content: Required[str]
+    Supports two operations:
+    - content: Re-encrypt content (key rotation)
+    - read: Mark as read (only recipient can do this)
+    """
 
     external_id: Required[str]
+
+    content: Optional[str]
+
+    read: Optional[bool]

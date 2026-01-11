@@ -15,6 +15,8 @@ class SettingUpdateParams(TypedDict, total=False):
 
     hide_online_status: Optional[bool]
 
+    muted_users: Optional[SequenceNotStr[str]]
+
     pinned_workspaces: Optional[SequenceNotStr[str]]
 
     show_document_navigator: Optional[bool]
