@@ -57,6 +57,7 @@ class TestSettings:
         setting = client.api.user.settings.update(
             ai_mode="ai_mode",
             hide_online_status=True,
+            muted_users=["usr-bFXA5r3A"],
             pinned_workspaces=["wrk-bFXA5r3A"],
             show_document_navigator=True,
             show_help_page=True,
@@ -144,6 +145,7 @@ class TestAsyncSettings:
         setting = await async_client.api.user.settings.update(
             ai_mode="ai_mode",
             hide_online_status=True,
+            muted_users=["usr-bFXA5r3A"],
             pinned_workspaces=["wrk-bFXA5r3A"],
             show_document_navigator=True,
             show_help_page=True,
