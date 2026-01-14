@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0 (2026-01-14)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/arbitrationcity/arbi-python/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **client:** add support for binary request streaming ([a8f3071](https://github.com/arbitrationcity/arbi-python/commit/a8f3071ff40e46013c222301f19b1deb50821909))
+
 ## 0.16.0 (2026-01-11)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/arbitrationcity/arbi-python/compare/v0.15.0...v0.16.0)
