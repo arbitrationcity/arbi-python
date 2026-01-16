@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0 (2026-01-16)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/arbitrationcity/arbi-python/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* Add AI-powered doctag generation endpoint ([950eba9](https://github.com/arbitrationcity/arbi-python/commit/950eba92b384547d17e238b71535c6462e71a41e))
+
 ## 0.17.0 (2026-01-14)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/arbitrationcity/arbi-python/compare/v0.16.0...v0.17.0)
