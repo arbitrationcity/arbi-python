@@ -16,7 +16,15 @@ from .title_llm_config_param import TitleLlmConfigParam
 from .model_citation_config_param import ModelCitationConfigParam
 from .document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
-__all__ = ["ConfigCreateParams", "AgentLlm", "Agents", "DocumentSummaryExtractorLlm", "EvaluatorLlm", "KeywordEmbedder"]
+__all__ = [
+    "ConfigCreateParams",
+    "AgentLlm",
+    "Agents",
+    "DoctagLlm",
+    "DocumentSummaryExtractorLlm",
+    "EvaluatorLlm",
+    "KeywordEmbedder",
+]
 
 
 class ConfigCreateParams(TypedDict, total=False):
@@ -25,6 +33,12 @@ class ConfigCreateParams(TypedDict, total=False):
     agents: Annotated[Optional[Agents], PropertyInfo(alias="Agents")]
 
     chunker: Annotated[Optional[ChunkerConfigParam], PropertyInfo(alias="Chunker")]
+
+    doctag_llm: Annotated[Optional[DoctagLlm], PropertyInfo(alias="DoctagLLM")]
+    """
+    Configuration for DoctagLLM - extracts information from documents based on tag
+    instructions.
+    """
 
     document_date_extractor_llm: Annotated[
         Optional[DocumentDateExtractorLlmConfigParam], PropertyInfo(alias="DocumentDateExtractorLLM")
@@ -120,6 +134,29 @@ class Agents(TypedDict, total=False):
 
     llm_summarise_temperature: Annotated[float, PropertyInfo(alias="LLM_SUMMARISE_TEMPERATURE")]
     """Temperature value for randomness."""
+
+
+class DoctagLlm(TypedDict, total=False):
+    """
+    Configuration for DoctagLLM - extracts information from documents based on tag instructions.
+    """
+
+    api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
+    """The inference type (local or remote)."""
+
+    max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
+    """Maximum characters in document for context."""
+
+    max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
+    """Maximum number of tokens allowed for all answers."""
+
+    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
+    """The name of the non-reasoning model to be used."""
+
+    system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
+
+    temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
+    """Temperature for factual answers."""
 
 
 class DocumentSummaryExtractorLlm(TypedDict, total=False):

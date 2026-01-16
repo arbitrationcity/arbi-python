@@ -57,6 +57,14 @@ class TestConfigs:
                 "llm_summarise_temperature": 0,
             },
             chunker={},
+            doctag_llm={
+                "api_type": "local",
+                "max_char_context_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
             document_date_extractor_llm={
                 "api_type": "local",
                 "max_char_context_to_answer": 0,
@@ -341,6 +349,14 @@ class TestAsyncConfigs:
                 "llm_summarise_temperature": 0,
             },
             chunker={},
+            doctag_llm={
+                "api_type": "local",
+                "max_char_context_to_answer": 0,
+                "max_tokens": 0,
+                "model_name": "MODEL_NAME",
+                "system_instruction": "SYSTEM_INSTRUCTION",
+                "temperature": 0,
+            },
             document_date_extractor_llm={
                 "api_type": "local",
                 "max_char_context_to_answer": 0,

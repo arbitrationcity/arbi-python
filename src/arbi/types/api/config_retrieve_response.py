@@ -19,6 +19,7 @@ __all__ = [
     "AllConfigs",
     "AllConfigsAgentLlm",
     "AllConfigsAgents",
+    "AllConfigsDoctagLlm",
     "AllConfigsDocumentSummaryExtractorLlm",
     "AllConfigsEvaluatorLlm",
     "AllConfigsKeywordEmbedder",
@@ -88,6 +89,29 @@ class AllConfigsAgents(BaseModel):
 
     llm_summarise_temperature: Optional[float] = FieldInfo(alias="LLM_SUMMARISE_TEMPERATURE", default=None)
     """Temperature value for randomness."""
+
+
+class AllConfigsDoctagLlm(BaseModel):
+    """
+    Configuration for DoctagLLM - extracts information from documents based on tag instructions.
+    """
+
+    api_type: Optional[Literal["local", "remote"]] = FieldInfo(alias="API_TYPE", default=None)
+    """The inference type (local or remote)."""
+
+    max_char_context_to_answer: Optional[int] = FieldInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER", default=None)
+    """Maximum characters in document for context."""
+
+    max_tokens: Optional[int] = FieldInfo(alias="MAX_TOKENS", default=None)
+    """Maximum number of tokens allowed for all answers."""
+
+    api_model_name: Optional[str] = FieldInfo(alias="MODEL_NAME", default=None)
+    """The name of the non-reasoning model to be used."""
+
+    system_instruction: Optional[str] = FieldInfo(alias="SYSTEM_INSTRUCTION", default=None)
+
+    temperature: Optional[float] = FieldInfo(alias="TEMPERATURE", default=None)
+    """Temperature for factual answers."""
 
 
 class AllConfigsDocumentSummaryExtractorLlm(BaseModel):
@@ -164,6 +188,12 @@ class AllConfigs(BaseModel):
     agents: Optional[AllConfigsAgents] = FieldInfo(alias="Agents", default=None)
 
     chunker: Optional[object] = FieldInfo(alias="Chunker", default=None)
+
+    doctag_llm: Optional[AllConfigsDoctagLlm] = FieldInfo(alias="DoctagLLM", default=None)
+    """
+    Configuration for DoctagLLM - extracts information from documents based on tag
+    instructions.
+    """
 
     document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfig] = FieldInfo(
         alias="DocumentDateExtractorLLM", default=None

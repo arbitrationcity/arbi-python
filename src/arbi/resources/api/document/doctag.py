@@ -17,9 +17,15 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.api.document import doctag_create_params, doctag_delete_params, doctag_update_params
+from ....types.api.document import (
+    doctag_create_params,
+    doctag_delete_params,
+    doctag_update_params,
+    doctag_generate_params,
+)
 from ....types.api.document.doc_tag_response import DocTagResponse
 from ....types.api.document.doctag_create_response import DoctagCreateResponse
+from ....types.api.document.doctag_generate_response import DoctagGenerateResponse
 
 __all__ = ["DoctagResource", "AsyncDoctagResource"]
 
@@ -174,6 +180,61 @@ class DoctagResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def generate(
+        self,
+        *,
+        doc_ext_ids: SequenceNotStr[str],
+        tag_ext_ids: SequenceNotStr[str],
+        config_ext_id: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DoctagGenerateResponse:
+        """
+        Generate AI annotations for documents using tag instructions.
+
+        Creates doctags with AI-generated notes and citations for each (doc, tag) pair.
+        Uses tag name + optional instruction as the question to answer about each
+        document.
+
+        Returns 202 Accepted immediately - processing happens in background. WebSocket
+        notification sent when complete.
+
+        Args:
+          config_ext_id: Configuration to use for LLM
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return self._post(
+            "/api/document/doctag/generate",
+            body=maybe_transform(
+                {
+                    "doc_ext_ids": doc_ext_ids,
+                    "tag_ext_ids": tag_ext_ids,
+                },
+                doctag_generate_params.DoctagGenerateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"config_ext_id": config_ext_id}, doctag_generate_params.DoctagGenerateParams),
+            ),
+            cast_to=DoctagGenerateResponse,
+        )
+
 
 class AsyncDoctagResource(AsyncAPIResource):
     @cached_property
@@ -325,6 +386,63 @@ class AsyncDoctagResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def generate(
+        self,
+        *,
+        doc_ext_ids: SequenceNotStr[str],
+        tag_ext_ids: SequenceNotStr[str],
+        config_ext_id: Optional[str] | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DoctagGenerateResponse:
+        """
+        Generate AI annotations for documents using tag instructions.
+
+        Creates doctags with AI-generated notes and citations for each (doc, tag) pair.
+        Uses tag name + optional instruction as the question to answer about each
+        document.
+
+        Returns 202 Accepted immediately - processing happens in background. WebSocket
+        notification sent when complete.
+
+        Args:
+          config_ext_id: Configuration to use for LLM
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return await self._post(
+            "/api/document/doctag/generate",
+            body=await async_maybe_transform(
+                {
+                    "doc_ext_ids": doc_ext_ids,
+                    "tag_ext_ids": tag_ext_ids,
+                },
+                doctag_generate_params.DoctagGenerateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"config_ext_id": config_ext_id}, doctag_generate_params.DoctagGenerateParams
+                ),
+            ),
+            cast_to=DoctagGenerateResponse,
+        )
+
 
 class DoctagResourceWithRawResponse:
     def __init__(self, doctag: DoctagResource) -> None:
@@ -338,6 +456,9 @@ class DoctagResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             doctag.delete,
+        )
+        self.generate = to_raw_response_wrapper(
+            doctag.generate,
         )
 
 
@@ -354,6 +475,9 @@ class AsyncDoctagResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             doctag.delete,
         )
+        self.generate = async_to_raw_response_wrapper(
+            doctag.generate,
+        )
 
 
 class DoctagResourceWithStreamingResponse:
@@ -369,6 +493,9 @@ class DoctagResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             doctag.delete,
         )
+        self.generate = to_streamed_response_wrapper(
+            doctag.generate,
+        )
 
 
 class AsyncDoctagResourceWithStreamingResponse:
@@ -383,4 +510,7 @@ class AsyncDoctagResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             doctag.delete,
+        )
+        self.generate = async_to_streamed_response_wrapper(
+            doctag.generate,
         )

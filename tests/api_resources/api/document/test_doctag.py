@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from arbi.types.api.document import (
     DocTagResponse,
     DoctagCreateResponse,
+    DoctagGenerateResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -169,6 +170,54 @@ class TestDoctag:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_generate(self, client: Arbi) -> None:
+        doctag = client.api.document.doctag.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+        )
+        assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_generate_with_all_params(self, client: Arbi) -> None:
+        doctag = client.api.document.doctag.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+            config_ext_id="config_ext_id",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_generate(self, client: Arbi) -> None:
+        response = client.api.document.doctag.with_raw_response.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        doctag = response.parse()
+        assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_generate(self, client: Arbi) -> None:
+        with client.api.document.doctag.with_streaming_response.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            doctag = response.parse()
+            assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncDoctag:
     parametrize = pytest.mark.parametrize(
@@ -321,5 +370,53 @@ class TestAsyncDoctag:
 
             doctag = await response.parse()
             assert doctag is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_generate(self, async_client: AsyncArbi) -> None:
+        doctag = await async_client.api.document.doctag.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+        )
+        assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_generate_with_all_params(self, async_client: AsyncArbi) -> None:
+        doctag = await async_client.api.document.doctag.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+            config_ext_id="config_ext_id",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_generate(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.document.doctag.with_raw_response.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        doctag = await response.parse()
+        assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_generate(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.document.doctag.with_streaming_response.generate(
+            doc_ext_ids=["string"],
+            tag_ext_ids=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            doctag = await response.parse()
+            assert_matches_type(DoctagGenerateResponse, doctag, path=["response"])
 
         assert cast(Any, response.is_closed) is True

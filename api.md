@@ -150,7 +150,7 @@ from arbi.types.api.document import DocTagResponse
 Types:
 
 ```python
-from arbi.types.api.document import DoctagCreateResponse
+from arbi.types.api.document import DoctagCreateResponse, DoctagGenerateResponse
 ```
 
 Methods:
@@ -158,6 +158,7 @@ Methods:
 - <code title="post /api/document/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">create</a>(\*\*<a href="src/arbi/types/api/document/doctag_create_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doctag_create_response.py">DoctagCreateResponse</a></code>
 - <code title="patch /api/document/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">update</a>(\*\*<a href="src/arbi/types/api/document/doctag_update_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doc_tag_response.py">DocTagResponse</a></code>
 - <code title="delete /api/document/doctag">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">delete</a>(\*\*<a href="src/arbi/types/api/document/doctag_delete_params.py">params</a>) -> None</code>
+- <code title="post /api/document/doctag/generate">client.api.document.doctag.<a href="./src/arbi/resources/api/document/doctag.py">generate</a>(\*\*<a href="src/arbi/types/api/document/doctag_generate_params.py">params</a>) -> <a href="./src/arbi/types/api/document/doctag_generate_response.py">DoctagGenerateResponse</a></code>
 
 ## Conversation
 

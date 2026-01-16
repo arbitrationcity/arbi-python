@@ -63,6 +63,7 @@ class ConfigsResource(SyncAPIResource):
         agent_llm: Optional[config_create_params.AgentLlm] | Omit = omit,
         agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
+        doctag_llm: Optional[config_create_params.DoctagLlm] | Omit = omit,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
         document_summary_extractor_llm: Optional[config_create_params.DocumentSummaryExtractorLlm] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
@@ -87,6 +88,9 @@ class ConfigsResource(SyncAPIResource):
         Save a new configuration.
 
         Args:
+          doctag_llm: Configuration for DoctagLLM - extracts information from documents based on tag
+              instructions.
+
           keyword_embedder: Configuration for keyword embedder with BM25 scoring.
 
           extra_headers: Send extra headers
@@ -104,6 +108,7 @@ class ConfigsResource(SyncAPIResource):
                     "agent_llm": agent_llm,
                     "agents": agents,
                     "chunker": chunker,
+                    "doctag_llm": doctag_llm,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "document_summary_extractor_llm": document_summary_extractor_llm,
                     "embedder": embedder,
@@ -264,6 +269,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         agent_llm: Optional[config_create_params.AgentLlm] | Omit = omit,
         agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
+        doctag_llm: Optional[config_create_params.DoctagLlm] | Omit = omit,
         document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
         document_summary_extractor_llm: Optional[config_create_params.DocumentSummaryExtractorLlm] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
@@ -288,6 +294,9 @@ class AsyncConfigsResource(AsyncAPIResource):
         Save a new configuration.
 
         Args:
+          doctag_llm: Configuration for DoctagLLM - extracts information from documents based on tag
+              instructions.
+
           keyword_embedder: Configuration for keyword embedder with BM25 scoring.
 
           extra_headers: Send extra headers
@@ -305,6 +314,7 @@ class AsyncConfigsResource(AsyncAPIResource):
                     "agent_llm": agent_llm,
                     "agents": agents,
                     "chunker": chunker,
+                    "doctag_llm": doctag_llm,
                     "document_date_extractor_llm": document_date_extractor_llm,
                     "document_summary_extractor_llm": document_summary_extractor_llm,
                     "embedder": embedder,
