@@ -50,6 +50,8 @@ class TagUpdateResponse(BaseModel):
 
     workspace_ext_id: str
 
+    instruction: Optional[str] = None
+
     parent_ext_id: Optional[str] = None
 
     updated_by_ext_id: Optional[str] = None

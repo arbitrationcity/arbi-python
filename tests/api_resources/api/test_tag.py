@@ -32,6 +32,7 @@ class TestTag:
         tag = client.api.tag.create(
             name="name",
             workspace_ext_id="wrk-bFXA5r3A",
+            instruction="instruction",
             parent_ext_id="tag-bFXA5r3A",
             shared=True,
             tag_type={
@@ -83,6 +84,7 @@ class TestTag:
     def test_method_update_with_all_params(self, client: Arbi) -> None:
         tag = client.api.tag.update(
             tag_ext_id="tag",
+            instruction="instruction",
             name="name",
             parent_ext_id="tag-bFXA5r3A",
             shared=True,
@@ -187,6 +189,7 @@ class TestAsyncTag:
         tag = await async_client.api.tag.create(
             name="name",
             workspace_ext_id="wrk-bFXA5r3A",
+            instruction="instruction",
             parent_ext_id="tag-bFXA5r3A",
             shared=True,
             tag_type={
@@ -238,6 +241,7 @@ class TestAsyncTag:
     async def test_method_update_with_all_params(self, async_client: AsyncArbi) -> None:
         tag = await async_client.api.tag.update(
             tag_ext_id="tag",
+            instruction="instruction",
             name="name",
             parent_ext_id="tag-bFXA5r3A",
             shared=True,

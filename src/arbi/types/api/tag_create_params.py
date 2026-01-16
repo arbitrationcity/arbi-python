@@ -16,6 +16,8 @@ class TagCreateParams(TypedDict, total=False):
 
     workspace_ext_id: Required[str]
 
+    instruction: Optional[str]
+
     parent_ext_id: Optional[str]
 
     shared: Optional[bool]

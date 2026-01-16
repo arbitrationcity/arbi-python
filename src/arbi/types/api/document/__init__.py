@@ -7,3 +7,5 @@ from .doctag_create_params import DoctagCreateParams as DoctagCreateParams
 from .doctag_delete_params import DoctagDeleteParams as DoctagDeleteParams
 from .doctag_update_params import DoctagUpdateParams as DoctagUpdateParams
 from .doctag_create_response import DoctagCreateResponse as DoctagCreateResponse
+from .doctag_generate_params import DoctagGenerateParams as DoctagGenerateParams
+from .doctag_generate_response import DoctagGenerateResponse as DoctagGenerateResponse
