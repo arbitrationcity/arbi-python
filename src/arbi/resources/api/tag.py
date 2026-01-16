@@ -50,6 +50,7 @@ class TagResource(SyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
+        instruction: Optional[str] | Omit = omit,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
         tag_type: tag_create_params.TagType | Omit = omit,
@@ -91,6 +92,7 @@ class TagResource(SyncAPIResource):
                 {
                     "name": name,
                     "workspace_ext_id": workspace_ext_id,
+                    "instruction": instruction,
                     "parent_ext_id": parent_ext_id,
                     "shared": shared,
                     "tag_type": tag_type,
@@ -107,6 +109,7 @@ class TagResource(SyncAPIResource):
         self,
         tag_ext_id: str,
         *,
+        instruction: Optional[str] | Omit = omit,
         name: Optional[str] | Omit = omit,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
@@ -137,6 +140,7 @@ class TagResource(SyncAPIResource):
             f"/api/tag/{tag_ext_id}",
             body=maybe_transform(
                 {
+                    "instruction": instruction,
                     "name": name,
                     "parent_ext_id": parent_ext_id,
                     "shared": shared,
@@ -208,6 +212,7 @@ class AsyncTagResource(AsyncAPIResource):
         *,
         name: str,
         workspace_ext_id: str,
+        instruction: Optional[str] | Omit = omit,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
         tag_type: tag_create_params.TagType | Omit = omit,
@@ -249,6 +254,7 @@ class AsyncTagResource(AsyncAPIResource):
                 {
                     "name": name,
                     "workspace_ext_id": workspace_ext_id,
+                    "instruction": instruction,
                     "parent_ext_id": parent_ext_id,
                     "shared": shared,
                     "tag_type": tag_type,
@@ -265,6 +271,7 @@ class AsyncTagResource(AsyncAPIResource):
         self,
         tag_ext_id: str,
         *,
+        instruction: Optional[str] | Omit = omit,
         name: Optional[str] | Omit = omit,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
@@ -295,6 +302,7 @@ class AsyncTagResource(AsyncAPIResource):
             f"/api/tag/{tag_ext_id}",
             body=await async_maybe_transform(
                 {
+                    "instruction": instruction,
                     "name": name,
                     "parent_ext_id": parent_ext_id,
                     "shared": shared,

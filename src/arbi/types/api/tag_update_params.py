@@ -11,6 +11,8 @@ __all__ = ["TagUpdateParams"]
 
 
 class TagUpdateParams(TypedDict, total=False):
+    instruction: Optional[str]
+
     name: Optional[str]
 
     parent_ext_id: Optional[str]
