@@ -12,13 +12,13 @@ from tests.utils import assert_matches_type
 from arbi.types.api import (
     WorkspaceResponse,
     WorkspaceCopyResponse,
-    WorkspaceShareResponse,
     WorkspaceDeleteResponse,
     WorkspaceGetTagsResponse,
+    WorkspaceAddUsersResponse,
     WorkspaceGetStatsResponse,
     WorkspaceGetUsersResponse,
-    WorkspaceRemoveUserResponse,
     WorkspaceGetDocumentsResponse,
+    WorkspaceUpdateUserRolesResponse,
     WorkspaceGetConversationsResponse,
 )
 
@@ -122,6 +122,63 @@ class TestWorkspace:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
             client.api.workspace.with_raw_response.delete(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_add_users(self, client: Arbi) -> None:
+        workspace = client.api.workspace.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+        )
+        assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_add_users_with_all_params(self, client: Arbi) -> None:
+        workspace = client.api.workspace.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+            role="owner",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_add_users(self, client: Arbi) -> None:
+        response = client.api.workspace.with_raw_response.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = response.parse()
+        assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_add_users(self, client: Arbi) -> None:
+        with client.api.workspace.with_streaming_response.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = response.parse()
+            assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_add_users(self, client: Arbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
+            client.api.workspace.with_raw_response.add_users(
+                workspace_ext_id="",
+                emails=["string"],
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -469,104 +526,98 @@ class TestWorkspace:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_remove_user(self, client: Arbi) -> None:
-        workspace = client.api.workspace.remove_user(
+    def test_method_remove_users(self, client: Arbi) -> None:
+        workspace = client.api.workspace.remove_users(
             workspace_ext_id="wrk",
-            user_ext_id="usr-bFXA5r3A",
+            users=[{"user_ext_id": "usr-bFXA5r3A"}],
         )
-        assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
+        assert workspace is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_remove_user(self, client: Arbi) -> None:
-        response = client.api.workspace.with_raw_response.remove_user(
+    def test_raw_response_remove_users(self, client: Arbi) -> None:
+        response = client.api.workspace.with_raw_response.remove_users(
             workspace_ext_id="wrk",
-            user_ext_id="usr-bFXA5r3A",
+            users=[{"user_ext_id": "usr-bFXA5r3A"}],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = response.parse()
-        assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
+        assert workspace is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_remove_user(self, client: Arbi) -> None:
-        with client.api.workspace.with_streaming_response.remove_user(
+    def test_streaming_response_remove_users(self, client: Arbi) -> None:
+        with client.api.workspace.with_streaming_response.remove_users(
             workspace_ext_id="wrk",
-            user_ext_id="usr-bFXA5r3A",
+            users=[{"user_ext_id": "usr-bFXA5r3A"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = response.parse()
-            assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
+            assert workspace is None
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_remove_user(self, client: Arbi) -> None:
+    def test_path_params_remove_users(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
-            client.api.workspace.with_raw_response.remove_user(
+            client.api.workspace.with_raw_response.remove_users(
                 workspace_ext_id="",
-                user_ext_id="usr-bFXA5r3A",
+                users=[{"user_ext_id": "usr-bFXA5r3A"}],
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_share(self, client: Arbi) -> None:
-        workspace = client.api.workspace.share(
+    def test_method_update_user_roles(self, client: Arbi) -> None:
+        workspace = client.api.workspace.update_user_roles(
             workspace_ext_id="wrk",
-            recipient_email="recipient_email",
+            role="owner",
+            user_ext_ids=["usr-bFXA5r3A"],
         )
-        assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
+        assert_matches_type(WorkspaceUpdateUserRolesResponse, workspace, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_share_with_all_params(self, client: Arbi) -> None:
-        workspace = client.api.workspace.share(
+    def test_raw_response_update_user_roles(self, client: Arbi) -> None:
+        response = client.api.workspace.with_raw_response.update_user_roles(
             workspace_ext_id="wrk",
-            recipient_email="recipient_email",
-            workspace_key="workspace-key",
-        )
-        assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_share(self, client: Arbi) -> None:
-        response = client.api.workspace.with_raw_response.share(
-            workspace_ext_id="wrk",
-            recipient_email="recipient_email",
+            role="owner",
+            user_ext_ids=["usr-bFXA5r3A"],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = response.parse()
-        assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
+        assert_matches_type(WorkspaceUpdateUserRolesResponse, workspace, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_share(self, client: Arbi) -> None:
-        with client.api.workspace.with_streaming_response.share(
+    def test_streaming_response_update_user_roles(self, client: Arbi) -> None:
+        with client.api.workspace.with_streaming_response.update_user_roles(
             workspace_ext_id="wrk",
-            recipient_email="recipient_email",
+            role="owner",
+            user_ext_ids=["usr-bFXA5r3A"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = response.parse()
-            assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
+            assert_matches_type(WorkspaceUpdateUserRolesResponse, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_path_params_share(self, client: Arbi) -> None:
+    def test_path_params_update_user_roles(self, client: Arbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
-            client.api.workspace.with_raw_response.share(
+            client.api.workspace.with_raw_response.update_user_roles(
                 workspace_ext_id="",
-                recipient_email="recipient_email",
+                role="owner",
+                user_ext_ids=["usr-bFXA5r3A"],
             )
 
 
@@ -669,6 +720,63 @@ class TestAsyncWorkspace:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
             await async_client.api.workspace.with_raw_response.delete(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_add_users(self, async_client: AsyncArbi) -> None:
+        workspace = await async_client.api.workspace.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+        )
+        assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_add_users_with_all_params(self, async_client: AsyncArbi) -> None:
+        workspace = await async_client.api.workspace.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+            role="owner",
+            workspace_key="workspace-key",
+        )
+        assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_add_users(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.workspace.with_raw_response.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = await response.parse()
+        assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_add_users(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.workspace.with_streaming_response.add_users(
+            workspace_ext_id="wrk",
+            emails=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = await response.parse()
+            assert_matches_type(WorkspaceAddUsersResponse, workspace, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_add_users(self, async_client: AsyncArbi) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
+            await async_client.api.workspace.with_raw_response.add_users(
+                workspace_ext_id="",
+                emails=["string"],
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -1016,102 +1124,96 @@ class TestAsyncWorkspace:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_remove_user(self, async_client: AsyncArbi) -> None:
-        workspace = await async_client.api.workspace.remove_user(
+    async def test_method_remove_users(self, async_client: AsyncArbi) -> None:
+        workspace = await async_client.api.workspace.remove_users(
             workspace_ext_id="wrk",
-            user_ext_id="usr-bFXA5r3A",
+            users=[{"user_ext_id": "usr-bFXA5r3A"}],
         )
-        assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
+        assert workspace is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_remove_user(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.workspace.with_raw_response.remove_user(
+    async def test_raw_response_remove_users(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.workspace.with_raw_response.remove_users(
             workspace_ext_id="wrk",
-            user_ext_id="usr-bFXA5r3A",
+            users=[{"user_ext_id": "usr-bFXA5r3A"}],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = await response.parse()
-        assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
+        assert workspace is None
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_remove_user(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.workspace.with_streaming_response.remove_user(
+    async def test_streaming_response_remove_users(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.workspace.with_streaming_response.remove_users(
             workspace_ext_id="wrk",
-            user_ext_id="usr-bFXA5r3A",
+            users=[{"user_ext_id": "usr-bFXA5r3A"}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = await response.parse()
-            assert_matches_type(WorkspaceRemoveUserResponse, workspace, path=["response"])
+            assert workspace is None
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_remove_user(self, async_client: AsyncArbi) -> None:
+    async def test_path_params_remove_users(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
-            await async_client.api.workspace.with_raw_response.remove_user(
+            await async_client.api.workspace.with_raw_response.remove_users(
                 workspace_ext_id="",
-                user_ext_id="usr-bFXA5r3A",
+                users=[{"user_ext_id": "usr-bFXA5r3A"}],
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_share(self, async_client: AsyncArbi) -> None:
-        workspace = await async_client.api.workspace.share(
+    async def test_method_update_user_roles(self, async_client: AsyncArbi) -> None:
+        workspace = await async_client.api.workspace.update_user_roles(
             workspace_ext_id="wrk",
-            recipient_email="recipient_email",
+            role="owner",
+            user_ext_ids=["usr-bFXA5r3A"],
         )
-        assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
+        assert_matches_type(WorkspaceUpdateUserRolesResponse, workspace, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_share_with_all_params(self, async_client: AsyncArbi) -> None:
-        workspace = await async_client.api.workspace.share(
+    async def test_raw_response_update_user_roles(self, async_client: AsyncArbi) -> None:
+        response = await async_client.api.workspace.with_raw_response.update_user_roles(
             workspace_ext_id="wrk",
-            recipient_email="recipient_email",
-            workspace_key="workspace-key",
-        )
-        assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_share(self, async_client: AsyncArbi) -> None:
-        response = await async_client.api.workspace.with_raw_response.share(
-            workspace_ext_id="wrk",
-            recipient_email="recipient_email",
+            role="owner",
+            user_ext_ids=["usr-bFXA5r3A"],
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = await response.parse()
-        assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
+        assert_matches_type(WorkspaceUpdateUserRolesResponse, workspace, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_share(self, async_client: AsyncArbi) -> None:
-        async with async_client.api.workspace.with_streaming_response.share(
+    async def test_streaming_response_update_user_roles(self, async_client: AsyncArbi) -> None:
+        async with async_client.api.workspace.with_streaming_response.update_user_roles(
             workspace_ext_id="wrk",
-            recipient_email="recipient_email",
+            role="owner",
+            user_ext_ids=["usr-bFXA5r3A"],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = await response.parse()
-            assert_matches_type(WorkspaceShareResponse, workspace, path=["response"])
+            assert_matches_type(WorkspaceUpdateUserRolesResponse, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_path_params_share(self, async_client: AsyncArbi) -> None:
+    async def test_path_params_update_user_roles(self, async_client: AsyncArbi) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_ext_id` but received ''"):
-            await async_client.api.workspace.with_raw_response.share(
+            await async_client.api.workspace.with_raw_response.update_user_roles(
                 workspace_ext_id="",
-                recipient_email="recipient_email",
+                role="owner",
+                user_ext_ids=["usr-bFXA5r3A"],
             )

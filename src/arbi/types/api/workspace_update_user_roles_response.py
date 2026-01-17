@@ -7,10 +7,10 @@ from typing_extensions import Literal, TypeAlias
 from ..._models import BaseModel
 from .user_response import UserResponse
 
-__all__ = ["WorkspaceGetUsersResponse", "WorkspaceGetUsersResponseItem"]
+__all__ = ["WorkspaceUpdateUserRolesResponse", "WorkspaceUpdateUserRolesResponseItem"]
 
 
-class WorkspaceGetUsersResponseItem(BaseModel):
+class WorkspaceUpdateUserRolesResponseItem(BaseModel):
     """User with their role in a workspace."""
 
     joined_at: datetime
@@ -29,4 +29,4 @@ class WorkspaceGetUsersResponseItem(BaseModel):
     document_count: Optional[int] = None
 
 
-WorkspaceGetUsersResponse: TypeAlias = List[WorkspaceGetUsersResponseItem]
+WorkspaceUpdateUserRolesResponse: TypeAlias = List[WorkspaceUpdateUserRolesResponseItem]

@@ -10,24 +10,37 @@ from .user_response import UserResponse
 __all__ = [
     "NotificationGetSchemasResponse",
     "ClientMessage",
+    "ClientMessageAuthMessage",
+    "ClientMessageSendMessageRequestOutput",
     "ServerMessage",
     "ServerMessageAuthResultMessage",
     "ServerMessageConnectionClosedMessage",
     "ServerMessagePresenceUpdateMessage",
     "ServerMessageErrorMessage",
     "ServerMessageTaskUpdateMessage",
-    "ServerMessageUserMessageNotification",
-    "ServerMessageWorkspaceShareNotification",
-    "ServerMessageContactAcceptedNotification",
+    "ServerMessageNotificationResponse",
 ]
 
 
-class ClientMessage(BaseModel):
+class ClientMessageAuthMessage(BaseModel):
     """Client authentication message."""
 
     token: str
 
     type: Optional[Literal["auth"]] = None
+
+
+class ClientMessageSendMessageRequestOutput(BaseModel):
+    """Client request to send an encrypted message."""
+
+    encrypted_content: str
+
+    recipient: str
+
+    type: Optional[Literal["send_message"]] = None
+
+
+ClientMessage: TypeAlias = Union[ClientMessageAuthMessage, ClientMessageSendMessageRequestOutput]
 
 
 class ServerMessageAuthResultMessage(BaseModel):
@@ -84,20 +97,16 @@ class ServerMessageTaskUpdateMessage(BaseModel):
     type: Optional[Literal["task_update"]] = None
 
 
-class ServerMessageUserMessageNotification(BaseModel):
-    """E2E encrypted message (bilateral).
+class ServerMessageNotificationResponse(BaseModel):
+    """Notification response model for API and WebSocket.
 
-    One row, both parties see it via RLS.
-    Client: sender == me → I sent it, else I received it.
+    Bilateral: both sender and recipient see the same row.
+    Client determines perspective: sender == me → I sent it, else I received it.
     """
-
-    content: str
 
     created_at: datetime
 
     external_id: str
-
-    new: bool
 
     recipient: UserResponse
     """Standard user representation used across all endpoints.
@@ -111,70 +120,29 @@ class ServerMessageUserMessageNotification(BaseModel):
     Used for: login response, workspace users, contacts (when registered).
     """
 
-    updated_at: datetime
+    type: Literal[
+        "user_message",
+        "workspaceuser_added_owner",
+        "workspaceuser_added_collaborator",
+        "workspaceuser_added_guest",
+        "workspaceuser_removed",
+        "workspaceuser_updated_owner",
+        "workspaceuser_updated_collaborator",
+        "workspaceuser_updated_guest",
+        "contact_accepted",
+    ]
+    """Notification types - all persisted AND delivered via WebSocket.
 
-    type: Optional[Literal["user_message"]] = None
-
-
-class ServerMessageWorkspaceShareNotification(BaseModel):
-    """Workspace shared (bilateral).
-
-    One row, both parties see it via RLS.
-    """
-
-    created_at: datetime
-
-    external_id: str
-
-    new: bool
-
-    recipient: UserResponse
-    """Standard user representation used across all endpoints.
-
-    Used for: login response, workspace users, contacts (when registered).
-    """
-
-    sender: UserResponse
-    """Standard user representation used across all endpoints.
-
-    Used for: login response, workspace users, contacts (when registered).
+    Type is self-descriptive, no need to parse content field.
     """
 
     updated_at: datetime
 
-    workspace_ext_id: str
+    content: Optional[str] = None
 
-    type: Optional[Literal["workspace_share"]] = None
+    new: Optional[bool] = None
 
-
-class ServerMessageContactAcceptedNotification(BaseModel):
-    """Contact invitation accepted.
-
-    Sent to inviter when their invited contact registers.
-    sender = new user who registered, recipient = inviter.
-    """
-
-    created_at: datetime
-
-    external_id: str
-
-    new: bool
-
-    recipient: UserResponse
-    """Standard user representation used across all endpoints.
-
-    Used for: login response, workspace users, contacts (when registered).
-    """
-
-    sender: UserResponse
-    """Standard user representation used across all endpoints.
-
-    Used for: login response, workspace users, contacts (when registered).
-    """
-
-    updated_at: datetime
-
-    type: Optional[Literal["contact_accepted"]] = None
+    workspace_ext_id: Optional[str] = None
 
 
 ServerMessage: TypeAlias = Union[
@@ -183,9 +151,7 @@ ServerMessage: TypeAlias = Union[
     ServerMessagePresenceUpdateMessage,
     ServerMessageErrorMessage,
     ServerMessageTaskUpdateMessage,
-    ServerMessageUserMessageNotification,
-    ServerMessageWorkspaceShareNotification,
-    ServerMessageContactAcceptedNotification,
+    ServerMessageNotificationResponse,
 ]
 
 
