@@ -86,14 +86,14 @@ Types:
 from arbi.types.api import (
     WorkspaceResponse,
     WorkspaceDeleteResponse,
+    WorkspaceAddUsersResponse,
     WorkspaceCopyResponse,
     WorkspaceGetConversationsResponse,
     WorkspaceGetDocumentsResponse,
     WorkspaceGetStatsResponse,
     WorkspaceGetTagsResponse,
     WorkspaceGetUsersResponse,
-    WorkspaceRemoveUserResponse,
-    WorkspaceShareResponse,
+    WorkspaceUpdateUserRolesResponse,
 )
 ```
 
@@ -101,6 +101,7 @@ Methods:
 
 - <code title="patch /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">update</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_update_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
 - <code title="delete /api/workspace/{workspace_ext_id}">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">delete</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_delete_response.py">WorkspaceDeleteResponse</a></code>
+- <code title="post /api/workspace/{workspace_ext_id}/users">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">add_users</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_add_users_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_add_users_response.py">WorkspaceAddUsersResponse</a></code>
 - <code title="post /api/workspace/{workspace_ext_id}/copy">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">copy</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_copy_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_copy_response.py">WorkspaceCopyResponse</a></code>
 - <code title="post /api/workspace/create_protected">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">create_protected</a>(\*\*<a href="src/arbi/types/api/workspace_create_protected_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_response.py">WorkspaceResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/conversations">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_conversations</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_conversations_response.py">WorkspaceGetConversationsResponse</a></code>
@@ -108,8 +109,8 @@ Methods:
 - <code title="get /api/workspace/{workspace_ext_id}/stats">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_stats</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_stats_response.py">WorkspaceGetStatsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/tags">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_tags</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_tags_response.py">WorkspaceGetTagsResponse</a></code>
 - <code title="get /api/workspace/{workspace_ext_id}/users">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">get_users</a>(workspace_ext_id) -> <a href="./src/arbi/types/api/workspace_get_users_response.py">WorkspaceGetUsersResponse</a></code>
-- <code title="delete /api/workspace/{workspace_ext_id}/user">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">remove_user</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_remove_user_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_remove_user_response.py">WorkspaceRemoveUserResponse</a></code>
-- <code title="post /api/workspace/{workspace_ext_id}/share">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">share</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_share_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_share_response.py">WorkspaceShareResponse</a></code>
+- <code title="delete /api/workspace/{workspace_ext_id}/users">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">remove_users</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_remove_users_params.py">params</a>) -> None</code>
+- <code title="patch /api/workspace/{workspace_ext_id}/users">client.api.workspace.<a href="./src/arbi/resources/api/workspace.py">update_user_roles</a>(workspace_ext_id, \*\*<a href="src/arbi/types/api/workspace_update_user_roles_params.py">params</a>) -> <a href="./src/arbi/types/api/workspace_update_user_roles_response.py">WorkspaceUpdateUserRolesResponse</a></code>
 
 ## Document
 

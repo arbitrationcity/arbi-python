@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Iterable, Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -18,22 +19,23 @@ from ..._response import (
 )
 from ...types.api import (
     workspace_copy_params,
-    workspace_share_params,
     workspace_update_params,
-    workspace_remove_user_params,
+    workspace_add_users_params,
+    workspace_remove_users_params,
     workspace_create_protected_params,
+    workspace_update_user_roles_params,
 )
 from ..._base_client import make_request_options
 from ...types.api.workspace_response import WorkspaceResponse
 from ...types.api.workspace_copy_response import WorkspaceCopyResponse
-from ...types.api.workspace_share_response import WorkspaceShareResponse
 from ...types.api.workspace_delete_response import WorkspaceDeleteResponse
 from ...types.api.workspace_get_tags_response import WorkspaceGetTagsResponse
+from ...types.api.workspace_add_users_response import WorkspaceAddUsersResponse
 from ...types.api.workspace_get_stats_response import WorkspaceGetStatsResponse
 from ...types.api.workspace_get_users_response import WorkspaceGetUsersResponse
-from ...types.api.workspace_remove_user_response import WorkspaceRemoveUserResponse
 from ...types.api.workspace_get_documents_response import WorkspaceGetDocumentsResponse
 from ...types.api.workspace_get_conversations_response import WorkspaceGetConversationsResponse
+from ...types.api.workspace_update_user_roles_response import WorkspaceUpdateUserRolesResponse
 
 __all__ = ["WorkspaceResource", "AsyncWorkspaceResource"]
 
@@ -124,8 +126,9 @@ class WorkspaceResource(SyncAPIResource):
 
         Only the creator of the workspace is allowed to delete it.
 
-        If the workspace
-        deletion fails (e.g., due to RLS policy), the operation aborts.
+        Workspaces with other
+        members cannot be deleted - remove all members first. If the workspace deletion
+        fails (e.g., due to RLS policy), the operation aborts.
 
         Args:
           extra_headers: Send extra headers
@@ -144,6 +147,57 @@ class WorkspaceResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WorkspaceDeleteResponse,
+        )
+
+    def add_users(
+        self,
+        workspace_ext_id: str,
+        *,
+        emails: SequenceNotStr[str],
+        role: Literal["owner", "collaborator", "guest"] | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WorkspaceAddUsersResponse:
+        """Add users to a workspace (bulk operation).
+
+        Only workspace owners can add users.
+
+        Client provides SealedBox-encrypted workspace key via Workspace-Key header.
+        Server decrypts it using session key, then wraps it with each recipient's public
+        key. Returns the full WorkspaceUserResponse for each successfully added user.
+
+        Args:
+          role: Role of a user within a workspace.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_ext_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return self._post(
+            f"/api/workspace/{workspace_ext_id}/users",
+            body=maybe_transform(
+                {
+                    "emails": emails,
+                    "role": role,
+                },
+                workspace_add_users_params.WorkspaceAddUsersParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WorkspaceAddUsersResponse,
         )
 
     def copy(
@@ -460,22 +514,22 @@ class WorkspaceResource(SyncAPIResource):
             cast_to=WorkspaceGetUsersResponse,
         )
 
-    def remove_user(
+    def remove_users(
         self,
         workspace_ext_id: str,
         *,
-        user_ext_id: str,
+        users: Iterable[workspace_remove_users_params.User],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> WorkspaceRemoveUserResponse:
-        """
-        Remove a user from a workspace.
+    ) -> None:
+        """Remove users from a workspace (bulk operation).
 
-        RLS ensures the user can only modify workspaces they have access to.
+        Only workspace owners can remove
+        users. Users can also remove themselves from a workspace.
 
         Args:
           extra_headers: Send extra headers
@@ -488,35 +542,38 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/api/workspace/{workspace_ext_id}/user",
-            body=maybe_transform({"user_ext_id": user_ext_id}, workspace_remove_user_params.WorkspaceRemoveUserParams),
+            f"/api/workspace/{workspace_ext_id}/users",
+            body=maybe_transform({"users": users}, workspace_remove_users_params.WorkspaceRemoveUsersParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceRemoveUserResponse,
+            cast_to=NoneType,
         )
 
-    def share(
+    def update_user_roles(
         self,
         workspace_ext_id: str,
         *,
-        recipient_email: str,
-        workspace_key: str | Omit = omit,
+        role: Literal["owner", "collaborator", "guest"],
+        user_ext_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> WorkspaceShareResponse:
-        """
-        Share a workspace with another user via their email address.
+    ) -> WorkspaceUpdateUserRolesResponse:
+        """Update user roles in a workspace (bulk operation).
 
-        Client provides SealedBox-encrypted workspace key via Workspace-Key header.
-        Server decrypts it using session key, then wraps it with recipient's public key.
+        Only workspace owners can
+        update roles. Returns the full WorkspaceUserResponse for each successfully
+        updated user.
 
         Args:
+          role: Role of a user within a workspace.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -527,14 +584,19 @@ class WorkspaceResource(SyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return self._post(
-            f"/api/workspace/{workspace_ext_id}/share",
-            body=maybe_transform({"recipient_email": recipient_email}, workspace_share_params.WorkspaceShareParams),
+        return self._patch(
+            f"/api/workspace/{workspace_ext_id}/users",
+            body=maybe_transform(
+                {
+                    "role": role,
+                    "user_ext_ids": user_ext_ids,
+                },
+                workspace_update_user_roles_params.WorkspaceUpdateUserRolesParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceShareResponse,
+            cast_to=WorkspaceUpdateUserRolesResponse,
         )
 
 
@@ -624,8 +686,9 @@ class AsyncWorkspaceResource(AsyncAPIResource):
 
         Only the creator of the workspace is allowed to delete it.
 
-        If the workspace
-        deletion fails (e.g., due to RLS policy), the operation aborts.
+        Workspaces with other
+        members cannot be deleted - remove all members first. If the workspace deletion
+        fails (e.g., due to RLS policy), the operation aborts.
 
         Args:
           extra_headers: Send extra headers
@@ -644,6 +707,57 @@ class AsyncWorkspaceResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WorkspaceDeleteResponse,
+        )
+
+    async def add_users(
+        self,
+        workspace_ext_id: str,
+        *,
+        emails: SequenceNotStr[str],
+        role: Literal["owner", "collaborator", "guest"] | Omit = omit,
+        workspace_key: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WorkspaceAddUsersResponse:
+        """Add users to a workspace (bulk operation).
+
+        Only workspace owners can add users.
+
+        Client provides SealedBox-encrypted workspace key via Workspace-Key header.
+        Server decrypts it using session key, then wraps it with each recipient's public
+        key. Returns the full WorkspaceUserResponse for each successfully added user.
+
+        Args:
+          role: Role of a user within a workspace.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_ext_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
+        return await self._post(
+            f"/api/workspace/{workspace_ext_id}/users",
+            body=await async_maybe_transform(
+                {
+                    "emails": emails,
+                    "role": role,
+                },
+                workspace_add_users_params.WorkspaceAddUsersParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WorkspaceAddUsersResponse,
         )
 
     async def copy(
@@ -960,22 +1074,22 @@ class AsyncWorkspaceResource(AsyncAPIResource):
             cast_to=WorkspaceGetUsersResponse,
         )
 
-    async def remove_user(
+    async def remove_users(
         self,
         workspace_ext_id: str,
         *,
-        user_ext_id: str,
+        users: Iterable[workspace_remove_users_params.User],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> WorkspaceRemoveUserResponse:
-        """
-        Remove a user from a workspace.
+    ) -> None:
+        """Remove users from a workspace (bulk operation).
 
-        RLS ensures the user can only modify workspaces they have access to.
+        Only workspace owners can remove
+        users. Users can also remove themselves from a workspace.
 
         Args:
           extra_headers: Send extra headers
@@ -988,37 +1102,40 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/api/workspace/{workspace_ext_id}/user",
+            f"/api/workspace/{workspace_ext_id}/users",
             body=await async_maybe_transform(
-                {"user_ext_id": user_ext_id}, workspace_remove_user_params.WorkspaceRemoveUserParams
+                {"users": users}, workspace_remove_users_params.WorkspaceRemoveUsersParams
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceRemoveUserResponse,
+            cast_to=NoneType,
         )
 
-    async def share(
+    async def update_user_roles(
         self,
         workspace_ext_id: str,
         *,
-        recipient_email: str,
-        workspace_key: str | Omit = omit,
+        role: Literal["owner", "collaborator", "guest"],
+        user_ext_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> WorkspaceShareResponse:
-        """
-        Share a workspace with another user via their email address.
+    ) -> WorkspaceUpdateUserRolesResponse:
+        """Update user roles in a workspace (bulk operation).
 
-        Client provides SealedBox-encrypted workspace key via Workspace-Key header.
-        Server decrypts it using session key, then wraps it with recipient's public key.
+        Only workspace owners can
+        update roles. Returns the full WorkspaceUserResponse for each successfully
+        updated user.
 
         Args:
+          role: Role of a user within a workspace.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1029,16 +1146,19 @@ class AsyncWorkspaceResource(AsyncAPIResource):
         """
         if not workspace_ext_id:
             raise ValueError(f"Expected a non-empty value for `workspace_ext_id` but received {workspace_ext_id!r}")
-        extra_headers = {**strip_not_given({"workspace-key": workspace_key}), **(extra_headers or {})}
-        return await self._post(
-            f"/api/workspace/{workspace_ext_id}/share",
+        return await self._patch(
+            f"/api/workspace/{workspace_ext_id}/users",
             body=await async_maybe_transform(
-                {"recipient_email": recipient_email}, workspace_share_params.WorkspaceShareParams
+                {
+                    "role": role,
+                    "user_ext_ids": user_ext_ids,
+                },
+                workspace_update_user_roles_params.WorkspaceUpdateUserRolesParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=WorkspaceShareResponse,
+            cast_to=WorkspaceUpdateUserRolesResponse,
         )
 
 
@@ -1051,6 +1171,9 @@ class WorkspaceResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             workspace.delete,
+        )
+        self.add_users = to_raw_response_wrapper(
+            workspace.add_users,
         )
         self.copy = to_raw_response_wrapper(
             workspace.copy,
@@ -1073,11 +1196,11 @@ class WorkspaceResourceWithRawResponse:
         self.get_users = to_raw_response_wrapper(
             workspace.get_users,
         )
-        self.remove_user = to_raw_response_wrapper(
-            workspace.remove_user,
+        self.remove_users = to_raw_response_wrapper(
+            workspace.remove_users,
         )
-        self.share = to_raw_response_wrapper(
-            workspace.share,
+        self.update_user_roles = to_raw_response_wrapper(
+            workspace.update_user_roles,
         )
 
 
@@ -1090,6 +1213,9 @@ class AsyncWorkspaceResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             workspace.delete,
+        )
+        self.add_users = async_to_raw_response_wrapper(
+            workspace.add_users,
         )
         self.copy = async_to_raw_response_wrapper(
             workspace.copy,
@@ -1112,11 +1238,11 @@ class AsyncWorkspaceResourceWithRawResponse:
         self.get_users = async_to_raw_response_wrapper(
             workspace.get_users,
         )
-        self.remove_user = async_to_raw_response_wrapper(
-            workspace.remove_user,
+        self.remove_users = async_to_raw_response_wrapper(
+            workspace.remove_users,
         )
-        self.share = async_to_raw_response_wrapper(
-            workspace.share,
+        self.update_user_roles = async_to_raw_response_wrapper(
+            workspace.update_user_roles,
         )
 
 
@@ -1129,6 +1255,9 @@ class WorkspaceResourceWithStreamingResponse:
         )
         self.delete = to_streamed_response_wrapper(
             workspace.delete,
+        )
+        self.add_users = to_streamed_response_wrapper(
+            workspace.add_users,
         )
         self.copy = to_streamed_response_wrapper(
             workspace.copy,
@@ -1151,11 +1280,11 @@ class WorkspaceResourceWithStreamingResponse:
         self.get_users = to_streamed_response_wrapper(
             workspace.get_users,
         )
-        self.remove_user = to_streamed_response_wrapper(
-            workspace.remove_user,
+        self.remove_users = to_streamed_response_wrapper(
+            workspace.remove_users,
         )
-        self.share = to_streamed_response_wrapper(
-            workspace.share,
+        self.update_user_roles = to_streamed_response_wrapper(
+            workspace.update_user_roles,
         )
 
 
@@ -1168,6 +1297,9 @@ class AsyncWorkspaceResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             workspace.delete,
+        )
+        self.add_users = async_to_streamed_response_wrapper(
+            workspace.add_users,
         )
         self.copy = async_to_streamed_response_wrapper(
             workspace.copy,
@@ -1190,9 +1322,9 @@ class AsyncWorkspaceResourceWithStreamingResponse:
         self.get_users = async_to_streamed_response_wrapper(
             workspace.get_users,
         )
-        self.remove_user = async_to_streamed_response_wrapper(
-            workspace.remove_user,
+        self.remove_users = async_to_streamed_response_wrapper(
+            workspace.remove_users,
         )
-        self.share = async_to_streamed_response_wrapper(
-            workspace.share,
+        self.update_user_roles = async_to_streamed_response_wrapper(
+            workspace.update_user_roles,
         )
