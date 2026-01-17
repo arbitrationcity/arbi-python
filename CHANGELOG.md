@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.1 (2026-01-17)
+
+Full Changelog: [v0.18.0...v0.18.1](https://github.com/arbitrationcity/arbi-python/compare/v0.18.0...v0.18.1)
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([5a9b847](https://github.com/arbitrationcity/arbi-python/commit/5a9b847d0dc051588c3314b91228c8c321b04f87))
+
 ## 0.18.0 (2026-01-16)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/arbitrationcity/arbi-python/compare/v0.17.0...v0.18.0)
