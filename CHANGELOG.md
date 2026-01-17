@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.19.0 (2026-01-17)
+
+Full Changelog: [v0.18.1...v0.19.0](https://github.com/arbitrationcity/arbi-python/compare/v0.18.1...v0.19.0)
+
+### Features
+
+* Add role column to WorkspaceUsers with RLS policies ([9f59fc1](https://github.com/arbitrationcity/arbi-python/commit/9f59fc13dbb36575ed1ea3395ca1dfdb324ea926))
+
 ## 0.18.1 (2026-01-17)
 
 Full Changelog: [v0.18.0...v0.18.1](https://github.com/arbitrationcity/arbi-python/compare/v0.18.0...v0.18.1)
