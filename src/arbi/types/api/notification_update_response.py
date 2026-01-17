@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 from datetime import datetime
-from typing_extensions import TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 from ..._models import BaseModel
 from .user_response import UserResponse
@@ -33,7 +33,21 @@ class NotificationUpdateResponseItem(BaseModel):
     Used for: login response, workspace users, contacts (when registered).
     """
 
-    type: str
+    type: Literal[
+        "user_message",
+        "workspaceuser_added_owner",
+        "workspaceuser_added_collaborator",
+        "workspaceuser_added_guest",
+        "workspaceuser_removed",
+        "workspaceuser_updated_owner",
+        "workspaceuser_updated_collaborator",
+        "workspaceuser_updated_guest",
+        "contact_accepted",
+    ]
+    """Notification types - all persisted AND delivered via WebSocket.
+
+    Type is self-descriptive, no need to parse content field.
+    """
 
     updated_at: datetime
 
