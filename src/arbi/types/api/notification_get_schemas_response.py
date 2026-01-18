@@ -18,6 +18,7 @@ __all__ = [
     "ServerMessagePresenceUpdateMessage",
     "ServerMessageErrorMessage",
     "ServerMessageTaskUpdateMessage",
+    "ServerMessageBatchCompleteMessage",
     "ServerMessageNotificationResponse",
 ]
 
@@ -97,6 +98,18 @@ class ServerMessageTaskUpdateMessage(BaseModel):
     type: Optional[Literal["task_update"]] = None
 
 
+class ServerMessageBatchCompleteMessage(BaseModel):
+    """Notification that a batch operation (upload or doctag generation) completed."""
+
+    batch_type: Literal["upload", "doctag_generate"]
+
+    doc_ext_ids: List[str]
+
+    workspace_ext_id: str
+
+    type: Optional[Literal["batch_complete"]] = None
+
+
 class ServerMessageNotificationResponse(BaseModel):
     """Notification response model for API and WebSocket.
 
@@ -151,6 +164,7 @@ ServerMessage: TypeAlias = Union[
     ServerMessagePresenceUpdateMessage,
     ServerMessageErrorMessage,
     ServerMessageTaskUpdateMessage,
+    ServerMessageBatchCompleteMessage,
     ServerMessageNotificationResponse,
 ]
 
