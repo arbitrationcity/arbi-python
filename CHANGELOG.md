@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.0 (2026-01-18)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/arbitrationcity/arbi-python/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* Add batch completion notification infrastructure ([610d08a](https://github.com/arbitrationcity/arbi-python/commit/610d08a6a8fc0fd91f7a6327caaf361cb83098e5))
+
 ## 0.19.0 (2026-01-17)
 
 Full Changelog: [v0.18.1...v0.19.0](https://github.com/arbitrationcity/arbi-python/compare/v0.18.1...v0.19.0)
