@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.0 (2026-01-19)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/arbitrationcity/arbi-python/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* Parallel document processing with batch tracking and global semaphores ([4695cf1](https://github.com/arbitrationcity/arbi-python/commit/4695cf1ff16dbada9397764ebb5828c99e4663a1))
+
 ## 0.20.0 (2026-01-18)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/arbitrationcity/arbi-python/compare/v0.19.0...v0.20.0)
