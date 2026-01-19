@@ -147,6 +147,9 @@ class DoctagLlm(TypedDict, total=False):
     max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
     """Maximum characters in document for context."""
 
+    max_concurrent_docs: Annotated[int, PropertyInfo(alias="MAX_CONCURRENT_DOCS")]
+    """Maximum concurrent documents for doctag generation."""
+
     max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
     """Maximum number of tokens allowed for all answers."""
 
