@@ -102,6 +102,9 @@ class AllConfigsDoctagLlm(BaseModel):
     max_char_context_to_answer: Optional[int] = FieldInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER", default=None)
     """Maximum characters in document for context."""
 
+    max_concurrent_docs: Optional[int] = FieldInfo(alias="MAX_CONCURRENT_DOCS", default=None)
+    """Maximum concurrent documents for doctag generation."""
+
     max_tokens: Optional[int] = FieldInfo(alias="MAX_TOKENS", default=None)
     """Maximum number of tokens allowed for all answers."""
 

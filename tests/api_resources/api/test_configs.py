@@ -60,6 +60,7 @@ class TestConfigs:
             doctag_llm={
                 "api_type": "local",
                 "max_char_context_to_answer": 0,
+                "max_concurrent_docs": 0,
                 "max_tokens": 0,
                 "model_name": "MODEL_NAME",
                 "system_instruction": "SYSTEM_INSTRUCTION",
@@ -352,6 +353,7 @@ class TestAsyncConfigs:
             doctag_llm={
                 "api_type": "local",
                 "max_char_context_to_answer": 0,
+                "max_concurrent_docs": 0,
                 "max_tokens": 0,
                 "model_name": "MODEL_NAME",
                 "system_instruction": "SYSTEM_INSTRUCTION",
