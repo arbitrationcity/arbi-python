@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Union, Optional
+from typing import Dict, List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
 from pydantic import Field as FieldInfo
@@ -19,8 +19,8 @@ __all__ = [
     "AllConfigsAgentLlm",
     "AllConfigsAgents",
     "AllConfigsDoctagLlm",
-    "AllConfigsDocumentDateExtractorLlm",
-    "AllConfigsDocumentSummaryExtractorLlm",
+    "AllConfigsDoctagLlmDefaultMetadataTag",
+    "AllConfigsDoctagLlmDefaultMetadataTagTagType",
     "AllConfigsEvaluatorLlm",
     "AllConfigsKeywordEmbedder",
     "NonDeveloperConfig",
@@ -91,6 +91,38 @@ class AllConfigsAgents(BaseModel):
     """Temperature value for randomness."""
 
 
+class AllConfigsDoctagLlmDefaultMetadataTagTagType(BaseModel):
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+    - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
+    - checkbox, text, number, folder: type only
+    """
+
+    options: Optional[List[str]] = None
+
+    type: Optional[Literal["checkbox", "text", "number", "select", "folder", "search", "date"]] = None
+
+
+class AllConfigsDoctagLlmDefaultMetadataTag(BaseModel):
+    """Base template for tag configuration - used for seeding default tags."""
+
+    name: str
+
+    instruction: Optional[str] = None
+
+    tag_type: Optional[AllConfigsDoctagLlmDefaultMetadataTagTagType] = None
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+
+    - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
+    - checkbox, text, number, folder: type only
+    """
+
+
 class AllConfigsDoctagLlm(BaseModel):
     """
     Configuration for DoctagLLM - extracts information from documents based on tag instructions.
@@ -98,6 +130,14 @@ class AllConfigsDoctagLlm(BaseModel):
 
     api_type: Optional[Literal["local", "remote"]] = FieldInfo(alias="API_TYPE", default=None)
     """The inference type (local or remote)."""
+
+    default_metadata_tags: Optional[List[AllConfigsDoctagLlmDefaultMetadataTag]] = FieldInfo(
+        alias="DEFAULT_METADATA_TAGS", default=None
+    )
+    """
+    Metadata templates used for automatic document metadata extraction during
+    indexing.
+    """
 
     max_char_context_to_answer: Optional[int] = FieldInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER", default=None)
     """Maximum characters in document for context."""
@@ -115,44 +155,6 @@ class AllConfigsDoctagLlm(BaseModel):
 
     temperature: Optional[float] = FieldInfo(alias="TEMPERATURE", default=None)
     """Temperature for factual answers."""
-
-
-class AllConfigsDocumentDateExtractorLlm(BaseModel):
-    api_type: Optional[Literal["local", "remote"]] = FieldInfo(alias="API_TYPE", default=None)
-    """The inference type (local or remote)."""
-
-    max_char_context_to_answer: Optional[int] = FieldInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER", default=None)
-    """Maximum characters in document for context."""
-
-    max_tokens: Optional[int] = FieldInfo(alias="MAX_TOKENS", default=None)
-    """Maximum number of tokens allowed."""
-
-    api_model_name: Optional[str] = FieldInfo(alias="MODEL_NAME", default=None)
-    """The name of the non-reasoning model to be used."""
-
-    system_instruction: Optional[str] = FieldInfo(alias="SYSTEM_INSTRUCTION", default=None)
-
-    temperature: Optional[float] = FieldInfo(alias="TEMPERATURE", default=None)
-    """Temperature value for randomness."""
-
-
-class AllConfigsDocumentSummaryExtractorLlm(BaseModel):
-    api_type: Optional[Literal["local", "remote"]] = FieldInfo(alias="API_TYPE", default=None)
-    """The inference type (local or remote)."""
-
-    max_char_context_to_answer: Optional[int] = FieldInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER", default=None)
-    """Maximum characters in document for context."""
-
-    max_tokens: Optional[int] = FieldInfo(alias="MAX_TOKENS", default=None)
-    """Maximum number of tokens allowed."""
-
-    api_model_name: Optional[str] = FieldInfo(alias="MODEL_NAME", default=None)
-    """The name of the non-reasoning model to be used."""
-
-    system_instruction: Optional[str] = FieldInfo(alias="SYSTEM_INSTRUCTION", default=None)
-
-    temperature: Optional[float] = FieldInfo(alias="TEMPERATURE", default=None)
-    """Temperature value for randomness."""
 
 
 class AllConfigsEvaluatorLlm(BaseModel):
@@ -216,14 +218,6 @@ class AllConfigs(BaseModel):
     Configuration for DoctagLLM - extracts information from documents based on tag
     instructions.
     """
-
-    document_date_extractor_llm: Optional[AllConfigsDocumentDateExtractorLlm] = FieldInfo(
-        alias="DocumentDateExtractorLLM", default=None
-    )
-
-    document_summary_extractor_llm: Optional[AllConfigsDocumentSummaryExtractorLlm] = FieldInfo(
-        alias="DocumentSummaryExtractorLLM", default=None
-    )
 
     embedder: Optional[EmbedderConfig] = FieldInfo(alias="Embedder", default=None)
 

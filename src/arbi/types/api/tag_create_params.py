@@ -46,4 +46,4 @@ class TagType(TypedDict, total=False):
 
     options: SequenceNotStr[str]
 
-    type: Literal["checkbox", "text", "number", "select", "folder", "search"]
+    type: Literal["checkbox", "text", "number", "select", "folder", "search", "date"]
