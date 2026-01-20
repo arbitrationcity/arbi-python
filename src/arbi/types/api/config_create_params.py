@@ -14,13 +14,13 @@ from .query_llm_config_param import QueryLlmConfigParam
 from .retriever_config_param import RetrieverConfigParam
 from .title_llm_config_param import TitleLlmConfigParam
 from .model_citation_config_param import ModelCitationConfigParam
-from .document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
 __all__ = [
     "ConfigCreateParams",
     "AgentLlm",
     "Agents",
     "DoctagLlm",
+    "DocumentDateExtractorLlm",
     "DocumentSummaryExtractorLlm",
     "EvaluatorLlm",
     "KeywordEmbedder",
@@ -41,7 +41,7 @@ class ConfigCreateParams(TypedDict, total=False):
     """
 
     document_date_extractor_llm: Annotated[
-        Optional[DocumentDateExtractorLlmConfigParam], PropertyInfo(alias="DocumentDateExtractorLLM")
+        Optional[DocumentDateExtractorLlm], PropertyInfo(alias="DocumentDateExtractorLLM")
     ]
 
     document_summary_extractor_llm: Annotated[
@@ -160,6 +160,25 @@ class DoctagLlm(TypedDict, total=False):
 
     temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
     """Temperature for factual answers."""
+
+
+class DocumentDateExtractorLlm(TypedDict, total=False):
+    api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
+    """The inference type (local or remote)."""
+
+    max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
+    """Maximum characters in document for context."""
+
+    max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
+    """Maximum number of tokens allowed."""
+
+    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
+    """The name of the non-reasoning model to be used."""
+
+    system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
+
+    temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
+    """Temperature value for randomness."""
 
 
 class DocumentSummaryExtractorLlm(TypedDict, total=False):

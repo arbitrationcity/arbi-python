@@ -32,7 +32,6 @@ from ...types.api.title_llm_config_param import TitleLlmConfigParam
 from ...types.api.config_retrieve_response import ConfigRetrieveResponse
 from ...types.api.model_citation_config_param import ModelCitationConfigParam
 from ...types.api.config_get_versions_response import ConfigGetVersionsResponse
-from ...types.api.document_date_extractor_llm_config_param import DocumentDateExtractorLlmConfigParam
 
 __all__ = ["ConfigsResource", "AsyncConfigsResource"]
 
@@ -64,7 +63,7 @@ class ConfigsResource(SyncAPIResource):
         agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
         doctag_llm: Optional[config_create_params.DoctagLlm] | Omit = omit,
-        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
+        document_date_extractor_llm: Optional[config_create_params.DocumentDateExtractorLlm] | Omit = omit,
         document_summary_extractor_llm: Optional[config_create_params.DocumentSummaryExtractorLlm] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
         evaluator_llm: Optional[config_create_params.EvaluatorLlm] | Omit = omit,
@@ -270,7 +269,7 @@ class AsyncConfigsResource(AsyncAPIResource):
         agents: Optional[config_create_params.Agents] | Omit = omit,
         chunker: Optional[ChunkerConfigParam] | Omit = omit,
         doctag_llm: Optional[config_create_params.DoctagLlm] | Omit = omit,
-        document_date_extractor_llm: Optional[DocumentDateExtractorLlmConfigParam] | Omit = omit,
+        document_date_extractor_llm: Optional[config_create_params.DocumentDateExtractorLlm] | Omit = omit,
         document_summary_extractor_llm: Optional[config_create_params.DocumentSummaryExtractorLlm] | Omit = omit,
         embedder: Optional[EmbedderConfigParam] | Omit = omit,
         evaluator_llm: Optional[config_create_params.EvaluatorLlm] | Omit = omit,

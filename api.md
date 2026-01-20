@@ -250,7 +250,6 @@ Types:
 ```python
 from arbi.types.api import (
     ChunkerConfig,
-    DocumentDateExtractorLlmConfig,
     EmbedderConfig,
     ModelCitationConfig,
     ParserConfig,
