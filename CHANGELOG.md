@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.22.0 (2026-01-20)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/arbitrationcity/arbi-python/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** manual updates ([14b5ac4](https://github.com/arbitrationcity/arbi-python/commit/14b5ac4da3a88ea2e0fe475476ff77e824c64158))
+* Unify metadata extraction into DoctagLLM ([76c85a0](https://github.com/arbitrationcity/arbi-python/commit/76c85a0befedb5f2d13ceedc83409f812e79ab6c))
+
 ## 0.21.0 (2026-01-19)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/arbitrationcity/arbi-python/compare/v0.20.0...v0.21.0)
