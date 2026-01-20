@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import Literal, Annotated, TypedDict
+from typing import Iterable, Optional
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
+from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 from .parser_config_param import ParserConfigParam
 from .chunker_config_param import ChunkerConfigParam
@@ -20,8 +21,8 @@ __all__ = [
     "AgentLlm",
     "Agents",
     "DoctagLlm",
-    "DocumentDateExtractorLlm",
-    "DocumentSummaryExtractorLlm",
+    "DoctagLlmDefaultMetadataTag",
+    "DoctagLlmDefaultMetadataTagTagType",
     "EvaluatorLlm",
     "KeywordEmbedder",
 ]
@@ -39,14 +40,6 @@ class ConfigCreateParams(TypedDict, total=False):
     Configuration for DoctagLLM - extracts information from documents based on tag
     instructions.
     """
-
-    document_date_extractor_llm: Annotated[
-        Optional[DocumentDateExtractorLlm], PropertyInfo(alias="DocumentDateExtractorLLM")
-    ]
-
-    document_summary_extractor_llm: Annotated[
-        Optional[DocumentSummaryExtractorLlm], PropertyInfo(alias="DocumentSummaryExtractorLLM")
-    ]
 
     embedder: Annotated[Optional[EmbedderConfigParam], PropertyInfo(alias="Embedder")]
 
@@ -136,6 +129,38 @@ class Agents(TypedDict, total=False):
     """Temperature value for randomness."""
 
 
+class DoctagLlmDefaultMetadataTagTagType(TypedDict, total=False):
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+    - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
+    - checkbox, text, number, folder: type only
+    """
+
+    options: SequenceNotStr[str]
+
+    type: Literal["checkbox", "text", "number", "select", "folder", "search", "date"]
+
+
+class DoctagLlmDefaultMetadataTag(TypedDict, total=False):
+    """Base template for tag configuration - used for seeding default tags."""
+
+    name: Required[str]
+
+    instruction: Optional[str]
+
+    tag_type: DoctagLlmDefaultMetadataTagTagType
+    """Tag format configuration stored as JSONB.
+
+    Type-specific fields:
+
+    - select: options (list of choices, can be single or multi-select)
+    - search: tag name is the query, chunks include relevance scores
+    - checkbox, text, number, folder: type only
+    """
+
+
 class DoctagLlm(TypedDict, total=False):
     """
     Configuration for DoctagLLM - extracts information from documents based on tag instructions.
@@ -143,6 +168,12 @@ class DoctagLlm(TypedDict, total=False):
 
     api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
     """The inference type (local or remote)."""
+
+    default_metadata_tags: Annotated[Iterable[DoctagLlmDefaultMetadataTag], PropertyInfo(alias="DEFAULT_METADATA_TAGS")]
+    """
+    Metadata templates used for automatic document metadata extraction during
+    indexing.
+    """
 
     max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
     """Maximum characters in document for context."""
@@ -160,44 +191,6 @@ class DoctagLlm(TypedDict, total=False):
 
     temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
     """Temperature for factual answers."""
-
-
-class DocumentDateExtractorLlm(TypedDict, total=False):
-    api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
-    """The inference type (local or remote)."""
-
-    max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
-    """Maximum characters in document for context."""
-
-    max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
-    """Maximum number of tokens allowed."""
-
-    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
-    """The name of the non-reasoning model to be used."""
-
-    system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
-
-    temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
-    """Temperature value for randomness."""
-
-
-class DocumentSummaryExtractorLlm(TypedDict, total=False):
-    api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
-    """The inference type (local or remote)."""
-
-    max_char_context_to_answer: Annotated[int, PropertyInfo(alias="MAX_CHAR_CONTEXT_TO_ANSWER")]
-    """Maximum characters in document for context."""
-
-    max_tokens: Annotated[int, PropertyInfo(alias="MAX_TOKENS")]
-    """Maximum number of tokens allowed."""
-
-    model_name: Annotated[str, PropertyInfo(alias="MODEL_NAME")]
-    """The name of the non-reasoning model to be used."""
-
-    system_instruction: Annotated[str, PropertyInfo(alias="SYSTEM_INSTRUCTION")]
-
-    temperature: Annotated[float, PropertyInfo(alias="TEMPERATURE")]
-    """Temperature value for randomness."""
 
 
 class EvaluatorLlm(TypedDict, total=False):

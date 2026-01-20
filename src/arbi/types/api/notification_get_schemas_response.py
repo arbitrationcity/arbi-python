@@ -91,7 +91,7 @@ class ServerMessageTaskUpdateMessage(BaseModel):
 
     progress: int
 
-    status: Literal["queued", "processing", "completed", "failed"]
+    status: Literal["queued", "parsing", "encrypting", "indexing", "analysing", "completed", "failed"]
 
     workspace_ext_id: str
 

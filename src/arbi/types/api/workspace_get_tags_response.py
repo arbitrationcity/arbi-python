@@ -20,7 +20,7 @@ class WorkspaceGetTagsResponseItemTagType(BaseModel):
 
     options: Optional[List[str]] = None
 
-    type: Optional[Literal["checkbox", "text", "number", "select", "folder", "search"]] = None
+    type: Optional[Literal["checkbox", "text", "number", "select", "folder", "search", "date"]] = None
 
 
 class WorkspaceGetTagsResponseItem(BaseModel):

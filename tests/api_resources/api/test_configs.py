@@ -59,24 +59,18 @@ class TestConfigs:
             chunker={},
             doctag_llm={
                 "api_type": "local",
+                "default_metadata_tags": [
+                    {
+                        "name": "name",
+                        "instruction": "instruction",
+                        "tag_type": {
+                            "options": ["string"],
+                            "type": "checkbox",
+                        },
+                    }
+                ],
                 "max_char_context_to_answer": 0,
                 "max_concurrent_docs": 0,
-                "max_tokens": 0,
-                "model_name": "MODEL_NAME",
-                "system_instruction": "SYSTEM_INSTRUCTION",
-                "temperature": 0,
-            },
-            document_date_extractor_llm={
-                "api_type": "local",
-                "max_char_context_to_answer": 0,
-                "max_tokens": 0,
-                "model_name": "MODEL_NAME",
-                "system_instruction": "SYSTEM_INSTRUCTION",
-                "temperature": 0,
-            },
-            document_summary_extractor_llm={
-                "api_type": "local",
-                "max_char_context_to_answer": 0,
                 "max_tokens": 0,
                 "model_name": "MODEL_NAME",
                 "system_instruction": "SYSTEM_INSTRUCTION",
@@ -352,24 +346,18 @@ class TestAsyncConfigs:
             chunker={},
             doctag_llm={
                 "api_type": "local",
+                "default_metadata_tags": [
+                    {
+                        "name": "name",
+                        "instruction": "instruction",
+                        "tag_type": {
+                            "options": ["string"],
+                            "type": "checkbox",
+                        },
+                    }
+                ],
                 "max_char_context_to_answer": 0,
                 "max_concurrent_docs": 0,
-                "max_tokens": 0,
-                "model_name": "MODEL_NAME",
-                "system_instruction": "SYSTEM_INSTRUCTION",
-                "temperature": 0,
-            },
-            document_date_extractor_llm={
-                "api_type": "local",
-                "max_char_context_to_answer": 0,
-                "max_tokens": 0,
-                "model_name": "MODEL_NAME",
-                "system_instruction": "SYSTEM_INSTRUCTION",
-                "temperature": 0,
-            },
-            document_summary_extractor_llm={
-                "api_type": "local",
-                "max_char_context_to_answer": 0,
                 "max_tokens": 0,
                 "model_name": "MODEL_NAME",
                 "system_instruction": "SYSTEM_INSTRUCTION",
