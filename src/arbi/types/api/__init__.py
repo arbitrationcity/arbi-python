@@ -79,7 +79,6 @@ from .document_upload_from_url_response import DocumentUploadFromURLResponse as 
 from .notification_get_schemas_response import NotificationGetSchemasResponse as NotificationGetSchemasResponse
 from .workspace_create_protected_params import WorkspaceCreateProtectedParams as WorkspaceCreateProtectedParams
 from .conversation_update_title_response import ConversationUpdateTitleResponse as ConversationUpdateTitleResponse
-from .document_date_extractor_llm_config import DocumentDateExtractorLlmConfig as DocumentDateExtractorLlmConfig
 from .workspace_update_user_roles_params import WorkspaceUpdateUserRolesParams as WorkspaceUpdateUserRolesParams
 from .conversation_delete_message_response import ConversationDeleteMessageResponse as ConversationDeleteMessageResponse
 from .workspace_get_conversations_response import WorkspaceGetConversationsResponse as WorkspaceGetConversationsResponse
@@ -89,7 +88,4 @@ from .conversation_retrieve_message_response import (
 )
 from .conversation_retrieve_threads_response import (
     ConversationRetrieveThreadsResponse as ConversationRetrieveThreadsResponse,
-)
-from .document_date_extractor_llm_config_param import (
-    DocumentDateExtractorLlmConfigParam as DocumentDateExtractorLlmConfigParam,
 )
