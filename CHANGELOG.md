@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.0 (2026-01-21)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/arbitrationcity/arbi-python/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* Allow updating tag_type via PATCH endpoint ([1d13281](https://github.com/arbitrationcity/arbi-python/commit/1d132811a19c536f32ba563c0b7ccfcc44ec26c4))
+
 ## 0.22.0 (2026-01-20)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/arbitrationcity/arbi-python/compare/v0.21.0...v0.22.0)
