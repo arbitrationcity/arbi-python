@@ -113,6 +113,7 @@ class TagResource(SyncAPIResource):
         name: Optional[str] | Omit = omit,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
+        tag_type: Optional[tag_update_params.TagType] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -125,6 +126,14 @@ class TagResource(SyncAPIResource):
         Update a tag by its external ID.
 
         Args:
+          tag_type: Tag format configuration stored as JSONB.
+
+              Type-specific fields:
+
+              - select: options (list of choices, can be single or multi-select)
+              - search: tag name is the query, chunks include relevance scores
+              - checkbox, text, number, folder: type only
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -144,6 +153,7 @@ class TagResource(SyncAPIResource):
                     "name": name,
                     "parent_ext_id": parent_ext_id,
                     "shared": shared,
+                    "tag_type": tag_type,
                 },
                 tag_update_params.TagUpdateParams,
             ),
@@ -275,6 +285,7 @@ class AsyncTagResource(AsyncAPIResource):
         name: Optional[str] | Omit = omit,
         parent_ext_id: Optional[str] | Omit = omit,
         shared: Optional[bool] | Omit = omit,
+        tag_type: Optional[tag_update_params.TagType] | Omit = omit,
         workspace_key: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -287,6 +298,14 @@ class AsyncTagResource(AsyncAPIResource):
         Update a tag by its external ID.
 
         Args:
+          tag_type: Tag format configuration stored as JSONB.
+
+              Type-specific fields:
+
+              - select: options (list of choices, can be single or multi-select)
+              - search: tag name is the query, chunks include relevance scores
+              - checkbox, text, number, folder: type only
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -306,6 +325,7 @@ class AsyncTagResource(AsyncAPIResource):
                     "name": name,
                     "parent_ext_id": parent_ext_id,
                     "shared": shared,
+                    "tag_type": tag_type,
                 },
                 tag_update_params.TagUpdateParams,
             ),

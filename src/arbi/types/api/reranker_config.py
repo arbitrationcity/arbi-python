@@ -14,6 +14,9 @@ class RerankerConfig(BaseModel):
     api_type: Optional[Literal["local", "remote"]] = FieldInfo(alias="API_TYPE", default=None)
     """The inference type (local or remote)."""
 
+    max_concurrent_requests: Optional[int] = FieldInfo(alias="MAX_CONCURRENT_REQUESTS", default=None)
+    """Maximum number of concurrent reranking requests."""
+
     max_numb_of_chunks: Optional[int] = FieldInfo(alias="MAX_NUMB_OF_CHUNKS", default=None)
     """Maximum number of chunks to return after reranking."""
 

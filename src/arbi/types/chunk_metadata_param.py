@@ -25,6 +25,8 @@ class ChunkMetadataParam(TypedDict, total=False):
 
     doc_title: Optional[str]
 
+    heading: bool
+
     rerank_score: Optional[float]
 
     score: Optional[float]

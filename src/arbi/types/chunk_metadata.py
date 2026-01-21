@@ -24,6 +24,8 @@ class ChunkMetadata(BaseModel):
 
     doc_title: Optional[str] = None
 
+    heading: Optional[bool] = None
+
     rerank_score: Optional[float] = None
 
     score: Optional[float] = None
