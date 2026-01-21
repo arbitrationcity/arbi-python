@@ -13,6 +13,9 @@ class RerankerConfigParam(TypedDict, total=False):
     api_type: Annotated[Literal["local", "remote"], PropertyInfo(alias="API_TYPE")]
     """The inference type (local or remote)."""
 
+    max_concurrent_requests: Annotated[int, PropertyInfo(alias="MAX_CONCURRENT_REQUESTS")]
+    """Maximum number of concurrent reranking requests."""
+
     max_numb_of_chunks: Annotated[int, PropertyInfo(alias="MAX_NUMB_OF_CHUNKS")]
     """Maximum number of chunks to return after reranking."""
 

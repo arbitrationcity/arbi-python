@@ -116,6 +116,7 @@ class TestConfigs:
             },
             reranker={
                 "api_type": "local",
+                "max_concurrent_requests": 1,
                 "max_numb_of_chunks": 1,
                 "model_name": "MODEL_NAME",
             },
@@ -403,6 +404,7 @@ class TestAsyncConfigs:
             },
             reranker={
                 "api_type": "local",
+                "max_concurrent_requests": 1,
                 "max_numb_of_chunks": 1,
                 "model_name": "MODEL_NAME",
             },

@@ -88,6 +88,10 @@ class TestTag:
             name="name",
             parent_ext_id="tag-bFXA5r3A",
             shared=True,
+            tag_type={
+                "options": ["string"],
+                "type": "checkbox",
+            },
             workspace_key="workspace-key",
         )
         assert_matches_type(TagUpdateResponse, tag, path=["response"])
@@ -245,6 +249,10 @@ class TestAsyncTag:
             name="name",
             parent_ext_id="tag-bFXA5r3A",
             shared=True,
+            tag_type={
+                "options": ["string"],
+                "type": "checkbox",
+            },
             workspace_key="workspace-key",
         )
         assert_matches_type(TagUpdateResponse, tag, path=["response"])
