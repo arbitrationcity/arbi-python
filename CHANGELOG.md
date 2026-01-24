@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.1 (2026-01-24)
+
+Full Changelog: [v0.23.0...v0.23.1](https://github.com/arbitrationcity/arbi-python/compare/v0.23.0...v0.23.1)
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([9e08cef](https://github.com/arbitrationcity/arbi-python/commit/9e08cef546d72e194df81342d3227041431ec169))
+
 ## 0.23.0 (2026-01-21)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/arbitrationcity/arbi-python/compare/v0.22.0...v0.23.0)
