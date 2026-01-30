@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.24.0 (2026-01-30)
+
+Full Changelog: [v0.23.0...v0.24.0](https://github.com/arbitrationcity/arbi-python/compare/v0.23.0...v0.24.0)
+
+### Features
+
+* **client:** add custom JSON encoder for extended type support ([2e15dd4](https://github.com/arbitrationcity/arbi-python/commit/2e15dd452748a1122deeed6d090c696b2696f62f))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([9e08cef](https://github.com/arbitrationcity/arbi-python/commit/9e08cef546d72e194df81342d3227041431ec169))
+
 ## 0.23.0 (2026-01-21)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/arbitrationcity/arbi-python/compare/v0.22.0...v0.23.0)
