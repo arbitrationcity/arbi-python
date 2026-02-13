@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.24.1 (2026-02-13)
+
+Full Changelog: [v0.24.0...v0.24.1](https://github.com/arbitrationcity/arbi-python/compare/v0.24.0...v0.24.1)
+
+### Chores
+
+* format all `api.md` files ([fb7afd9](https://github.com/arbitrationcity/arbi-python/commit/fb7afd9e4cf50d66608e29dfc7bcadb5695b7fef))
+* **internal:** bump dependencies ([7618196](https://github.com/arbitrationcity/arbi-python/commit/7618196028a94d9a94ea5a49c8516609f4545c65))
+* **internal:** fix lint error on Python 3.14 ([4bf57cf](https://github.com/arbitrationcity/arbi-python/commit/4bf57cfc8bf2c2175944821ed55b826c82869448))
+
 ## 0.24.0 (2026-01-30)
 
 Full Changelog: [v0.23.0...v0.24.0](https://github.com/arbitrationcity/arbi-python/compare/v0.23.0...v0.24.0)
